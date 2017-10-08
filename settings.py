@@ -51,14 +51,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
-}
-
 ROOT_URLCONF = 'flac.urls'
 
 TEMPLATES = [
@@ -81,9 +73,9 @@ TEMPLATES = [
         },
     },
 ]
-TEMPLATE_DIRS = (
-    '/Users/orion/PycharmProjects/flac/venv/flac/flac/templates',
-)
+# TEMPLATE_DIRS = (
+#     '/Users/orion/PycharmProjects/flac/venv/flac/flac/templates',
+# )
 
 WSGI_APPLICATION = 'flac.wsgi.application'
 
