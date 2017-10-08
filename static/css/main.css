@@ -1,0 +1,9 @@
+.hyperlink {
+    cursor: pointer;
+}
+.hyperlink a{
+    color: #447e9b;
+}
+.album-image {
+    height: 160px;
+}

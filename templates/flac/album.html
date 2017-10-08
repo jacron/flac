@@ -1,12 +1,14 @@
 {% extends "flac/base.html" %}
 {%  load static %}
 {% block page %}
+    <img src="/albumimage/{{ album.1 }}/" class="album-image">
     <h1>{{ album.0 }}</h1>
 <table>
-    {% for item in items %}
-        <tr><td>
-            <a href="/piece/{{ item.1 }}/">{{ item.0 }}</a>
-        </td></tr>
-    {% endfor %}
+<form>{% csrf_token %}</form>
+{% for item in items %}
+    <tr><td class="hyperlink">
+        <a onclick="play('{{ item.1 }}')">{{ item.0 }}</a>
+    </td></tr>
+{% endfor %}
 </table>
 {% endblock %}

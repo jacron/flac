@@ -7,20 +7,22 @@ import sqlite3
 cuesheet_extension = '.cue'
 #           /Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/Sonatas - John Browning - piano
 # cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/Sonatas - Pierre Hantai - clavecimbel/Sonatas I"
-cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/Sonatas - Horowitz  - piano"
-# cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/Sonatas - Belder/Disc 1of3"
+# cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/Sonatas - Horowitz  - piano"
+cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/Sonatas - Belder/Disc 1of3"
 flac_path = cue_path + "/*.flac"
-output_path = "output/scarlatti/"
-k_split = ", K"
-pianist = "Horowitz"
+# output_path = "output/scarlatti/"
+k_split = "- K"
+pianist = "Belder"
 rows = []
+# let op: het pad naar de database moet relatief zijn, omdat dit script stand alone uitgevoerd wordt!
+db_file = '../db.sqlite3'
 
 
 def process_file(filepath):
     w = filepath.split('/')
     filename = w[-1]
     nr = filename.split()[0]
-    # print(filename)
+    print(filename)
     k = filename.split(k_split)[1]
     knr = k.split()[0]
     rows.append({
@@ -99,7 +101,7 @@ def insert_performer(name, c, conn):
 
 
 def main():
-    conn = sqlite3.connect('db.sqlite3')
+    conn = sqlite3.connect(db_file)
     c = conn.cursor()
     w = cue_path.split('/')
     album_title = w[-1]
@@ -112,7 +114,6 @@ def main():
 
     [process_file(f) for f in glob.iglob(flac_path)]
     for nr, row in enumerate(rows):
-        # store_row_in_excel(ws, row, nr)
         store_row_in_db(row['link_href'], row['knr'], album_id[0], c, conn)
     conn.close()
 
