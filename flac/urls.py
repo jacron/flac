@@ -22,5 +22,5 @@ urlpatterns = [
     url(r'^home/$', views.home),
     url(r'^album/(?P<id>.+)/$', views.album),
     url(r'^performer/(?P<id>.+)/$', views.performer),
-    url(r'^piece/(?P<id>.+)/$', views.piece),
+    url(r'^piece/(?P<id>.+)/(?P<album_id>.+)/$', views.piece),
 ]

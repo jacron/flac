@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'flac',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+# https://stackoverflow.com/questions/10165638/django-isnt-serving-static-files-getting-404-errors
+STATICFILES_DIRS = (os.path.join('static'),)
