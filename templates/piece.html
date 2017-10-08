@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block page %}
-    <small>{{ now }}</small>
-<table>
+    <small>piece</small>
+    <table>
     {% for item in items %}
         <tr><td>
-            <a href="/album/{{ item.1 }}">{{ item.0 }}</a>
+            <a href="{{ item.1 }}">{{ item.0 }}</a>
         </td></tr>
     {% endfor %}
-</table>
+    </table>
 {% endblock %}
