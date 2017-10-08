@@ -4,14 +4,12 @@
 'use strict';
 // console.log('hello piece!');
 
-function play(file, csrf_token) {
-    // console.log(file);
-    var url = 'http://dev.movies13/?post=open_program';
-    url = '/ajax/';
+function ajaxPost(cmd, arg) {
+    const url = '/ajax/';
     console.log(url);
     const data = {
-        program: encodeURI('media center 21'),
-        args: encodeURI(file)
+        arg: arg,
+        cmd: cmd
     };
     const headers = {
         'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
@@ -27,4 +25,14 @@ function play(file, csrf_token) {
     }).fail(function(err) {
         console.log(err);
     });
+}
+
+function openfinder(albumId) {
+    console.log(albumId);
+    ajaxPost('openfinder', albumId);
+}
+
+function play(file, csrf_token) {
+    // var url = 'http://dev.movies13/?post=open_program';
+    ajaxPost('play', encodeURI(file))
 }

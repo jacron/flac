@@ -12,7 +12,8 @@ cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/Sonatas - Bel
 flac_path = cue_path + "/*.flac"
 # output_path = "output/scarlatti/"
 k_split = "- K"
-pianist = "Belder"
+artiest = "Belder"
+instrument = "Clavecimbel"
 rows = []
 # let op: het pad naar de database moet relatief zijn, omdat dit script stand alone uitgevoerd wordt!
 db_file = '../db.sqlite3'
@@ -27,7 +28,7 @@ def process_file(filepath):
     knr = k.split()[0]
     rows.append({
         "knr": knr,
-        "link_name": pianist + " " + nr,
+        "link_name": artiest + " " + nr,
         "link_href": "file://" + filepath,
     })
 
@@ -107,8 +108,8 @@ def main():
     album_title = w[-1]
     componist = w[-2]
 
-    print(album_title, componist, pianist)
-    performer_id = insert_performer(pianist, c, conn)
+    print(album_title, componist, artiest)
+    performer_id = insert_performer(artiest, c, conn)
     componist_id = insert_componist(componist, c, conn)
     album_id = insert_album(album_title, performer_id[0], componist_id[0], c, conn)
 

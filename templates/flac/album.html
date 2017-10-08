@@ -1,6 +1,9 @@
 {% extends "flac/base.html" %}
 {%  load static %}
 {% block page %}
+    <div class="hyperlink">
+    <a onclick="openfinder('{{ album.1 }}')">open finder</a>
+    </div>
     <img src="/albumimage/{{ album.1 }}/" class="album-image">
     <h1>{{ album.0 }}</h1>
 <table>

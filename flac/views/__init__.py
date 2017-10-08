@@ -4,3 +4,5 @@ from home import *
 from ajax import *
 from performer import *
 from albumimage import *
+from componist import *
+from instrument import *

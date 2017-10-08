@@ -9,11 +9,11 @@ def connect():
     return conn, c
 
 
-def get_image(path):
+def directory(path):
     p = path.decode('utf-8')
     w = p.split('/')[:-1]
     image_path = '/'.join(w)
-    return image_path + '/folder.jpg'
+    return image_path
 
 
 def albumimage(request, id):
@@ -26,7 +26,7 @@ def albumimage(request, id):
     '''
     items = [item for item in c.execute(sql, id).fetchall()]
     conn.close()
-    image_path = get_image(item[1])
+    image_path = directory(item[1]) + '/folder.jpg'
     upath = image_path.encode('utf-8')[len('file://'):]
 
     image_data = open(upath, "rb").read()
