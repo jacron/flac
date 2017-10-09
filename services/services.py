@@ -14,4 +14,11 @@ def directory(path):
     return image_path
 
 
+def dirname(file):
+    return '/'.join(file.split('/')[:-2])
+
+
+def filename(file):
+    return file.split('/')[-1]
+
 

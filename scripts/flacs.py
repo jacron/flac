@@ -2,21 +2,26 @@
 
 """
 import glob
+import os
 import sqlite3
+from venv.flac.services import dirname, filename
 
 cuesheet_extension = '.cue'
+flac_wild = "/*.flac"
 #           /Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/Sonatas - John Browning - piano
 # cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/Sonatas - Pierre Hantai - clavecimbel/Sonatas I"
 # cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/Sonatas - Horowitz  - piano"
 cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/Sonatas - Belder/Disc 1of3"
-flac_path = cue_path + "/*.flac"
+flac_path = cue_path + flac_wild
 # output_path = "output/scarlatti/"
 k_split = "- K"
 artiest = "Belder"
 instrument = "Clavecimbel"
 rows = []
 # let op: het pad naar de database moet relatief zijn, omdat dit script stand alone uitgevoerd wordt!
-db_file = '../db.sqlite3'
+db_file = '../../db.sqlite3'
+combine_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten clavecimbel/Sonatas - Belder/"
+combine_part = ["Disc 1of3", "Disc 2of3", "Disc 3of3",]
 
 
 def process_file(filepath):
@@ -101,7 +106,7 @@ def insert_performer(name, c, conn):
     return c.execute(sql, (name,)).fetchone()
 
 
-def main():
+def store_pieces():
     conn = sqlite3.connect(db_file)
     c = conn.cursor()
     w = cue_path.split('/')
@@ -118,6 +123,29 @@ def main():
         store_row_in_db(row['link_href'], row['knr'], album_id[0], c, conn)
     conn.close()
 
+
+def combine_file(file, nr):
+    target = dirname(file) + '/' + nr + filename(file)
+    print(file)
+    print(target)
+    # os.rename(file, target)
+
+
+def combine():
+    nr = '1'
+    [combine_file(f, nr) for f in glob.iglob(combine_path + flac_wild)]
+    # for album in combine_part:
+    #     # print(album)
+    #     nr = album.split()[1][0]
+    #     # print(nr)
+    #     p = combine_path + album + flac_wild
+    #     print(p)
+    #     [combine_file(f, nr) for f in glob.iglob(p)]
+
+
+def main():
+    # store_pieces()
+    combine()
 
 if __name__ == '__main__':
     main()

@@ -1,0 +1,5 @@
+CREATE TABLE Instrument
+(
+    ID INT PRIMARY KEY,
+    NAME TEXT
+)

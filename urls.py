@@ -20,7 +20,7 @@ from . import views
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
     url(r'^home/$', views.home),
-    url(r'^album/(?P<id>.+)/$', views.album),
+    url(r'^album/(?P<album_id>.+)/$', views.album),
     url(r'^performer/(?P<id>.+)/$', views.performer),
     url(r'^componist/(?P<id>.+)/$', views.componist),
     url(r'^instrument/(?P<id>.+)/$', views.instrument),

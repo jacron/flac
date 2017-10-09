@@ -1,30 +1,13 @@
-import sqlite3
 import os
 
 from django.http import HttpResponse
-
-# from . import services
-# import venv.flac.services
-# from venv.flac import services
+from .. import services
 
 player = '/Applications/Media Center 21.app'
 
 
-def directory(path):
-    p = path.decode('utf-8')
-    w = p.split('/')[:-1]
-    image_path = '/'.join(w)
-    return image_path
-
-
-def connect():
-    conn = sqlite3.connect('db.sqlite3')
-    c = conn.cursor()
-    return conn, c
-
-
-def getAlbum(albumId):
-    conn, c = connect()
+def get_album(albumId):
+    conn, c = services.connect()
     sql = '''
       SELECT Name, File, ID FROM Piece 
       WHERE AlbumID=?
@@ -44,8 +27,8 @@ def ajax(request):
             uargs = args.encode('utf-8')
             os.system('open -a "{}" "{}"'.format(player, uargs))
         if cmd == 'openfinder':
-            item = getAlbum(request.POST['arg'])
-            path = directory(item[1])
+            item = get_album(request.POST['arg'])
+            path = services.directory(item[1])
             os.system('open "' + path + '"')
     else:
         msg = 'Dit is geen POST request'
