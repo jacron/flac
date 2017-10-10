@@ -1,6 +1,6 @@
 CREATE TABLE Componist
 (
-    ID INTEGER PRIMARY KEY,
+    ID INTEGER PRIMARY KEY ,
     FirstName TEXT,
     LastName TEXT,
     Born INT,
