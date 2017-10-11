@@ -84,27 +84,44 @@ def get_componist_albums(id_componist):
 
 def get_instrument(id_instrument):
     sql = '''
-    SELECT * from Instrument WHERE ID=?
+    SELECT Name from Instrument WHERE ID=?
     '''
     return get_item_with_id(sql, id_instrument)
 
 
 def get_componist(id_componist):
     sql = '''
-    SELECT * from Componist WHERE ID=?
+    SELECT FirstName, LastName, Birth, Death from Componist WHERE ID=?
     '''
-    return get_item_with_id(sql, id_componist)
+    fields = get_item_with_id(sql, id_componist)
+    return {
+        "FirstName": fields[0],
+        "LastName": fields[1],
+        "Birth": fields[2],
+        "Death": fields[3]
+    }
 
 
 def get_performer(id_performer):
     sql = '''
-    SELECT * from Performer WHERE ID=?
+    SELECT FirstName, LastName, Birth, Death from Performer WHERE ID=?
     '''
-    return get_item_with_id(sql, id_performer)
+    fields = get_item_with_id(sql, id_performer)
+    return {
+        "FirstName": fields[0],
+        "LastName": fields[1],
+        "Birth": fields[2],
+        "Death": fields[3]
+    }
 
 
 def get_album(id_album):
     sql = '''
-    SELECT * from Album WHERE ID=?
+    SELECT Title, Label, ID from Album WHERE ID=?
     '''
-    return get_item_with_id(sql, id_album)
+    fields = get_item_with_id(sql, id_album)
+    return {
+        "Title": fields[0],
+        "Label": fields[1],
+        "ID": fields[2],
+    }

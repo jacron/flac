@@ -11,13 +11,14 @@ CREATE TABLE Instrument
     ID INTEGER PRIMARY KEY,
     Name TEXT
 );
+CREATE UNIQUE INDEX Instrument_Name_uindex ON Instrument(Name);
 
 CREATE TABLE Componist
 (
     ID INTEGER PRIMARY KEY ,
     FirstName TEXT,
     LastName TEXT,
-    Born INT,
+    Birth INT,
     Death INT
 );
 CREATE UNIQUE INDEX Componist__FirstName_LastName_uindex ON Componist (FirstName, LastName);
@@ -38,6 +39,7 @@ CREATE TABLE Collection
     Name TEXT,
     Label TEXT
 );
+CREATE UNIQUE INDEX Collection_Name_Label_uindex ON Collection(Name, Label);
 
 CREATE TABLE Album
 (
@@ -55,7 +57,7 @@ CREATE TABLE Album
     FOREIGN KEY (PerformerID) REFERENCES Performer (ID),
     FOREIGN KEY (CollectionID) REFERENCES Collection(ID)
 );
-CREATE UNIQUE INDEX Album_ComponistID_Title_uindex ON Album (Title, ComponistID);;
+CREATE UNIQUE INDEX Album_ComponistID_Title_uindex ON Album (Title, ComponistID);
 
 CREATE TABLE Piece
 (

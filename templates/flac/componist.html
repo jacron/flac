@@ -1,5 +1,7 @@
 {% extends "flac/base.html" %}
 {% block page %}
+<h2>{{ componist.FirstName }} {{ componist.LastName }}</h2>
+<h4>{{ componist.Birth }} - {%  if componist.Death %}{{ componist.Death }}{% endif %}</h4>
 <table>
     {% for item in items %}
         <tr><td>

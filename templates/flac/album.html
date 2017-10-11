@@ -2,10 +2,10 @@
 {%  load static %}
 {% block page %}
     <div class="hyperlink">
-    <a onclick="openfinder('{{ album.1 }}')">open finder</a>
+    <a onclick="openfinder('{{ album.ID }}')">open finder</a>
     </div>
-    <img src="/albumimage/{{ album.1 }}/" class="album-image">
-    <h1>{{ album.0 }}</h1>
+    <img src="/albumimage/{{ album.ID }}/" class="album-image">
+    <h1>{{ album.Title }}</h1>
 <table>
 <form>{% csrf_token %}</form>
 {% for item in items %}
