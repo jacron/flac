@@ -22,3 +22,27 @@ def filename(file):
     return file.split('/')[-1]
 
 
+def splits_comma_naam(naam):
+    c_namen = naam.split(',')
+    if len(c_namen) > 1:
+        c_firstname = c_namen[1]
+        c_lastname = c_namen[0]
+    else:
+        c_firstname = ''
+        c_lastname = naam
+    return c_firstname, c_lastname
+
+
+def splits_naam(naam):
+    if len(naam.split(',')) > 1:
+        return splits_comma_naam(naam)
+    c_namen = naam.split()
+    if len(c_namen) > 1:
+        c_firstname = c_namen[0]
+        c_lastname = c_namen[1]
+    else:
+        c_firstname = ''
+        c_lastname = naam
+    return c_firstname, c_lastname
+
+

@@ -1,8 +1,6 @@
-import sqlite3
-
 from django.http import HttpResponse
 from django.template import loader
-from ..db import get_albums, get_componisten
+from ..db import get_albums, get_componisten, get_performers
 
 
 def home(request):
@@ -11,4 +9,5 @@ def home(request):
         {
             'albums': get_albums(),
             'componisten': get_componisten(),
+            'performers': get_performers(),
          }, request))

@@ -4,7 +4,6 @@
 import glob
 import sqlite3
 # importing for stand alone script
-from venv.flac.services import dirname, filename
 from venv.flac.db import (insert_album, insert_componist, insert_performer, insert_instrument, insert_piece)
 
 cuesheet_extension = '.cue'
@@ -60,39 +59,16 @@ def store_pieces():
         componist_id=componist_id[0],
         c=c,
         conn=conn)
-
     print(flac_path)
-    # albums = [item for item in c.execute(sql).fetchall()]
     [process_file(f) for f in glob.iglob(flac_path)]
     for nr, row in enumerate(rows):
         insert_piece(row['link_href'], row['knr'], album_id[0], c, conn)
     conn.close()
 
-# "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten piano/Sonatas - Horowitz - piano/*.flac"
-#  /Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten piano/Sonatas - Horowitz  - piano
-def combine_file(filepath, nr):
-    target = dirname(filepath) + '/' + nr + filename(filepath)
-    print(filepath)
-    print(target)
-    # os.rename(file, target)
-
-
-def combine():
-    pass
-    # nr = '1'
-    # [combine_file(f, nr) for f in glob.iglob(combine_path + flac_wild)]
-    # for album in combine_part:
-    #     # print(album)
-    #     nr = album.split()[1][0]
-    #     # print(nr)
-    #     p = combine_path + album + flac_wild
-    #     print(p)
-    #     [combine_file(f, nr) for f in glob.iglob(p)]
-
 
 def main():
     store_pieces()
-    # combine()
+
 
 if __name__ == '__main__':
     main()

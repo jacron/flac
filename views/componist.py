@@ -1,34 +1,20 @@
-import sqlite3
-
 from django.http import HttpResponse
 from django.template import loader
+from ..db import get_componist_albums, get_componisten, get_componist
 
 
-def connect():
-    conn = sqlite3.connect('db.sqlite3')
-    c = conn.cursor()
-    return conn, c
-
-
-def componist(request, id):
-    conn, c = connect()
-    template = loader.get_template('flac/album.html')
-
-    sql = '''
-      SELECT Name, ID from Instrument WHERE ID=?
-    '''
-    name = c.execute(sql, id).fetchone()
-
-    sql = '''
-      SELECT Title, ID from Album 
-      WHERE InstrumentID=?
-      ORDER BY Title
-    '''
-    items = [item for item in c.execute(sql, id).fetchall()]
-    conn.close()
-
+def componist(request, componist_id):
+    template = loader.get_template('flac/componist.html')
     context = {
-        'items': items,
-        'instrument': name,
+        'items': get_componist_albums(componist_id),
+        'componist': get_componist(componist_id),
+    }
+    return HttpResponse(template.render(context, request))
+
+
+def componisten(request):
+    template = loader.get_template('flac/componisten.html')
+    context = {
+        'items': get_componisten(),
     }
     return HttpResponse(template.render(context, request))

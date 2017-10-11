@@ -1,25 +1,18 @@
-import sqlite3
-
 from django.http import HttpResponse
 from django.template import loader
+from ..db import get_performers, get_performer_albums
 
 
-def connect():
-    conn = sqlite3.connect('db.sqlite3')
-    c = conn.cursor()
-    return conn, c
-
-
-def performer(request, id):
-    conn, c = connect()
+def performer(request, performer_id):
     template = loader.get_template('flac/performer.html')
-    sql = '''
-      SELECT FirstName, LastName, ID from Performer
-    '''
-    items = [item for item in c.execute(sql).fetchall()]
-    conn.close()
+    items = get_performer_albums(performer_id)
     context = {
         'items': items,
     }
     return HttpResponse(template.render(context, request))
 
+
+def performers(request):
+    template = loader.get_template('flac/performers.html')
+    context = {'performers': get_performers()}
+    return HttpResponse(template.render(context, request))

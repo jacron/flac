@@ -1,34 +1,18 @@
-import sqlite3
-
 from django.http import HttpResponse
 from django.template import loader
+from ..db import get_instrument, get_instrument_albums, get_instruments
 
 
-def connect():
-    conn = sqlite3.connect('db.sqlite3')
-    c = conn.cursor()
-    return conn, c
-
-
-def instrument(request, id):
-    conn, c = connect()
-    template = loader.get_template('flac/album.html')
-
-    sql = '''
-      SELECT Name, ID from Instrument WHERE ID=?
-    '''
-    name = c.execute(sql, id).fetchone()
-
-    sql = '''
-      SELECT Title, ID from Album 
-      WHERE InstrumentID=?
-      ORDER BY Title
-    '''
-    items = [item for item in c.execute(sql, id).fetchall()]
-    conn.close()
-
+def instrument(request, instrument_id):
+    template = loader.get_template('flac/instrument.html')
     context = {
-        'items': items,
-        'instrument': name,
+        'items': get_instrument_albums(instrument_id),
+        'instrument': get_instrument(instrument_id),
     }
+    return HttpResponse(template.render(context, request))
+
+
+def instrumenten(request):
+    context = {'items': get_instruments()}
+    template = loader.get_template('flac/instrumenten.html')
     return HttpResponse(template.render(context, request))

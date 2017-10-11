@@ -14,17 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-# from django.contrib import admin
 from . import views
 
 urlpatterns = [
-    # url(r'^admin/', admin.site.urls),
     url(r'^home/$', views.home),
-    # url(r'^/$', views.home),
     url(r'^album/(?P<album_id>.+)/$', views.album),
-    url(r'^performer/(?P<id>.+)/$', views.performer),
-    url(r'^componist/(?P<id>.+)/$', views.componist),
-    url(r'^instrument/(?P<id>.+)/$', views.instrument),
+    url(r'^album/$', views.albums),
+    url(r'^performer/(?P<performer_id>.+)/$', views.performer),
+    url(r'^performer/$', views.performers),
+    url(r'^componist/(?P<componist_id>.+)/$', views.componist),
+    url(r'^componist/$', views.componisten),
+    url(r'^instrument/(?P<instrument_id>.+)/$', views.instrument),
+    url(r'^instrument/$', views.instrumenten),
     url(r'^ajax/$', views.ajax),
     url(r'^albumimage/(?P<id>.+)/$', views.albumimage),
 ]

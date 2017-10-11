@@ -32,19 +32,28 @@ CREATE TABLE Performer
 );
 CREATE UNIQUE INDEX Performer_FirstName_LastName_uindex ON Performer (FirstName, LastName);
 
+CREATE TABLE Collection
+(
+    ID INTEGER PRIMARY KEY,
+    Name TEXT,
+    Label TEXT
+);
+
 CREATE TABLE Album
 (
     ID INTEGER PRIMARY KEY ,
     ComponistID INTEGER,
     PerformerID INTEGER,
     InstrumentID INTEGER,
+    CollectionID INTEGER,
     Title TEXT,
     Label TEXT,
     Path TEXT,
     DiskID TEXT,
     FOREIGN KEY (InstrumentID) REFERENCES Instrument(ID),
     FOREIGN KEY (ComponistID) REFERENCES Componist (ID),
-    FOREIGN KEY (PerformerID) REFERENCES Performer (ID)
+    FOREIGN KEY (PerformerID) REFERENCES Performer (ID),
+    FOREIGN KEY (CollectionID) REFERENCES Collection(ID)
 );
 CREATE UNIQUE INDEX Album_ComponistID_Title_uindex ON Album (Title, ComponistID);;
 

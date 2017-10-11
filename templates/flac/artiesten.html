@@ -1,9 +1,10 @@
 {% extends "flac/base.html" %}
 {% block page %}
-<table>
+    <h4>Kies een artiest</h4>
+<table class="table">
     {% for item in items %}
         <tr><td>
-            <a href="/album/{{ item.1 }}">{{ item.0 }}</a>
+            <a href="/artiest/{{ item.1 }}">{{ item.0 }}</a>
         </td></tr>
     {% endfor %}
 </table>

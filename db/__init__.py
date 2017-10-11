@@ -1,3 +1,3 @@
 from album import *
-from db import *
+from insert import *
 from fetch import *
