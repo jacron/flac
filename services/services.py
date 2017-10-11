@@ -1,12 +1,3 @@
-import sqlite3
-
-
-def connect():
-    conn = sqlite3.connect('db.sqlite3')
-    c = conn.cursor()
-    return conn, c
-
-
 def directory(path):
     # path = path.decode('utf-8')
     w = path.split('/')[:-1]

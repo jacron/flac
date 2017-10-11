@@ -1,4 +1,4 @@
-from ..services import connect
+from .connect import connect
 
 
 def get_items_with_id(sql, id):

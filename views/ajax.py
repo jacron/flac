@@ -1,21 +1,17 @@
 import os
-
 from django.http import HttpResponse
-from .. import services
 from ..db import get_album
-
-player = '/Applications/Media Center 21.app'
+from django.conf import settings
 
 
 def play(args):
     uargs = args.encode('utf-8')
-    os.system('open -a "{}" "{}"'.format(player, uargs))
+    os.system('open -a "{}" "{}"'.format(settings.MEDIA_PLAYER, uargs))
 
 
 def openfinder(args):
     album = get_album(args)
-    path = services.directory(album['Path'])
-    os.system('open "' + path + '"')
+    os.system('open "' + album['Path'] + '"')
 
 
 def ajax(request):

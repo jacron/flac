@@ -22,7 +22,7 @@ rows = []
 
 
 def script_connect():
-    # let op: het pad naar de database moet relatief zijn, omdat dit script stand alone uitgevoerd wordt!
+    # let op: het pad naar de database moet hier relatief zijn, omdat dit script stand alone uitgevoerd wordt!
     conn = sqlite3.connect('../../db.sqlite3')
     c = conn.cursor()
     return conn, c
