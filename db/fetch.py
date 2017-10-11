@@ -117,11 +117,12 @@ def get_performer(id_performer):
 
 def get_album(id_album):
     sql = '''
-    SELECT Title, Label, ID from Album WHERE ID=?
+    SELECT Title, Label, Path, ID from Album WHERE ID=?
     '''
     fields = get_item_with_id(sql, id_album)
     return {
         "Title": fields[0],
         "Label": fields[1],
-        "ID": fields[2],
+        "Path": fields[2],
+        "ID": fields[3],
     }

@@ -8,8 +8,8 @@ def connect():
 
 
 def directory(path):
-    p = path.decode('utf-8')
-    w = p.split('/')[:-1]
+    # path = path.decode('utf-8')
+    w = path.split('/')[:-1]
     image_path = '/'.join(w)
     return image_path
 

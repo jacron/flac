@@ -10,11 +10,11 @@ cuesheet_extension = '.cue'
 flac_wild = "/*.flac"
 # cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten piano/Sonatas - John Browning - piano"
 # cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten piano/Sonatas - Horowitz - piano"
-cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten piano/sonatas scarlatti - schiff"
-
+# cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten piano/sonatas scarlatti - schiff"
+cue_path = '/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten piano/sonatas scarlatti - weissenberg'
 flac_path = cue_path + flac_wild
-k_split = " K."
-artiest = "Andres Schiff"
+k_split = " K"
+artiest = "Alexis Weissenberg"
 instrument = "Piano"
 rows = []
 # combine_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten clavecimbel/Sonatas - Belder/"

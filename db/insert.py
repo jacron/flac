@@ -34,6 +34,7 @@ def insert_componist(componist, c, conn):
 
 
 def insert_piece(filepath, code, album_id, c, conn):
+    filepath = filepath.decode('utf-8')
     ffilename = filepath.split('/')[-1]
     filenamesec = ffilename.split('.')[-2]
     sql = '''

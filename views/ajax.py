@@ -2,20 +2,20 @@ import os
 
 from django.http import HttpResponse
 from .. import services
+from ..db import get_album
 
 player = '/Applications/Media Center 21.app'
 
 
-def get_album(albumId):
-    conn, c = services.connect()
-    sql = '''
-      SELECT Name, File, ID FROM Piece 
-      WHERE AlbumID=?
-      ORDER BY Name
-    '''
-    items = [item for item in c.execute(sql, albumId).fetchall()]
-    conn.close()
-    return item
+def play(args):
+    uargs = args.encode('utf-8')
+    os.system('open -a "{}" "{}"'.format(player, uargs))
+
+
+def openfinder(args):
+    album = get_album(args)
+    path = services.directory(album['Path'])
+    os.system('open "' + path + '"')
 
 
 def ajax(request):
@@ -23,15 +23,10 @@ def ajax(request):
         cmd = request.POST['cmd']
         msg = 'Uitgevoerd cmd: ' + cmd
         if cmd == 'play':
-            args = request.POST['arg']
-            uargs = args.encode('utf-8')
-            os.system('open -a "{}" "{}"'.format(player, uargs))
+            play(request.POST['arg'])
         if cmd == 'openfinder':
-            item = get_album(request.POST['arg'])
-            path = services.directory(item[1])
-            os.system('open "' + path + '"')
+            openfinder(request.POST['arg'])
     else:
         msg = 'Dit is geen POST request'
     print(msg)
     return HttpResponse(msg)
-
