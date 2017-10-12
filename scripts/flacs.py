@@ -36,7 +36,7 @@ k_split = None
 # artiest = "Vladimir Horowitz"
 # artiest = "Andres Schiff"
 artiest = ""
-componist = "Alfred Schnittke"
+componist = u"Schönberg"
 # instrument = "Piano"
 rows = []
 
@@ -56,7 +56,7 @@ def process_file(filepath):
     if k_split:
         k = ffilename.split(k_split)[1]
         knr = k.split()[0]
-    filepath = ffilename.decode('utf-8')
+    # filepath = ffilename.decode('utf-8')
     ffilename = filepath.split('/')[-1]
     ffilename = ffilename.replace("_", " ")
     rows.append({
@@ -88,7 +88,7 @@ def store_pieces():
         [process_file(f) for f in glob.iglob(files_path)]
         for nr, row in enumerate(rows):
             insert_piece(
-                name=row['name'].encode('utf-8'),
+                name=row['name'],  # .encode('utf-8'),
                 code=row['knr'],
                 album_id=album_id[0],
                 c=c,

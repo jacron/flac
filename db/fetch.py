@@ -97,7 +97,7 @@ def get_componist(id_componist):
     return {
         "FirstName": fields[0],
         "LastName": fields[1],
-        "FullName": '{} {}'.format(fields[0], fields[1]),
+        "FullName": u'{} {}'.format(fields[0], fields[1]),
         "Birth": fields[2],
         "Death": fields[3]
     }
@@ -114,7 +114,7 @@ def get_performer(id_performer):
     return {
         "FirstName": fields[0],
         "LastName": fields[1],
-        "FullName": '{} {}'.format(fields[0], fields[1]),
+        "FullName": u'{} {}'.format(fields[0], fields[1]),
         "Birth": fields[2],
         "Death": fields[3]
     }

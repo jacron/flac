@@ -26,12 +26,12 @@ def insert_componist(componist, c, conn):
     (FirstName, LastName) 
     VALUES (?,?)
     '''
-    c.execute(sql, (c_firstname[0], c_lastname[0]))
+    c.execute(sql, (c_firstname, c_lastname))
     conn.commit()
     sql = '''
     SELECT ID from Componist WHERE FirstName=? AND LastName=?
     '''
-    return c.execute(sql, (c_firstname[0], c_lastname[0])).fetchone()
+    return c.execute(sql, (c_firstname, c_lastname)).fetchone()
 
 
 def insert_piece(name, code, album_id, c, conn):
@@ -64,11 +64,11 @@ def insert_performer(name, c, conn):
     (FirstName,LastName) 
     VALUES (?,?)
     '''
-    c.execute(sql, (c_firstname[0], c_lastname[0]))
+    c.execute(sql, (c_firstname, c_lastname))
     conn.commit()
     sql = '''
     SELECT ID from Performer WHERE FirstName=? AND LastName=?
     '''
-    return c.execute(sql, (c_firstname[0], c_lastname[0],)).fetchone()
+    return c.execute(sql, (c_firstname, c_lastname,)).fetchone()
 
 
