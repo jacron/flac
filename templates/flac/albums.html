@@ -3,7 +3,7 @@
     <h4>Kies een album</h4>
 <table class="table">
     {% for item in albums %}
-        <tr><td>
+        <tr><td class="hyperlink">
             <a href="/album/{{ item.1 }}">{{ item.0 }}</a>
         </td></tr>
     {% endfor %}

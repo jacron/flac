@@ -3,7 +3,7 @@
     <h4>Kies een instrument</h4>
 <table class="table">
     {% for item in items %}
-        <tr><td>
+        <tr><td class="hyperlink">
             <a href="/instrument/{{ item.1 }}">{{ item.0 }}</a>
         </td></tr>
     {% endfor %}

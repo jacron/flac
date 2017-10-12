@@ -27,6 +27,7 @@ cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Schnittke/schnittke_sympho
 cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Schnittke/The Alfred Schnittke Edition"
 cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Schnittke/Alfred Schnittke - The Ten Symphonies (6 CD box set, FLAC)"
 cue_path = u"/Volumes/Media/Audio/Klassiek/Componisten/Schönberg/Gurrelieder (Rattle BPO)"
+cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Schubert/96k Schubert - Alfred Brendel, Evelyne Crochet"
 # files_path = cue_path + cue_wild
 # files_path = cue_path + flac_wild
 k_split = None
@@ -37,6 +38,7 @@ k_split = None
 # artiest = "Andres Schiff"
 artiest = ""
 componist = u"Schönberg"
+componist = "Franz Schubert"
 # instrument = "Piano"
 rows = []
 

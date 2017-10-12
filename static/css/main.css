@@ -3,9 +3,8 @@ body  {
   font-family: 'Open Sans', 'Helvetica Nueue', Helvetica, Arial, sans-serif;
   font-size: 1rem;
   font-weight: 100;
-  line-height: 160%;
   color: #555459;
-  line-height: 1.5rem;
+  line-height: 1.4rem;
   *zoom: 1;
 }
 body {
@@ -19,9 +18,10 @@ body {
 }
 .hyperlink a{
     color: #447e9b;
+    text-decoration: none;
 }
 .album-image {
-    height: 160px;
+    height: 220px;
 }
 nav {
     background-color: rgba(21,21,100,.90);

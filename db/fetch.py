@@ -23,6 +23,7 @@ def get_item_with_id(sql, id):
 def get_albums():
     sql = '''
       SELECT Title, ID from Album
+      ORDER BY Title COLLATE NOCASE
     '''
     return get_items(sql)
 
@@ -40,6 +41,7 @@ def get_pieces(album_id):
 def get_componisten():
     sql = '''
       SELECT FirstName, LastName, ID from Componist
+      ORDER BY LastName
     '''
     return get_items(sql)
 
@@ -47,6 +49,7 @@ def get_componisten():
 def get_performers():
     sql = '''
       SELECT FirstName, LastName, ID from Performer
+      ORDER BY LastName
     '''
     return get_items(sql)
 
@@ -91,7 +94,7 @@ def get_instrument(id_instrument):
 
 def get_componist(id_componist):
     sql = '''
-    SELECT FirstName, LastName, Birth, Death from Componist WHERE ID=?
+    SELECT FirstName, LastName, Birth, Death, ID from Componist WHERE ID=?
     '''
     fields = get_item_with_id(sql, id_componist)
     return {
@@ -99,7 +102,8 @@ def get_componist(id_componist):
         "LastName": fields[1],
         "FullName": u'{} {}'.format(fields[0], fields[1]),
         "Birth": fields[2],
-        "Death": fields[3]
+        "Death": fields[3],
+        "ID": fields[4],
     }
 
 
@@ -108,7 +112,7 @@ def get_performer(id_performer):
         return {}
     # print(id_performer)
     sql = '''
-    SELECT FirstName, LastName, Birth, Death from Performer WHERE ID=?
+    SELECT FirstName, LastName, Birth, Death, ID from Performer WHERE ID=?
     '''
     fields = get_item_with_id(sql, id_performer)
     return {
@@ -116,7 +120,8 @@ def get_performer(id_performer):
         "LastName": fields[1],
         "FullName": u'{} {}'.format(fields[0], fields[1]),
         "Birth": fields[2],
-        "Death": fields[3]
+        "Death": fields[3],
+        "ID": fields[4],
     }
 
 
