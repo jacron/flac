@@ -1,0 +1,13 @@
+<div class="navbar">
+<ul>
+{% for item in menu %}
+    <li class="{% if menu_active == item.href %}active{% endif %}">
+    {% if menu_active == item.href %}
+    {{ item.label }}
+    {% else %}
+        <a href="{{ item.href }}">{{ item.label }}</a>
+    {% endif %}
+    </li>
+{% endfor %}
+</ul>
+</div>

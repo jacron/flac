@@ -18,6 +18,10 @@ body {
     float: left;
     margin: 4px;
 }
+.navbar li.active {
+    color: #fff;
+    background: blue;
+}
 .navbar a {
     text-decoration: none;
     color: #fff;
@@ -30,4 +34,7 @@ body {
     padding: 4px;
     margin: 0 0 8px 0;
     font-size: 18px;
+}
+.active {
+
 }

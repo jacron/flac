@@ -37,3 +37,21 @@ def splits_naam(naam):
     return c_firstname, c_lastname
 
 
+def menu_items():
+    return [
+            {'href': '/home',
+             'label': 'Home',
+             },
+            {'href': '/componist',
+             'label': 'Componist',
+             },
+            {'href': '/performer',
+             'label': 'Artiest',
+             },
+            {'href': '/instrument',
+             'label': 'Instrument',
+             },
+            {'href': '/album',
+             'label': 'Album',
+             },
+        ]

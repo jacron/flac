@@ -1,5 +1,9 @@
 {% extends "flac/base.html" %}
 {%  load static %}
+{%  load page_tags %}
+{% block navigation %}
+    {% navbar menu %}
+{% endblock %}
 {% block page %}
     <div class="hyperlink">
     <a onclick="openfinder('{{ album.ID }}')">open finder</a>
