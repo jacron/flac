@@ -1,12 +1,16 @@
 import os
 from django.http import HttpResponse
-from ..db import get_album
+from ..db import get_album, get_piece
 from django.conf import settings
 
 
 def play(args):
-    uargs = args.encode('utf-8')
-    os.system('open -a "{}" "{}"'.format(settings.MEDIA_PLAYER, uargs))
+    piece = get_piece(args)
+    album = get_album(piece['AlbumID'])
+    # path = album['Path'] + '/' + piece['Name'] + piece['Extension']
+    # print(path)
+    os.system('open -a "{}" "{}"'.format(settings.MEDIA_PLAYER,
+                                         "{}/{}".format(album['Path'], piece['Name'])))
 
 
 def openfinder(args):
@@ -17,11 +21,13 @@ def openfinder(args):
 def ajax(request):
     if request.POST:
         cmd = request.POST['cmd']
+        arg = request.POST['arg']
+        print(arg)
         msg = 'Uitgevoerd cmd: ' + cmd
         if cmd == 'play':
-            play(request.POST['arg'])
+            play(arg)
         if cmd == 'openfinder':
-            openfinder(request.POST['arg'])
+            openfinder(arg)
     else:
         msg = 'Dit is geen POST request'
     print(msg)

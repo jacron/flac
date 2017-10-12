@@ -32,7 +32,7 @@ function openfinder(albumId) {
     ajaxPost('openfinder', albumId);
 }
 
-function play(file, csrf_token) {
+function play(idPiece, idAlbum) {
     // var url = 'http://dev.movies13/?post=open_program';
-    ajaxPost('play', encodeURI(file))
+    ajaxPost('play', idPiece);
 }

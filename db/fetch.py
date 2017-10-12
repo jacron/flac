@@ -3,7 +3,7 @@ from .connect import connect
 
 def get_items_with_id(sql, id):
     conn, c = connect()
-    items = [item for item in c.execute(sql, id).fetchall()]
+    items = [item for item in c.execute(sql, (id,)).fetchall()]
     conn.close()
     return items
 
@@ -17,7 +17,7 @@ def get_items(sql):
 
 def get_item_with_id(sql, id):
     conn, c = connect()
-    return c.execute(sql, id).fetchone()
+    return c.execute(sql, (id,)).fetchone()
 
 
 def get_albums():
@@ -97,12 +97,16 @@ def get_componist(id_componist):
     return {
         "FirstName": fields[0],
         "LastName": fields[1],
+        "FullName": '{} {}'.format(fields[0], fields[1]),
         "Birth": fields[2],
         "Death": fields[3]
     }
 
 
 def get_performer(id_performer):
+    if not id_performer:
+        return {}
+    # print(id_performer)
     sql = '''
     SELECT FirstName, LastName, Birth, Death from Performer WHERE ID=?
     '''
@@ -110,6 +114,7 @@ def get_performer(id_performer):
     return {
         "FirstName": fields[0],
         "LastName": fields[1],
+        "FullName": '{} {}'.format(fields[0], fields[1]),
         "Birth": fields[2],
         "Death": fields[3]
     }
@@ -117,12 +122,27 @@ def get_performer(id_performer):
 
 def get_album(id_album):
     sql = '''
-    SELECT Title, Label, Path, ID from Album WHERE ID=?
+    SELECT Title, Label, Path, ComponistID, PerformerID, ID from Album WHERE ID=?
     '''
     fields = get_item_with_id(sql, id_album)
     return {
         "Title": fields[0],
         "Label": fields[1],
         "Path": fields[2],
+        "ComponistID": fields[3],
+        "PerformerID": fields[4],
+        "ID": fields[5],
+    }
+
+
+def get_piece(id_piece):
+    sql = '''
+    SELECT Name, File, AlbumID, ID from Piece WHERE ID=?
+    '''
+    fields = get_item_with_id(sql, id_piece)
+    return {
+        "Name": fields[0],
+        "File": fields[1],
+        "AlbumID": fields[2],
         "ID": fields[3],
     }

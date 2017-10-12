@@ -24,7 +24,7 @@ body {
     height: 160px;
 }
 nav {
-    background-color: rgba(21,21,23,.95);
+    background-color: rgba(21,21,100,.90);
     color: #212124;
 }
 nav a {
@@ -38,6 +38,6 @@ nav a:not(.selected):hover {
     background-color: blue;
     cursor: pointer;
 }
-.selected {
-    box-shadow: inset 0 -8px 0 0 #588;
+nav a.selected {
+    box-shadow: inset 0 -8px 0 0 #558;
 }

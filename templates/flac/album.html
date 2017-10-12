@@ -7,11 +7,13 @@
     </div>
     <img src="/albumimage/{{ album.ID }}/" class="album-image">
     <h1>{{ album.Title }}</h1>
+    <h2>{{ performer.FullName }}</h2>
+    <h3>{{ componist.FullName }}</h3>
 <table>
 <form>{% csrf_token %}</form>
 {% for item in items %}
     <tr><td class="hyperlink">
-        <a onclick="play('{{ item.1 }}')">{{ item.0 }}</a>
+        <a onclick="play({{ item.2 }})">{{ item.0 }}</a>
     </td></tr>
 {% endfor %}
 </table>

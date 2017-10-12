@@ -33,15 +33,12 @@ def insert_componist(componist, c, conn):
     return c.execute(sql, (c_firstname, c_lastname)).fetchone()
 
 
-def insert_piece(filepath, code, album_id, c, conn):
-    filepath = filepath.decode('utf-8')
-    ffilename = filepath.split('/')[-1]
-    filenamesec = ffilename.split('.')[-2]
+def insert_piece(name, code, album_id, c, conn):
     sql = '''
-    INSERT INTO Piece (Name, AlbumID, File, LibraryCode)
-    VALUES (?,?,?,?)
+    INSERT INTO Piece (Name, AlbumID, LibraryCode)
+    VALUES (?,?,?)
     '''
-    c.execute(sql, (filenamesec, album_id, filepath, code))
+    c.execute(sql, (name, album_id, code))
     conn.commit()
 
 
