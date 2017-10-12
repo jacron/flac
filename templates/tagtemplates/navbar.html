@@ -1,13 +1,10 @@
-<div class="navbar">
-<ul>
+<nav>
 {% for item in menu %}
-    <li class="{% if menu_active == item.href %}active{% endif %}">
-    {% if menu_active == item.href %}
-    {{ item.label }}
-    {% else %}
-        <a href="{{ item.href }}">{{ item.label }}</a>
-    {% endif %}
-    </li>
+    <a {% if item.href != menu_active %}
+            href="{{ item.href }}"
+            {% else %}
+            class="selected"
+            {% endif %}
+    >{{ item.label }}</a>
 {% endfor %}
-</ul>
-</div>
+</nav>
