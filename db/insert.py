@@ -20,17 +20,18 @@ def insert_album(title, path, instrument_id, performer_id, componist_id, c, conn
 
 def insert_componist(componist, c, conn):
     c_firstname, c_lastname = splits_naam(componist)
+    print(c_firstname, c_lastname)
     sql = '''
     INSERT OR IGNORE INTO Componist 
     (FirstName, LastName) 
     VALUES (?,?)
     '''
-    c.execute(sql, (c_firstname, c_lastname))
+    c.execute(sql, (c_firstname[0], c_lastname[0]))
     conn.commit()
     sql = '''
     SELECT ID from Componist WHERE FirstName=? AND LastName=?
     '''
-    return c.execute(sql, (c_firstname, c_lastname)).fetchone()
+    return c.execute(sql, (c_firstname[0], c_lastname[0])).fetchone()
 
 
 def insert_piece(name, code, album_id, c, conn):
@@ -63,11 +64,11 @@ def insert_performer(name, c, conn):
     (FirstName,LastName) 
     VALUES (?,?)
     '''
-    c.execute(sql, (c_firstname, c_lastname))
+    c.execute(sql, (c_firstname[0], c_lastname[0]))
     conn.commit()
     sql = '''
     SELECT ID from Performer WHERE FirstName=? AND LastName=?
     '''
-    return c.execute(sql, (c_firstname, c_lastname,)).fetchone()
+    return c.execute(sql, (c_firstname[0], c_lastname[0],)).fetchone()
 
 

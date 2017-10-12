@@ -8,3 +8,5 @@ delete from album;
 delete from piece;
 delete from Componist;
 delete from Instrument;
+
+UPDATE Album SET Title = replace(Title, "_", " ");

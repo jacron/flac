@@ -16,11 +16,11 @@ def filename(file):
 def splits_comma_naam(naam):
     c_namen = naam.split(',')
     if len(c_namen) > 1:
-        c_firstname = c_namen[1]
-        c_lastname = c_namen[0]
+        c_firstname = c_namen[1].split()
+        c_lastname = c_namen[0].split()
     else:
         c_firstname = ''
-        c_lastname = naam
+        c_lastname = naam.split()
     return c_firstname, c_lastname
 
 
@@ -29,11 +29,11 @@ def splits_naam(naam):
         return splits_comma_naam(naam)
     c_namen = naam.split()
     if len(c_namen) > 1:
-        c_firstname = c_namen[0]
-        c_lastname = c_namen[1]
+        c_firstname = c_namen[0].split()
+        c_lastname = c_namen[1].split()
     else:
         c_firstname = ''
-        c_lastname = naam
+        c_lastname = naam.split()
     return c_firstname, c_lastname
 
 

@@ -7,15 +7,15 @@ from django.conf import settings
 def play(args):
     piece = get_piece(args)
     album = get_album(piece['AlbumID'])
-    # path = album['Path'] + '/' + piece['Name'] + piece['Extension']
-    # print(path)
+    path = album['Path'].encode('utf-8')
     os.system('open -a "{}" "{}"'.format(settings.MEDIA_PLAYER,
-                                         "{}/{}".format(album['Path'], piece['Name'])))
+                                         "{}/{}".format(path, piece['Name'])))
 
 
 def openfinder(args):
     album = get_album(args)
-    os.system('open "' + album['Path'] + '"')
+    path = album['Path'].encode('utf-8')
+    os.system('open "{}"'.format(path))
 
 
 def ajax(request):
