@@ -1,12 +1,7 @@
 {% extends "flac/base.html" %}
+{% load page_tags %}
 {% block page %}
 <h2>{{ performer.FirstName }} {{ performer.LastName }}</h2>
 <h4>{{ performer.Birth }} - {% if performer.Death %}{{ performer.Death }}{% endif %}</h4>
-<table>
-    {% for item in items %}
-        <tr><td class="hyperlink">
-            <a href="/album/{{ item.1 }}">{{ item.0 }}</a>
-        </td></tr>
-    {% endfor %}
-</table>
+{% albumlist items %}
 {% endblock %}

@@ -28,6 +28,10 @@ cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Schnittke/The Alfred Schni
 cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Schnittke/Alfred Schnittke - The Ten Symphonies (6 CD box set, FLAC)"
 cue_path = u"/Volumes/Media/Audio/Klassiek/Componisten/Schönberg/Gurrelieder (Rattle BPO)"
 cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Schubert/96k Schubert - Alfred Brendel, Evelyne Crochet"
+cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Schubert/96k Schubert - Piano Trio Op100"
+cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Schubert/96k(PJ-RS) Schubert - Piano Trio Op 99"
+cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Schubert/192k Schubert - Quintet Op. 163 - Weller Quartet"
+cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Schubert/Impromptus/Martijn van den Hoek"
 # files_path = cue_path + cue_wild
 # files_path = cue_path + flac_wild
 k_split = None
@@ -86,15 +90,18 @@ def store_pieces():
         conn=conn)
     # print(files_path)
     for card in play_types:
-        files_path = cue_path + card
+        files_path = u"{}{}".format(cue_path, card)
+        print(files_path)
         [process_file(f) for f in glob.iglob(files_path)]
-        for nr, row in enumerate(rows):
-            insert_piece(
-                name=row['name'],  # .encode('utf-8'),
-                code=row['knr'],
-                album_id=album_id[0],
-                c=c,
-                conn=conn)
+        # print(rows)
+    # for nr, row in enumerate(rows):
+    for row in rows:
+        insert_piece(
+            name=row['name'],  # .encode('utf-8'),
+            code=row['knr'],
+            album_id=album_id[0],
+            c=c,
+            conn=conn)
     conn.close()
 
 

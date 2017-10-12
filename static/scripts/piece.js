@@ -6,7 +6,6 @@
 
 function ajaxPost(cmd, arg) {
     const url = '/ajax/';
-    console.log(url);
     const data = {
         arg: arg,
         cmd: cmd
@@ -28,11 +27,15 @@ function ajaxPost(cmd, arg) {
 }
 
 function openfinder(albumId) {
-    console.log(albumId);
     ajaxPost('openfinder', albumId);
 }
 
 function play(idPiece, idAlbum) {
-    // var url = 'http://dev.movies13/?post=open_program';
     ajaxPost('play', idPiece);
 }
+
+$(function() {
+   $('.album-image').click(function(){
+      $(this).toggleClass('expanded');
+   });
+});

@@ -16,13 +16,9 @@ def navbar(context):
 
 
 @register.inclusion_tag(
-    'tagtemplates/menu_item.html',
+    'tagtemplates/albumlist.html',
     takes_context=True
 )
-def render_menu_item(context, url, label, badge=None):
-    request = context['request']
-    context['active'] = request.path.startswith(url)
-    context['url'] = url
-    context['label'] = label
-    context['badge'] = badge
+def albumlist(context, albums):
+    context['albums'] = albums
     return context
