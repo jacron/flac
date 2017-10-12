@@ -22,3 +22,12 @@ def navbar(context):
 def albumlist(context, albums):
     context['albums'] = albums
     return context
+
+
+@register.inclusion_tag(
+    'tagtemplates/componistenlist.html',
+    takes_context=True
+)
+def componistenlist(context, items):
+    context['items'] = items
+    return context

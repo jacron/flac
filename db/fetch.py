@@ -40,7 +40,7 @@ def get_pieces(album_id):
 
 def get_componisten():
     sql = '''
-      SELECT FirstName, LastName, ID from Componist
+      SELECT FirstName, LastName, Path, ID from Componist
       ORDER BY LastName
     '''
     return get_items(sql)
@@ -94,7 +94,7 @@ def get_instrument(id_instrument):
 
 def get_componist(id_componist):
     sql = '''
-    SELECT FirstName, LastName, Birth, Death, ID from Componist WHERE ID=?
+    SELECT FirstName, LastName, Birth, Death, Path,  ID from Componist WHERE ID=?
     '''
     fields = get_item_with_id(sql, id_componist)
     return {
@@ -103,7 +103,8 @@ def get_componist(id_componist):
         "FullName": u'{} {}'.format(fields[0], fields[1]),
         "Birth": fields[2],
         "Death": fields[3],
-        "ID": fields[4],
+        "Path": fields[4],
+        "ID": fields[5],
     }
 
 
@@ -121,7 +122,8 @@ def get_performer(id_performer):
         "FullName": u'{} {}'.format(fields[0], fields[1]),
         "Birth": fields[2],
         "Death": fields[3],
-        "ID": fields[4],
+        "Path": fields[4],
+        "ID": fields[5],
     }
 
 

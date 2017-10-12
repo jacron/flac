@@ -1,0 +1,10 @@
+<ul class="album-list">
+    {% for item in items %}
+        <li class="hyperlink">
+            <a href="/componist/{{ item.3 }}">
+                <img src="/componistimage/{{ item.3 }}/" class="album-image-thumb">
+            <div>{{ item.0 }} {{ item.1 }}</div>
+            </a>
+        </li>
+    {% endfor %}
+</ul>

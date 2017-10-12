@@ -28,4 +28,5 @@ urlpatterns = [
     url(r'^instrument/$', views.instrumenten),
     url(r'^ajax/$', views.ajax),
     url(r'^albumimage/(?P<album_id>.+)/$', views.albumimage),
+    url(r'^componistimage/(?P<componist_id>.+)/$', views.componistimage),
 ]
