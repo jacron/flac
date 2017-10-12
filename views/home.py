@@ -11,6 +11,4 @@ def home(request):
             'albums': get_albums(),
             'componisten': get_componisten(),
             'performers': get_performers(),
-            'menu': menu_items(),
-            'menu_active': '/home'
         }, request))

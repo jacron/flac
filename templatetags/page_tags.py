@@ -1,4 +1,5 @@
 from django.template import Library
+from ..services import menu_items
 
 register = Library()
 
@@ -7,8 +8,10 @@ register = Library()
     'tagtemplates/navbar.html',
     takes_context=True
 )
-def navbar(context, menu):
-    context['menu'] = menu
+def navbar(context):
+    request = context['request']
+    context['menu'] = menu_items()
+    context['menu_active'] = request.path
     return context
 
 

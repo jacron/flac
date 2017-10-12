@@ -9,8 +9,6 @@ def album(request, album_id):
     context = {
         'items': get_pieces(album_id),
         'album': get_album(album_id),
-        'menu': menu_items(),
-        'menu_active': '/album'
     }
     return HttpResponse(template.render(context, request))
 

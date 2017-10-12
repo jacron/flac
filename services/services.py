@@ -39,19 +39,19 @@ def splits_naam(naam):
 
 def menu_items():
     return [
-            {'href': '/home',
+            {'href': '/home/',
              'label': 'Home',
              },
-            {'href': '/componist',
+            {'href': '/componist/',
              'label': 'Componist',
              },
-            {'href': '/performer',
+            {'href': '/performer/',
              'label': 'Artiest',
              },
-            {'href': '/instrument',
+            {'href': '/instrument/',
              'label': 'Instrument',
              },
-            {'href': '/album',
+            {'href': '/album/',
              'label': 'Album',
              },
         ]
