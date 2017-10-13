@@ -31,3 +31,12 @@ def albumlist(context, albums):
 def componistenlist(context, items):
     context['items'] = items
     return context
+
+
+@register.inclusion_tag(
+    'tagtemplates/performerslist.html',
+    takes_context=True
+)
+def performerslist(context, items):
+    context['items'] = items
+    return context

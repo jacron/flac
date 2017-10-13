@@ -1,7 +1,9 @@
 {% extends "flac/base.html" %}
 {% load page_tags %}
 {% block page %}
-<h2>{{ componist.FirstName }} {{ componist.LastName }}</h2>
+<h2>
+    {{ componist.FullName }}
+</h2>
 <h4>{{ componist.Birth }} - {%  if componist.Death %}{{ componist.Death }}{% endif %}</h4>
 {% albumlist items %}
 {% endblock %}

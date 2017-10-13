@@ -48,7 +48,7 @@ def get_componisten():
 
 def get_performers():
     sql = '''
-      SELECT FirstName, LastName, ID from Performer
+      SELECT FirstName, LastName, Path, ID from Performer
       ORDER BY LastName
     '''
     return get_items(sql)
@@ -113,7 +113,7 @@ def get_performer(id_performer):
         return {}
     # print(id_performer)
     sql = '''
-    SELECT FirstName, LastName, Birth, Death, ID from Performer WHERE ID=?
+    SELECT FirstName, LastName, Birth, Death, Path, ID from Performer WHERE ID=?
     '''
     fields = get_item_with_id(sql, id_performer)
     return {
