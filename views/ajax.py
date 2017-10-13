@@ -1,3 +1,4 @@
+# coding=utf-8
 import os
 from django.http import HttpResponse
 from ..db import get_album, get_piece
@@ -8,8 +9,9 @@ def play(args):
     piece = get_piece(args)
     album = get_album(piece['AlbumID'])
     path = album['Path'].encode('utf-8')
+    name = piece['Name'].encode('utf-8')
     os.system('open -a "{}" "{}"'.format(settings.MEDIA_PLAYER,
-                                         "{}/{}".format(path, piece['Name'])))
+                                         "{}/{}".format(path, name)))
 
 
 def openfinder(args):
@@ -32,3 +34,5 @@ def ajax(request):
         msg = 'Dit is geen POST request'
     print(msg)
     return HttpResponse(msg)
+# /Volumes/Media/Audio/Klassiek/Componisten/Satie/Barbara Hannigan, Reinbert De Leeuw - Erik Satie, Socrate (2016)/01 - Trois Mélodies Les Anges.mp3
+# The file /Users/orion/PycharmProjects/flac/u/Volumes/Media/Audio/Klassiek/Componisten/Satie/Barbara Hannigan, Reinbert De Leeuw - Erik Satie, Socrate (2016)/01 - Trois Mélodies Les Anges.mp3 does not exist.

@@ -10,7 +10,7 @@ from venv.flac.db import (insert_album, insert_componist, insert_performer, inse
 cuesheet_extension = '.cue'
 cue_wild = '/*.cue'
 flac_wild = "/*.flac"
-play_types = (cue_wild, flac_wild, "/*.ape")
+play_types = (cue_wild, flac_wild, "/*.ape", "/*.mp3")
 # cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten piano/Sonatas - John Browning - piano"
 # cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten piano/Sonatas - Horowitz - piano"
 # cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten piano/sonatas scarlatti - schiff"
@@ -32,6 +32,9 @@ cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Schubert/96k Schubert - Pian
 cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Schubert/96k(PJ-RS) Schubert - Piano Trio Op 99"
 cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Schubert/192k Schubert - Quintet Op. 163 - Weller Quartet"
 cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Schubert/Impromptus/Martijn van den Hoek"
+cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Satie/Barbara Hannigan, Reinbert De Leeuw - Erik Satie, Socrate (2016)"
+cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Satie/Jean-Yves Thibaudet"
+cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Satie/Gorisek Manning - complete piano works and songs/satie_complete_piano_works10"
 # files_path = cue_path + cue_wild
 # files_path = cue_path + flac_wild
 k_split = None
@@ -40,10 +43,13 @@ k_split = None
 # artiest = "John Browning"
 # artiest = "Vladimir Horowitz"
 # artiest = "Andres Schiff"
-artiest = ""
-componist = u"Schönberg"
-componist = "Franz Schubert"
-# instrument = "Piano"
+# artiest = "Reinbert de Leeuw"
+# artiest = "Jean-Yves Thibaudet"
+artiest = "Gorisek Manning"
+componist = u"Satie, Eric"
+# componist = "Franz Schubert"
+instrument = "Piano"
+instrument = None
 rows = []
 
 
@@ -62,7 +68,6 @@ def process_file(filepath):
     if k_split:
         k = ffilename.split(k_split)[1]
         knr = k.split()[0]
-    # filepath = ffilename.decode('utf-8')
     ffilename = filepath.split('/')[-1]
     ffilename = ffilename.replace("_", " ")
     rows.append({
@@ -71,37 +76,42 @@ def process_file(filepath):
     })
 
 
+def insert_pieces(album_id, conn, c):
+    for card in play_types:
+        files_path = u"{}{}".format(cue_path, card)
+        print(files_path)
+        [process_file(f) for f in glob.iglob(files_path)]
+    for row in rows:
+        insert_piece(
+            name=row['name'],  # .encode('utf-8'),
+            code=row['knr'],
+            album_id=album_id,
+            c=c,
+            conn=conn)
+
+
 def store_pieces():
     conn, c = script_connect()
     w = cue_path.split('/')
     album_title = w[-1].replace("_", "")
 
-
-    # performer_id = insert_performer(artiest, c, conn)
-    componist_id = insert_componist(componist, c, conn)
-    # instrument_id = insert_instrument(instrument, c, conn)
+    performer_id = insert_performer(artiest, c, conn)[0]
+    componist_id = insert_componist(componist, c, conn)[0]
+    if instrument:
+        instrument_id = insert_instrument(instrument, c, conn)[0]
+    else:
+        instrument_id = None
     album_id = insert_album(
         title=album_title,
         path=cue_path,
-        instrument_id=None,  # instrument_id[0],
-        performer_id=None,  # performer_id[0],
-        componist_id=componist_id[0],
+        instrument_id=instrument_id,
+        performer_id=performer_id,
+        componist_id=componist_id,
         c=c,
-        conn=conn)
-    # print(files_path)
-    for card in play_types:
-        files_path = u"{}{}".format(cue_path, card)
-        print(files_path)
-        [process_file(f) for f in glob.iglob(files_path)]
-        # print(rows)
-    # for nr, row in enumerate(rows):
-    for row in rows:
-        insert_piece(
-            name=row['name'],  # .encode('utf-8'),
-            code=row['knr'],
-            album_id=album_id[0],
-            c=c,
-            conn=conn)
+        conn=conn,
+        album_id=25,
+    )[0]
+    insert_pieces(album_id, conn, c)
     conn.close()
 
 

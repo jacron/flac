@@ -13,3 +13,16 @@ CREATE TABLE Album
     FOREIGN KEY (PerformerID) REFERENCES Performer (ID)
 );
 CREATE UNIQUE INDEX Album_ComponistID_Title_uindex ON Album (Title, ComponistID)
+
+
+SELECT
+    FirstName,
+    LastName,
+    Birth,
+    Death,
+    Performer.Path,
+    Performer.ID
+FROM Performer_Album
+    JOIN Performer ON Performer.ID = Performer_Album.PerformerID
+    JOIN Album ON Album.ID = Performer_Album.AlbumID
+WHERE Performer_Album.AlbumID = 25;

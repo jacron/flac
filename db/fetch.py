@@ -31,7 +31,7 @@ def get_albums():
 def get_pieces(album_id):
 
     sql = '''
-      SELECT Name, File, ID from Piece 
+      SELECT Name, ID from Piece 
       WHERE AlbumID=?
       ORDER BY Name
     '''
@@ -80,9 +80,17 @@ def get_instrument_albums(id_instrument):
 def get_componist_albums(id_componist):
     sql = '''
       SELECT Title, ID from Album
-      WHERE ComponistID=?
+      WHERE ComponistID=? AND AlbumID ISNULL 
     '''
     return get_items_with_id(sql, id_componist)
+
+
+def get_album_albums(id_album):
+    sql = '''
+      SELECT Title, ID from Album
+      WHERE AlbumID=? 
+    '''
+    return get_items_with_id(sql, id_album)
 
 
 def get_instrument(id_instrument):
@@ -106,6 +114,20 @@ def get_componist(id_componist):
         "Path": fields[4],
         "ID": fields[5],
     }
+
+
+def get_album_performers(id_album):
+    sql = '''
+        SELECT
+            FirstName,
+            LastName,
+            Performer.ID
+        FROM Performer_Album
+            JOIN Performer ON Performer.ID = Performer_Album.PerformerID
+            JOIN Album ON Album.ID = Performer_Album.AlbumID
+        WHERE Performer_Album.AlbumID = ?
+    '''
+    return get_items_with_id(sql, id_album)
 
 
 def get_performer(id_performer):
@@ -144,12 +166,11 @@ def get_album(id_album):
 
 def get_piece(id_piece):
     sql = '''
-    SELECT Name, File, AlbumID, ID from Piece WHERE ID=?
+    SELECT Name, AlbumID, ID from Piece WHERE ID=?
     '''
     fields = get_item_with_id(sql, id_piece)
     return {
         "Name": fields[0],
-        "File": fields[1],
-        "AlbumID": fields[2],
-        "ID": fields[3],
+        "AlbumID": fields[1],
+        "ID": fields[2],
     }

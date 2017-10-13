@@ -1,25 +1,34 @@
 {% extends "flac/base.html" %}
-{%  load static %}
-{%  load page_tags %}
+{% load static %}
+{% load page_tags %}
 {% block page %}
     <div class="hyperlink">
-    <a onclick="openfinder('{{ album.ID }}')">open finder</a>
+        <a onclick="openfinder('{{ album.ID }}')">open finder</a>
     </div>
     <img src="/albumimage/{{ album.ID }}/"
          class="album-image">
     <h1>{{ album.Title }}</h1>
-    {%  if performer %}
-        <h2 class="hyperlink"><a href="/performer/{{ performer.ID }}/">{{ performer.FullName }}</a></h2>
-    {% endif %}
     {% if componist %}
-    <h3 class="hyperlink"><a href="/componist/{{ componist.ID }}/">{{ componist.FullName }}</a></h3>
+        <h2 class="hyperlink"><a href="/componist/{{ componist.ID }}/">{{ componist.FullName }}</a></h2>
     {% endif %}
-<table>
-<form>{% csrf_token %}</form>
-{% for item in items %}
-    <tr><td class="hyperlink">
-        <a onclick="play({{ item.2 }})">{{ item.0 }}</a>
-    </td></tr>
-{% endfor %}
-</table>
+    {% for performer in performers %}
+        <h3 class="hyperlink">
+            <a href="/performer/{{ performer.2 }}/">{{ performer.0 }} {{ performer.1 }}</a>
+        </h3>
+    {% endfor %}
+    {{ cuesheet_output }}
+    {% for cuesheet in cuesheet_output %}
+        <a onclick="play({{ cuesheet.ID }})">{{ cuesheet.Title }}</a>
+    {% endfor %}
+    <table>
+        <form>{% csrf_token %}</form>
+        {% albumlist albums %}
+        {% for item in items %}
+            <tr>
+                <td class="hyperlink">
+                    <a onclick="play({{ item.1 }})">{{ item.0 }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
