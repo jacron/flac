@@ -1,16 +1,13 @@
 from ..services import splits_naam
 
 
-def insert_album(title, path, instrument_id, performer_id, componist_id, album_id, c, conn):
-    print('+++')
-    print(title, performer_id, componist_id, instrument_id, path)
-    # return
+def insert_album(title, path, instrument_id, componist_id, album_id, c, conn):
     sql = '''
     INSERT OR IGNORE INTO Album
-    (Title, InstrumentID, PerformerID, ComponistID, AlbumID, Path) 
-    VALUES (?,?,?,?,?,?)
+    (Title, InstrumentID, ComponistID, AlbumID, Path) 
+    VALUES (?,?,?,?,?)
     '''
-    c.execute(sql, (title, instrument_id, performer_id, componist_id, album_id, path))
+    c.execute(sql, (title, instrument_id, componist_id, album_id, path))
     conn.commit()
     sql = '''
     SELECT ID from Album WHERE Title=?

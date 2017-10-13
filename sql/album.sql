@@ -26,3 +26,14 @@ FROM Performer_Album
     JOIN Performer ON Performer.ID = Performer_Album.PerformerID
     JOIN Album ON Album.ID = Performer_Album.AlbumID
 WHERE Performer_Album.AlbumID = 25;
+
+
+        SELECT
+            FirstName,
+            LastName,
+            Performer.ID
+        FROM Performer_Album
+            JOIN Performer ON Performer.ID = Performer_Album.PerformerID
+            JOIN Album ON Album.ID = Performer_Album.AlbumID
+        WHERE Performer_Album.AlbumID =23;
+

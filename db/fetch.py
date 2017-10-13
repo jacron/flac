@@ -63,8 +63,13 @@ def get_instruments():
 
 def get_performer_albums(id_performer):
     sql = '''
-      SELECT Title, ID from Album
-      WHERE PerformerID=?
+        SELECT
+            Album.Title,
+            Album.ID
+        FROM Performer_Album
+            JOIN Performer ON Performer.ID = Performer_Album.PerformerID
+            JOIN Album ON Album.ID = Performer_Album.AlbumID
+        WHERE Performer_Album.PerformerID =?
     '''
     return get_items_with_id(sql, id_performer)
 
@@ -125,9 +130,9 @@ def get_album_performers(id_album):
         FROM Performer_Album
             JOIN Performer ON Performer.ID = Performer_Album.PerformerID
             JOIN Album ON Album.ID = Performer_Album.AlbumID
-        WHERE Performer_Album.AlbumID = ?
+        WHERE Performer_Album.AlbumID =?
     '''
-    return get_items_with_id(sql, id_album)
+    return get_items_with_id(sql, id_album )
 
 
 def get_performer(id_performer):
@@ -151,7 +156,7 @@ def get_performer(id_performer):
 
 def get_album(id_album):
     sql = '''
-    SELECT Title, Label, Path, ComponistID, PerformerID, ID from Album WHERE ID=?
+    SELECT Title, Label, Path, ComponistID, ID from Album WHERE ID=?
     '''
     fields = get_item_with_id(sql, id_album)
     return {
@@ -159,8 +164,7 @@ def get_album(id_album):
         "Label": fields[1],
         "Path": fields[2],
         "ComponistID": fields[3],
-        "PerformerID": fields[4],
-        "ID": fields[5],
+        "ID": fields[4],
     }
 
 

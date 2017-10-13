@@ -1,47 +1,52 @@
-from cueparser import CueSheet
+# from cueparser import CueSheet
 from django.http import HttpResponse
 from django.template import loader
 from ..db import get_albums, get_album, get_pieces, get_componist, get_album_albums, get_album_performers
 
 
+
+def dequote(line):
+    line = line.strip()
+    if line.startswith('"'):
+        line = line[1:]
+    if line.endswith('"'):
+        line = line[:-1]
+    return line
+
+
 def get_title(data):
     for line in data.split('\n'):
-        if line[:5] == 'TITLE':
-            return line[5:]
+        line = line.strip()
+        pos = line.find('TITLE ')
+        if pos != -1:
+            rest = pos + len('TITLE ')
+            line = line[rest:-1]
+            return dequote(line)
 
 
 def album(request, album_id):
     template = loader.get_template('flac/album.html')
     album_o = get_album(album_id)
-    # cuesheet = CueSheet()
-    # header = u'%performer% - %title%\n%file%\n%tracks%'
-    # track = u'%performer% - %title%'
-    # cuesheet.setOutputFormat(header, track)
     items = get_pieces(album_id)
     cuesheets = []
+    pieces = []
     for item in items:
         file = item[0]
-        # print(file)
         if file:
             extension = file.split('.')[-1]
             if extension == 'cue':
                 path = '{}/{}'.format(album_o['Path'], file)
-                # print(path)
                 with open(path, 'r') as f:
                     data = f.read()
                     cuesheets.append({
                         'Title': get_title(data),
                         'ID': item[1]
                     })
-                    # item['Title'] = get_title(data)
-                    # print(data)
-                    # if data:
-                    # cuesheet.setData(f.read())
-                        # cuesheets.append(data)
-    # cuesheet.parse()
+            else:
+                pieces.append(item)
 
     context = {
-        'items': items,
+        'items': pieces,
         'albums': get_album_albums(album_id),
         'album': album_o,
         'componist': get_componist(album_o['ComponistID']),

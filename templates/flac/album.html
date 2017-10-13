@@ -16,9 +16,10 @@
             <a href="/performer/{{ performer.2 }}/">{{ performer.0 }} {{ performer.1 }}</a>
         </h3>
     {% endfor %}
-    {{ cuesheet_output }}
     {% for cuesheet in cuesheet_output %}
-        <a onclick="play({{ cuesheet.ID }})">{{ cuesheet.Title }}</a>
+        <div class="hyperlink">
+            <a onclick="play({{ cuesheet.ID }})">{{ cuesheet.Title }}</a>
+        </div>
     {% endfor %}
     <table>
         <form>{% csrf_token %}</form>
