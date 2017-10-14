@@ -22,7 +22,7 @@ def get_item_with_id(sql, oid):
 
 def named_albums(items):
     out = []
-    for item in items:
+    for nr, item in enumerate(items):
         out.append({
             'Title': item[0],
             'ID': item[1],
@@ -30,14 +30,48 @@ def named_albums(items):
     return out
 
 
+def get_album_albums(id_album):
+    sql = '''
+      SELECT Title, Album.ID, Componist.FirstName, Componist.LastName  
+      from Album 
+      LEFT JOIN Componist_Album ON Componist_Album.AlbumID=Album.ID
+      LEFT JOIN Componist ON Componist.ID=Componist_Album.ComponistID
+      WHERE Album.AlbumID=?
+      GROUP BY Title
+      ORDER BY Title COLLATE NOCASE
+    '''
+    items = get_items_with_id(sql, id_album)
+    out = []
+    for nr, item in enumerate(items):
+        componist = ''
+        if item[2] or item[3]:
+            componist = '{} {}'.format(item[2], item[3])
+        out.append({
+            'Title': item[0],
+            'ID': item[1],
+            'Componist': componist,
+        })
+    return out
+
+
 def get_albums():
     sql = '''
-      SELECT Title, ID from Album
+      SELECT Title, Album.ID, Componist.FirstName, Componist.LastName  
+      from Album 
+      JOIN Componist_Album ON Album.ID=Componist_Album.AlbumID
+      JOIN Componist ON Componist.ID=Componist_Album.ComponistID
       WHERE IsCollection ISNULL OR IsCollection=0
       ORDER BY Title COLLATE NOCASE
     '''
     items = get_items(sql)
-    return named_albums(items)
+    out = []
+    for nr, item in enumerate(items):
+        out.append({
+            'Title': item[0],
+            'ID': item[1],
+            'Componist': '{} {}'.format(item[2], item[3]),
+        })
+    return out
 
 
 def get_collections():
@@ -87,7 +121,8 @@ def get_performers():
       SELECT FirstName, LastName, Path, ID from Performer
       ORDER BY LastName
     '''
-    return get_items(sql)
+    items = get_items(sql)
+    return named_persons(items)
 
 
 def get_instruments():
@@ -132,15 +167,6 @@ def get_componist_albums(id_componist):
     '''
     # return get_items_with_id(sql, id_componist)
     items = get_items_with_id(sql, id_componist)
-    return named_albums(items)
-
-
-def get_album_albums(id_album):
-    sql = '''
-      SELECT Title, ID from Album
-      WHERE AlbumID=? 
-    '''
-    items = get_items_with_id(sql, id_album)
     return named_albums(items)
 
 

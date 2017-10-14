@@ -61,7 +61,8 @@ function addComponist($select) {
 function newComponist($input) {
     const data = {
         cmd: 'new_componist',
-        name: $input.val()
+        name: $input.val(),
+        albumid: $input.attr('albumid')
     };
     // console.log(data);
     ajaxPost(data);
@@ -109,7 +110,7 @@ $(function() {
    });
    $('select.select-componist').keydown(function(e){
        if (e.key == 'Enter') {
-           addComponist($('select.select-componist'));
+        addComponist($('select.select-componist'));
        }
    });
 });

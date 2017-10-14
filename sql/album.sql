@@ -107,3 +107,12 @@ where ComponistID=8;
   SELECT
 ComponistID        FROM Componist_Album
         WHERE Componist_Album.AlbumID =95;
+
+
+ SELECT Title, Album.ID, Componist.FirstName, Componist.LastName
+      from Album
+      LEFT JOIN Componist_Album ON Componist_Album.AlbumID=Album.ID
+      LEFT JOIN Componist ON Componist.ID=Componist_Album.ComponistID
+      WHERE Album.AlbumID=94
+      GROUP BY Title
+      ORDER BY Title COLLATE NOCASE;

@@ -13,19 +13,29 @@ def get_image(path):
         return HttpResponse('Dit pad bestaat niet:"{}"'.format(image_path))
 
 
+def empty_response():
+    return HttpResponse()
+
+
 def albumimage(request, album_id):
     album = get_album(album_id)
+    if not album['Path']:
+        return empty_response()
     image_path = album['Path'] + settings.COVER_FILE
     return get_image(image_path)
 
 
 def componistimage(request, componist_id):
     componist = get_componist(componist_id)
+    if not componist['Path']:
+        return empty_response()
     image_path = componist['Path'] + settings.PERSON_FILE
     return get_image(image_path)
 
 
 def performerimage(request, performer_id):
     performer = get_performer(performer_id)
+    if not performer['Path']:
+        return empty_response()
     image_path = performer['Path'] + settings.PERSON_FILE
     return get_image(image_path)

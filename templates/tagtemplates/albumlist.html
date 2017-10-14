@@ -1,12 +1,13 @@
 <ul class="album-list">
     {% for item in albums %}
         <li class="hyperlink">
-            <a href="/album/{{ item.ID }}">
+            <a href="/album/{{ item.ID }}/">
                 <img src="/albumimage/{{ item.ID }}/"
-         class="album-image-thumb">
-            <div>
-                {{ item.Title }}
-                </div></a>
+                     class="album-image-thumb">
+                <div>
+                    {{ item.Title }} - {{ item.Componist }}
+                </div>
+            </a>
         </li>
     {% endfor %}
 </ul>

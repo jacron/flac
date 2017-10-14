@@ -29,8 +29,9 @@ def add_componist(componistid, albumid):
     return add_componist_to_album(int(componistid), int(albumid))
 
 
-def get_new_componist(name):
-    return new_componist(name)
+def get_new_componist(name, albumid):
+    componistid = new_componist(name)
+    return add_componist_to_album(int(componistid[0]), int(albumid))
 
 
 def do_post(post):
@@ -46,7 +47,7 @@ def do_post(post):
     if cmd == 'add_componist':
         return add_componist(post['componistid'], post['albumid'])
     if cmd == 'new_componist':
-        return get_new_componist(post['name'])
+        return get_new_componist(post['name'], post['albumid'])
 
 
 def ajax(request):

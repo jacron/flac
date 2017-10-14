@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
 from ..db import (
-    get_albums, get_album, get_pieces, get_componisten,
+    get_albums, get_album, get_pieces, get_componisten, get_performers,
     get_album_albums, get_album_performers, get_album_componisten, get_mother_title)
 from ..services import get_cuesheet_title, get_cuesheet
 
@@ -32,21 +32,17 @@ def album(request, album_id):
         mother_title = get_mother_title(album_o['AlbumID'])
     items = get_pieces(album_id)
     cuesheets, pieces = organize_pieces(items, album_o['Path'])
-    # if album_o['ComponistID']:
-    #     componist = get_componist(album_o['ComponistID'])
-    # else:
-    #     componist = None
 
     context = {
         'items': pieces,
         'albums': get_album_albums(album_id),
         'album': album_o,
         'mother_title': mother_title,
-        # 'componist': componist,
         'componisten': get_componisten(),
         'album_componisten': get_album_componisten(album_id),
-        'performers': get_album_performers(album_id),
-        'cuesheet_output': cuesheets
+        'performers': get_performers(),
+        'album_performers': get_album_performers(album_id),
+        'cuesheet_output': cuesheets,
     }
     return HttpResponse(template.render(context, request))
 

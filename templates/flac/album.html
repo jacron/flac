@@ -25,7 +25,7 @@
             <a href="/componist/{{ componist.ID }}/">{{ componist.FullName }}</a>
         </h2>
     {% endfor %}
-    {% for performer in performers %}
+    {% for performer in album_performers %}
         <h3 class="hyperlink">
             <a href="/performer/{{ performer.ID }}/">{{ performer.FullName }}</a>
         </h3>
@@ -58,22 +58,44 @@
                             <option value="{{ option.ID }}">{{ option.FullName }}</option>
                         {% endfor %}
                     </select>
-
                 </td>
                 <td>
                     <button class="select-componist">Voeg toe</button>
-
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input class="add-componist" type="text">
+                    <input class="add-componist" type="text" albumid="{{ album.ID }}">
                 </td>
                 <td>
                     <button class="add-componist">Nieuw</button>
                 </td>
             </tr>
         </table>
+    Artiest
+        <table cellpadding="4">
+            <tr>
+                <td>
+                    <select class="select-performer"
+                            albumid="{{ album.ID }}">
+                        {% for option in performers %}
+                            <option value="{{ option.ID }}">{{ option.FullName }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>
+                    <button class="select-performer">Voeg toe</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="add-performer" type="text"
+                           albumid="{{ album.ID }}">
+                </td>
+                <td>
+                    <button class="add-performer">Nieuw</button>
+                </td>
+            </tr>
+        </table>
     </div>
-
 {% endblock %}

@@ -21,7 +21,6 @@ def add_componist_to_album(componistid, albumid):
     """
     con, c = connect()
     ret = c.execute(sql, (componistid, albumid, )).fetchone()
-    print(ret)
     con.commit()
 
 
@@ -34,5 +33,8 @@ def new_componist(name):
     """
     con, c = connect()
     ret = c.execute(sql, (c_firstname, c_lastname, )).fetchone()
-    print(ret)
     con.commit()
+    sql = '''
+    SELECT ID from Componist WHERE FirstName=? AND LastName=?
+    '''
+    return c.execute(sql, (c_firstname, c_lastname, )).fetchone()
