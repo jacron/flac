@@ -116,3 +116,6 @@ ComponistID        FROM Componist_Album
       WHERE Album.AlbumID=94
       GROUP BY Title
       ORDER BY Title COLLATE NOCASE;
+
+select * from Piece
+where AlbumID=151;

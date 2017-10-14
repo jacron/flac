@@ -1,13 +1,13 @@
 from ..services import splits_naam
 
 
-def insert_album(title, path, instrument_id, album_id, c, conn):
+def insert_album(title, path, instrument_id, album_id, is_collectie, c, conn):
     sql = '''
     INSERT OR IGNORE INTO Album
-    (Title, InstrumentID, AlbumID, Path) 
-    VALUES (?,?,?,?)
+    (Title, InstrumentID, AlbumID, Path, IsCollection) 
+    VALUES (?,?,?,?,?)
     '''
-    c.execute(sql, (title, instrument_id, album_id, path))
+    c.execute(sql, (title, instrument_id, album_id, path, is_collectie))
     conn.commit()
     sql = '''
     SELECT ID from Album WHERE Title=?
@@ -32,6 +32,7 @@ def insert_componist(componist, c, conn):
 
 
 def insert_piece(name, code, album_id, c, conn):
+    print(name, code, album_id)
     sql = '''
     INSERT OR IGNORE INTO Piece (Name, AlbumID, LibraryCode)
     VALUES (?,?,?)

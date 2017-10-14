@@ -27,6 +27,9 @@ def organize_pieces(items, album_path):
 def album(request, album_id):
     template = loader.get_template('flac/album.html')
     album_o = get_album(album_id)
+    if not album_o:
+        return HttpResponse()
+
     mother_title = None
     if album_o['AlbumID']:
         mother_title = get_mother_title(album_o['AlbumID'])

@@ -12,12 +12,6 @@ from venv.flac.db import (
 
 play_types = ('cue', "flac", "ape", "mp3", "iso", "wma")
 
-# cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/piano solo/pianosonates/Wilhelm Kempf - sonates"
-# cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/piano solo/pianosonates/Wilhelm Kempf - sonates/kempff_beethoven_the_complete_piano_sonatas08"
-# cue_path="/Volumes/Media/Audio/Klassiek/Collecties/Archiv Produktion 1947 - 2013"
-# cue_path="/Volumes/Media/Audio/Klassiek/Collecties/Archiv Produktion 1947 - 2013/archiv_produktion_1947_2013_01"
-cue_path="/Volumes/Media/Audio/Klassiek/Collecties/Archiv Produktion 1947 - 2013/archiv_produktion_1947_2013_"
-componist=""
 k_split = None
 # artiest="Wilhelm Kempf"
 artiest=None
@@ -29,7 +23,8 @@ instrument = None
 # mother_album_id = 50 # beethoven piano solo
 # mother_album_id = 72 # ronald brautigam
 # mother_album_id = 85 # wilhelm kempf
-mother_album_id = 94 # archiv produktion
+# mother_album_id = 94 # archiv produktion
+mother_album_id=150  # avant garde
 rows = []
 
 
@@ -41,6 +36,7 @@ def script_connect():
 
 
 def process_file(filepath):
+    print(filepath)
     w = filepath.split('/')
     ffilename = w[-1]
     print(ffilename)
@@ -57,10 +53,15 @@ def process_file(filepath):
 
 
 def insert_pieces(path, album_id, conn, c):
+    global rows
+    print(path)
     for card in play_types:
         files_path = u"{}{}".format(path, "/*.{}".format(card))
+        print(files_path)
         [process_file(f) for f in glob.iglob(files_path)]
+    # print(rows)
     for row in rows:
+        # print(row['name'])
         insert_piece(
             name=row['name'],
             code=row['knr'],
@@ -69,9 +70,10 @@ def insert_pieces(path, album_id, conn, c):
             conn=conn)
 
 
-def store_pieces(path):
+def process_album(path):
     global rows
     rows = []
+
     if len(path.split('[')) > 1:
         print('cue_path mag geen vierkante haken ([]) bevatten! - quitting')
         return
@@ -95,7 +97,7 @@ def store_pieces(path):
         title=album_title,
         path=path,
         instrument_id=instrument_id,
-        # componist_id=componist_id,
+        is_collectie=0,
         c=c,
         conn=conn,
         album_id=mother_album_id,
@@ -124,10 +126,12 @@ def main():
     #         nr = '0{}'.format(i)
     #     path = '{}{}'.format(cue_path, nr)
 
-    path = "/Volumes/Media/Audio/Klassiek/Collecties/Archiv Produktion 1947 - 2013/archiv_produktion_1947_2013_40b"
-    rename_frontjpg(path)
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Archiv Produktion 1947 - 2013/archiv_produktion_1947_2013_40b"
+    # path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project"
+    path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project/AGP151 - Alban Berg"
+    # rename_frontjpg(path)
     # print(path)
-    store_pieces(path)
+    process_album(path)
 
 
 if __name__ == '__main__':

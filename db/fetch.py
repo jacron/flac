@@ -291,6 +291,10 @@ def get_album(id_album):
     WHERE Album.ID=?
     '''
     fields = get_item_with_id(sql, id_album)
+    if not fields:
+        print(id_album)
+        print('has no items')
+        return {}
     return {
         "Title": fields[0],
         "Label": fields[1],
