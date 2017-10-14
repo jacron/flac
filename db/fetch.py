@@ -45,7 +45,7 @@ def get_album_albums(id_album):
     for nr, item in enumerate(items):
         componist = ''
         if item[2] or item[3]:
-            componist = '{} {}'.format(item[2], item[3])
+            componist = u'{} {}'.format(item[2], item[3])
         out.append({
             'Title': item[0],
             'ID': item[1],
@@ -69,7 +69,7 @@ def get_albums():
         out.append({
             'Title': item[0],
             'ID': item[1],
-            'Componist': '{} {}'.format(item[2], item[3]),
+            'Componist': u'{} {}'.format(item[2], item[3]),
         })
     return out
 
@@ -258,7 +258,7 @@ def get_scarlatti_k_pieces():
         out.append({
             'k_code': item[0],
             'Name': item[1],
-            'Artiest': '{} {}'.format(item[2], item[3]),
+            'Artiest': u'{} {}'.format(item[2], item[3]),
             'ArtiestID': item[4],
             'ID': item[5],
         })

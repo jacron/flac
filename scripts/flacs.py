@@ -129,6 +129,14 @@ def main():
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/Archiv Produktion 1947 - 2013/archiv_produktion_1947_2013_40b"
     # path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project"
     path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project/AGP151 - Alban Berg"
+    path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project/AGP151 - Alban Berg - 24bits"
+    path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project/AGP170 - Ivo Malec II"
+    path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project/AGP171 - Ivo Malec III"
+    path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project/AGP175 - Pierrot-Lunaire"
+    path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project/AGP176 - Ondes Martenot"
+    path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project/AGP177 - Music for Ondes Martenot"
+    path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project/AGP180 - International Week of New Music"
+    path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project/Kagel - Acustica"
     # rename_frontjpg(path)
     # print(path)
     process_album(path)
