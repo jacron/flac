@@ -2,26 +2,7 @@
 from django.http import HttpResponse
 from django.template import loader
 from ..db import get_albums, get_album, get_pieces, get_componist, get_album_albums, get_album_performers
-
-
-
-def dequote(line):
-    line = line.strip()
-    if line.startswith('"'):
-        line = line[1:]
-    if line.endswith('"'):
-        line = line[:-1]
-    return line
-
-
-def get_title(data):
-    for line in data.split('\n'):
-        line = line.strip()
-        pos = line.find('TITLE ')
-        if pos != -1:
-            rest = pos + len('TITLE ')
-            line = line[rest:-1]
-            return dequote(line)
+from ..services import get_cuesheet
 
 
 def album(request, album_id):
@@ -36,12 +17,7 @@ def album(request, album_id):
             extension = file.split('.')[-1]
             if extension == 'cue':
                 path = '{}/{}'.format(album_o['Path'], file)
-                with open(path, 'r') as f:
-                    data = f.read()
-                    cuesheets.append({
-                        'Title': get_title(data),
-                        'ID': item[1]
-                    })
+                cuesheets.append(get_cuesheet(path, item[1]))
             else:
                 pieces.append(item)
 

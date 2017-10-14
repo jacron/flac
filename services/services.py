@@ -13,6 +13,15 @@ def filename(file):
     return file.split('/')[-1]
 
 
+def dequote(line):
+    line = line.strip()
+    if line.startswith('"'):
+        line = line[1:]
+    if line.endswith('"'):
+        line = line[:-1]
+    return line
+
+
 def splits_comma_naam(naam):
     c_namen = naam.split(',')
     if len(c_namen) > 1:

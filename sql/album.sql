@@ -37,3 +37,6 @@ WHERE Performer_Album.AlbumID = 25;
             JOIN Album ON Album.ID = Performer_Album.AlbumID
         WHERE Performer_Album.AlbumID =23;
 
+ UPDATE Album
+    SET Title='Socrate (2016)'
+    WHERE Album.ID=23;

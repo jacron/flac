@@ -1,7 +1,7 @@
 # coding=utf-8
 import os
 from django.http import HttpResponse
-from ..db import get_album, get_piece
+from ..db import get_album, get_piece, update_album_title
 from django.conf import settings
 
 
@@ -20,19 +20,24 @@ def openfinder(args):
     os.system('open "{}"'.format(path))
 
 
+def do_update_album_title(title, albumid):
+    return update_album_title(album_id=int(albumid), title=title)
+
+
+def do_post(post):
+    cmd = post['cmd']
+    if cmd == 'play':
+        play(post['arg'])
+        return 'Played'
+    if cmd == 'openfinder':
+        openfinder(post['arg'])
+        return 'Finder opened'
+    if cmd == 'update_album_title':
+        return do_update_album_title(post['title'], post['albumid'])
+
+
 def ajax(request):
+    msg = 'No post!'
     if request.POST:
-        cmd = request.POST['cmd']
-        arg = request.POST['arg']
-        print(arg)
-        msg = 'Uitgevoerd cmd: ' + cmd
-        if cmd == 'play':
-            play(arg)
-        if cmd == 'openfinder':
-            openfinder(arg)
-    else:
-        msg = 'Dit is geen POST request'
-    print(msg)
+        msg = do_post(request.POST)
     return HttpResponse(msg)
-# /Volumes/Media/Audio/Klassiek/Componisten/Satie/Barbara Hannigan, Reinbert De Leeuw - Erik Satie, Socrate (2016)/01 - Trois Mélodies Les Anges.mp3
-# The file /Users/orion/PycharmProjects/flac/u/Volumes/Media/Audio/Klassiek/Componisten/Satie/Barbara Hannigan, Reinbert De Leeuw - Erik Satie, Socrate (2016)/01 - Trois Mélodies Les Anges.mp3 does not exist.

@@ -7,7 +7,10 @@
     </div>
     <img src="/albumimage/{{ album.ID }}/"
          class="album-image">
-    <h1>{{ album.Title }}</h1>
+    <form>{% csrf_token %}</form>
+    <h1 contenteditable="true" name="title" class="edit-title" albumid="{{ album.ID }}">
+        {{ album.Title }}
+    </h1>
     {% if componist %}
         <h2 class="hyperlink"><a href="/componist/{{ componist.ID }}/">{{ componist.FullName }}</a></h2>
     {% endif %}
@@ -22,7 +25,6 @@
         </div>
     {% endfor %}
     <table>
-        <form>{% csrf_token %}</form>
         {% albumlist albums %}
         {% for item in items %}
             <tr>
