@@ -1,5 +1,6 @@
 from django.template import Library
-from ..services import menu_items
+from . import MENU_ITEMS
+
 
 register = Library()
 
@@ -10,7 +11,7 @@ register = Library()
 )
 def navbar(context):
     request = context['request']
-    context['menu'] = menu_items()
+    context['menu'] = MENU_ITEMS
     context['menu_active'] = request.path
     return context
 

@@ -1,36 +1,3 @@
 {% extends "flac/base.html" %}
 {% block page %}
-    <div class="hyperlink">
-    <h4>Kies een componist</h4>
-<table class="table">
-    {% for item in componisten %}
-        <tr><td>
-            <a href="/componist/{{ item.2 }}">{{ item.0 }} {{ item.1 }}</a>
-        </td></tr>
-    {% endfor %}
-</table>
-    <h4>Kies een artiest</h4>
-<table class="table">
-    {% for item in performers %}
-        <tr><td>
-            <a href="/performer/{{ item.2 }}">{{ item.0 }} {{ item.1 }}</a>
-        </td></tr>
-    {% endfor %}
-</table></div>
-    <h4>Kies een instrument</h4>
-<table class="table">
-    {% for item in instruments %}
-        <tr><td class="hyperlink">
-            <a href="/instrument/{{ item.1 }}">{{ item.0 }}</a>
-        </td></tr>
-    {% endfor %}
-</table>
-    <h4>Kies een album</h4>
-<table class="table">
-    {% for item in albums %}
-        <tr><td class="hyperlink">
-            <a href="/album/{{ item.1 }}">{{ item.0 }}</a>
-        </td></tr>
-    {% endfor %}
-</table>
 {% endblock %}

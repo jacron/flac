@@ -2,54 +2,34 @@
 """flac
 
 """
+import os
 import glob
 import sqlite3
 # importing for stand alone script
-from venv.flac.db import (insert_album, insert_componist, insert_performer, insert_instrument, insert_piece)
+from venv.flac.db import (
+    insert_album, insert_componist, insert_performer, insert_instrument,
+    insert_piece, insert_album_performer, insert_album_componist, )
 
-cuesheet_extension = '.cue'
-play_types = ('/*.cue', "/*.flac", "/*.ape", "/*.mp3")
-# cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten piano/Sonatas - John Browning - piano"
-# cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten piano/Sonatas - Horowitz - piano"
-# cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten piano/sonatas scarlatti - schiff"
-# cue_path = '/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten piano/sonatas scarlatti - weissenberg'
-# cue_path = '/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/Lettere Amorose - Il Complesso Barroco'
-# cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/corboz_scarlatti_missa_ad_usum_cappellae_6_motets"
-# cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, A/biondi_scarlatti_la_santissima_trinita"
-# cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, A/Diana and Endimione"
-# cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, A/lesne_piau_scarlatti_stabat_mater"
-# cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, A/Cantatas"
-# cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, A/Griselda"
-# cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Schnittke/Concerto Grosso 3 en 4 - Jaap van Zweden"
-# cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Schnittke/schnittke_symphony_no_4_requiem_kamu"
-# cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Schnittke/The Alfred Schnittke Edition"
-# cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Schnittke/Alfred Schnittke - The Ten Symphonies (6 CD box set, FLAC)"
-# cue_path = u"/Volumes/Media/Audio/Klassiek/Componisten/Schönberg/Gurrelieder (Rattle BPO)"
-# cue_path = "/Volumes/Media/Audio/Klassiek/Componisten/Schubert/96k Schubert - Alfred Brendel, Evelyne Crochet"
-# cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Schubert/96k Schubert - Piano Trio Op100"
-# cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Schubert/96k(PJ-RS) Schubert - Piano Trio Op 99"
-# cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Schubert/192k Schubert - Quintet Op. 163 - Weller Quartet"
-# cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Schubert/Impromptus/Martijn van den Hoek"
-# cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Satie/Barbara Hannigan, Reinbert De Leeuw - Erik Satie, Socrate (2016)"
-# cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Satie/Jean-Yves Thibaudet"
-cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Satie/Gorisek Manning - complete piano works and songs/satie_complete_piano_works10"
-# files_path = cue_path + cue_wild
-# files_path = cue_path + flac_wild
+play_types = ('cue', "flac", "ape", "mp3", "iso", "wma")
+
+# cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/piano solo/pianosonates/Wilhelm Kempf - sonates"
+# cue_path="/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/piano solo/pianosonates/Wilhelm Kempf - sonates/kempff_beethoven_the_complete_piano_sonatas08"
+# cue_path="/Volumes/Media/Audio/Klassiek/Collecties/Archiv Produktion 1947 - 2013"
+# cue_path="/Volumes/Media/Audio/Klassiek/Collecties/Archiv Produktion 1947 - 2013/archiv_produktion_1947_2013_01"
+cue_path="/Volumes/Media/Audio/Klassiek/Collecties/Archiv Produktion 1947 - 2013/archiv_produktion_1947_2013_"
+componist=""
 k_split = None
-# k_split = " K"
-# artiest = "Alexis Weissenberg"
-# artiest = "John Browning"
-# artiest = "Vladimir Horowitz"
-# artiest = "Andres Schiff"
-# artiest = "Reinbert de Leeuw"
-# artiest = "Jean-Yves Thibaudet"
-# artiest = "Gorisek Manning"
-artiest = None
-# componist = u"Satie, Eric"
-# componist = "Franz Schubert"
+# artiest="Wilhelm Kempf"
+artiest=None
+# componist = "Gustav Mahler"
+# componist="Beethoven, Ludwig von"
 componist = None
 # instrument = "Piano"
 instrument = None
+# mother_album_id = 50 # beethoven piano solo
+# mother_album_id = 72 # ronald brautigam
+# mother_album_id = 85 # wilhelm kempf
+mother_album_id = 94 # archiv produktion
 rows = []
 
 
@@ -76,10 +56,9 @@ def process_file(filepath):
     })
 
 
-def insert_pieces(album_id, conn, c):
+def insert_pieces(path, album_id, conn, c):
     for card in play_types:
-        files_path = u"{}{}".format(cue_path, card)
-        print(files_path)
+        files_path = u"{}{}".format(path, "/*.{}".format(card))
         [process_file(f) for f in glob.iglob(files_path)]
     for row in rows:
         insert_piece(
@@ -90,13 +69,20 @@ def insert_pieces(album_id, conn, c):
             conn=conn)
 
 
-def store_pieces():
+def store_pieces(path):
+    global rows
+    rows = []
+    if len(path.split('[')) > 1:
+        print('cue_path mag geen vierkante haken ([]) bevatten! - quitting')
+        return
     conn, c = script_connect()
-    w = cue_path.split('/')
+    w = path.split('/')
     album_title = w[-1].replace("_", "")
 
     if artiest:
-        insert_performer(artiest, c, conn)[0]
+        performer_id = insert_performer(artiest, c, conn)[0]
+    else:
+        performer_id = None
     if componist:
         componist_id = insert_componist(componist, c, conn)[0]
     else:
@@ -107,19 +93,41 @@ def store_pieces():
         instrument_id = None
     album_id = insert_album(
         title=album_title,
-        path=cue_path,
+        path=path,
         instrument_id=instrument_id,
-        componist_id=componist_id,
+        # componist_id=componist_id,
         c=c,
         conn=conn,
-        album_id=25,
+        album_id=mother_album_id,
     )[0]
-    insert_pieces(album_id, conn, c)
+    print("album_id={}".format(album_id))
+    insert_pieces(path, album_id, conn, c)
+    if performer_id:
+        insert_album_performer(performer_id, album_id, c, conn)
+    if componist_id:
+        insert_album_componist(componist_id, album_id, c, conn)
     conn.close()
 
 
+def rename_frontjpg(path):
+    src = '{}/{}'.format(path, 'front.jpg')
+    trg = '{}/{}'.format(path, 'folder.jpg')
+    if os.path.exists(src):
+        print('renamed to:{}'.format(trg))
+        os.rename(src, trg)
+
+
 def main():
-    store_pieces()
+    # for i in range(48, 56):  # 38):
+    #     nr = i
+    #     if i < 10:
+    #         nr = '0{}'.format(i)
+    #     path = '{}{}'.format(cue_path, nr)
+
+    path = "/Volumes/Media/Audio/Klassiek/Collecties/Archiv Produktion 1947 - 2013/archiv_produktion_1947_2013_40b"
+    rename_frontjpg(path)
+    # print(path)
+    store_pieces(path)
 
 
 if __name__ == '__main__':

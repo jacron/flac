@@ -6,3 +6,5 @@ from performer import *
 from albumimage import *
 from componist import *
 from instrument import *
+from extra import *
+from collection import *

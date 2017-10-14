@@ -25,11 +25,11 @@ def dequote(line):
 def splits_comma_naam(naam):
     c_namen = naam.split(',')
     if len(c_namen) > 1:
-        c_firstname = c_namen[1].split()[0]
-        c_lastname = c_namen[0].split()[0]
+        c_firstname = c_namen[1].strip()
+        c_lastname = c_namen[0].strip()
     else:
         c_firstname = ''
-        c_lastname = naam.split()[0]
+        c_lastname = naam.strip()
     return c_firstname, c_lastname
 
 
@@ -38,29 +38,11 @@ def splits_naam(naam):
         return splits_comma_naam(naam)
     c_namen = naam.split()
     if len(c_namen) > 1:
-        c_firstname = c_namen[0].split()[0]
-        c_lastname = c_namen[1].split()[0]
+        c_firstname = c_namen[0].strip()
+        c_lastname = c_namen[1].strip()
     else:
         c_firstname = ''
-        c_lastname = naam.split()[0]
+        c_lastname = naam.strip()
     return c_firstname, c_lastname
 
 
-def menu_items():
-    return [
-            {'href': '/home/',
-             'label': 'Home',
-             },
-            {'href': '/componist/',
-             'label': 'Componist',
-             },
-            {'href': '/performer/',
-             'label': 'Artiest',
-             },
-            {'href': '/instrument/',
-             'label': 'Instrument',
-             },
-            {'href': '/album/',
-             'label': 'Album',
-             },
-        ]

@@ -1,13 +1,13 @@
 from ..services import splits_naam
 
 
-def insert_album(title, path, instrument_id, componist_id, album_id, c, conn):
+def insert_album(title, path, instrument_id, album_id, c, conn):
     sql = '''
     INSERT OR IGNORE INTO Album
-    (Title, InstrumentID, ComponistID, AlbumID, Path) 
-    VALUES (?,?,?,?,?)
+    (Title, InstrumentID, AlbumID, Path) 
+    VALUES (?,?,?,?)
     '''
-    c.execute(sql, (title, instrument_id, componist_id, album_id, path))
+    c.execute(sql, (title, instrument_id, album_id, path))
     conn.commit()
     sql = '''
     SELECT ID from Album WHERE Title=?
@@ -33,7 +33,7 @@ def insert_componist(componist, c, conn):
 
 def insert_piece(name, code, album_id, c, conn):
     sql = '''
-    INSERT INTO Piece (Name, AlbumID, LibraryCode)
+    INSERT OR IGNORE INTO Piece (Name, AlbumID, LibraryCode)
     VALUES (?,?,?)
     '''
     c.execute(sql, (name, album_id, code))
@@ -69,3 +69,21 @@ def insert_performer(name, c, conn):
     return c.execute(sql, (c_firstname, c_lastname,)).fetchone()
 
 
+def insert_album_performer(performer_id, album_id, c, conn):
+    sql = '''
+    INSERT OR IGNORE INTO Performer_Album
+    (PerformerID, AlbumID)
+    VALUES (?,?)
+    '''
+    c.execute(sql, (performer_id, album_id))
+    conn.commit()
+
+
+def insert_album_componist(componist_id, album_id, c, conn):
+    sql = '''
+    INSERT OR IGNORE INTO Componist_Album
+    (ComponistID, AlbumID)
+    VALUES (?,?)
+    '''
+    c.execute(sql, (componist_id, album_id))
+    conn.commit()

@@ -16,9 +16,16 @@ body {
 .hyperlink {
     cursor: pointer;
 }
+.hyperlink.cuesheet {
+    color: darkgreen;
+}
 .hyperlink a{
-    color: #447e9b;
+    /*color: #447e9b;*/
     text-decoration: none;
+    cursor: pointer;
+}
+.artiest a {
+    color: green;
 }
 .album-image {
     height: 220px;
@@ -27,7 +34,7 @@ body {
     height: 160px;
 }
 .album-image.expanded {
-    height: 400px;
+    height: 560px;
 }
 nav {
     background-color: rgba(21,21,100,.90);
@@ -52,4 +59,15 @@ nav a.selected {
     width: 200px;
     height: 230px;
     list-style: none;
+}
+.toggle-content,
+.toggle-edit {
+    cursor: pointer;
+}
+.content.stukken,
+.content.edit {
+    display: none;
+}
+.clear {
+    clear: both;
 }

@@ -1,7 +1,8 @@
 # coding=utf-8
 import os
 from django.http import HttpResponse
-from ..db import get_album, get_piece, update_album_title
+from ..db import (get_album, get_piece, update_album_title,
+                  add_componist_to_album, new_componist, )
 from django.conf import settings
 
 
@@ -24,6 +25,14 @@ def do_update_album_title(title, albumid):
     return update_album_title(album_id=int(albumid), title=title)
 
 
+def add_componist(componistid, albumid):
+    return add_componist_to_album(int(componistid), int(albumid))
+
+
+def get_new_componist(name):
+    return new_componist(name)
+
+
 def do_post(post):
     cmd = post['cmd']
     if cmd == 'play':
@@ -34,6 +43,10 @@ def do_post(post):
         return 'Finder opened'
     if cmd == 'update_album_title':
         return do_update_album_title(post['title'], post['albumid'])
+    if cmd == 'add_componist':
+        return add_componist(post['componistid'], post['albumid'])
+    if cmd == 'new_componist':
+        return get_new_componist(post['name'])
 
 
 def ajax(request):

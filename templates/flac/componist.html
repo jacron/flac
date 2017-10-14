@@ -4,6 +4,7 @@
 <h2>
     {{ componist.FullName }}
 </h2>
+<img src="/componistimage/{{ componist.ID }}/" class="album-image">
 <h4>{{ componist.Birth }} - {%  if componist.Death %}{{ componist.Death }}{% endif %}</h4>
 {% albumlist items %}
 {% endblock %}

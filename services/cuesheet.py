@@ -11,12 +11,18 @@ def get_title(data):
             return dequote(line)
 
 
-def get_cuesheet(path, id):
+def get_cuesheet_title(path, id):
     with open(path, 'r') as f:
         data = f.read()
         return {
             'Title': get_title(data),
-            'ID': id
+            'ID': id,
         }
 
 
+def get_cuesheet(filename, id):
+    filename = ' '.join(filename.split('.')[:-1])
+    return {
+        'Title': filename,
+        'ID': id,
+    }
