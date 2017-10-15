@@ -102,14 +102,16 @@ def named_persons(items):
             'LastName': item[1],
             'FullName': u'{} {}'.format(item[0], item[1]),
             'Path': item[2],
-            'ID': item[3],
+            'Birth': item[3],
+            'Death': item[4],
+            'ID': item[5],
         })
     return out
 
 
 def get_componisten():
     sql = '''
-      SELECT FirstName, LastName, Path, ID from Componist
+      SELECT FirstName, LastName, Path, Birth, Death, ID from Componist
       ORDER BY LastName
     '''
     items = get_items(sql)
@@ -118,7 +120,7 @@ def get_componisten():
 
 def get_performers():
     sql = '''
-      SELECT FirstName, LastName, Path, ID from Performer
+      SELECT FirstName, LastName, Path, Birth, Death, ID from Performer
       ORDER BY LastName
     '''
     items = get_items(sql)
@@ -135,7 +137,7 @@ def get_instruments():
         out.append({
             'Name': item[0],
             'ID': item[1],
-            'FullName': item[0],  # for editalbum tag
+            'LastName': item[0],  # for editalbum tag
         })
     return out
 

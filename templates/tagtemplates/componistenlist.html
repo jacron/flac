@@ -4,6 +4,7 @@
             <a href="/componist/{{ item.ID }}">
                 <img src="/componistimage/{{ item.ID }}/" class="album-image-thumb">
             <div class="componist-naam" componistid="{{ item.ID }}">{{ item.FullName }}</div>
+                <div class="jaren">{{ item.Birth }} - {{ item.Death }}</div>
             </a>
         </li>
     {% endfor %}

@@ -31,6 +31,8 @@ urlpatterns = [
     url(r'^collection/$', views.collections),
     url(r'^collection/(?P<album_id>.+)/$', views.album),
     url(r'^ajax/$', views.ajax),
+    url(r'^gather/(P<gather_id>.+)/$', views.gather),
+    url(r'^gather/$', views.gather),
     url(r'^albumimage/(?P<album_id>.+)/$', views.albumimage),
     url(r'^componistimage/(?P<componist_id>.+)/$', views.componistimage),
     url(r'^performerimage/(?P<performer_id>.+)/$', views.performerimage),
