@@ -1,7 +1,10 @@
 {% extends "flac/base.html" %}
 {% load page_tags %}
+{% block title %}
+    {{ performer.FullName }}
+{% endblock %}
 {% block page %}
-<h2>{{ performer.FirstName }} {{ performer.LastName }}</h2>
+<h2>{{ performer.FullName }}</h2>
 <img src="/performerimage/{{ performer.ID }}/" class="album-image">
 <h4>{{ performer.Birth }} - {% if performer.Death %}{{ performer.Death }}{% endif %}</h4>
 {% albumlist items %}

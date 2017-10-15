@@ -1,5 +1,8 @@
 {% extends "flac/base.html" %}
 {% load page_tags %}
+{% block title %}
+    {{ componist.FullName }}
+{% endblock %}
 {% block page %}
 <h2>
     {{ componist.FullName }}

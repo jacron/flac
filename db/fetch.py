@@ -182,7 +182,10 @@ def get_instrument(id_instrument):
     sql = '''
     SELECT Name from Instrument WHERE ID=?
     '''
-    return get_item_with_id(sql, id_instrument)
+    fields = get_item_with_id(sql, id_instrument)
+    return {
+        "Name": fields[0],
+    }
 
 
 def get_componist(id_componist):

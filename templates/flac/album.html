@@ -1,6 +1,9 @@
 {% extends "flac/base.html" %}
 {% load static %}
 {% load page_tags %}
+{% block title %}
+    {{ album.Title }}
+{% endblock %}
 {% block page %}
     <form>{% csrf_token %}</form>
     <div class="hyperlink">

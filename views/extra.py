@@ -14,6 +14,7 @@ def list_scarlatti(request):
     return HttpResponse(template.render(
         {
             'items': get_scarlatti_k_pieces(),
+            'page_title': 'Scarlatti Sonaten (Kirkpatrick nummering)'
         }, request))
 
 
