@@ -119,3 +119,12 @@ ComponistID        FROM Componist_Album
 
 select * from Piece
 where AlbumID=151;
+
+select Name from Piece
+where Piece.AlbumID not in (select ID from Album);
+
+select C.*
+from Piece C
+left join Album M
+on M.ID = C.AlbumID
+where M.ID ISNULL ;

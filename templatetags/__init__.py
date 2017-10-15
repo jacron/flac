@@ -1,7 +1,4 @@
 MENU_ITEMS =[
-        {'href': '/home/',
-         'label': 'Home',
-         },
         {'href': '/componist/',
          'label': 'Componist',
          },
