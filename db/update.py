@@ -35,6 +35,17 @@ def add_performer_to_album(performerid, albumid):
     con.commit()
 
 
+def add_instrument_to_album(instrumentid, albumid):
+    sql = """
+    UPDATE Album
+    SET InstrumentID=?
+    WHERE ID=?
+    """
+    con, c = connect()
+    ret = c.execute(sql, (instrumentid, albumid, )).fetchone()
+    con.commit()
+
+
 def new_componist(name):
     c_firstname, c_lastname = splits_naam(name)
     sql = """
@@ -65,3 +76,18 @@ def new_performer(name):
     SELECT ID from Performer WHERE FirstName=? AND LastName=?
     '''
     return c.execute(sql, (c_firstname, c_lastname, )).fetchone()
+
+
+def new_instrument(name):
+    sql = """
+    INSERT OR IGNORE INTO Instrument 
+    (Name)
+    VALUES(?)
+    """
+    con, c = connect()
+    ret = c.execute(sql, (name, )).fetchone()
+    con.commit()
+    sql = '''
+    SELECT ID from Instrument WHERE Name=?
+    '''
+    return c.execute(sql, (name, )).fetchone()

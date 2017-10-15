@@ -36,8 +36,16 @@ def componistenlist(context, items):
 
 @register.inclusion_tag(
     'tagtemplates/performerslist.html',
-    takes_context=True
 )
 def performerslist(context, items):
     context['items'] = items
     return context
+
+
+#     {% editalbum 'select-performer' 'add-performer' album.ID performers %}
+
+@register.inclusion_tag(
+    'tagtemplates/editalbum.html',
+)
+def editalbum(select, add, albumid, options):
+    return dict(select=select, add=add, albumid=albumid, options=options)

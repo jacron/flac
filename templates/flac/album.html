@@ -30,6 +30,11 @@
             <a href="/performer/{{ performer.ID }}/">{{ performer.FullName }}</a>
         </h3>
     {% endfor %}
+    {%  if album_instrument %}
+    <h4 class="hyperlink">
+        <a href="/instrument/{{ album_instrument.ID }}/">{{ album_instrument.Name }}</a>
+    </h4>
+    {% endif %}
     {% for cuesheet in cuesheet_output %}
         <div class="hyperlink cuesheet">
             <a onclick="play({{ cuesheet.ID }})">{{ cuesheet.Title }}</a>
@@ -50,52 +55,10 @@
     <h4>Bewerk<i class="toggle-edit fa fa-caret-up"></i></h4>
     <div class="content edit">
     Componist
-        <table cellpadding="4">
-            <tr>
-                <td>
-                    <select class="select-componist" albumid="{{ album.ID }}">
-                        {% for option in componisten %}
-                            <option value="{{ option.ID }}">{{ option.FullName }}</option>
-                        {% endfor %}
-                    </select>
-                </td>
-                <td>
-                    <button class="select-componist">Voeg toe</button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input class="add-componist" type="text" albumid="{{ album.ID }}">
-                </td>
-                <td>
-                    <button class="add-componist">Nieuw</button>
-                </td>
-            </tr>
-        </table>
+    {% editalbum 'select-componist' 'add-componist' album.ID componisten %}
     Artiest
-        <table cellpadding="4">
-            <tr>
-                <td>
-                    <select class="select-performer"
-                            albumid="{{ album.ID }}">
-                        {% for option in performers %}
-                            <option value="{{ option.ID }}">{{ option.FullName }}</option>
-                        {% endfor %}
-                    </select>
-                </td>
-                <td>
-                    <button class="select-performer">Voeg toe</button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input class="add-performer" type="text"
-                           albumid="{{ album.ID }}">
-                </td>
-                <td>
-                    <button class="add-performer">Nieuw</button>
-                </td>
-            </tr>
-        </table>
+    {% editalbum 'select-performer' 'add-performer' album.ID performers %}
+    Instrument
+    {% editalbum 'select-instrument' 'add-instrument' album.ID instrumenten %}
     </div>
 {% endblock %}

@@ -1,8 +1,9 @@
 from django.http import HttpResponse
 from django.template import loader
 from ..db import (
-    get_albums, get_album, get_pieces, get_componisten, get_performers,
-    get_album_albums, get_album_performers, get_album_componisten, get_mother_title)
+    get_albums, get_album, get_pieces, get_componisten, get_performers, get_instruments,
+    get_album_albums, get_album_performers, get_album_componisten, get_album_instruments,
+    get_mother_title)
 from ..services import get_cuesheet_title, get_cuesheet
 
 
@@ -45,6 +46,8 @@ def album(request, album_id):
         'album_componisten': get_album_componisten(album_id),
         'performers': get_performers(),
         'album_performers': get_album_performers(album_id),
+        'instrumenten': get_instruments(),
+        'album_instrument': get_album_instruments(album_id),
         'cuesheet_output': cuesheets,
     }
     return HttpResponse(template.render(context, request))

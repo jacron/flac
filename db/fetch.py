@@ -129,7 +129,15 @@ def get_instruments():
     sql = '''
       SELECT Name, ID from Instrument
     '''
-    return get_items(sql)
+    items = get_items(sql)
+    out = []
+    for item in items:
+        out.append({
+            'Name': item[0],
+            'ID': item[1],
+            'FullName': item[0],  # for editalbum tag
+        })
+    return out
 
 
 def get_performer_albums(id_performer):
@@ -191,6 +199,24 @@ def get_componist(id_componist):
         "Path": fields[4],
         "ID": fields[5],
     }
+
+
+def get_album_instruments(id_album):
+    # solo instruments only
+    sql = '''
+    SELECT Name, Instrument.ID 
+    FROM Instrument
+    JOIN Album ON Album.InstrumentID = Instrument.ID
+    WHERE Album.ID = ?
+    '''
+    fields = get_item_with_id(sql, id_album)
+    if fields:
+        return {
+            "Name": fields[0],
+            "ID": fields[1],
+        }
+    else:
+        return {}
 
 
 def get_album_performers(id_album):
