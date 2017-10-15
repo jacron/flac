@@ -13,19 +13,9 @@ from venv.flac.db import (
 play_types = ('cue', "flac", "ape", "mp3", "iso", "wma")
 
 k_split = None
-# artiest="Wilhelm Kempf"
-artiest=None
-# componist = "Gustav Mahler"
-# componist="Beethoven, Ludwig von"
+artiest = None
 componist = None
-# instrument = "Piano"
 instrument = None
-# mother_album_id = 50 # beethoven piano solo
-# mother_album_id = 72 # ronald brautigam
-# mother_album_id = 85 # wilhelm kempf
-# mother_album_id = 94 # archiv produktion
-mother_album_id=150  # avant garde=None
-mother_album_id=None # is collection
 rows = []
 
 
@@ -71,7 +61,29 @@ def insert_pieces(path, album_id, conn, c):
             conn=conn)
 
 
-def process_album(path):
+def insert_artiest(artiest, c, conn, album_id):
+    if artiest:
+        performer_id = insert_performer(artiest, c, conn)[0]
+    else:
+        performer_id = None
+    if performer_id:
+        insert_album_performer(performer_id, album_id, c, conn)
+
+
+def insert_composer(componist, c, conn, album_id):
+    if componist:
+        componist_id = insert_componist(componist, c, conn)[0]
+    else:
+        componist_id = None
+    if componist_id:
+        insert_album_componist(componist_id, album_id, c, conn)
+
+
+def process_album(path, mother_id, is_collectie):
+    # print (path)
+    # print(mother_id)
+    # return
+
     global rows
     rows = []
 
@@ -82,47 +94,54 @@ def process_album(path):
     w = path.split('/')
     album_title = w[-1].replace("_", "")
 
-    if artiest:
-        performer_id = insert_performer(artiest, c, conn)[0]
-    else:
-        performer_id = None
-    if componist:
-        componist_id = insert_componist(componist, c, conn)[0]
-    else:
-        componist_id = None
     if instrument:
         instrument_id = insert_instrument(instrument, c, conn)[0]
     else:
         instrument_id = None
     album_id = insert_album(
         title=album_title,
-        path=path,
+        path=path.decode('latin-1').encode('utf-8'),
         instrument_id=instrument_id,
-        is_collectie=1,
+        is_collectie=is_collectie,
         c=c,
         conn=conn,
-        album_id=mother_album_id,
+        album_id=mother_id,
     )[0]
     print("album_id={}".format(album_id))
     insert_pieces(path, album_id, conn, c)
-    if performer_id:
-        insert_album_performer(performer_id, album_id, c, conn)
-    if componist_id:
-        insert_album_componist(componist_id, album_id, c, conn)
+    insert_artiest(artiest, c, conn, album_id)
+    insert_composer(componist, c, conn, album_id)
     conn.close()
 
 
-def rename_frontjpg(path):
-    src = '{}/{}'.format(path, 'front.jpg')
+def rename_frontjpg(path, name):
+    src = '{}/{}.jpg'.format(path, name)
     trg = '{}/{}'.format(path, 'folder.jpg')
+    if os.path.exists(trg):
+        return
+
     if os.path.exists(src):
-        print('renamed to:{}'.format(trg))
         os.rename(src, trg)
+        print('renamed to:{}'.format(trg))
+    else:
+        wild = '{}/front*.jpg'.format(path)
+        pics = glob.glob(wild)
+        if len(pics) > 0:
+            src = pics[0]
+            print('renaming {}\n to:{}'.format(src, trg))
+            os.rename(src, trg)
+        else:
+            wild = '{}/*.jpg'.format(path)
+            pics = glob.glob(wild)
+            if len(pics) > 0:
+                src = pics[0]
+                print('renaming {}\n to:{}'.format(src, trg))
+                os.rename(src, trg)
 
 
 def process_path(path, f):
     print(f)
-    p = u'{}/{}'.format(path, f)
+    p = '{}/{}'.format(path, f)
     if os.path.isdir(p):
         for ff in os.listdir(p):
             print(ff)
@@ -134,61 +153,76 @@ def process_path(path, f):
             # os.rename(p, trg)
 
 
-
-def process_custom(path):
-    # files_path = u"{}{}".format(path, "/*.*")
-    # print(files_path)
-    [process_path(path, f) for f in os.listdir(path)]
+def process_dir(path, mid):
+    for d in os.listdir(path):
+        p = '{}/{}'.format(path, d).decode('latin-1').encode('utf-8')
+        if os.path.isdir(p) and d != 'website' and d != 'artwork':
+            # rename_frontjpg(p, 'box front')
+            process_album(p, mid, 0)
 
 
 def main():
-    # for i in range(48, 56):  # 38):
-    #     nr = i
-    #     if i < 10:
-    #         nr = '0{}'.format(i)
-    #     path = '{}{}'.format(cue_path, nr)
-
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Archiv Produktion 1947 - 2013/archiv_produktion_1947_2013_40b"
-    # path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project"
-    # path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project/AGP151 - Alban Berg"
-    # path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project/AGP151 - Alban Berg - 24bits"
-    # path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project/AGP170 - Ivo Malec II"
-    # path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project/AGP171 - Ivo Malec III"
-    # path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project/AGP175 - Pierrot-Lunaire"
-    # path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project/AGP176 - Ondes Martenot"
-    # path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project/AGP177 - Music for Ondes Martenot"
-    # path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project/AGP180 - International Week of New Music"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Avant Garde Project/Kagel - Acustica"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/BBC Legends"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Classic Voice Antiqua"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Decca Legends"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Decca Mono Years Complete - 2496"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Decca, The Decca Sound"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Deutsche Harmonia Mundi 50 Years"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Deutsche Harmonia Mundi Collectie 50 CD"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/DG - the originals"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/DG - the originals - vinyl"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/DG 111 years"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/DG 111 YEARS B"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Divox Antiqua Historic Organs Series"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Franklin Mint"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Harmonia Mundi - 50 years"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Harmonia Mundi - Century Collection"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Harmonia Mundi - Freiburger Barockorchester"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Harmonia Mundi - Liturgie"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Harmonia Mundi - Sacred Music"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Mercury Living Presence"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Mercury Living Presence 2"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/MLP - box 3"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Musik in Deutschland 1950-2000"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Philips Duo"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/RCA Living Stereo"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Treasures of chamber music"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/Vivarte Sony 60 CD Collection"
+    paths = []
+    ids = []
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/BBC Legends")
+    ids.append(168)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Classic Voice Antiqua")
+    ids.append(169)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Decca Legends")
+    ids.append(170)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Decca Mono Years Complete - 2496")
+    ids.append(171)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Decca, The Decca Sound")
+    ids.append(172)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Deutsche Harmonia Mundi 50 Years")
+    ids.append(173)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Deutsche Harmonia Mundi Collectie 50 CD")
+    ids.append(174)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/DG - the originals")
+    ids.append(175)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/DG - the originals - vinyl")
+    ids.append(176)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/DG 111 years")
+    ids.append(177)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/DG 111 YEARS B")
+    ids.append(178)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Divox Antiqua Historic Organs Series")
+    ids.append(179)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Franklin Mint")
+    ids.append(180)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Harmonia Mundi - 50 years")
+    ids.append(181)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Harmonia Mundi - Century Collection")
+    ids.append(182)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Harmonia Mundi - Liturgie")
+    ids.append(183)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Harmonia Mundi - Sacred Music")
+    ids.append(184)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Mercury Living Presence")
+    ids.append(185)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Mercury Living Presence 2")
+    ids.append(186)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/MLP - box 2")
+    ids.append(188)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Musik in Deutschland 1950-2000")
+    ids.append(190)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Philips Duo")
+    ids.append(191)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/RCA Living Stereo")
+    ids.append(192)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Treasures of chamber music")
+    ids.append(193)
+    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Vivarte Sony 60 CD Collection")
+    ids.append(168) # !!
     # rename_frontjpg(path)
     # print(path)
-    # process_custom(path)
-    process_album(path)
+
+    # for path, mid in zip(paths, ids):
+    nr = 24
+    path = paths[nr]
+    mid = ids[nr]
+    # print(path, mid)
+    process_dir(path, mid)
 
 
 if __name__ == '__main__':

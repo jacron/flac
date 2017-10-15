@@ -2,7 +2,8 @@
 import os
 from django.http import HttpResponse
 from ..db import (get_album, get_piece, update_album_title,
-                  add_componist_to_album, new_componist, )
+                  add_componist_to_album, add_performer_to_album,
+                  new_componist, new_performer )
 from django.conf import settings
 
 
@@ -34,6 +35,15 @@ def get_new_componist(name, albumid):
     return add_componist_to_album(int(componistid[0]), int(albumid))
 
 
+def add_performer(performerid, albumid):
+    return add_performer_to_album(int(performerid), int(albumid))
+
+
+def get_new_performer(name, albumid):
+    performerid = new_performer(name)
+    return add_performer_to_album(int(performerid[0]), int(albumid))
+
+
 def do_post(post):
     cmd = post['cmd']
     if cmd == 'play':
@@ -44,10 +54,18 @@ def do_post(post):
         return 'Finder opened'
     if cmd == 'update_album_title':
         return do_update_album_title(post['title'], post['albumid'])
+
+    # componist
     if cmd == 'add_componist':
         return add_componist(post['componistid'], post['albumid'])
     if cmd == 'new_componist':
         return get_new_componist(post['name'], post['albumid'])
+
+    # performer
+    if cmd == 'add_performer':
+        return add_performer(post['performerid'], post['albumid'])
+    if cmd == 'new_performer':
+        return get_new_performer(post['name'], post['albumid'])
 
 
 def ajax(request):

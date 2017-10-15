@@ -128,3 +128,17 @@ from Piece C
 left join Album M
 on M.ID = C.AlbumID
 where M.ID ISNULL ;
+
+update Album set IsCollection=0
+where Title like 'BBCL%';
+
+select Title from Album
+where Title like 'BBCL%';
+
+select Title from Album
+where AlbumID=168 and Title like 'cd %';
+
+update Album
+set AlbumID=194
+where AlbumID=168 and Title like 'cd %';
+
