@@ -4,7 +4,7 @@
 {% block title %}{{ page_title }}{% endblock %}
 {% block page %}
     <form>{% csrf_token %}</form>
-    <h1>{{ page_title }}</h1>
+    <h2>{{ page_title }} ({{ items|length }})</h2>
     <table cellpadding="4">
         {% for item in items %}
             <tr>

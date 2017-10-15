@@ -2,7 +2,6 @@
 {% load page_tags %}
 {% block title %}Collecties{% endblock %}
 {% block page %}
-    <h1>Collecties</h1>
-    <h4>Kies een collectie</h4>
+    <h2>Collecties ({{ albums|length }})</h2>
     {% albumlist albums %}
 {% endblock %}

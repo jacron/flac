@@ -3,6 +3,6 @@
 {% block title %}Componisten{% endblock %}
 {% block page %}
     <input class="typeahead" type="text" placeholder="Zoek componist">
-    <h4>Kies een componist</h4>
+    <h3>Componisten ({{ items|length }})</h3>
     {% componistenlist items %}
 {% endblock %}
