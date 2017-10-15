@@ -1,6 +1,7 @@
 {% extends "flac/base.html" %}
 {% load page_tags %}
 {% block page %}
+    <input class="typeahead" type="text" placeholder="Zoek componist">
     <h4>Kies een componist</h4>
     {% componistenlist items %}
 {% endblock %}

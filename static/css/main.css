@@ -71,3 +71,6 @@ nav a.selected {
 .clear {
     clear: both;
 }
+.tt-menu {
+    background: #fff;
+}

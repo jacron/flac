@@ -36,6 +36,7 @@ def componistenlist(context, items):
 
 @register.inclusion_tag(
     'tagtemplates/performerslist.html',
+    takes_context=True
 )
 def performerslist(context, items):
     context['items'] = items

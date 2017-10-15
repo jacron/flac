@@ -7,3 +7,7 @@ CREATE TABLE Performer
     Born DATE
 );
 CREATE UNIQUE INDEX sqlite_autoindex_Performer_1 ON Performer (FirstName, LastName)
+    
+    
+    SELECT FirstName, LastName, Path, ID from Performer
+      ORDER BY LastName;

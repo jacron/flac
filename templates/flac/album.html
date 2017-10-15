@@ -8,9 +8,9 @@
     </div>
     <img src="/albumimage/{{ album.ID }}/"
          class="album-image">
-    <h1 contenteditable="true" name="title" class="edit-title" albumid="{{ album.ID }}">
+    <h2 contenteditable="true" name="title" class="edit-title" albumid="{{ album.ID }}">
         {{ album.Title }}
-    </h1>
+    </h2>
     {% if componist %}
         <h2 class="hyperlink"><a href="/componist/{{ componist.ID }}/">{{ componist.FullName }}</a></h2>
     {% endif %}

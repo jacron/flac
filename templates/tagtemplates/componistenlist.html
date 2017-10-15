@@ -3,7 +3,7 @@
         <li class="hyperlink">
             <a href="/componist/{{ item.ID }}">
                 <img src="/componistimage/{{ item.ID }}/" class="album-image-thumb">
-            <div>{{ item.FullName }}</div>
+            <div class="componist-naam" componistid="{{ item.ID }}">{{ item.FullName }}</div>
             </a>
         </li>
     {% endfor %}

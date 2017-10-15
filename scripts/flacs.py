@@ -10,7 +10,7 @@ from venv.flac.db import (
     insert_album, insert_componist, insert_performer, insert_instrument,
     insert_piece, insert_album_performer, insert_album_componist, )
 
-play_types = ('cue', "flac", "ape", "mp3", "iso", "wma")
+play_types = ('cue', "flac", "ape", "mp3", "iso", "wma", "wav", "mp3", )
 
 k_split = None
 artiest = None
@@ -218,12 +218,15 @@ def main():
     # print(path)
 
     # for path, mid in zip(paths, ids):
-    nr = 24
-    path = paths[nr]
-    mid = ids[nr]
+    # nr = 24
+    # path = paths[nr]
+    # mid = ids[nr]
     # print(path, mid)
-    process_dir(path, mid)
-
+    mid = 169
+    path="/Volumes/Media/Audio/Klassiek/Collecties/BBC Legends/BBCL4015 - Gilels - Schumane, Scarlatti, Bach"
+    PendingDeprecationWarning="/Volumes/Media/Audio/Klassiek/Collecties/Classic Voice Antiqua/ClassicAntiqua_15-WAV"
+    # process_dir(path, mid)
+    process_album(path, mid, 0)
 
 if __name__ == '__main__':
     main()
