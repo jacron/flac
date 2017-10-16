@@ -28,7 +28,7 @@ body {
     color: green;
 }
 .album-image {
-    height: 220px;
+    height: 440px;
 }
 .album-image-thumb {
     height: 160px;
@@ -61,11 +61,13 @@ nav a.selected {
     list-style: none;
 }
 .toggle-content,
-.toggle-edit {
+.toggle-edit,
+.toggle-cue {
     cursor: pointer;
+    font-size: 18px;
 }
 .content.stukken,
-.content.edit {
+.content.cue {
     display: none;
 }
 .clear {
@@ -73,4 +75,10 @@ nav a.selected {
 }
 .tt-menu {
     background: #fff;
+}
+.album ul {
+    margin-top: 0;
+}
+.album .content.stukken {
+    margin-top: -20px;
 }

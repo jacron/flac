@@ -10,9 +10,12 @@
             <tr>
             <td class="code">{{ item.k_code }}</td>
             <td class="artiest hyperlink">
-                <a href="/performer/{{ item.ArtiestID }}">{{ item.Artiest }}</a></td>
+                <a href="/performer/{{ item.Artiest.ID }}">{{ item.Artiest.Name }}</a></td>
             <td class="hyperlink">
-                <div onclick="play({{ item.ID }})">{{ item.Name }}</div>
+                <a href="/instrument/{{ item.Instrument.ID }}">{{ item.Instrument.Name }}</a>
+            </td>
+            <td class="hyperlink">
+                <div onclick="play({{ item.Piece.ID }})">{{ item.Piece.Name }}</div>
             </td>
             </tr>
         {% endfor %}

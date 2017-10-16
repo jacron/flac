@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from ..db import get_album, get_componist, get_performer
+from ..db import get_album, get_componist_path, get_performer_path
 from django.conf import settings
 import os
 
@@ -25,17 +25,25 @@ def albumimage(request, album_id):
     return get_image(image_path)
 
 
-def componistimage(request, componist_id):
-    componist = get_componist(componist_id)
-    if not componist['Path']:
+def albumimageback(request, album_id):
+    album = get_album(album_id)
+    if not album['Path']:
         return empty_response()
-    image_path = componist['Path'] + settings.PERSON_FILE
+    image_path = album['Path'] + settings.BACK_FILE
+    return get_image(image_path)
+
+
+def componistimage(request, componist_id):
+    componist_path = get_componist_path(componist_id)
+    if not componist_path:
+        return empty_response()
+    image_path = componist_path + settings.PERSON_FILE
     return get_image(image_path)
 
 
 def performerimage(request, performer_id):
-    performer = get_performer(performer_id)
-    if not performer['Path']:
+    performer_path = get_performer_path(performer_id)
+    if not performer_path:
         return empty_response()
-    image_path = performer['Path'] + settings.PERSON_FILE
+    image_path = performer_path + settings.PERSON_FILE
     return get_image(image_path)

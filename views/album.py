@@ -4,7 +4,7 @@ from ..db import (
     get_albums, get_album, get_pieces, get_componisten, get_performers, get_instruments,
     get_album_albums, get_album_performers, get_album_componisten, get_album_instruments,
     get_mother_title)
-from ..services import get_cuesheet_title, get_cuesheet
+from ..services import get_full_cuesheet, get_cuesheet
 
 
 def organize_pieces(items, album_path):
@@ -15,11 +15,11 @@ def organize_pieces(items, album_path):
         if ffile:
             extension = ffile.split('.')[-1]
             if extension == 'cue':
-                if ffile == 'lijst.cue':
-                    path = u'{}/{}'.format(album_path, ffile)
-                    cuesheets.append(get_cuesheet_title(path, item[1]))
-                else:
-                    cuesheets.append(get_cuesheet(ffile, item[1]))
+                # if ffile == 'lijst.cue':
+                path = u'{}/{}'.format(album_path, ffile)
+                #     cuesheets.append(get_cuesheet_title(path, item[1]))
+                # else:
+                cuesheets.append(get_full_cuesheet(path, item[1]))
             else:
                 pieces.append(item)
     return cuesheets, pieces

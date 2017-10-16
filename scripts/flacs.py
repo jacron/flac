@@ -153,67 +153,20 @@ def process_path(path, f):
             # os.rename(p, trg)
 
 
-def process_dir(path, mid):
+def process_dir(path, mid, iscollectie):
     for d in os.listdir(path):
         p = '{}/{}'.format(path, d).decode('latin-1').encode('utf-8')
         if os.path.isdir(p) and d != 'website' and d != 'artwork':
             # rename_frontjpg(p, 'box front')
-            process_album(p, mid, 0)
+            # print(p, mid, iscollectie)
+            process_album(p, mid, iscollectie)
 
 
 def main():
     paths = []
     ids = []
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/BBC Legends")
-    ids.append(168)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Classic Voice Antiqua")
-    ids.append(169)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Decca Legends")
-    ids.append(170)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Decca Mono Years Complete - 2496")
-    ids.append(171)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Decca, The Decca Sound")
-    ids.append(172)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Deutsche Harmonia Mundi 50 Years")
-    ids.append(173)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Deutsche Harmonia Mundi Collectie 50 CD")
-    ids.append(174)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/DG - the originals")
-    ids.append(175)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/DG - the originals - vinyl")
-    ids.append(176)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/DG 111 years")
-    ids.append(177)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/DG 111 YEARS B")
-    ids.append(178)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Divox Antiqua Historic Organs Series")
-    ids.append(179)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Franklin Mint")
-    ids.append(180)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Harmonia Mundi - 50 years")
-    ids.append(181)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Harmonia Mundi - Century Collection")
-    ids.append(182)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Harmonia Mundi - Liturgie")
-    ids.append(183)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Harmonia Mundi - Sacred Music")
-    ids.append(184)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Mercury Living Presence")
-    ids.append(185)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Mercury Living Presence 2")
-    ids.append(186)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/MLP - box 2")
-    ids.append(188)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Musik in Deutschland 1950-2000")
-    ids.append(190)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Philips Duo")
-    ids.append(191)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/RCA Living Stereo")
-    ids.append(192)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Treasures of chamber music")
-    ids.append(193)
-    paths.append("/Volumes/Media/Audio/Klassiek/Collecties/Vivarte Sony 60 CD Collection")
-    ids.append(168) # !!
+    # paths.append("/Volumes/Media/Audio/Klassiek/Collecties/BBC Legends")
+    # ids.append(168)
     # rename_frontjpg(path)
     # print(path)
 
@@ -222,11 +175,18 @@ def main():
     # path = paths[nr]
     # mid = ids[nr]
     # print(path, mid)
-    mid = 169
-    path="/Volumes/Media/Audio/Klassiek/Collecties/BBC Legends/BBCL4015 - Gilels - Schumane, Scarlatti, Bach"
-    PendingDeprecationWarning="/Volumes/Media/Audio/Klassiek/Collecties/Classic Voice Antiqua/ClassicAntiqua_15-WAV"
-    # process_dir(path, mid)
-    process_album(path, mid, 0)
+    # mid = 169
+    mid = None
+    # path="/Volumes/Media/Audio/Klassiek/Collecties/BBC Legends/BBCL4015 - Gilels - Schumane, Scarlatti, Bach"
+    # path="/Volumes/Media/Audio/Klassiek/Collecties/Classic Voice Antiqua/ClassicAntiqua_15-WAV"
+    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums"
+    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Christopher Page, Gothic Voices - The earliest songbook in England"
+    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Christopher Page, Gothic Voices - The Spirits of England and France - vol 3"
+    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Grieg - Sibelius"
+    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/historisch russisch archief"
+    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Jefta"
+    # process_dir(path, mid, 2)
+    process_album(path, mid, 2)
 
 if __name__ == '__main__':
     main()

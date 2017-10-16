@@ -33,7 +33,7 @@ def named_albums(items):
 def get_album_albums(id_album):
     sql = '''
       SELECT Title, Album.ID, Componist.FirstName, Componist.LastName  
-      from Album 
+      FROM Album 
       LEFT JOIN Componist_Album ON Componist_Album.AlbumID=Album.ID
       LEFT JOIN Componist ON Componist.ID=Componist_Album.ComponistID
       WHERE Album.AlbumID=?
@@ -57,7 +57,7 @@ def get_album_albums(id_album):
 def get_albums():
     sql = '''
       SELECT Title, Album.ID, Componist.FirstName, Componist.LastName  
-      from Album 
+      FROM Album 
       JOIN Componist_Album ON Album.ID=Componist_Album.AlbumID
       JOIN Componist ON Componist.ID=Componist_Album.ComponistID
       WHERE IsCollection ISNULL OR IsCollection=0
@@ -76,7 +76,7 @@ def get_albums():
 
 def get_collections():
     sql = '''
-      SELECT Title, ID from Album
+      SELECT Title, ID FROM Album
       WHERE IsCollection=1
       ORDER BY Title COLLATE NOCASE
     '''
@@ -84,10 +84,19 @@ def get_collections():
     return named_albums(items)
 
 
-def get_pieces(album_id):
-
+def get_gatherers():
     sql = '''
-      SELECT Name, ID from Piece 
+      SELECT Title, ID FROM Album
+      WHERE IsCollection=2
+      ORDER BY Title COLLATE NOCASE
+    '''
+    items = get_items(sql)
+    return named_albums(items)
+
+
+def get_pieces(album_id):
+    sql = '''
+      SELECT Name, ID FROM Piece 
       WHERE AlbumID=?
       ORDER BY Name
     '''
@@ -111,7 +120,7 @@ def named_persons(items):
 
 def get_componisten():
     sql = '''
-      SELECT FirstName, LastName, Path, Birth, Death, ID from Componist
+      SELECT FirstName, LastName, Path, Birth, Death, ID FROM Componist
       ORDER BY LastName
     '''
     items = get_items(sql)
@@ -120,7 +129,7 @@ def get_componisten():
 
 def get_performers():
     sql = '''
-      SELECT FirstName, LastName, Path, Birth, Death, ID from Performer
+      SELECT FirstName, LastName, Path, Birth, Death, ID FROM Performer
       ORDER BY LastName
     '''
     items = get_items(sql)
@@ -129,7 +138,7 @@ def get_performers():
 
 def get_instruments():
     sql = '''
-      SELECT Name, ID from Instrument
+      SELECT Name, ID FROM Instrument
     '''
     items = get_items(sql)
     out = []
@@ -158,7 +167,7 @@ def get_performer_albums(id_performer):
 
 def get_instrument_albums(id_instrument):
     sql = '''
-      SELECT Title, ID from Album
+      SELECT Title, ID FROM Album
       WHERE InstrumentID=?
     '''
     items = get_items_with_id(sql, id_instrument)
@@ -182,7 +191,7 @@ def get_componist_albums(id_componist):
 
 def get_instrument(id_instrument):
     sql = '''
-    SELECT Name from Instrument WHERE ID=?
+    SELECT Name FROM Instrument WHERE ID=?
     '''
     fields = get_item_with_id(sql, id_instrument)
     return {
@@ -190,9 +199,18 @@ def get_instrument(id_instrument):
     }
 
 
+def get_componist_path(id_componist):
+    sql = '''
+    SELECT Path 
+    FROM Componist WHERE ID=?
+    '''
+    return get_item_with_id(sql, id_componist)[0]
+
+
 def get_componist(id_componist):
     sql = '''
-    SELECT FirstName, LastName, Birth, Death, Path,  ID from Componist WHERE ID=?
+    SELECT FirstName, LastName, Birth, Death, ID 
+    FROM Componist WHERE ID=?
     '''
     fields = get_item_with_id(sql, id_componist)
     return {
@@ -201,13 +219,11 @@ def get_componist(id_componist):
         "FullName": u'{} {}'.format(fields[0], fields[1]),
         "Birth": fields[2],
         "Death": fields[3],
-        "Path": fields[4],
-        "ID": fields[5],
+        "ID": fields[4],
     }
 
 
 def get_album_instruments(id_album):
-    # solo instruments only
     sql = '''
     SELECT Name, Instrument.ID 
     FROM Instrument
@@ -272,14 +288,24 @@ def get_album_componisten(id_album):
 
 def get_scarlatti_k_pieces():
     sql = '''
-      SELECT LibraryCode, Name, Performer.FirstName, Performer.LastName, Performer.ID, Piece.ID 
-      from Piece
-       join Album
-       on Piece.AlbumID = Album.ID
-       join Performer_Album
-       on Performer_Album.AlbumID = Album.ID
-       join Performer
-       on Performer_Album.PerformerID = Performer.ID
+      SELECT 
+        Piece.LibraryCode, 
+        Piece.Name, 
+        Piece.ID,
+        Performer.FirstName, 
+        Performer.LastName, 
+        Performer.ID, 
+        Instrument.Name,
+        Instrument.ID
+      FROM Piece
+       JOIN Album
+       ON Piece.AlbumID = Album.ID
+       JOIN Performer_Album
+       ON Performer_Album.AlbumID = Album.ID
+       JOIN Performer
+       ON Performer_Album.PerformerID = Performer.ID
+       JOIN Instrument
+       ON Album.InstrumentID = Instrument.ID
       WHERE LibraryCode LIKE 'K %'
       ORDER BY LENGTH(LibraryCode), LibraryCode
     '''
@@ -288,20 +314,33 @@ def get_scarlatti_k_pieces():
     for item in items:
         out.append({
             'k_code': item[0],
-            'Name': item[1],
-            'Artiest': u'{} {}'.format(item[2], item[3]),
-            'ArtiestID': item[4],
-            'ID': item[5],
+            'Piece': {
+                'Name': item[1],
+                'ID': item[2],
+            },
+            'Artiest': {
+                'Name': u'{} {}'.format(item[3], item[4]),
+                'ID': item[5],
+            },
+            'Instrument': {
+                'Name': item[6],
+                'ID': item[7],
+            },
         })
     return out
 
 
-def get_performer(id_performer):
-    if not id_performer:
-        return {}
-    # print(id_performer)
+def get_performer_path(id_performer):
     sql = '''
-    SELECT FirstName, LastName, Birth, Death, Path, ID from Performer WHERE ID=?
+    SELECT Path FROM Performer WHERE ID=?
+    '''
+    return get_item_with_id(sql, id_performer)[0]
+
+
+def get_performer(id_performer):
+    sql = '''
+    SELECT FirstName, LastName, Birth, Death, ID 
+    FROM Performer WHERE ID=?
     '''
     fields = get_item_with_id(sql, id_performer)
     return {
@@ -310,15 +349,14 @@ def get_performer(id_performer):
         "FullName": u'{} {}'.format(fields[0], fields[1]),
         "Birth": fields[2],
         "Death": fields[3],
-        "Path": fields[4],
-        "ID": fields[5],
+        "ID": fields[4],
     }
 
 
 def get_album(id_album):
     sql = '''
     SELECT Title, Label, Path, ComponistID, AlbumID, ID 
-    from Album 
+    FROM Album 
     WHERE Album.ID=?
     '''
     fields = get_item_with_id(sql, id_album)
@@ -339,7 +377,7 @@ def get_album(id_album):
 def get_mother_title(id_album):
     sql = '''
     SELECT Title 
-    from Album 
+    FROM Album 
     WHERE Album.ID=?
     '''
     fields = get_item_with_id(sql, id_album)
@@ -348,7 +386,7 @@ def get_mother_title(id_album):
 
 def get_piece(id_piece):
     sql = '''
-    SELECT Name, AlbumID, ID from Piece WHERE ID=?
+    SELECT Name, AlbumID, ID FROM Piece WHERE ID=?
     '''
     fields = get_item_with_id(sql, id_piece)
     return {

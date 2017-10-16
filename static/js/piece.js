@@ -30,14 +30,14 @@ function editAlbumTitle($this) {
 
 function toggleContent($this, parent, sibling) {
     const next = $this.parents(parent).siblings(sibling);
-    if ($this.hasClass('fa-caret-up')) {
+    if ($this.hasClass('fa-caret-right')) {
         $this.addClass('fa-caret-down');
-        $this.removeClass('fa-caret-up');
-        next.show();
+        $this.removeClass('fa-caret-right');
+        next.first().show();
     } else {
-        $this.addClass('fa-caret-up');
+        $this.addClass('fa-caret-right');
         $this.removeClass('fa-caret-down');
-        next.hide();
+        next.first().hide();
     }
 }
 
@@ -55,5 +55,8 @@ $(function() {
    });
    $('.toggle-edit').click(function(){
        toggleContent($(this), 'h4', '.content.edit');
+   });
+   $('.toggle-cue').click(function(){
+       toggleContent($(this), 'div', '.content.cue');
    });
 });

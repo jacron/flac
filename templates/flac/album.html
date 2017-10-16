@@ -5,63 +5,74 @@
     {{ album.Title }}
 {% endblock %}
 {% block page %}
-    <form>{% csrf_token %}</form>
-    <div class="hyperlink">
-        <a onclick="openfinder('{{ album.ID }}')">open finder</a>
-    </div>
-    <img src="/albumimage/{{ album.ID }}/"
-         class="album-image">
-    <h2 contenteditable="true" name="title" class="edit-title" albumid="{{ album.ID }}">
-        {{ album.Title }}
-    </h2>
-    {% if componist %}
-        <h2 class="hyperlink"><a href="/componist/{{ componist.ID }}/">{{ componist.FullName }}</a></h2>
-    {% endif %}
-    {% if album.AlbumID %}
-        <h3 class="hyperlink">
-            <span>Collectie: </span>
-            <a href="/album/{{ album.AlbumID }}">{{ mother_title }}</a>
-        </h3>
-    {% endif %}
-    {% for componist in album_componisten %}
-        <h2 class="hyperlink">
-            <a href="/componist/{{ componist.ID }}/">{{ componist.FullName }}</a>
-        </h2>
-    {% endfor %}
-    {% for performer in album_performers %}
-        <h3 class="hyperlink">
-            <a href="/performer/{{ performer.ID }}/">{{ performer.FullName }}</a>
-        </h3>
-    {% endfor %}
-    {%  if album_instrument %}
-    <h4 class="hyperlink">
-        <a href="/instrument/{{ album_instrument.ID }}/">{{ album_instrument.Name }}</a>
-    </h4>
-    {% endif %}
-    {% for cuesheet in cuesheet_output %}
-        <div class="hyperlink cuesheet">
-            <a onclick="play({{ cuesheet.ID }})">{{ cuesheet.Title }}</a>
+    <div class="album">
+        <form>{% csrf_token %}</form>
+        <div class="hyperlink">
+            <a onclick="openfinder('{{ album.ID }}')">open finder</a>
         </div>
-    {% endfor %}
-    {% albumlist albums %}
-    <div class="clear"></div>
-    <h4>Stukken<i class="toggle-content fa fa-caret-up"></i></h4>
-    <table class="content stukken">
-        {% for item in items %}
-            <tr>
-                <td class="hyperlink">
-                    <a onclick="play({{ item.1 }})">{{ item.0 }}</a>
-                </td>
-            </tr>
+        <img src="/albumimage/{{ album.ID }}/"
+             class="album-image">
+        <img src="/albumimage/{{ album.ID }}/back/"
+             class="album-image">
+        <h2 contenteditable="true" name="title" class="edit-title" albumid="{{ album.ID }}">
+            {{ album.Title }}
+        </h2>
+        {% if componist %}
+            <h2 class="hyperlink"><a href="/componist/{{ componist.ID }}/">{{ componist.FullName }}</a></h2>
+        {% endif %}
+        {% if album.AlbumID %}
+            <h3 class="hyperlink">
+                <span>Collectie: </span>
+                <a href="/album/{{ album.AlbumID }}">{{ mother_title }}</a>
+            </h3>
+        {% endif %}
+        {% for componist in album_componisten %}
+            <h2 class="hyperlink">
+                <a href="/componist/{{ componist.ID }}/">{{ componist.FullName }}</a>
+            </h2>
         {% endfor %}
-    </table>
-    <h4>Bewerk<i class="toggle-edit fa fa-caret-up"></i></h4>
-    <div class="content edit">
-    Componist
-    {% editalbum 'select-componist' 'add-componist' album.ID componisten %}
-    Artiest
-    {% editalbum 'select-performer' 'add-performer' album.ID performers %}
-    Instrument
-    {% editalbum 'select-instrument' 'add-instrument' album.ID instrumenten %}
+        {% for performer in album_performers %}
+            <h3 class="hyperlink">
+                <a href="/performer/{{ performer.ID }}/">{{ performer.FullName }}</a>
+            </h3>
+        {% endfor %}
+        {% if album_instrument %}
+            <h4 class="hyperlink">
+                <a href="/instrument/{{ album_instrument.ID }}/">{{ album_instrument.Name }}</a>
+            </h4>
+        {% endif %}
+        {% for cuesheet in cuesheet_output %}
+            <div>
+                <div class="hyperlink cuesheet">
+                    <a onclick="play({{ album.ID }})">{{ cuesheet.Title }}</a>
+                    <i class="toggle-cue fa fa-caret-right"></i></div>
+                <ul class="content cue">
+                    {% for line in cuesheet.cuesheet %}
+                        <li>{{ line }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+        {% albumlist albums %}
+        <div class="clear"></div>
+        <h4>Stukken <i class="toggle-content fa fa-caret-right"></i></h4>
+        <table class="content stukken">
+            {% for item in items %}
+                <tr>
+                    <td class="hyperlink">
+                        <a onclick="play({{ item.1 }})">{{ item.0 }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <h4>Bewerk <i class="toggle-edit fa fa-caret-down"></i></h4>
+        <div class="content edit">
+            Componist
+            {% editalbum 'select-componist' 'add-componist' album.ID componisten %}
+            Artiest
+            {% editalbum 'select-performer' 'add-performer' album.ID performers %}
+            Instrument
+            {% editalbum 'select-instrument' 'add-instrument' album.ID instrumenten %}
+        </div>
     </div>
 {% endblock %}

@@ -1,0 +1,7 @@
+{% extends "flac/base.html" %}
+{% load page_tags %}
+{% block title %}Verzamelalbums{% endblock %}
+{% block page %}
+    <h2>Verzamelalbums ({{ albums|length }})</h2>
+    {% albumlist albums %}
+{% endblock %}
