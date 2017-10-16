@@ -16,20 +16,38 @@ def get_element(line, prefix):
     pos = line.find(prefix)
     if pos != -1:
         rest = pos + len(prefix)
-        return line[rest:].decode('latin-1').encode('utf-8')
+        try:
+            result = line[rest:]
+        except:
+            result = line[rest:].decode('latin-1').encode('utf-8')
+        return result
     return None
 
 
+def replace_haakjes(s):
+    for ch in ['[', '{']:
+        if ch in s:
+            s = s.replace(ch, '(')
+    for ch in [']', '}']:
+        if ch in s:
+            s = s.replace(ch, ')')
+    print(s)
+    return s
+
+
 def display(cue):
-    # lines = [cue['title'], cue['performer']]
     lines = []
-    for rem in cue['rem']:
-        lines.append(rem)
-    for file in cue['files']:
-        lines.append(file['name'])
-        for track in file['tracks']:
-            # lines.append('  {} {}'.format(track['nr'], track['name']))
-            lines.append('- {}'.format(track['title']))
+    # for rem in cue['rem']:
+    #     lines.append(rem)
+    try:
+        for file in cue['files']:
+            lines.append(file['name'])
+            for track in file['tracks']:
+                # utf necessary while lines are implicitly decoded on web page
+                lines.append('- {}'.format(track['title']))
+    except:
+        print('making display of cuesheet failed: ')
+        print(cue)
     return lines
 
 
@@ -43,8 +61,10 @@ def parse(data):
     cfile = None
     ctrack = None
     for line in data.split('\n'):
-        line = line.strip()
-
+        try:
+            line = line.strip()
+        except:
+            print('line is niet te strippen')
         # rem = get_element(line, 'REM ')
         # if rem:
         #     cue['rem'].append(rem)
@@ -52,7 +72,7 @@ def parse(data):
         title = get_element(line, 'TITLE ')
         if title:
             if ctrack:
-                ctrack['title'] = dequote(title)
+                ctrack['title'] = replace_haakjes(dequote(title))
             else:
                 cue['title'] = dequote(title)
 

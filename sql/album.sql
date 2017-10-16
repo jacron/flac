@@ -142,3 +142,6 @@ update Album
 set AlbumID=194
 where AlbumID=168 and Title like 'cd %';
 
+--    path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello"
+select Title, ID from Album
+where Path like '/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello%';

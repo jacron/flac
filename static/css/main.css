@@ -84,6 +84,7 @@ nav a.selected {
 }
 .album fieldset {
     width: 220px;
+    display: inline-block;
 }
 .instrument-image {
     height: 180px;
@@ -93,4 +94,8 @@ nav a.selected {
     width: 200px;
     height: 230px;
     list-style: none;
+}
+.mother-album {
+    /*box-shadow: -1px -1px 1px red;*/
+    background: #efefff;
 }

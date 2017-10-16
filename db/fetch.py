@@ -3,7 +3,10 @@ from .connect import connect
 
 def get_items_with_id(sql, oid):
     conn, c = connect()
-    items = [item for item in c.execute(sql, (oid,)).fetchall()]
+    try:
+        items = [item for item in c.execute(sql, (oid,)).fetchall()]
+    except:
+        print('in db encoding error')
     conn.close()
     return items
 
@@ -169,25 +172,58 @@ def get_instrument_albums(id_instrument):
     sql = '''
       SELECT Title, ID FROM Album
       WHERE InstrumentID=?
+        -- AND Album.AlbumID ISNULL 
+      ORDER BY Title
     '''
     items = get_items_with_id(sql, id_instrument)
     return named_albums(items)
+
+
+def named_albums2(items):
+    out = []
+    for item in items:
+        out.append({
+            'Title': item[0],
+            'AlbumID': item[1],
+            'ID': item[2],
+        })
+    return out
 
 
 def get_componist_albums(id_componist):
     sql = '''
         SELECT
             Album.Title,
+            Album.AlbumID,
             Album.ID
         FROM Componist_Album
             JOIN Componist ON Componist.ID = Componist_Album.ComponistID
             JOIN Album ON Album.ID = Componist_Album.AlbumID
         WHERE Componist_Album.ComponistID =?
+        -- AND Album.AlbumID ISNULL 
+        -- AND Album.AlbumID NOT IN (MotherID)
         ORDER BY Album.Title
     '''
     # return get_items_with_id(sql, id_componist)
     items = get_items_with_id(sql, id_componist)
-    return named_albums(items)
+    # return named_albums2(items)
+
+    named_items = named_albums2(items)
+    # return named_items
+
+    # filter to get rid of albums that already are contained in a mother album in this list
+    filtered = []
+    for album in named_items:
+        found = False
+        for album2 in named_items:
+            if album2 != album:
+                if album2['ID'] == album['AlbumID']:
+                    found = True
+                    album2['mother'] = True
+        if not found:
+            filtered.append(album)
+
+    return filtered
 
 
 def get_instrument(id_instrument):

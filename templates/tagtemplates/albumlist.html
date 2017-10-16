@@ -1,6 +1,10 @@
 <ul class="album-list">
     {% for item in albums %}
-        <li class="hyperlink">
+        <li class="hyperlink
+{% if item.mother %}
+mother-album
+{% endif %}
+">
             <a href="/album/{{ item.ID }}/">
                 <img src="/albumimage/{{ item.ID }}/"
                      class="album-image-thumb">

@@ -11,12 +11,21 @@ def organize_pieces(items, album_path):
     cuesheets = []
     pieces = []
     for item in items:
-        ffile = item[0].encode('utf-8')
+        try:
+            ffile = item[0].encode('utf-8')
+        except:
+            ffile = item[0]
+            print("could not encode filename:" + ffile)
         if ffile:
             extension = ffile.split('.')[-1]
             if extension == 'cue':
-                path = '{}/{}'.format(album_path, ffile)
-                cuesheets.append(get_full_cuesheet(path, item[1]))
+                try:
+                    path = '{}/{}'.format(album_path, ffile)
+                    cuesheets.append(get_full_cuesheet(path, item[1]))
+                except:
+                    # path = '{}/{}'.format(album_path, ffile)
+                    # cuesheets.append(get_full_cuesheet(path, item[1]))
+                    print('could not get cuesheet for this path: ' + path)
             else:
                 pieces.append(item)
     return cuesheets, pieces
@@ -31,8 +40,11 @@ def album(request, album_id):
     mother_title = None
     if album_o['AlbumID']:
         mother_title = get_mother_title(album_o['AlbumID'])
-    items = get_pieces(album_id)
-    cuesheets, pieces = organize_pieces(items, album_o['Path'])
+    try:
+        items = get_pieces(album_id)
+        cuesheets, pieces = organize_pieces(items, album_o['Path'])
+    except:
+        print('Cannot get pieces')
 
     context = {
         'items': pieces,

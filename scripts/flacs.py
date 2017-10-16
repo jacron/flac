@@ -18,8 +18,8 @@ play_types = ('cue', "flac", "ape", "mp3", "iso", "wma", "wav", "mp3", "m4a", )
 
 k_split = None
 artiest = None
-componist = None
-instrument = None
+componist = 'Bach, JS'
+instrument = 'Cello'
 rows = []
 
 
@@ -49,14 +49,11 @@ def process_file(filepath):
 
 def insert_pieces(path, album_id, conn, c):
     global rows
-    print(path)
+    # print(path)
     for card in play_types:
         files_path = u"{}{}".format(path, "/*.{}".format(card))
-        # print(files_path)
         [process_file(f) for f in glob.iglob(files_path)]
-    # print(rows)
     for row in rows:
-        # print(row['name'])
         insert_piece(
             name=row['name'],
             code=row['knr'],
@@ -173,7 +170,6 @@ def has_haakjes(s):
     return False
 
 
-
 def process_dir(path, mother_id, iscollectie):
     for d in os.listdir(path):
         p = '{}/{}'.format(path, d).decode('latin-1').encode('utf-8')
@@ -185,8 +181,10 @@ def process_dir(path, mother_id, iscollectie):
             album_title = w[-1].replace("_", "")
             conn, c = script_connect()
             found = get_album_by_title(album_title, c, conn)
+            # print album_title
+
             if found['Count'] == 0:
-                print album_title
+                # print album_title
                 process_album(p, mother_id, iscollectie)
                 # print replace_haakjes(album_title)
                 # if has_haakjes(album_title):
@@ -231,8 +229,11 @@ def main():
     path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Phase 4 Concert Series Complete - 2496"
     path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/RenaissanceMusic"
     path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Rossini - Respighi - Lamberto Gardelli (24)"
-    # process_dir(path=path, mother_id=2044, iscollectie=0)
-    process_album(path=path, mother_id=None, is_collectie=2)
+    path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello"
+    path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello/Rostropovich"
+    path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello/Heinrich Schiff"
+    process_dir(path=path, mother_id=2167, iscollectie=0)
+    # process_album(path=path, mother_id=None, is_collectie=2)
 
 
 if __name__ == '__main__':
