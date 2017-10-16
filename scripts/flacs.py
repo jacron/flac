@@ -14,7 +14,7 @@ from venv.flac.db import (
     insert_album, insert_componist, insert_performer, insert_instrument,
     insert_piece, insert_album_performer, insert_album_componist, get_album_by_title, )
 
-play_types = ('cue', "flac", "ape", "mp3", "iso", "wma", "wav", "mp3", )
+play_types = ('cue', "flac", "ape", "mp3", "iso", "wma", "wav", "mp3", "m4a", )
 
 k_split = None
 artiest = None
@@ -223,13 +223,16 @@ def main():
     # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Grieg - Sibelius"
     # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/historisch russisch archief"
     # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Jefta"
-    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Ferrara Ensemble - Figures of Harmony - Songs of Codex Chantilly C. 1390 (2015) (FLAC)"
-    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Gale 96k_1976-77"
-    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/High Def Vinyls 96K24B (Miller & Kreisel) Limited Edition Vol. 1, 3, 5 (24)"
-    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Jean Cocteau et Les Six"
-    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Komitas Armenian Liturgy"
-    process_dir(path=path, mother_id=2016, iscollectie=0)
-    # process_album(path=path, mother_id=None, is_collectie=2)
+    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Ferrara Ensemble - Figures of Harmony - Songs of Codex Chantilly C. 1390 (2015) (FLAC)"
+    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Gale 96k_1976-77"
+    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/High Def Vinyls 96K24B (Miller & Kreisel) Limited Edition Vol. 1, 3, 5 (24)"
+    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Jean Cocteau et Les Six"
+    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Komitas Armenian Liturgy"
+    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Phase 4 Concert Series Complete - 2496"
+    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/RenaissanceMusic"
+    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Rossini - Respighi - Lamberto Gardelli (24)"
+    # process_dir(path=path, mother_id=2044, iscollectie=0)
+    process_album(path=path, mother_id=None, is_collectie=2)
 
 
 if __name__ == '__main__':

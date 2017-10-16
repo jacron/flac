@@ -183,6 +183,7 @@ def get_componist_albums(id_componist):
             JOIN Componist ON Componist.ID = Componist_Album.ComponistID
             JOIN Album ON Album.ID = Componist_Album.AlbumID
         WHERE Componist_Album.ComponistID =?
+        ORDER BY Album.Title
     '''
     # return get_items_with_id(sql, id_componist)
     items = get_items_with_id(sql, id_componist)
@@ -284,6 +285,21 @@ def get_album_componisten(id_album):
             'ID': item[2],
         })
     return out
+
+
+def get_scarlatti():
+    sql = '''
+    SELECT FirstName, LastName, ID
+    FROM Componist
+    WHERE FirstName='D'
+    AND LastName='Scarlatti'
+    '''
+    conn, c = connect()
+    fields = c.execute(sql).fetchone()
+    return {
+        'FullName': '{} {}'.format(fields[0], fields[1]),
+        'ID': fields[2],
+    }
 
 
 def get_scarlatti_k_pieces():

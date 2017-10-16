@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.template import loader
-from ..db import get_scarlatti_k_pieces
+from ..db import get_scarlatti_k_pieces, get_scarlatti
 
 def extra(request):
     template = loader.get_template('flac/extra.html')
@@ -14,7 +14,8 @@ def list_scarlatti(request):
     return HttpResponse(template.render(
         {
             'items': get_scarlatti_k_pieces(),
-            'page_title': 'Scarlatti Sonaten (Kirkpatrick nummering)'
+            'scarlatti': get_scarlatti(),
+            'page_title': 'Scarlatti Sonaten (Kirkpatrick nummering)',
         }, request))
 
 

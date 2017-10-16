@@ -4,11 +4,14 @@ Instrumenten
 {% endblock %}
 {% block page %}
     <h4>Solo instrumenten ({{ items|length }})</h4>
-<table class="table">
+<ul class="instruments-list">
     {% for item in items %}
-        <tr><td class="hyperlink">
-            <a href="/instrument/{{ item.ID }}">{{ item.Name }}</a>
-        </td></tr>
+     <li class="hyperlink">
+        <a href="/instrument/{{ item.ID }}">
+            <img src="/instrumentimage/{{ item.Name }}" class="instrument-image">
+            {{ item.Name }}
+        </a>
+     </li>
     {% endfor %}
-</table>
+</ul>
 {% endblock %}

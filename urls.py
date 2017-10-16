@@ -34,5 +34,6 @@ urlpatterns = [
     url(r'^albumimage/(?P<album_id>.+)/back/$', views.albumimageback),
     url(r'^albumimage/(?P<album_id>.+)/$', views.albumimage),
     url(r'^componistimage/(?P<componist_id>.+)/$', views.componistimage),
+    url(r'^instrumentimage/(?P<instrument_name>.+)/$', views.instrumentimage),
     url(r'^performerimage/(?P<performer_id>.+)/$', views.performerimage),
 ]

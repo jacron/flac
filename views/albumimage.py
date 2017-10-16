@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from ..db import get_album, get_componist_path, get_performer_path
+from ..db import get_album, get_componist_path, get_performer_path, get_instrument
 from django.conf import settings
 import os
 
@@ -15,6 +15,11 @@ def get_image(path):
 
 def empty_response():
     return HttpResponse()
+
+
+def instrumentimage(request, instrument_name):
+    image_path = '{}{}.jpg'.format(settings.INSTRUMENTS_PATH, instrument_name)
+    return get_image(image_path)
 
 
 def albumimage(request, album_id):
