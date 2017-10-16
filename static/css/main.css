@@ -82,3 +82,6 @@ nav a.selected {
 .album .content.stukken {
     margin-top: -20px;
 }
+.album fieldset {
+    width: 220px;
+}

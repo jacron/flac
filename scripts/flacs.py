@@ -5,10 +5,14 @@
 import os
 import glob
 import sqlite3
+
+from flac import settings
+
+
 # importing for stand alone script
 from venv.flac.db import (
     insert_album, insert_componist, insert_performer, insert_instrument,
-    insert_piece, insert_album_performer, insert_album_componist, )
+    insert_piece, insert_album_performer, insert_album_componist, get_album_by_title, )
 
 play_types = ('cue', "flac", "ape", "mp3", "iso", "wma", "wav", "mp3", )
 
@@ -80,10 +84,6 @@ def insert_composer(componist, c, conn, album_id):
 
 
 def process_album(path, mother_id, is_collectie):
-    # print (path)
-    # print(mother_id)
-    # return
-
     global rows
     rows = []
 
@@ -153,13 +153,51 @@ def process_path(path, f):
             # os.rename(p, trg)
 
 
-def process_dir(path, mid, iscollectie):
+def replace_haakjes(s):
+    for ch in ['[', '{']:
+        if ch in s:
+            s = s.replace(ch, '(')
+    for ch in [']', '}']:
+        if ch in s:
+            s = s.replace(ch, ')')
+    return s
+
+
+def has_haakjes(s):
+    for ch in ['[', '{']:
+        if ch in s:
+            return True
+    for ch in [']', '}']:
+        if ch in s:
+            return True
+    return False
+
+
+
+def process_dir(path, mother_id, iscollectie):
     for d in os.listdir(path):
         p = '{}/{}'.format(path, d).decode('latin-1').encode('utf-8')
-        if os.path.isdir(p) and d != 'website' and d != 'artwork':
+        if os.path.isdir(p) and d != 'website' and d != 'artwork' and d != 'Artwork' and d != 'etc' and d != 'scans':
             # rename_frontjpg(p, 'box front')
             # print(p, mid, iscollectie)
-            process_album(p, mid, iscollectie)
+            # process_album(p, mid, iscollectie)
+            w = p.split('/')
+            album_title = w[-1].replace("_", "")
+            conn, c = script_connect()
+            found = get_album_by_title(album_title, c, conn)
+            if found['Count'] == 0:
+                print album_title
+                process_album(p, mother_id, iscollectie)
+                # print replace_haakjes(album_title)
+                # if has_haakjes(album_title):
+                #     src = '{}/{}'.format(path, album_title)
+                #     dst = '{}/{}'.format(path, replace_haakjes(album_title))
+                #     # print(src)
+                #     # print(dst)
+                #     if os.path.exists(src):
+                #         os.rename(src, dst)
+                #     else:
+                #         print(src)
 
 
 def main():
@@ -180,13 +218,19 @@ def main():
     # path="/Volumes/Media/Audio/Klassiek/Collecties/BBC Legends/BBCL4015 - Gilels - Schumane, Scarlatti, Bach"
     # path="/Volumes/Media/Audio/Klassiek/Collecties/Classic Voice Antiqua/ClassicAntiqua_15-WAV"
     path="/Volumes/Media/Audio/Klassiek/Verzamelalbums"
-    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Christopher Page, Gothic Voices - The earliest songbook in England"
-    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Christopher Page, Gothic Voices - The Spirits of England and France - vol 3"
-    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Grieg - Sibelius"
-    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/historisch russisch archief"
-    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Jefta"
-    # process_dir(path, mid, 2)
-    process_album(path, mid, 2)
+    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Christopher Page, Gothic Voices - The earliest songbook in England"
+    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Christopher Page, Gothic Voices - The Spirits of England and France - vol 3"
+    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Grieg - Sibelius"
+    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/historisch russisch archief"
+    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Jefta"
+    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Ferrara Ensemble - Figures of Harmony - Songs of Codex Chantilly C. 1390 (2015) (FLAC)"
+    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Gale 96k_1976-77"
+    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/High Def Vinyls 96K24B (Miller & Kreisel) Limited Edition Vol. 1, 3, 5 (24)"
+    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Jean Cocteau et Les Six"
+    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Komitas Armenian Liturgy"
+    process_dir(path=path, mother_id=2016, iscollectie=0)
+    # process_album(path=path, mother_id=None, is_collectie=2)
+
 
 if __name__ == '__main__':
     main()

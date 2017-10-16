@@ -16,7 +16,7 @@ def get_element(line, prefix):
     pos = line.find(prefix)
     if pos != -1:
         rest = pos + len(prefix)
-        return line[rest:]
+        return line[rest:].decode('latin-1').encode('utf-8')
     return None
 
 
@@ -95,23 +95,22 @@ def parse(data):
         cfile['tracks'].append(ctrack)
     if cfile:
         cue['files'].append(cfile)
-
-    # show(cue)
-    print(cue)
-    # print(display(cue))
     return cue
 
 
 def get_full_cuesheet(path, id):
     filename = os.path.split(path)[1]
     filename = ' '.join(filename.split('.')[:-1])
-    with open(path, 'r') as f:
-        data = f.read()
-        return {
-            'Title': filename,
-            'ID': id,
-            'cuesheet': display(parse(data)),
-        }
+    if os.path.exists(path):
+        with open(path, 'r') as f:
+            data = f.read()
+            return {
+                'Title': filename,
+                'ID': id,
+                'cuesheet': display(parse(data)),
+            }
+    else:
+        print('Bestaat niet: {}'.format(path))
 
 
 def get_cuesheet(filename, id):

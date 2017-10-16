@@ -15,10 +15,7 @@ def organize_pieces(items, album_path):
         if ffile:
             extension = ffile.split('.')[-1]
             if extension == 'cue':
-                # if ffile == 'lijst.cue':
-                path = u'{}/{}'.format(album_path, ffile)
-                #     cuesheets.append(get_cuesheet_title(path, item[1]))
-                # else:
+                path = '{}/{}'.format(album_path, ffile)
                 cuesheets.append(get_full_cuesheet(path, item[1]))
             else:
                 pieces.append(item)

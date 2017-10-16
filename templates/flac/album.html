@@ -67,12 +67,18 @@
         </table>
         <h4>Bewerk <i class="toggle-edit fa fa-caret-down"></i></h4>
         <div class="content edit">
-            Componist
+            <fieldset>
+                <legend>Componist</legend>
             {% editalbum 'select-componist' 'add-componist' album.ID componisten %}
-            Artiest
+            </fieldset>
+            <fieldset>
+                <legend>Artiest</legend>
             {% editalbum 'select-performer' 'add-performer' album.ID performers %}
-            Instrument
+            </fieldset>
+            <fieldset>
+                <legend>Instrument</legend>
             {% editalbum 'select-instrument' 'add-instrument' album.ID instrumenten %}
+            </fieldset>
         </div>
     </div>
 {% endblock %}

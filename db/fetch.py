@@ -394,3 +394,14 @@ def get_piece(id_piece):
         "AlbumID": fields[1],
         "ID": fields[2],
     }
+
+
+def get_album_by_title(title, c, conn):
+    sql = '''
+    SELECT COUNT(ID) FROM Album
+     WHERE Title=?
+    '''
+    fields = c.execute(sql, (title,)).fetchone()
+    return {
+        "Count": fields[0],
+    }
