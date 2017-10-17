@@ -1,0 +1,11 @@
+{% extends "flac/base.html" %}
+{% load page_tags %}
+{% block title %}Verzamelalbums{% endblock %}
+{% block page %}
+    <h2>Tags ({{ tags|length }})</h2>
+    <lu>
+    {% for tag in tags %}
+        <li><a href="/tag/{{ tag.ID }}">{{ tag.Name }}</a></li>
+    {% endfor %}
+    </lu>
+{% endblock %}

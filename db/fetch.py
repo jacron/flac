@@ -189,6 +189,20 @@ def get_performer_albums(id_performer):
     return named_albums(items)
 
 
+def get_tag_albums(id_tag):
+    sql = '''
+        SELECT
+            Album.Title,
+            Album.ID
+        FROM Tag_Album
+            JOIN Tag ON Tag.ID = Tag_Album.TagID
+            JOIN Album ON Album.ID = Tag_Album.AlbumID
+        WHERE Tag_Album.TagID =?
+    '''
+    items = get_items_with_id(sql, id_tag)
+    return named_albums(items)
+
+
 def named_albums2(items):
     out = []
     for item in items:
@@ -302,6 +316,26 @@ def get_album_instruments(id_album):
         return {}
 
 
+def get_album_tags(id_album):
+    sql = '''
+        SELECT
+            Name,
+            Tag.ID
+        FROM Tag_Album
+            JOIN Tag ON Tag.ID = Tag_Album.TagID
+            JOIN Album ON Album.ID = Tag_Album.AlbumID
+        WHERE Tag_Album.AlbumID =?
+    '''
+    items = get_items_with_id(sql, id_album, )
+    out = []
+    for item in items:
+        out.append({
+            'Name': item[0],
+            'ID': item[1],
+        })
+    return out
+
+
 def get_album_performers(id_album):
     sql = '''
         SELECT
@@ -412,6 +446,18 @@ def get_performer_path(id_performer):
     SELECT Path FROM Performer WHERE ID=?
     '''
     return get_item_with_id(sql, id_performer)[0]
+
+
+def get_tag(id_tag):
+    sql = '''
+    SELECT Name, ID 
+    FROM Tag WHERE ID=?
+    '''
+    fields = get_item_with_id(sql, id_tag)
+    return {
+        "Name": fields[0],
+        "ID": fields[1],
+    }
 
 
 def get_performer(id_performer):

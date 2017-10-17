@@ -3,7 +3,7 @@ from django.template import loader
 from ..db import (
     get_albums, get_album, get_pieces, get_componisten, get_performers, get_instruments,
     get_album_albums, get_album_performers, get_album_componisten, get_album_instruments,
-    get_mother_title, get_tags, )
+    get_mother_title, get_tags, get_album_tags, )
 from ..services import get_full_cuesheet, get_cuesheet
 
 
@@ -59,6 +59,7 @@ def album(request, album_id):
         'album_instrument': get_album_instruments(album_id),
         'cuesheet_output': cuesheets,
         'tags': get_tags(),
+        'album_tags': get_album_tags(album_id),
     }
     return HttpResponse(template.render(context, request))
 

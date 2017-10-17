@@ -17,6 +17,9 @@
         <h2 contenteditable="true" name="title" class="edit-title" albumid="{{ album.ID }}">
             {{ album.Title }}
         </h2>
+        {% for tag in album_tags %}
+            <i>{{ tag.Name }}</i>,
+        {% endfor %}
         {% if componist %}
             <h2 class="hyperlink"><a href="/componist/{{ componist.ID }}/">{{ componist.FullName }}</a></h2>
         {% endif %}

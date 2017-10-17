@@ -38,7 +38,7 @@ def add_performer_to_album(performerid, albumid):
 def add_tag_to_album(tagid, albumid):
     sql = """
     INSERT OR IGNORE INTO Tag_Album 
-    (PerformerID, AlbumID)
+    (TagID, AlbumID)
     VALUES(?,?)
     """
     con, c = connect()
