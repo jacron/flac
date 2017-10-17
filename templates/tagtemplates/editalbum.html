@@ -2,12 +2,12 @@
     <tr>
         <td>
             <select class="{{ select }}"
-                    title="{{ option.FullName }}"
+                    title="{{ option.Title }}"
                     albumid="{{ albumid }}">
                 {% for option in options %}
-                    <option value="{{ option.ID }}"
-                    title="{{ option.FullName }}"
-                    >{{ option.LastName }}</option>
+                    <option value="{{ option.Value }}"
+                    title="{{ option.Title }}"
+                    >{{ option.Label }}</option>
                 {% endfor %}
             </select>
         </td>

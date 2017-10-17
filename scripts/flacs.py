@@ -18,7 +18,8 @@ play_types = ('cue', "flac", "ape", "mp3", "iso", "wma", "wav", "mp3", "m4a", )
 
 k_split = None
 artiest = None
-componist = 'Mahler, Gustav'
+# componist = 'Mahler, Gustav'
+componist = "Bach, JS"
 instrument = None
 rows = []
 
@@ -183,9 +184,9 @@ def process_dir(path, mother_id, iscollectie):
             found = get_album_by_title(album_title, c, conn)
             # print album_title
 
-            if found['Count'] == 0:
+            # if found['Count'] == 0:
                 # print album_title
-                process_album(p, mother_id, iscollectie)
+            process_album(p, mother_id, iscollectie)
                 # print replace_haakjes(album_title)
                 # if has_haakjes(album_title):
                 #     src = '{}/{}'.format(path, album_title)
@@ -223,8 +224,10 @@ def main():
     # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello/Rostropovich"
     # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello/Heinrich Schiff"
     path="/Volumes/Media/Audio/Klassiek/Componisten/Mahler/Symfonie 04"
-    process_dir(path=path, mother_id=43, iscollectie=0)
-    # process_album(path=path, mother_id=None, is_collectie=2)
+    path="/Volumes/Media/Audio/Klassiek/Componisten/Bach"
+    path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello/Colin Carr"
+    process_dir(path=path, mother_id=2166, iscollectie=0)
+    # process_album(path=path, mother_id=2166, is_collectie=2)
 
 
 if __name__ == '__main__':

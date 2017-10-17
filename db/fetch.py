@@ -113,6 +113,7 @@ def named_persons(items):
             'FirstName': item[0],
             'LastName': item[1],
             'FullName': u'{} {}'.format(item[0], item[1]),
+            'NameFull': u'{}, {}'.format(item[1], item[0]),
             'Path': item[2],
             'Birth': item[3],
             'Death': item[4],
@@ -153,7 +154,6 @@ def get_instruments():
         out.append({
             'Name': item[0],
             'ID': item[1],
-            'LastName': item[0],  # for editalbum tag
         })
     return out
 
@@ -170,7 +170,6 @@ def get_tags():
         out.append({
             'Name': item[0],
             'ID': item[1],
-            'LastName': item[0],  # for editalbum tag
         })
     return out
 
