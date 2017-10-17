@@ -79,6 +79,10 @@
                 <legend>Instrument</legend>
             {% editalbum 'select-instrument' 'add-instrument' album.ID instrumenten %}
             </fieldset>
+            <fieldset>
+                <legend>Tags</legend>
+                {% editalbum 'select-tag' 'add-tag' album.ID tags %}
+            </fieldset>
         </div>
     </div>
 {% endblock %}

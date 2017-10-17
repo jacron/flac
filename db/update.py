@@ -20,7 +20,7 @@ def add_componist_to_album(componistid, albumid):
     VALUES(?,?)
     """
     con, c = connect()
-    ret = c.execute(sql, (componistid, albumid, )).fetchone()
+    c.execute(sql, (componistid, albumid, )).fetchone()
     con.commit()
 
 
@@ -31,7 +31,18 @@ def add_performer_to_album(performerid, albumid):
     VALUES(?,?)
     """
     con, c = connect()
-    ret = c.execute(sql, (performerid, albumid, )).fetchone()
+    c.execute(sql, (performerid, albumid, )).fetchone()
+    con.commit()
+
+
+def add_tag_to_album(tagid, albumid):
+    sql = """
+    INSERT OR IGNORE INTO Tag_Album 
+    (PerformerID, AlbumID)
+    VALUES(?,?)
+    """
+    con, c = connect()
+    c.execute(sql, (tagid, albumid,)).fetchone()
     con.commit()
 
 
@@ -76,6 +87,21 @@ def new_performer(name):
     SELECT ID from Performer WHERE FirstName=? AND LastName=?
     '''
     return c.execute(sql, (c_firstname, c_lastname, )).fetchone()
+
+
+def new_tag(name):
+    sql = """
+    INSERT OR IGNORE INTO Tag 
+    (Name)
+    VALUES(?)
+    """
+    con, c = connect()
+    c.execute(sql, (name, )).fetchone()
+    con.commit()
+    sql = '''
+    SELECT ID from Tag WHERE Name=?
+    '''
+    return c.execute(sql, (name, )).fetchone()
 
 
 def new_instrument(name):

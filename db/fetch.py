@@ -123,7 +123,8 @@ def named_persons(items):
 
 def get_componisten():
     sql = '''
-      SELECT FirstName, LastName, Path, Birth, Death, ID FROM Componist
+      SELECT FirstName, LastName, Path, Birth, Death, ID 
+      FROM Componist
       ORDER BY LastName
     '''
     items = get_items(sql)
@@ -132,7 +133,8 @@ def get_componisten():
 
 def get_performers():
     sql = '''
-      SELECT FirstName, LastName, Path, Birth, Death, ID FROM Performer
+      SELECT FirstName, LastName, Path, Birth, Death, ID 
+      FROM Performer
       ORDER BY LastName
     '''
     items = get_items(sql)
@@ -141,7 +143,26 @@ def get_performers():
 
 def get_instruments():
     sql = '''
-      SELECT Name, ID FROM Instrument
+      SELECT Name, ID 
+      FROM Instrument
+      ORDER BY Name
+    '''
+    items = get_items(sql)
+    out = []
+    for item in items:
+        out.append({
+            'Name': item[0],
+            'ID': item[1],
+            'LastName': item[0],  # for editalbum tag
+        })
+    return out
+
+
+def get_tags():
+    sql = '''
+      SELECT Name, ID 
+      FROM Tag
+      ORDER BY Name
     '''
     items = get_items(sql)
     out = []
@@ -168,17 +189,6 @@ def get_performer_albums(id_performer):
     return named_albums(items)
 
 
-def get_instrument_albums(id_instrument):
-    sql = '''
-      SELECT Title, ID FROM Album
-      WHERE InstrumentID=?
-        -- AND Album.AlbumID ISNULL 
-      ORDER BY Title
-    '''
-    items = get_items_with_id(sql, id_instrument)
-    return named_albums(items)
-
-
 def named_albums2(items):
     out = []
     for item in items:
@@ -188,6 +198,38 @@ def named_albums2(items):
             'ID': item[2],
         })
     return out
+
+
+def filter_contained_childs(items):
+    # filter to get rid of albums that already are contained in a mother album in this list
+    filtered = []
+    for album in items:
+        found = False
+        for album2 in items:
+            if album2 != album:
+                if album2['ID'] == album['AlbumID']:
+                    found = True
+                    album2['mother'] = True
+        if not found:
+            filtered.append(album)
+
+    return filtered
+
+
+def get_instrument_albums(id_instrument):
+    sql = '''
+      SELECT 
+       Title,
+       AlbumID,
+       ID FROM Album
+      WHERE InstrumentID=?
+      ORDER BY Title
+    '''
+    items = get_items_with_id(sql, id_instrument)
+    named_items = named_albums2(items)
+    return filter_contained_childs(named_items)
+
+    # return named_albums(items)
 
 
 def get_componist_albums(id_componist):
@@ -204,26 +246,9 @@ def get_componist_albums(id_componist):
         -- AND Album.AlbumID NOT IN (MotherID)
         ORDER BY Album.Title
     '''
-    # return get_items_with_id(sql, id_componist)
     items = get_items_with_id(sql, id_componist)
-    # return named_albums2(items)
-
     named_items = named_albums2(items)
-    # return named_items
-
-    # filter to get rid of albums that already are contained in a mother album in this list
-    filtered = []
-    for album in named_items:
-        found = False
-        for album2 in named_items:
-            if album2 != album:
-                if album2['ID'] == album['AlbumID']:
-                    found = True
-                    album2['mother'] = True
-        if not found:
-            filtered.append(album)
-
-    return filtered
+    return filter_contained_childs(named_items)
 
 
 def get_instrument(id_instrument):

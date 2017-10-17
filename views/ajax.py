@@ -3,6 +3,7 @@ import os
 from django.http import HttpResponse
 from ..db import (get_album, get_piece, update_album_title,
                   add_componist_to_album, add_performer_to_album, add_instrument_to_album,
+                    add_tag_to_album, new_tag,
                   new_componist, new_performer, new_instrument, )
 from django.conf import settings
 
@@ -49,8 +50,17 @@ def add_instrument(instrumentid, albumid):
 
 
 def get_new_instrument(name, albumid):
-    performerid = new_instrument(name)
-    return add_instrument_to_album(int(performerid[0]), int(albumid))
+    instrumentid = new_instrument(name)
+    return add_instrument_to_album(int(instrumentid[0]), int(albumid))
+
+
+def add_tag(tagid, albumid):
+    return add_tag_to_album(int(tagid), int(albumid))
+
+
+def get_new_tag(name, albumid):
+    tagid = new_tag(name)
+    return add_tag_to_album(int(tagid[0]), int(albumid))
 
 
 def do_post(post):
@@ -81,6 +91,13 @@ def do_post(post):
         return add_instrument(post['instrumentid'], post['albumid'])
     if cmd == 'new_instrument':
         return get_new_instrument(post['name'], post['albumid'])
+
+    # tag
+    if cmd == 'add_tag':
+        return add_tag(post['tagid'], post['albumid'])
+    if cmd == 'new_tag':
+        return get_new_tag(post['name'], post['albumid'])
+
 
 def ajax(request):
     msg = 'No post!'

@@ -44,7 +44,7 @@ def display(cue):
             lines.append(file['name'])
             for track in file['tracks']:
                 # utf necessary while lines are implicitly decoded on web page
-                lines.append('- {}'.format(track['title']))
+                lines.append(u'- {}'.format(track['title']))
     except:
         print('making display of cuesheet failed: ')
         print(cue)
