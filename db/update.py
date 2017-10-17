@@ -76,6 +76,20 @@ def remove_performer_from_album(id, albumid):
     con.commit()
 
 
+def remove_instrument_from_album(id, albumid):
+    if not albumid:
+        print('error')
+        return
+    sql = """
+    UPDATE Album
+    SET InstrumentID=NULL 
+     WHERE ID=?
+    """
+    con, c = connect()
+    c.execute(sql, (albumid,)).fetchone()
+    con.commit()
+
+
 def add_instrument_to_album(instrumentid, albumid):
     sql = """
     UPDATE Album

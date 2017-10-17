@@ -5,6 +5,7 @@ from ..db import (
     get_album, get_piece, update_album_title, add_tag_to_album,
     add_componist_to_album, add_performer_to_album, add_instrument_to_album,
     remove_tag_from_album, remove_componist_from_album, remove_performer_from_album,
+    remove_instrument_from_album,
     new_tag, new_componist, new_performer, new_instrument, )
 from django.conf import settings
 
@@ -52,6 +53,10 @@ def get_new_performer(name, albumid):
 
 def remove_performer(id, albumid):
     return remove_performer_from_album(id, albumid)
+
+
+def remove_instrument(id, albumid):
+    return remove_instrument_from_album(id, albumid)
 
 
 def add_instrument(instrumentid, albumid):
@@ -108,6 +113,8 @@ def do_post(post):
         return add_instrument(post['instrumentid'], post['albumid'])
     if cmd == 'new_instrument':
         return get_new_instrument(post['name'], post['albumid'])
+    if cmd == 'remove_instrument':
+        return remove_instrument(post['id'], post['albumid'])
 
     # tag
     if cmd == 'add_tag':

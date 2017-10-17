@@ -145,3 +145,11 @@ where AlbumID=168 and Title like 'cd %';
 --    path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello"
 select Title, ID from Album
 where Path like '/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello%';
+
+update Album
+set AlbumID=2221
+where ID in (2160,2153,2159,2163,2166,2167,2164,2165,2162,2156);
+
+select Title
+from Album
+where ID in (2160,2153,2159,2163,2166,2167,2164,2165,2162,2156);

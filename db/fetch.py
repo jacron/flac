@@ -178,6 +178,7 @@ def get_performer_albums(id_performer):
     sql = '''
         SELECT
             Album.Title,
+            Album.AlbumID,
             Album.ID
         FROM Performer_Album
             JOIN Performer ON Performer.ID = Performer_Album.PerformerID
@@ -185,13 +186,16 @@ def get_performer_albums(id_performer):
         WHERE Performer_Album.PerformerID =?
     '''
     items = get_items_with_id(sql, id_performer)
-    return named_albums(items)
+    named_items = named_albums_with_mother(items)
+    return filter_contained_childs(named_items)
+    # return named_albums(items)
 
 
 def get_tag_albums(id_tag):
     sql = '''
         SELECT
             Album.Title,
+            Album.AlbumID,
             Album.ID
         FROM Tag_Album
             JOIN Tag ON Tag.ID = Tag_Album.TagID
@@ -199,10 +203,12 @@ def get_tag_albums(id_tag):
         WHERE Tag_Album.TagID =?
     '''
     items = get_items_with_id(sql, id_tag)
-    return named_albums(items)
+    named_items = named_albums_with_mother(items)
+    return filter_contained_childs(named_items)
+    # return named_albums(items)
 
 
-def named_albums2(items):
+def named_albums_with_mother(items):
     out = []
     for item in items:
         out.append({
@@ -225,7 +231,6 @@ def filter_contained_childs(items):
                     album2['mother'] = True
         if not found:
             filtered.append(album)
-
     return filtered
 
 
@@ -239,10 +244,8 @@ def get_instrument_albums(id_instrument):
       ORDER BY Title
     '''
     items = get_items_with_id(sql, id_instrument)
-    named_items = named_albums2(items)
+    named_items = named_albums_with_mother(items)
     return filter_contained_childs(named_items)
-
-    # return named_albums(items)
 
 
 def get_componist_albums(id_componist):
@@ -260,7 +263,7 @@ def get_componist_albums(id_componist):
         ORDER BY Album.Title
     '''
     items = get_items_with_id(sql, id_componist)
-    named_items = named_albums2(items)
+    named_items = named_albums_with_mother(items)
     return filter_contained_childs(named_items)
 
 
@@ -524,6 +527,17 @@ def get_album_by_title(title, c, conn):
      WHERE Title=?
     '''
     fields = c.execute(sql, (title,)).fetchone()
+    return {
+        "Count": fields[0],
+    }
+
+
+def get_album_by_path(path, c, conn):
+    sql = '''
+    SELECT COUNT(ID) FROM Album
+     WHERE Path=?
+    '''
+    fields = c.execute(sql, (path,)).fetchone()
     return {
         "Count": fields[0],
     }

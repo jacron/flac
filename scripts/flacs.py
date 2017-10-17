@@ -5,21 +5,17 @@
 import os
 import glob
 import sqlite3
-
 from flac import settings
-
-
 # importing for stand alone script
 from venv.flac.db import (
     insert_album, insert_componist, insert_performer, insert_instrument,
-    insert_piece, insert_album_performer, insert_album_componist, get_album_by_title, )
+    insert_piece, insert_album_performer, insert_album_componist, get_album_by_path, )
 
 play_types = ('cue', "flac", "ape", "mp3", "iso", "wma", "wav", "mp3", "m4a", )
 
 k_split = None
 artiest = None
-# componist = 'Mahler, Gustav'
-componist = "Bach, JS"
+componist = None
 instrument = None
 rows = []
 
@@ -171,64 +167,52 @@ def has_haakjes(s):
     return False
 
 
+skipdirs = ['website', 'artwork', 'Artwork', 'etc', 'scans', ]
+
+
+def sanatize_haakjes(path):
+    w = path.split('/')
+    album_title = w[-1].replace("_", "")
+    # print replace_haakjes(album_title)
+    if has_haakjes(album_title):
+        src = '{}/{}'.format(path, album_title)
+        dst = '{}/{}'.format(path, replace_haakjes(album_title))
+        # print(src)
+        # print(dst)
+        if os.path.exists(src):
+            os.rename(src, dst)
+        else:
+            print(src)
+
+
+def find_path(p):
+    # w = p.split('/')
+    # album_title = w[-1].replace("_", "")
+    conn, c = script_connect()
+    return get_album_by_path(p, c, conn)
+
+
 def process_dir(path, mother_id, iscollectie):
     for d in os.listdir(path):
         p = '{}/{}'.format(path, d).decode('latin-1').encode('utf-8')
-        if os.path.isdir(p) and d != 'website' and d != 'artwork' and d != 'Artwork' and d != 'etc' and d != 'scans':
+        if os.path.isdir(p) and d not in skipdirs:
             # rename_frontjpg(p, 'box front')
-            # print(p, mid, iscollectie)
-            # process_album(p, mid, iscollectie)
-            w = p.split('/')
-            album_title = w[-1].replace("_", "")
-            conn, c = script_connect()
-            found = get_album_by_title(album_title, c, conn)
-            # print album_title
-
-            # if found['Count'] == 0:
-                # print album_title
-            process_album(p, mother_id, iscollectie)
-                # print replace_haakjes(album_title)
-                # if has_haakjes(album_title):
-                #     src = '{}/{}'.format(path, album_title)
-                #     dst = '{}/{}'.format(path, replace_haakjes(album_title))
-                #     # print(src)
-                #     # print(dst)
-                #     if os.path.exists(src):
-                #         os.rename(src, dst)
-                #     else:
-                #         print(src)
+            # process_album(p, mother_id, iscollectie)
+            found = find_path(p)
+            if found['Count'] == 0:
+                # print(p)
+                # sanatize_haakjes(p)
+                process_album(p, mother_id, iscollectie)
 
 
 def main():
-    paths = []
-    ids = []
-    # paths.append("/Volumes/Media/Audio/Klassiek/Collecties/BBC Legends")
-    # ids.append(168)
-    # rename_frontjpg(path)
-    # print(path)
+    global artiest, instrument, componist
+    componist = "Bach, JS"
 
-    # for path, mid in zip(paths, ids):
-    # nr = 24
-    # path = paths[nr]
-    # mid = ids[nr]
-    # print(path, mid)
-    # mid = 169
     mid = None
-    # path="/Volumes/Media/Audio/Klassiek/Collecties/BBC Legends/BBCL4015 - Gilels - Schumane, Scarlatti, Bach"
-    # path="/Volumes/Media/Audio/Klassiek/Collecties/Classic Voice Antiqua/ClassicAntiqua_15-WAV"
-    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums"
-    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Phase 4 Concert Series Complete - 2496"
-    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/RenaissanceMusic"
-    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Rossini - Respighi - Lamberto Gardelli (24)"
-    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello"
-    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello/Rostropovich"
-    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello/Heinrich Schiff"
-    path="/Volumes/Media/Audio/Klassiek/Componisten/Mahler/Symfonie 04"
     path="/Volumes/Media/Audio/Klassiek/Componisten/Bach"
-    path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello/Colin Carr"
-    process_dir(path=path, mother_id=2166, iscollectie=0)
-    # process_album(path=path, mother_id=2166, is_collectie=2)
-
+    process_dir(path=path, mother_id=None, iscollectie=0)
+    # process_album(path=path, mother_id=None, is_collectie=0)
 
 if __name__ == '__main__':
     main()

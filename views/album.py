@@ -33,7 +33,7 @@ def organize_pieces(items, album_path):
 
 
 def personslijst(items):
-    # achternamen, maar bij ambivalentie aanvullen met voornaam
+    # achternamen als label, maar bij ambivalentie aanvullen met voornaam
     out = []
     for item in items:
         out.append({

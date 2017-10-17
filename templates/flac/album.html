@@ -41,8 +41,9 @@
             </h3>
         {% endfor %}
         {% if album_instrument %}
-            <h4 class="hyperlink">
+            <h4 class="hyperlink instrument">
                 <a href="/instrument/{{ album_instrument.ID }}/">{{ album_instrument.Name }}</a>
+                <div class="fa fa-times-circle remove" id="{{ instrument.ID }}" albumid="{{ album.ID }}"></div>
             </h4>
         {% endif %}
         {% for cuesheet in cuesheet_output %}

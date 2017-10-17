@@ -104,7 +104,8 @@ nav a.selected {
 }
 .tag div.remove,
 .componist .remove,
-.performer .remove {
+.performer .remove,
+.instrument .remove {
     display: none;
     cursor: pointer;
     position: absolute;
@@ -112,6 +113,7 @@ nav a.selected {
 }
 .tag:hover div.remove,
 .componist:hover .remove,
-.performer:hover .remove{
+.performer:hover .remove,
+.instrument:hover .remove {
     display: inline-block;
 }

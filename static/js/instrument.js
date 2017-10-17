@@ -24,6 +24,16 @@ function newInstrument($input) {
     location.reload();
 }
 
+function removeInstrument($this) {
+        const data = {
+        cmd: 'remove_instrument',
+        id: $this.attr('id'),
+        albumid: $this.attr('albumid')
+    };
+    ajaxPost(data);
+    location.reload();
+}
+
 $(function() {
    // instrument
    $('button.select-instrument').click(function () {
@@ -42,4 +52,8 @@ $(function() {
         addInstrument($('select.select-instrument'));
        }
    });
+   $('.instrument .remove').click(function(){
+       removeInstrument($(this));
+   });
+
 });
