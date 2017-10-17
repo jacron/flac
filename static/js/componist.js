@@ -24,25 +24,15 @@ function newComponist($input) {
     location.reload();
 }
 
-$(function () {
-    // componist
-    $('button.select-componist').click(function () {
-        addComponist($('select.select-componist'));
-    });
-    $('button.add-componist').click(function () {
-        newComponist($('input.add-componist'));
-    });
-    $('input.add-componist').keydown(function (e) {
-        if (e.key === 'Enter') {
-            newComponist($('input.add-componist'));
-        }
-    });
-    $('select.select-componist').keydown(function (e) {
-        if (e.key === 'Enter') {
-            addComponist($('select.select-componist'));
-        }
-    });
-});
+function removeComponist($this) {
+        const data = {
+        cmd: 'remove_componist',
+        id: $this.attr('id'),
+        albumid: $this.attr('albumid')
+    };
+    ajaxPost(data);
+    location.reload();
+}
 
 var substringMatcher = function (strs) {
     return function findMatches(q, cb) {
@@ -98,3 +88,27 @@ $(function () {
         }
     });
 });
+
+$(function () {
+    // componist
+    $('button.select-componist').click(function () {
+        addComponist($('select.select-componist'));
+    });
+    $('button.add-componist').click(function () {
+        newComponist($('input.add-componist'));
+    });
+    $('input.add-componist').keydown(function (e) {
+        if (e.key === 'Enter') {
+            newComponist($('input.add-componist'));
+        }
+    });
+    $('select.select-componist').keydown(function (e) {
+        if (e.key === 'Enter') {
+            addComponist($('select.select-componist'));
+        }
+    });
+   $('.componist .remove').click(function(){
+       removeComponist($(this));
+   });
+});
+

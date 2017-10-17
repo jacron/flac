@@ -56,6 +56,26 @@ def remove_tag_from_album(tagid, albumid):
     con.commit()
 
 
+def remove_componist_from_album(id, albumid):
+    sql = """
+    DELETE FROM Componist_Album
+     WHERE ComponistID=? AND AlbumID=?
+    """
+    con, c = connect()
+    c.execute(sql, (id, albumid,)).fetchone()
+    con.commit()
+
+
+def remove_performer_from_album(id, albumid):
+    sql = """
+    DELETE FROM Performer_Album
+     WHERE PerformerID=? AND AlbumID=?
+    """
+    con, c = connect()
+    c.execute(sql, (id, albumid,)).fetchone()
+    con.commit()
+
+
 def add_instrument_to_album(instrumentid, albumid):
     sql = """
     UPDATE Album
@@ -63,7 +83,7 @@ def add_instrument_to_album(instrumentid, albumid):
     WHERE ID=?
     """
     con, c = connect()
-    ret = c.execute(sql, (instrumentid, albumid, )).fetchone()
+    c.execute(sql, (instrumentid, albumid, )).fetchone()
     con.commit()
 
 
@@ -75,7 +95,7 @@ def new_componist(name):
     VALUES(?,?)
     """
     con, c = connect()
-    ret = c.execute(sql, (c_firstname, c_lastname, )).fetchone()
+    c.execute(sql, (c_firstname, c_lastname, )).fetchone()
     con.commit()
     sql = '''
     SELECT ID from Componist WHERE FirstName=? AND LastName=?
@@ -91,7 +111,7 @@ def new_performer(name):
     VALUES(?,?)
     """
     con, c = connect()
-    ret = c.execute(sql, (c_firstname, c_lastname, )).fetchone()
+    c.execute(sql, (c_firstname, c_lastname, )).fetchone()
     con.commit()
     sql = '''
     SELECT ID from Performer WHERE FirstName=? AND LastName=?
@@ -121,7 +141,7 @@ def new_instrument(name):
     VALUES(?)
     """
     con, c = connect()
-    ret = c.execute(sql, (name, )).fetchone()
+    c.execute(sql, (name, )).fetchone()
     con.commit()
     sql = '''
     SELECT ID from Instrument WHERE Name=?

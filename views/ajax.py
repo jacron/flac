@@ -1,10 +1,11 @@
 # coding=utf-8
 import os
 from django.http import HttpResponse
-from ..db import (get_album, get_piece, update_album_title,
-                  add_componist_to_album, add_performer_to_album, add_instrument_to_album,
-                    add_tag_to_album, new_tag, remove_tag_from_album,
-                  new_componist, new_performer, new_instrument, )
+from ..db import (
+    get_album, get_piece, update_album_title, add_tag_to_album,
+    add_componist_to_album, add_performer_to_album, add_instrument_to_album,
+    remove_tag_from_album, remove_componist_from_album, remove_performer_from_album,
+    new_tag, new_componist, new_performer, new_instrument, )
 from django.conf import settings
 
 
@@ -36,6 +37,10 @@ def get_new_componist(name, albumid):
     return add_componist_to_album(int(componistid[0]), int(albumid))
 
 
+def remove_componist(id, albumid):
+    return remove_componist_from_album(id, albumid)
+
+
 def add_performer(performerid, albumid):
     return add_performer_to_album(int(performerid), int(albumid))
 
@@ -43,6 +48,10 @@ def add_performer(performerid, albumid):
 def get_new_performer(name, albumid):
     performerid = new_performer(name)
     return add_performer_to_album(int(performerid[0]), int(albumid))
+
+
+def remove_performer(id, albumid):
+    return remove_performer_from_album(id, albumid)
 
 
 def add_instrument(instrumentid, albumid):
@@ -83,12 +92,16 @@ def do_post(post):
         return add_componist(post['componistid'], post['albumid'])
     if cmd == 'new_componist':
         return get_new_componist(post['name'], post['albumid'])
+    if cmd == 'remove_componist':
+        return remove_componist(post['id'], post['albumid'])
 
     # performer
     if cmd == 'add_performer':
         return add_performer(post['performerid'], post['albumid'])
     if cmd == 'new_performer':
         return get_new_performer(post['name'], post['albumid'])
+    if cmd == 'remove_performer':
+        return remove_performer(post['id'], post['albumid'])
 
     # instrument
     if cmd == 'add_instrument':

@@ -25,6 +25,16 @@ function newPerformer($input) {
     location.reload();
 }
 
+function removePerformer($this) {
+        const data = {
+        cmd: 'remove_performer',
+        id: $this.attr('id'),
+        albumid: $this.attr('albumid')
+    };
+    ajaxPost(data);
+    location.reload();
+}
+
 $(function() {
    $('button.select-performer').click(function () {
        addPerformer($('select.select-performer'));
@@ -41,5 +51,8 @@ $(function() {
        if (e.key === 'Enter') {
         addPerformer($('select.select-performer'));
        }
+   });
+   $('.performer .remove').click(function(){
+       removePerformer($(this));
    });
 });

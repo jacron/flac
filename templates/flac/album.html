@@ -18,12 +18,10 @@
             {{ album.Title }}
         </h2>
         {% for tag in album_tags %}
-            <i class="tag">{{ tag.Name }}
-                <div class="remove" id="{{ tag.ID }}" albumid="{{ album.ID }}">x</div></i>,
+            <i class="tag hyperlink"><a href="/tag/{{ tag.ID }}">{{ tag.Name }}</a>
+                <div class="fa fa-times-circle remove" id="{{ tag.ID }}" albumid="{{ album.ID }}"></div>
+            </i>,
         {% endfor %}
-        {% if componist %}
-            <h2 class="hyperlink"><a href="/componist/{{ componist.ID }}/">{{ componist.FullName }}</a></h2>
-        {% endif %}
         {% if album.AlbumID %}
             <h3 class="hyperlink">
                 <span>Collectie: </span>
@@ -31,13 +29,15 @@
             </h3>
         {% endif %}
         {% for componist in album_componisten %}
-            <h2 class="hyperlink">
+            <h2 class="hyperlink componist">
                 <a href="/componist/{{ componist.ID }}/">{{ componist.FullName }}</a>
+                <div class="fa fa-times-circle remove" id="{{ componist.ID }}" albumid="{{ album.ID }}"></div>
             </h2>
         {% endfor %}
         {% for performer in album_performers %}
-            <h3 class="hyperlink">
+            <h3 class="hyperlink performer">
                 <a href="/performer/{{ performer.ID }}/">{{ performer.FullName }}</a>
+                <div class="fa fa-times-circle remove" id="{{ performer.ID }}" albumid="{{ album.ID }}"></div>
             </h3>
         {% endfor %}
         {% if album_instrument %}
