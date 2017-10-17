@@ -24,6 +24,19 @@ function newTag($input) {
     location.reload();
 }
 
+function removeTag($this) {
+   console.log($this.attr('id'));
+    const data = {
+        cmd: 'remove_tag',
+        id: $this.attr('id'),
+        albumid: $this.attr('albumid')
+    };
+    // console.log(data);
+    ajaxPost(data);
+    // location.reload();
+}
+
+
 $(function () {
     // tag
     $('button.select-tag').click(function () {
@@ -42,4 +55,7 @@ $(function () {
             addTag($('select.select-tag'));
         }
     });
+   $('.tag .remove').click(function(){
+       removeTag($(this));
+   });
 });

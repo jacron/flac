@@ -20,6 +20,7 @@ def organize_pieces(items, album_path):
             extension = ffile.split('.')[-1]
             if extension == 'cue':
                 try:
+                    # sometimes prefixing with 'u' seems necessary but then reading the file will fail
                     path = '{}/{}'.format(album_path, ffile)
                     cuesheets.append(get_full_cuesheet(path, item[1]))
                 except:

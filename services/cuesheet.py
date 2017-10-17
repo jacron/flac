@@ -43,8 +43,11 @@ def display(cue):
         for file in cue['files']:
             lines.append(file['name'])
             for track in file['tracks']:
+                # title = track['title'].decode('latin-1').encode('utf-8')
+                # title = track['title'].encode('utf-8')
+                title = track['title']
                 # utf necessary while lines are implicitly decoded on web page
-                lines.append(u'- {}'.format(track['title']))
+                lines.append(u'- {}'.format(title))
     except:
         print('making display of cuesheet failed: ')
         print(cue)
@@ -124,10 +127,18 @@ def get_full_cuesheet(path, id):
     if os.path.exists(path):
         with open(path, 'r') as f:
             data = f.read()
+            try:
+                cue = parse(data)
+            except:
+                print('parse cue failed')
+            try:
+                lines = display(cue)
+            except:
+                print('display cue failed')
             return {
                 'Title': filename,
                 'ID': id,
-                'cuesheet': display(parse(data)),
+                'cuesheet': lines,
             }
     else:
         print('Bestaat niet: {}'.format(path))

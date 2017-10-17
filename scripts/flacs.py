@@ -18,8 +18,8 @@ play_types = ('cue', "flac", "ape", "mp3", "iso", "wma", "wav", "mp3", "m4a", )
 
 k_split = None
 artiest = None
-componist = 'Bach, JS'
-instrument = 'Cello'
+componist = 'Mahler, Gustav'
+instrument = None
 rows = []
 
 
@@ -215,24 +215,15 @@ def main():
     mid = None
     # path="/Volumes/Media/Audio/Klassiek/Collecties/BBC Legends/BBCL4015 - Gilels - Schumane, Scarlatti, Bach"
     # path="/Volumes/Media/Audio/Klassiek/Collecties/Classic Voice Antiqua/ClassicAntiqua_15-WAV"
-    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums"
-    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Christopher Page, Gothic Voices - The earliest songbook in England"
-    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Christopher Page, Gothic Voices - The Spirits of England and France - vol 3"
-    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Grieg - Sibelius"
-    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/historisch russisch archief"
-    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Jefta"
-    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Ferrara Ensemble - Figures of Harmony - Songs of Codex Chantilly C. 1390 (2015) (FLAC)"
-    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Gale 96k_1976-77"
-    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/High Def Vinyls 96K24B (Miller & Kreisel) Limited Edition Vol. 1, 3, 5 (24)"
-    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Jean Cocteau et Les Six"
-    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Komitas Armenian Liturgy"
-    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Phase 4 Concert Series Complete - 2496"
-    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/RenaissanceMusic"
-    path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Rossini - Respighi - Lamberto Gardelli (24)"
-    path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello"
-    path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello/Rostropovich"
-    path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello/Heinrich Schiff"
-    process_dir(path=path, mother_id=2167, iscollectie=0)
+    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums"
+    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Phase 4 Concert Series Complete - 2496"
+    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/RenaissanceMusic"
+    # path="/Volumes/Media/Audio/Klassiek/Verzamelalbums/Rossini - Respighi - Lamberto Gardelli (24)"
+    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello"
+    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello/Rostropovich"
+    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Cello/Heinrich Schiff"
+    path="/Volumes/Media/Audio/Klassiek/Componisten/Mahler/Symfonie 04"
+    process_dir(path=path, mother_id=43, iscollectie=0)
     # process_album(path=path, mother_id=None, is_collectie=2)
 
 

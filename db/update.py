@@ -46,6 +46,16 @@ def add_tag_to_album(tagid, albumid):
     con.commit()
 
 
+def remove_tag_from_album(tagid, albumid):
+    sql = """
+    DELETE FROM Tag_Album
+     WHERE TagID=? AND AlbumID=?
+    """
+    con, c = connect()
+    c.execute(sql, (tagid, albumid,)).fetchone()
+    con.commit()
+
+
 def add_instrument_to_album(instrumentid, albumid):
     sql = """
     UPDATE Album

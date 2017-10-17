@@ -99,3 +99,18 @@ nav a.selected {
     /*box-shadow: -1px -1px 1px red;*/
     background: #efefff;
 }
+.tags li {
+    list-style: none;
+}
+.tag div.remove {
+    display: none;
+    border: 1px solid #efefef;
+    border-radius: 10px;
+    width: 14px;
+    height: 14px;
+    padding: 0 0 6px 4px;
+    cursor: pointer;
+}
+.tag:hover div.remove {
+    display: inline-block;
+}

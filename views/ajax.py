@@ -3,7 +3,7 @@ import os
 from django.http import HttpResponse
 from ..db import (get_album, get_piece, update_album_title,
                   add_componist_to_album, add_performer_to_album, add_instrument_to_album,
-                    add_tag_to_album, new_tag,
+                    add_tag_to_album, new_tag, remove_tag_from_album,
                   new_componist, new_performer, new_instrument, )
 from django.conf import settings
 
@@ -63,6 +63,10 @@ def get_new_tag(name, albumid):
     return add_tag_to_album(int(tagid[0]), int(albumid))
 
 
+def remove_tag(id, albumid):
+    return remove_tag_from_album(id, albumid)
+
+
 def do_post(post):
     cmd = post['cmd']
     if cmd == 'play':
@@ -97,6 +101,8 @@ def do_post(post):
         return add_tag(post['tagid'], post['albumid'])
     if cmd == 'new_tag':
         return get_new_tag(post['name'], post['albumid'])
+    if cmd == 'remove_tag':
+        return remove_tag(post['id'], post['albumid'])
 
 
 def ajax(request):
