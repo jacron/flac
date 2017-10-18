@@ -153,3 +153,16 @@ where ID in (2160,2153,2159,2163,2166,2167,2164,2165,2162,2156);
 select Title
 from Album
 where ID in (2160,2153,2159,2163,2166,2167,2164,2165,2162,2156);
+
+delete from Album
+where ID in (203, 278, 350);
+
+select Title, Path
+from Album
+where ID in (2348, 2352, 2349, 2346, 2347, 2350, 2351);
+
+select ID, Title from Album
+where AlbumID=169;
+
+select ID from Album
+where Title='BBCL4015 - Gilels - Schumane, Scarlatti, Bach';

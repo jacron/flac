@@ -117,3 +117,6 @@ nav a.selected {
 .instrument:hover .remove {
     display: inline-block;
 }
+fieldset {
+    color: rgba(21,21,100,.90);
+}

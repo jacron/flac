@@ -5,5 +5,7 @@
 {% endblock %}
 {% block page %}
     <h2>{{ instrument.Name }} ({{ items|length }})</h2>
-{% albumlist items %}
+{% albumlist items.mothers %}
+    <div class="clear"></div>
+{% albumlist items.children %}
 {% endblock %}

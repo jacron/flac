@@ -9,5 +9,6 @@
 </h2>
 <img src="/componistimage/{{ componist.ID }}/" class="album-image">
 <h4>{{ componist.Birth }} - {%  if componist.Death %}{{ componist.Death }}{% endif %}</h4>
-{% albumlist items %}
+{% albumlist items.mothers %}    <div class="clear"></div>
+{% albumlist items.children %}
 {% endblock %}

@@ -12,7 +12,7 @@ from venv.flac.db import (
     insert_piece, insert_album_performer, insert_album_componist, get_album_by_path, )
 
 play_types = ('cue', "flac", "ape", "mp3", "iso", "wma", "wav", "mp3", "m4a", )
-
+skipdirs = ['website', 'artwork', 'Artwork', 'etc', 'scans', ]
 k_split = None
 artiest = None
 componist = None
@@ -158,6 +158,7 @@ def replace_haakjes(s):
 
 
 def has_haakjes(s):
+    # print(s)
     for ch in ['[', '{']:
         if ch in s:
             return True
@@ -167,22 +168,13 @@ def has_haakjes(s):
     return False
 
 
-skipdirs = ['website', 'artwork', 'Artwork', 'etc', 'scans', ]
-
-
-def sanatize_haakjes(path):
-    w = path.split('/')
-    album_title = w[-1].replace("_", "")
-    # print replace_haakjes(album_title)
-    if has_haakjes(album_title):
-        src = '{}/{}'.format(path, album_title)
-        dst = '{}/{}'.format(path, replace_haakjes(album_title))
-        # print(src)
-        # print(dst)
+def sanatize_haakjes(path, d):
+    if has_haakjes(d):
+        src = '{}/{}'.format(path, d)
+        dst = '{}/{}'.format(path, replace_haakjes(d))
         if os.path.exists(src):
             os.rename(src, dst)
-        else:
-            print(src)
+            print(dst)
 
 
 def find_path(p):
@@ -195,23 +187,34 @@ def find_path(p):
 def process_dir(path, mother_id, iscollectie):
     for d in os.listdir(path):
         p = '{}/{}'.format(path, d).decode('latin-1').encode('utf-8')
+        # print(d)
         if os.path.isdir(p) and d not in skipdirs:
+            # sanatize_haakjes(path, d)
             # rename_frontjpg(p, 'box front')
-            # process_album(p, mother_id, iscollectie)
-            found = find_path(p)
-            if found['Count'] == 0:
-                # print(p)
-                # sanatize_haakjes(p)
-                process_album(p, mother_id, iscollectie)
+            process_album(p, mother_id, iscollectie)
+            # found = find_path(p)
+            # if found['Count'] == 0:
+            #     print(p)
+            #     process_album(p, mother_id, iscollectie)
 
 
 def main():
     global artiest, instrument, componist
     componist = "Bach, JS"
+    # instrument = "Clavecimbel"
 
-    mid = None
-    path="/Volumes/Media/Audio/Klassiek/Componisten/Bach"
-    process_dir(path=path, mother_id=None, iscollectie=0)
+    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach"
+    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Orgelwerken"
+    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Orgelwerken/Knud Vad  J S Bach_ Organ Works (2006)"
+    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Orgelwerken/Stockmeier"
+    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Orgelwerken/Olivier Vernet"
+    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano"
+    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano/Glenn Gould"
+    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Viool"
+    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/cantatas"
+    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/clavecimbel"
+    path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/hilliard ensemble"
+    process_dir(path=path, mother_id=2188, iscollectie=0)
     # process_album(path=path, mother_id=None, is_collectie=0)
 
 if __name__ == '__main__':

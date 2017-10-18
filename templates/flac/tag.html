@@ -5,5 +5,6 @@
 {% endblock %}
 {% block page %}
 <h2>{{ tag.Name }} ({{ items|length }})</h2>
-{% albumlist items %}
+{% albumlist items.mothers %}
+{% albumlist items.children %}
 {% endblock %}

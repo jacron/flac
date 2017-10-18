@@ -35,7 +35,11 @@ def named_albums(items):
 
 def get_album_albums(id_album):
     sql = '''
-      SELECT Title, Album.ID, Componist.FirstName, Componist.LastName  
+      SELECT 
+      Title, 
+      Album.ID, 
+      Componist.FirstName, 
+      Componist.LastName  
       FROM Album 
       LEFT JOIN Componist_Album ON Componist_Album.AlbumID=Album.ID
       LEFT JOIN Componist ON Componist.ID=Componist_Album.ComponistID
@@ -162,7 +166,7 @@ def get_tags():
     sql = '''
       SELECT Name, ID 
       FROM Tag
-      ORDER BY Name
+      ORDER BY Name COLLATE NOCASE
     '''
     items = get_items(sql)
     out = []
@@ -184,6 +188,7 @@ def get_performer_albums(id_performer):
             JOIN Performer ON Performer.ID = Performer_Album.PerformerID
             JOIN Album ON Album.ID = Performer_Album.AlbumID
         WHERE Performer_Album.PerformerID =?
+        ORDER BY Title COLLATE NOCASE
     '''
     items = get_items_with_id(sql, id_performer)
     named_items = named_albums_with_mother(items)
@@ -201,6 +206,7 @@ def get_tag_albums(id_tag):
             JOIN Tag ON Tag.ID = Tag_Album.TagID
             JOIN Album ON Album.ID = Tag_Album.AlbumID
         WHERE Tag_Album.TagID =?
+        ORDER BY Title COLLATE NOCASE
     '''
     items = get_items_with_id(sql, id_tag)
     named_items = named_albums_with_mother(items)
@@ -220,8 +226,9 @@ def named_albums_with_mother(items):
 
 
 def filter_contained_childs(items):
-    # filter to get rid of albums that already are contained in a mother album in this list
-    filtered = []
+    # return lists of mothers (with property mother is true) and childrens
+    children = []
+    mothers = []
     for album in items:
         found = False
         for album2 in items:
@@ -230,8 +237,14 @@ def filter_contained_childs(items):
                     found = True
                     album2['mother'] = True
         if not found:
-            filtered.append(album)
-    return filtered
+            if album.get('mother'):
+                mothers.append(album)
+            else:
+                children.append(album)
+    return {
+        'mothers': mothers,
+        'children': children
+    }
 
 
 def get_instrument_albums(id_instrument):
@@ -241,7 +254,7 @@ def get_instrument_albums(id_instrument):
        AlbumID,
        ID FROM Album
       WHERE InstrumentID=?
-      ORDER BY Title
+      ORDER BY Title COLLATE NOCASE
     '''
     items = get_items_with_id(sql, id_instrument)
     named_items = named_albums_with_mother(items)
@@ -258,9 +271,7 @@ def get_componist_albums(id_componist):
             JOIN Componist ON Componist.ID = Componist_Album.ComponistID
             JOIN Album ON Album.ID = Componist_Album.AlbumID
         WHERE Componist_Album.ComponistID =?
-        -- AND Album.AlbumID ISNULL 
-        -- AND Album.AlbumID NOT IN (MotherID)
-        ORDER BY Album.Title
+        ORDER BY Album.Title COLLATE NOCASE
     '''
     items = get_items_with_id(sql, id_componist)
     named_items = named_albums_with_mother(items)
