@@ -4,11 +4,19 @@
     {{ componist.FullName }}
 {% endblock %}
 {% block page %}
-<h2>
-    {{ componist.FullName }} ({{ items|length }})
-</h2>
-<img src="/componistimage/{{ componist.ID }}/" class="album-image">
-<h4>{{ componist.Birth }} - {%  if componist.Death %}{{ componist.Death }}{% endif %}</h4>
-{% albumlist items.mothers %}    <div class="clear"></div>
-{% albumlist items.children %}
+    <div class="w3-row">
+        <div class="w3-col m2 5">
+            <h4>
+                {{ componist.FullName }}
+                ({{ items.mothers|length }}, {{ items.children|length }})
+            </h4>
+            <img src="/componistimage/{{ componist.ID }}/" class="instrument-image">
+            <h4>{{ componist.Birth }} - {% if componist.Death %}{{ componist.Death }}{% endif %}</h4>
+        </div>
+        <div class="w3-col m10 19">
+            {% albumlist items.mothers %}
+            <div class="clear"></div>
+            {% albumlist items.children %}
+        </div>
+    </div>
 {% endblock %}

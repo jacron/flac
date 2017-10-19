@@ -1,20 +1,3 @@
-CREATE TABLE Album
-(
-    ID INTEGER PRIMARY KEY ,
-    ComponistID INTEGER,
-    PerformerID INTEGER,
-    InstrumentID INTEGER,
-    Title TEXT,
-    Label TEXT,
-    Path TEXT,
-    DiskID TEXT,
-    FOREIGN KEY (InstrumentID) REFERENCES Instrument(ID),
-    FOREIGN KEY (ComponistID) REFERENCES Componist (ID),
-    FOREIGN KEY (PerformerID) REFERENCES Performer (ID)
-);
-CREATE UNIQUE INDEX Album_ComponistID_Title_uindex ON Album (Title, ComponistID)
-
-
 SELECT
     FirstName,
     LastName,
@@ -123,11 +106,21 @@ where AlbumID=151;
 select Name from Piece
 where Piece.AlbumID not in (select ID from Album);
 
+-- Hoe vind ik alle pieces die in geen album (meer) zitten?
 select C.*
 from Piece C
 left join Album M
 on M.ID = C.AlbumID
 where M.ID ISNULL ;
+
+-- hoe ruim ik die op?
+delete from Piece where ID in (
+  select C.ID
+  from Piece C
+  left join Album M
+  on M.ID = C.AlbumID
+  where M.ID ISNULL
+);
 
 update Album set IsCollection=0
 where Title like 'BBCL%';
@@ -155,7 +148,7 @@ from Album
 where ID in (2160,2153,2159,2163,2166,2167,2164,2165,2162,2156);
 
 delete from Album
-where ID in (203, 278, 350);
+where ID in (267, 339, 411, 483, 555, 627);
 
 select Title, Path
 from Album
@@ -166,3 +159,33 @@ where AlbumID=169;
 
 select ID from Album
 where Title='BBCL4015 - Gilels - Schumane, Scarlatti, Bach';
+
+select ID, Path
+from Album
+where Path in (
+  select Path
+  from Album
+  group by Path
+  having COUNT(*) = 1
+);
+
+
+-- (1) Path duplicates
+select ID, Path, COUNT(*) as c
+from Album
+group by Path
+ORDER BY c DESC;
+
+-- (2) ID's for the duplicated Path
+select ID, Path
+from Album
+where Path IN (
+  select Path from Album
+  where ID=651
+);
+
+-- (3) delete Albums by ID
+delete from Album
+where ID in (291,363,435,507,579,651);
+
+291,363,435,507,579,651

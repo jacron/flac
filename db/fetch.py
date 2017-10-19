@@ -192,7 +192,7 @@ def get_performer_albums(id_performer):
     '''
     items = get_items_with_id(sql, id_performer)
     named_items = named_albums_with_mother(items)
-    return filter_contained_childs(named_items)
+    return filter_contained_children(named_items)
     # return named_albums(items)
 
 
@@ -210,7 +210,7 @@ def get_tag_albums(id_tag):
     '''
     items = get_items_with_id(sql, id_tag)
     named_items = named_albums_with_mother(items)
-    return filter_contained_childs(named_items)
+    return filter_contained_children(named_items)
     # return named_albums(items)
 
 
@@ -225,22 +225,24 @@ def named_albums_with_mother(items):
     return out
 
 
-def filter_contained_childs(items):
-    # return lists of mothers (with property mother is true) and childrens
+def filter_contained_children(items):
+    # return lists of mothers (with property mother is true) and children
+    # N.B. sometimes a mother is a child, i.e. in the children list an album has property mother true
+    # but somehow this is right
     children = []
     mothers = []
-    for album in items:
+    for album1 in items:
         found = False
         for album2 in items:
-            if album2 != album:
-                if album2['ID'] == album['AlbumID']:
+            if album2 != album1:
+                if album2['ID'] == album1['AlbumID']: # this album has a mother in this list
                     found = True
                     album2['mother'] = True
         if not found:
-            if album.get('mother'):
-                mothers.append(album)
+            if album1.get('mother'):
+                mothers.append(album1)
             else:
-                children.append(album)
+                children.append(album1)
     return {
         'mothers': mothers,
         'children': children
@@ -258,7 +260,7 @@ def get_instrument_albums(id_instrument):
     '''
     items = get_items_with_id(sql, id_instrument)
     named_items = named_albums_with_mother(items)
-    return filter_contained_childs(named_items)
+    return filter_contained_children(named_items)
 
 
 def get_componist_albums(id_componist):
@@ -275,7 +277,7 @@ def get_componist_albums(id_componist):
     '''
     items = get_items_with_id(sql, id_componist)
     named_items = named_albums_with_mother(items)
-    return filter_contained_childs(named_items)
+    return filter_contained_children(named_items)
 
 
 def get_instrument(id_instrument):
@@ -491,7 +493,7 @@ def get_performer(id_performer):
 
 def get_album(id_album):
     sql = '''
-    SELECT Title, Label, Path, ComponistID, AlbumID, ID 
+    SELECT Title, Label, Path, AlbumID, ID 
     FROM Album 
     WHERE Album.ID=?
     '''
@@ -504,9 +506,8 @@ def get_album(id_album):
         "Title": fields[0],
         "Label": fields[1],
         "Path": fields[2],
-        "ComponistID": fields[3],
-        "AlbumID": fields[4],
-        "ID": fields[5],
+        "AlbumID": fields[3],
+        "ID": fields[4],
     }
 
 

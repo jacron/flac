@@ -17,6 +17,7 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+    url(r'^$', views.home),
     url(r'^home/$', views.home),
     url(r'^album/(?P<album_id>.+)/$', views.album),
     url(r'^album/$', views.albums),

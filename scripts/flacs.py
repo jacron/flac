@@ -200,22 +200,21 @@ def process_dir(path, mother_id, iscollectie):
 
 def main():
     global artiest, instrument, componist
-    componist = "Bach, JS"
+    componist = "Atterberg, Kurt"
     # instrument = "Clavecimbel"
 
-    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach"
-    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Orgelwerken"
-    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Orgelwerken/Knud Vad  J S Bach_ Organ Works (2006)"
-    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Orgelwerken/Stockmeier"
-    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Orgelwerken/Olivier Vernet"
-    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano"
-    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano/Glenn Gould"
-    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Viool"
-    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/cantatas"
-    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/clavecimbel"
-    path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/hilliard ensemble"
-    process_dir(path=path, mother_id=2188, iscollectie=0)
+    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/hilliard ensemble"
+    # path="/Volumes/Media/Audio/Klassiek/Componisten/Albeniz"
+    # path="/Volumes/Media/Audio/Klassiek/Componisten/Albeniz/96kIsaAlb_OuvPoPi_AlDeLar"
+    path="/Volumes/Media/Audio/Klassiek/Componisten/Atterberg"
+    path="/Volumes/Media/Audio/Klassiek/Collecties/BBC Legends/BBCL4021 - Richter - Debussy, Chopin"
+    # process_dir(path=path, mother_id=None, iscollectie=0)
     # process_album(path=path, mother_id=None, is_collectie=0)
+    path="/Volumes/Media/Audio/Klassiek/Collecties/BBC Legends/BBCL4020 - Curzon - Beethoven, Mozart pianoconcerten"
+    path="/Volumes/Media/Audio/Klassiek/Collecties/BBC Legends/BBCL4041 - Thomas Beecham_ Royal Philharmonic - Sibelius_ 90th Birthday Concert"
+    conn, c = script_connect()
+    insert_pieces(path, 199, conn, c)
+
 
 if __name__ == '__main__':
     main()

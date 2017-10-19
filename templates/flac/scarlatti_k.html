@@ -4,8 +4,8 @@
 {% block title %}{{ page_title }}{% endblock %}
 {% block page %}
     <form>{% csrf_token %}</form>
-    <h2>{{ page_title }} ({{ items|length }})</h2>
-<img src="/componistimage/{{ scarlatti.ID }}/" class="album-image">
+    <h4>{{ page_title }} ({{ items|length }})</h4>
+<img src="/componistimage/{{ scarlatti.ID }}/" class="instrument-image">
     <table cellpadding="4">
         {% for item in items %}
             <tr>

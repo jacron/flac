@@ -120,3 +120,6 @@ nav a.selected {
 fieldset {
     color: rgba(21,21,100,.90);
 }
+.left-pane {
+    float: left;
+}
