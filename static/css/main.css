@@ -28,7 +28,9 @@ body {
     color: green;
 }
 .album-image {
-    height: 440px;
+    height: 360px;
+    float: left;
+    margin: 0 4px 4px 0;
 }
 .album-image-thumb {
     height: 160px;
@@ -122,4 +124,11 @@ fieldset {
 }
 .left-pane {
     float: left;
+}
+.edit-album {
+    font-size: 14px;
+}
+.edit-album select,
+.edit-album button {
+    font-size: 12px;
 }

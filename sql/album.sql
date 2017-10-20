@@ -181,11 +181,14 @@ select ID, Path
 from Album
 where Path IN (
   select Path from Album
-  where ID=651
+  where ID=666
 );
 
 -- (3) delete Albums by ID
 delete from Album
 where ID in (291,363,435,507,579,651);
 
-291,363,435,507,579,651
+
+update Album
+set AlbumID=41
+where (ID between 2365 AND 2373);

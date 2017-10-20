@@ -44,6 +44,11 @@ def process_file(filepath):
     })
 
 
+def process_pieces(path, album_id):
+    conn, c = script_connect()
+    insert_pieces(path, album_id, conn, c)
+
+
 def insert_pieces(path, album_id, conn, c):
     global rows
     # print(path)
@@ -184,14 +189,17 @@ def find_path(p):
     return get_album_by_path(p, c, conn)
 
 
-def process_dir(path, mother_id, iscollectie):
+def process_dir(path, mother_id, iscollectie, cmd):
     for d in os.listdir(path):
         p = '{}/{}'.format(path, d).decode('latin-1').encode('utf-8')
         # print(d)
         if os.path.isdir(p) and d not in skipdirs:
-            # sanatize_haakjes(path, d)
-            # rename_frontjpg(p, 'box front')
-            process_album(p, mother_id, iscollectie)
+            if cmd == 'sanatize':
+                sanatize_haakjes(path, d)
+            if cmd == 'rename':
+                rename_frontjpg(p, 'box front')
+            if cmd == 'process':
+                process_album(p, mother_id, iscollectie)
             # found = find_path(p)
             # if found['Count'] == 0:
             #     print(p)
@@ -200,20 +208,17 @@ def process_dir(path, mother_id, iscollectie):
 
 def main():
     global artiest, instrument, componist
-    componist = "Atterberg, Kurt"
+    componist = "Gustav Mahler"
     # instrument = "Clavecimbel"
 
-    # path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/hilliard ensemble"
-    # path="/Volumes/Media/Audio/Klassiek/Componisten/Albeniz"
-    # path="/Volumes/Media/Audio/Klassiek/Componisten/Albeniz/96kIsaAlb_OuvPoPi_AlDeLar"
-    path="/Volumes/Media/Audio/Klassiek/Componisten/Atterberg"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/BBC Legends/BBCL4021 - Richter - Debussy, Chopin"
-    # process_dir(path=path, mother_id=None, iscollectie=0)
+    path="/Volumes/Media/Audio/Klassiek/Componisten/Mahler/Symfonie 10"
+    # process_pieces(path, 666)
+    cmd='sanatize'
+    # cmd='rename'
+    cmd='process'
+    process_dir(path=path, mother_id=49,
+                iscollectie=0, cmd=cmd)
     # process_album(path=path, mother_id=None, is_collectie=0)
-    path="/Volumes/Media/Audio/Klassiek/Collecties/BBC Legends/BBCL4020 - Curzon - Beethoven, Mozart pianoconcerten"
-    path="/Volumes/Media/Audio/Klassiek/Collecties/BBC Legends/BBCL4041 - Thomas Beecham_ Royal Philharmonic - Sibelius_ 90th Birthday Concert"
-    conn, c = script_connect()
-    insert_pieces(path, 199, conn, c)
 
 
 if __name__ == '__main__':

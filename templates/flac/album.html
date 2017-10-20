@@ -14,37 +14,37 @@
              class="album-image">
         <img src="/albumimage/{{ album.ID }}/back/"
              class="album-image">
-        <h2 contenteditable="true" name="title" class="edit-title" albumid="{{ album.ID }}">
+        <div contenteditable="true" name="title" class="edit-title" albumid="{{ album.ID }}">
             {{ album.Title }}
-        </h2>
+        </div>
         {% for tag in album_tags %}
             <i class="tag hyperlink"><a href="/tag/{{ tag.ID }}">{{ tag.Name }}</a>
                 <div class="fa fa-times-circle remove" id="{{ tag.ID }}" albumid="{{ album.ID }}"></div>
             </i>,
         {% endfor %}
         {% if album.AlbumID %}
-            <h3 class="hyperlink">
+            <div class="hyperlink">
                 <span>Collectie: </span>
                 <a href="/album/{{ album.AlbumID }}">{{ mother_title }}</a>
-            </h3>
+            </div>
         {% endif %}
         {% for componist in album_componisten %}
-            <h2 class="hyperlink componist">
+            <div class="hyperlink componist">
                 <a href="/componist/{{ componist.ID }}/">{{ componist.FullName }}</a>
                 <div class="fa fa-times-circle remove" id="{{ componist.ID }}" albumid="{{ album.ID }}"></div>
-            </h2>
+            </div>
         {% endfor %}
         {% for performer in album_performers %}
-            <h3 class="hyperlink performer">
+            <div class="hyperlink performer">
                 <a href="/performer/{{ performer.ID }}/">{{ performer.FullName }}</a>
                 <div class="fa fa-times-circle remove" id="{{ performer.ID }}" albumid="{{ album.ID }}"></div>
-            </h3>
+            </div>
         {% endfor %}
         {% if album_instrument %}
-            <h4 class="hyperlink instrument">
+            <div class="hyperlink instrument">
                 <a href="/instrument/{{ album_instrument.ID }}/">{{ album_instrument.Name }}</a>
                 <div class="fa fa-times-circle remove" id="{{ instrument.ID }}" albumid="{{ album.ID }}"></div>
-            </h4>
+            </div>
         {% endif %}
         {% for cuesheet in cuesheet_output %}
             <div>
@@ -60,17 +60,19 @@
         {% endfor %}
         {% albumlist albums %}
         <div class="clear"></div>
-        <h4>Stukken <i class="toggle-content fa fa-caret-right"></i></h4>
-        <table class="content stukken">
-            {% for item in items %}
-                <tr>
-                    <td class="hyperlink">
-                        <a onclick="play({{ item.1 }})">{{ item.0 }}</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
-        <h4>Bewerk <i class="toggle-edit fa fa-caret-down"></i></h4>
+        <div class="">
+            <div>Stukken <i class="toggle-content fa fa-caret-right"></i></div>
+            <table class="content stukken">
+                {% for item in items %}
+                    <tr>
+                        <td class="hyperlink">
+                            <a onclick="play({{ item.1 }})">{{ item.0 }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div>Bewerk <i class="toggle-edit fa fa-caret-down"></i></div>
         <div class="content edit">
             <fieldset>
                 <legend>Componist</legend>
