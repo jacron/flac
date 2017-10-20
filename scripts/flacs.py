@@ -12,7 +12,7 @@ from venv.flac.db import (
     insert_piece, insert_album_performer, insert_album_componist, get_album_by_path, )
 
 play_types = ('cue', "flac", "ape", "mp3", "iso", "wma", "wav", "mp3", "m4a", )
-skipdirs = ['website', 'artwork', 'Artwork', 'etc', 'scans', ]
+skipdirs = ['website', 'artwork', 'Artwork', 'etc', 'scans', 'website boxset', '#Boolets', 'Pixels']
 k_split = None
 artiest = None
 componist = None
@@ -91,7 +91,7 @@ def process_album(path, mother_id, is_collectie):
         return
     conn, c = script_connect()
     w = path.split('/')
-    album_title = w[-1].replace("_", "")
+    album_title = w[-1].replace("_", " ")
 
     if instrument:
         instrument_id = insert_instrument(instrument, c, conn)[0]
@@ -111,6 +111,7 @@ def process_album(path, mother_id, is_collectie):
     insert_artiest(artiest, c, conn, album_id)
     insert_composer(componist, c, conn, album_id)
     conn.close()
+    return album_id
 
 
 def rename_frontjpg(path, name):
@@ -192,15 +193,20 @@ def find_path(p):
 def process_dir(path, mother_id, iscollectie, cmd):
     for d in os.listdir(path):
         p = '{}/{}'.format(path, d).decode('latin-1').encode('utf-8')
-        # print(d)
         if os.path.isdir(p) and d not in skipdirs:
             if cmd == 'sanatize':
                 sanatize_haakjes(path, d)
             if cmd == 'rename':
                 rename_frontjpg(p, 'box front')
             if cmd == 'process':
-                process_album(p, mother_id, iscollectie)
-            # found = find_path(p)
+                album_id = process_album(p, mother_id, iscollectie)
+                # one recursive step
+                for d in os.listdir(p):
+                    p2 = '{}/{}'.format(path, d).decode('latin-1').encode('utf-8')
+                    if os.path.isdir(p2) and d not in skipdirs:
+                        process_album(p2, album_id, 0)
+
+                        # found = find_path(p)
             # if found['Count'] == 0:
             #     print(p)
             #     process_album(p, mother_id, iscollectie)
@@ -215,11 +221,12 @@ def main():
     path="/Volumes/Media/Audio/Klassiek/Componisten/Mahler/192k Mahler - Symphony No. 2 - Klemperer (1st German Pressing)"
     path="/Volumes/Media/Audio/Klassiek/Componisten/Mahler/Amsterdam Mahlerfeest 1995"
     # path="/Volumes/Media/Audio/Klassiek/Componisten/Mahler/Amsterdam Mahlerfeest 1995/cd 11"
+    path="/Volumes/Media/Audio/Klassiek/Componisten/Bach/Rilling - Bach Complete Edition - Hanssler"
     # process_pieces(path, album_id=666)
     cmd='sanatize'
     # cmd='rename'
     cmd='process'
-    process_dir(path=path, iscollectie=0, cmd=cmd, mother_id=2395)
+    process_dir(path=path, iscollectie=0, cmd=cmd, mother_id=2198)
     # process_album(path=path, mother_id=2395, is_collectie=0)
 
 
