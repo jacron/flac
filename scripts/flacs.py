@@ -211,14 +211,16 @@ def main():
     componist = "Gustav Mahler"
     # instrument = "Clavecimbel"
 
-    path="/Volumes/Media/Audio/Klassiek/Componisten/Mahler/Symfonie 10"
-    # process_pieces(path, 666)
+    # path="/Volumes/Media/Audio/Klassiek/Componisten/Mahler/Symfonie 10"
+    path="/Volumes/Media/Audio/Klassiek/Componisten/Mahler/192k Mahler - Symphony No. 2 - Klemperer (1st German Pressing)"
+    path="/Volumes/Media/Audio/Klassiek/Componisten/Mahler/Amsterdam Mahlerfeest 1995"
+    # path="/Volumes/Media/Audio/Klassiek/Componisten/Mahler/Amsterdam Mahlerfeest 1995/cd 11"
+    # process_pieces(path, album_id=666)
     cmd='sanatize'
     # cmd='rename'
     cmd='process'
-    process_dir(path=path, mother_id=49,
-                iscollectie=0, cmd=cmd)
-    # process_album(path=path, mother_id=None, is_collectie=0)
+    process_dir(path=path, iscollectie=0, cmd=cmd, mother_id=2395)
+    # process_album(path=path, mother_id=2395, is_collectie=0)
 
 
 if __name__ == '__main__':

@@ -132,3 +132,6 @@ fieldset {
 .edit-album button {
     font-size: 12px;
 }
+.title {
+    width: 80%;
+}

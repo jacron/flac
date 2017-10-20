@@ -10,9 +10,9 @@ def insert_album(title, path, instrument_id, album_id, is_collectie, c, conn):
     c.execute(sql, (title, instrument_id, album_id, path, is_collectie))
     conn.commit()
     sql = '''
-    SELECT ID from Album WHERE Title=?
+    SELECT ID from Album WHERE Path=?
     '''
-    return c.execute(sql, (title,)).fetchone()
+    return c.execute(sql, (path,)).fetchone()
 
 
 def insert_componist(componist, c, conn):
