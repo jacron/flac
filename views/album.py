@@ -4,24 +4,19 @@ from ..db import (
     get_albums, get_album, get_pieces, get_componisten, get_performers, get_instruments,
     get_album_albums, get_album_performers, get_album_componisten, get_album_instruments,
     get_mother_title, get_tags, get_album_tags, )
-from ..services import get_full_cuesheet, get_cuesheet
+from ..services import get_full_cuesheet
 
 
 def organize_pieces(items, album_path):
     cuesheets = []
     pieces = []
     for item in items:
-        try:
-            ffile = item[0].encode('utf-8')
-        except:
-            ffile = item[0]
-            print("could not encode filename:" + ffile)
+        ffile = item[0]
         if ffile:
             extension = ffile.split('.')[-1]
             if extension == 'cue':
+                path = u'{}/{}'.format(album_path, ffile)
                 try:
-                    # sometimes prefixing with 'u' seems necessary but then reading the file will fail
-                    path = '{}/{}'.format(album_path, ffile)
                     cuesheets.append(get_full_cuesheet(path, item[1]))
                 except:
                     # path = '{}/{}'.format(album_path, ffile)
@@ -89,6 +84,8 @@ def album(request, album_id):
         cuesheets, pieces = organize_pieces(items, album_o['Path'])
     except:
         print('Cannot get pieces')
+        cuesheets = []
+        pieces = []
 
     context = {
         'items': pieces,

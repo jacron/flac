@@ -2,6 +2,8 @@ from ..services import splits_naam
 
 
 def insert_album(title, path, instrument_id, album_id, is_collectie, c, conn):
+    print(title)
+    print(path)
     sql = '''
     INSERT OR IGNORE INTO Album
     (Title, InstrumentID, AlbumID, Path, IsCollection) 

@@ -16,10 +16,7 @@ def get_element(line, prefix):
     pos = line.find(prefix)
     if pos != -1:
         rest = pos + len(prefix)
-        try:
-            result = line[rest:]
-        except:
-            result = line[rest:].decode('latin-1').encode('utf-8')
+        result = line[rest:]
         return result
     return None
 
@@ -31,7 +28,6 @@ def replace_haakjes(s):
     for ch in [']', '}']:
         if ch in s:
             s = s.replace(ch, ')')
-    print(s)
     return s
 
 
@@ -39,18 +35,20 @@ def display(cue):
     lines = []
     # for rem in cue['rem']:
     #     lines.append(rem)
+
     try:
         for file in cue['files']:
             lines.append(file['name'])
             for track in file['tracks']:
                 # title = track['title'].decode('latin-1').encode('utf-8')
-                # title = track['title'].encode('utf-8')
                 title = track['title']
-                # utf necessary while lines are implicitly decoded on web page
-                lines.append(u'- {}'.format(title))
+                # lines.append('- {}'.format(title))
+                lines.append(title)
+                # print(title)
+                # lines.append(title)
     except:
-        print('making display of cuesheet failed: ')
-        print(cue)
+        print('making display of cuesheet failed.')
+    print(lines)
     return lines
 
 
@@ -68,6 +66,7 @@ def parse(data):
             line = line.strip()
         except:
             print('line is niet te strippen')
+
         # rem = get_element(line, 'REM ')
         # if rem:
         #     cue['rem'].append(rem)
@@ -135,6 +134,7 @@ def get_full_cuesheet(path, id):
                 lines = display(cue)
             except:
                 print('display cue failed')
+                lines = []
             return {
                 'Title': filename,
                 'ID': id,

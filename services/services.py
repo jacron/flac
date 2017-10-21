@@ -1,3 +1,24 @@
+def replace_haakjes(s):
+    for ch in ['[', '{']:
+        if ch in s:
+            s = s.replace(ch, '(')
+    for ch in [']', '}']:
+        if ch in s:
+            s = s.replace(ch, ')')
+    return s
+
+
+def has_haakjes(s):
+    # print(s)
+    for ch in ['[', '{']:
+        if ch in s:
+            return True
+    for ch in [']', '}']:
+        if ch in s:
+            return True
+    return False
+
+
 def directory(path):
     # path = path.decode('utf-8')
     w = path.split('/')[:-1]
