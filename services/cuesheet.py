@@ -1,3 +1,6 @@
+# from __future__ import unicode_literals
+
+
 from .services import dequote
 import os
 
@@ -40,15 +43,11 @@ def display(cue):
         for file in cue['files']:
             lines.append(file['name'])
             for track in file['tracks']:
-                # title = track['title'].decode('latin-1').encode('utf-8')
                 title = track['title']
                 # lines.append('- {}'.format(title))
                 lines.append(title)
-                # print(title)
-                # lines.append(title)
     except:
         print('making display of cuesheet failed.')
-    print(lines)
     return lines
 
 
@@ -61,11 +60,13 @@ def parse(data):
     }
     cfile = None
     ctrack = None
-    for line in data.split('\n'):
-        try:
-            line = line.strip()
-        except:
-            print('line is niet te strippen')
+    for line in data.split(b'\n'):
+        if len(line) < 1:
+            continue
+        # try:
+        #     line = line.strip()
+        # except:
+        #     print('line is niet te strippen')
 
         # rem = get_element(line, 'REM ')
         # if rem:
@@ -124,8 +125,9 @@ def get_full_cuesheet(path, id):
     filename = os.path.split(path)[1]
     filename = ' '.join(filename.split('.')[:-1])
     if os.path.exists(path):
-        with open(path, 'r') as f:
+        with open(path, b'r') as f:
             data = f.read()
+            cue = None
             try:
                 cue = parse(data)
             except:

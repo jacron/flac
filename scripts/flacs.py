@@ -1,10 +1,10 @@
+from __future__ import unicode_literals
 # encoding: utf-8
 # coding=utf-8
 """flac
 
 """
 import os
-import unicodedata
 import sqlite3
 from venv.flac.db import (
     insert_album, insert_instrument, get_album_by_path, )
@@ -12,14 +12,16 @@ from venv.flac.scripts.helper.rename import (
     rename_cover, sanatize_haakjes
 )
 from venv.flac.scripts.helper.insert import (
-    insert_artiest, insert_composer, insert_pieces
+    insert_artiest, insert_composer, insert_componist_by_id, insert_pieces
 )
+
 
 db_path = '../../db.sqlite3'
 skipdirs = ['website', 'artwork', 'Artwork', 'etc', 'scans',
-            'website boxset', '#Booklets', 'Pixels']
+            'website boxset', '#Booklets', 'Pixels', 'Graphics', ]
 artiest = None
 componist = None
+ComponistID = None
 instrument = None
 
 
@@ -48,7 +50,7 @@ def process_album(path, mother_id, is_collectie):
         instrument_id = None
     album_id = insert_album(
         title=album_title,
-        path=path,  # .decode('latin-1').encode('utf-8'),
+        path=path,
         instrument_id=instrument_id,
         is_collectie=is_collectie,
         c=c,
@@ -58,7 +60,10 @@ def process_album(path, mother_id, is_collectie):
     print("album_id={}".format(album_id))
     insert_pieces(path, album_id, conn, c)
     insert_artiest(artiest, c, conn, album_id)
-    insert_composer(componist, c, conn, album_id)
+    if ComponistID:
+        insert_componist_by_id(ComponistID, c, conn, album_id)
+    else:
+        insert_composer(componist, c, conn, album_id)
     conn.close()
     return album_id
 
@@ -74,48 +79,55 @@ def process_a(p, mother_id, iscollectie, step_in):
     if step_in:
         # one recursive step
         for d2 in os.listdir(p):
-            p2 = u'{}/{}'.format(p, d2)  # .decode('latin-1').encode('utf-8')
+            p2 = u'{}/{}'.format(p, d2)
             if os.path.isdir(p2) and d2 not in skipdirs:
                 process_album(p2, album_id, 0)
 
 
-def process_p(path, p, d, mother_id, iscollectie, cmd, step_in):
-    print(cmd)
-    if cmd == 'sanatize':
-        sanatize_haakjes(path, d)
-    if cmd == 'cover':
-        rename_cover(p)
-    if cmd == 'process':
-        # if count_album_by_path(p) == 0:
-        process_a(p, mother_id, iscollectie, step_in)
+def get_albums(path, mother_id, iscollectie, step_in):
+    for d in os.listdir(path):
+        p = u'{}/{}'.format(path, d)
+        if os.path.isdir(p) and d not in skipdirs:
+            process_a(p, mother_id, iscollectie, step_in)
 
 
 def process_dir(path, mother_id, iscollectie, cmd, step_in):
-    for d in os.listdir(path):
-        p = u'{}/{}'.format(path, d)  # .decode('latin-1').encode('utf-8')
-        if os.path.isdir(p) and d not in skipdirs:
-            process_p(path, p, d, mother_id, iscollectie, cmd, step_in)
+    if cmd == 'sanatize':
+        sanatize_haakjes(path, step_in)
+    if cmd == 'cover':
+        rename_cover(path, step_in)
+    if cmd == 'get_albums':
+        get_albums(path, mother_id, iscollectie, step_in)
 
 
 def main():
-    global artiest, instrument, componist
-    componist = "JS Bach"
-    # componist = "Heinrich Albert"
+    global artiest, instrument, componist, ComponistID
+    # componist = "Bartok"
+    ComponistID = 8  # Beethoven
     # instrument = "Clavecimbel"
     # cmd = 'sanatize'
     # cmd = 'cover'
-    cmd = 'process'
+    cmd = 'get_albums'
+    print(cmd)
 
-    # path="/Volumes/Media/Audio/Klassiek/Componisten/Mahler/Symfonie 10"
-    # path="/Volumes/Media/Audio/Klassiek/Componisten/Mahler/Amsterdam Mahlerfeest 1995"
-    # path="/Volumes/Media/Audio/Klassiek/Componisten/Mahler/Amsterdam Mahlerfeest 1995/cd 11"
-    path = u"/Volumes/Media/Audio/Klassiek/Componisten/Bach/Rilling - Bach Complete Edition - Hanssler"
-    path = u"/Volumes/Media/Audio/Klassiek/Componisten/Albert"
-    path = "/Volumes/Media/Audio/Klassiek/Componisten/Bach/Rilling - Sacred Works (11 cds)"
+    # path = u"/Volumes/Media/Audio/Klassiek/Componisten/Bach/Rilling - Bach Complete Edition - Hanssler"
+    # path = u"/Volumes/Media/Audio/Klassiek/Componisten/Albert"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Bach/Rilling - Sacred Works (11 cds)"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/pianoconcerten"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/symphonies"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/symphonies/96k LvB 9Symphonies Karajan"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/The Piano Trios - Beaux Arts"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/cellosonates"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/Beethoven Unknown Masterworks (9 cds)"
+    path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/alle concerten - 96 - dgg (24)"
     # process_pieces(path, album_id=666)
     # process_dir(path=path, iscollectie=0, cmd=cmd, mother_id=2198, step_in=True) # Rilling
-    process_dir(path=path, iscollectie=0, cmd=cmd, mother_id=2196, step_in=False)
-    # process_album(path=path, mother_id=2395, is_collectie=0)
+    # process_dir(path=path, iscollectie=0, cmd=cmd, mother_id=2657, step_in=False)
+    process_a(p=path, mother_id=None, iscollectie=0, step_in=True)
+    # sanatize_haakjes(path, True)
+
+    # album_id = process_album(path=path, mother_id=None, is_collectie=0)
 
 
 if __name__ == '__main__':

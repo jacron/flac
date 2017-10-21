@@ -43,6 +43,10 @@ def insert_artiest(artiest, c, conn, album_id):
         insert_album_performer(performer_id, album_id, c, conn)
 
 
+def insert_componist_by_id(id, c, conn, album_id):
+    insert_album_componist(id, album_id, c, conn)
+
+
 def insert_composer(componist, c, conn, album_id):
     if componist:
         componist_id = insert_componist(componist, c, conn)[0]
