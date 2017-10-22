@@ -4,6 +4,24 @@
 
 'use strict';
 
+function ajaxGet(data, cb) {
+    const url = '/ajax/';
+    const headers = {
+        'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+    };
+    $.ajax({
+        type: 'GET',
+        url: url,
+        data: data,
+        headers: headers,
+        dataType: 'json'
+    }).done(function(response){
+        cb(response);
+    }).fail(function(err) {
+        cb(err.responseText);
+    });
+}
+
 function ajaxPost(data) {
     const url = '/ajax/';
     const headers = {
@@ -18,6 +36,6 @@ function ajaxPost(data) {
     }).done(function(response){
         console.log(response);
     }).fail(function(err) {
-        console.log(err.responseText);
+        // console.log(err.responseText);
     });
 }

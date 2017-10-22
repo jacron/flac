@@ -34,7 +34,7 @@ function removeComponist($this) {
     location.reload();
 }
 
-var substringMatcher = function (strs) {
+var match = function (items) {
     return function findMatches(q, cb) {
         var matches, substrRegex;
 
@@ -46,7 +46,7 @@ var substringMatcher = function (strs) {
 
         // iterate through the pool of strings and for any string that
         // contains the substring `q`, add it to the `matches` array
-        $.each(strs, function (i, str) {
+        $.each(items, function (i, str) {
             if (substrRegex.test(str)) {
                 matches.push(str);
             }
@@ -62,7 +62,7 @@ $(function () {
         var $this = $(this);
         componisten.push($this.text());
     });
-    $('.typeahead').typeahead({
+    $('.componisten .typeahead').typeahead({
             hint: true,
             highlight: true,
             minLength: 1,
@@ -70,19 +70,15 @@ $(function () {
         },
         {
             name: 'componisten',
-            // display: name,
-            source: substringMatcher(componisten),
+            source: match(componisten)
         }
     ).keydown(function(e){
         if (e.key === 'Enter') {
-            // console.log($('.typeahead'));
             var result = $('.typeahead').get(1).value;
-            console.log(result);
             $('.componist-naam').each(function () {
                 var $this = $(this);
                 if ($this.text() === result) {
-                    var url = '/componist/' + $this.attr('componistid');
-                    location.href = url;
+                    location.href = '/componist/' + $this.attr('componistid');
                 }
             });
         }

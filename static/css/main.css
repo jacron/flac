@@ -61,6 +61,7 @@ nav a.selected {
     width: 200px;
     height: 230px;
     list-style: none;
+    overflow-y: hidden;
 }
 .toggle-content,
 .toggle-edit,
@@ -72,7 +73,7 @@ nav a.selected {
     display: none;
 }
 .content.cue {
-    /*display: none;*/
+    display: none;
 }
 .clear {
     clear: both;
@@ -151,4 +152,24 @@ fieldset {
 }
 .content.edit {
     display: none;
+}
+.btn {
+    border: 1px solid #efefef;
+    padding: 3px;
+    display: inline-block;
+    border-radius: 3px;
+    margin-top: 2px;
+}
+.btn:hover {
+    background: #ccccff;
+}
+.album-controls {
+    padding-bottom: 2px;
+    height: 36px;
+}
+.album-controls .typeahead {
+    display: none;
+}
+.album-controls:hover .typeahead {
+    display: inline-block;
 }

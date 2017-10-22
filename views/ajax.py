@@ -1,11 +1,12 @@
 # coding=utf-8
+import json
 import os
 from django.http import HttpResponse
 from ..db import (
     get_album, get_piece, update_album_title, add_tag_to_album,
     add_componist_to_album, add_performer_to_album, add_instrument_to_album,
     remove_tag_from_album, remove_componist_from_album, remove_performer_from_album,
-    remove_instrument_from_album,
+    remove_instrument_from_album, get_tags,
     new_tag, new_componist, new_performer, new_instrument, )
 from django.conf import settings
 
@@ -125,8 +126,18 @@ def do_post(post):
         return remove_tag(post['id'], post['albumid'])
 
 
+def do_get(get):
+    cmd = get['cmd']
+    print(cmd)
+    if cmd == 'tags':
+        return json.dumps(get_tags())
+    return 'unknown cmd'
+
+
 def ajax(request):
     msg = 'No post!'
     if request.POST:
         msg = do_post(request.POST)
+    if request.GET:
+        msg = do_get(request.GET)
     return HttpResponse(msg)

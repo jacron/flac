@@ -2,7 +2,9 @@
 {% load page_tags %}
 {% block title %}Componisten{% endblock %}
 {% block page %}
-    <input class="typeahead" type="text" placeholder="Zoek componist">
-    <h3>Componisten ({{ items|length }})</h3>
-    {% componistenlist items %}
+    <div class="componisten">
+        <input class="typeahead" type="text" placeholder="Zoek componist">
+        <h3>Componisten ({{ items|length }})</h3>
+        {% componistenlist items %}
+    </div>
 {% endblock %}

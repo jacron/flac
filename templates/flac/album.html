@@ -7,8 +7,11 @@
 {% block page %}
     <div class="album">
         <form>{% csrf_token %}</form>
-        <div class="hyperlink">
-            <a onclick="openfinder('{{ album.ID }}')">open finder</a>
+        <div class="album-controls">
+            <span class="hyperlink btn">
+                <a onclick="openfinder('{{ album.ID }}')">open finder</a>
+            </span>
+            <input class="typeahead" type="text" placeholder="Tag">
         </div>
         <img src="/albumimage/{{ album.ID }}/"
              class="album-image">
