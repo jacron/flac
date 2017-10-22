@@ -14,7 +14,9 @@ def tag(request, tag_id):
 
 def tags(request):
     template = loader.get_template('flac/tags.html')
+    tags = get_tags()
     return HttpResponse(template.render(
         {
-            "tags": get_tags()
+            "tags": tags['tags'],
+            'tags_len': tags['tags_len'],
         }, request))

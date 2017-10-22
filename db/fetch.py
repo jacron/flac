@@ -128,6 +128,21 @@ def named_persons(items):
     return out
 
 
+def get_componisten_typeahead():
+    sql = '''
+      SELECT FirstName, LastName, ID
+      FROM Componist
+    '''
+    items = get_items(sql)
+    out = []
+    for item in items:
+        out.append({
+            'FullName': u'{} {}'.format(item[0], item[1]),
+            'ID': item[2],
+        })
+    return out
+
+
 def get_componisten(limit=0):
     sql = '''
 SELECT *
@@ -194,12 +209,17 @@ def get_tags():
     '''
     items = get_items(sql)
     out = []
+    len = 0
     for item in items:
+        len += 1
         out.append({
             'Name': item[0],
             'ID': item[1],
         })
-    return out
+    return{
+        'tags': out,
+        'tags_len': len,
+    }
 
 
 def get_performer_albums(id_performer):

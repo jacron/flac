@@ -4,7 +4,11 @@
     {{ tag.Name }}
 {% endblock %}
 {% block page %}
-<h2>{{ tag.Name }} ({{ items|length }})</h2>
+<h4>{{ tag.Name }}
+    {% if items.mothers|length %}
+    ({{ items.mothers.length }})
+    {% endif %}
+    ({{ items.children|length }})</h4>
 {% albumlist items.mothers %}
 {% albumlist items.children %}
 {% endblock %}

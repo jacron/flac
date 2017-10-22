@@ -244,3 +244,7 @@ FROM (
     DESC
 )
 WHERE Albums > 1;
+
+
+SELECT ID FROM Componist
+    WHERE FirstName || ' ' || LastName='JS Bach';

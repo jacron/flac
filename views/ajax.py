@@ -5,8 +5,9 @@ from django.http import HttpResponse
 from ..db import (
     get_album, get_piece, update_album_title, add_tag_to_album,
     add_componist_to_album, add_performer_to_album, add_instrument_to_album,
+    add_new_componist_to_album,
     remove_tag_from_album, remove_componist_from_album, remove_performer_from_album,
-    remove_instrument_from_album, get_tags,
+    remove_instrument_from_album, get_tags, get_componisten_typeahead,
     new_tag, new_componist, new_performer, new_instrument, )
 from django.conf import settings
 
@@ -32,6 +33,10 @@ def do_update_album_title(title, albumid):
 
 def add_componist(componistid, albumid):
     return add_componist_to_album(int(componistid), int(albumid))
+
+
+def add_new_componist(name, albumid):
+    return add_new_componist_to_album(name, int(albumid))
 
 
 def get_new_componist(name, albumid):
@@ -98,6 +103,8 @@ def do_post(post):
         return add_componist(post['componistid'], post['albumid'])
     if cmd == 'new_componist':
         return get_new_componist(post['name'], post['albumid'])
+    if cmd == 'add_new_componist':
+        return add_new_componist(post['name'], post['albumid'])
     if cmd == 'remove_componist':
         return remove_componist(post['id'], post['albumid'])
 
@@ -131,6 +138,8 @@ def do_get(get):
     print(cmd)
     if cmd == 'tags':
         return json.dumps(get_tags())
+    if cmd == 'componisten':
+        return json.dumps(get_componisten_typeahead())
     return 'unknown cmd'
 
 

@@ -61,7 +61,7 @@ def instrumentenlijst(items):
 
 def taglijst(items):
     out = []
-    for item in items:
+    for item in items['tags']:
         out.append({
             "Title": '',
             "Value": item['ID'],

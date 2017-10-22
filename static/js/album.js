@@ -27,8 +27,8 @@ var match = function (items) {
 
 
 function impl_tags_typeahead(tags) {
-    var $typeahead = $('.album .typeahead');
-    $typeahead.typeahead({
+    var $tagTypeahead = $('.album .tag.typeahead');
+    $tagTypeahead.typeahead({
             hint: true,
             highlight: true,
             minLength: 1,
@@ -40,8 +40,8 @@ function impl_tags_typeahead(tags) {
         }
     ).keydown(function(e){
         if (e.key === 'Enter') {
-            var result = $('.typeahead').get(1).value;
-            console.log(result);
+            var result = $(e.target).val();
+            // console.log(result);
             const data = {
                 cmd: 'new_tag',
                 name: result,
@@ -51,7 +51,37 @@ function impl_tags_typeahead(tags) {
             location.reload();
         }
         if (e.key === 'Escape') {
-            $typeahead.val('');
+            $tagTypeahead.val('');
+        }
+    });
+}
+
+function impl_componisten_typeahead(componisten) {
+    var $tagTypeahead = $('.album .componist.typeahead');
+    $tagTypeahead.typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1,
+            displayKey: 'Name'
+        },
+        {
+            name: 'componisten',
+            source: match(componisten)
+        }
+    ).keydown(function(e){
+        if (e.key === 'Enter') {
+            var result = $(e.target).val();
+            console.log(result);
+            const data = {
+                cmd: 'add_new_componist',
+                name: result,
+                albumid: $('.edit-title').attr('albumid')
+            };
+            ajaxPost(data);
+            location.reload();
+        }
+        if (e.key === 'Escape') {
+            $tagTypeahead.val('');
         }
     });
 }
@@ -61,13 +91,23 @@ $(function () {
     ajaxGet({
         cmd: 'tags'
     }, function(response){
-        // console.log(response);
         tags = [];
-        response.forEach(function(tag) {
+        response.tags.forEach(function(tag) {
             tags.push(tag.Name);
         });
-        // console.log(tags);
-        impl_tags_typeahead(tags)
+        impl_tags_typeahead(tags);
+    });
+    var componisten = ['Bach JS', 'test2'];
+    ajaxGet({
+        cmd: 'componisten'
+    }, function(response){
+        componisten = [];
+        // console.log(response);
+        response.forEach(function(componist) {
+            componisten.push(componist.FullName);
+        });
+        // console.log(componisten);
+        impl_componisten_typeahead(componisten);
     });
 });
 
