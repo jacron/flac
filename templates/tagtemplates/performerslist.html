@@ -6,8 +6,9 @@
             <div>{{ item.FullName }}</div>
                 <div class="jaren">{{ item.Birth }} -
                     {% if item.Death %}
-                    {{ item.Death }}
+                        {{ item.Death }}
                     {% endif %}
+                ({{ item.Albums }})
                 </div>
             </a>
         </li>

@@ -192,3 +192,14 @@ where ID in (291,363,435,507,579,651);
 update Album
 set AlbumID=41
 where (ID between 2365 AND 2373);
+
+      SELECT FirstName, LastName, C.Path, Birth, Death,
+        C.ID, COUNT(A.ID) AS AID
+       -- COUNT(A.ID)
+      FROM Componist C
+      JOIN Componist_Album CA
+      ON CA.ComponistID = C.ID
+      JOIN Album A
+      ON CA.AlbumID = A.ID
+        GROUP BY C.ID
+      ORDER BY AID DESC;

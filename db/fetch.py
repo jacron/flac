@@ -122,26 +122,51 @@ def named_persons(items):
             'Birth': item[3],
             'Death': item[4],
             'ID': item[5],
+            'Albums': item[6],
         })
     return out
 
 
 def get_componisten():
+    # sql = '''
+    #   SELECT FirstName, LastName, Path, Birth, Death, ID
+    #   FROM Componist
+    #   ORDER BY LastName
+    # '''
     sql = '''
-      SELECT FirstName, LastName, Path, Birth, Death, ID 
-      FROM Componist
+      SELECT FirstName, LastName, C.Path, Birth, Death,
+        C.ID, COUNT(A.ID) AS Albums
+       -- COUNT(A.ID)
+      FROM Componist C
+      JOIN Componist_Album CA
+      ON CA.ComponistID = C.ID
+      JOIN Album A
+      ON CA.AlbumID = A.ID
+        GROUP BY C.ID
       ORDER BY LastName
-    '''
+      '''
     items = get_items(sql)
     return named_persons(items)
 
 
 def get_performers():
+    # sql = '''
+    #   SELECT FirstName, LastName, Path, Birth, Death, ID
+    #   FROM Performer
+    #   ORDER BY LastName
+    # '''
     sql = '''
-      SELECT FirstName, LastName, Path, Birth, Death, ID 
-      FROM Performer
+      SELECT FirstName, LastName, C.Path, Birth, Death,
+        C.ID, COUNT(A.ID) AS Albums
+       -- COUNT(A.ID)
+      FROM Performer C
+      JOIN Performer_Album CA
+      ON CA.PerformerID = C.ID
+      JOIN Album A
+      ON CA.AlbumID = A.ID
+        GROUP BY C.ID
       ORDER BY LastName
-    '''
+      '''
     items = get_items(sql)
     return named_persons(items)
 

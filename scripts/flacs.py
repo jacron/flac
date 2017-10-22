@@ -75,6 +75,15 @@ def count_album_by_path(p):
 
 
 def process_a(p, mother_id, iscollectie, step_in):
+    '''
+    Lees in directory p alle stukken in voor een album, onthoud album_id als mother.
+    Als step_in waar is, doe hetzelfde in de subdirectories (1 niveau diep) met album_id als mother.
+    :param p:
+    :param mother_id:
+    :param iscollectie:
+    :param step_in:
+    :return:
+    '''
     album_id = process_album(p, mother_id, iscollectie)
     if step_in:
         # one recursive step
@@ -85,19 +94,18 @@ def process_a(p, mother_id, iscollectie, step_in):
 
 
 def get_albums(path, mother_id, iscollectie, step_in):
+    '''
+    Behandel het path als plaats waar de subdirectories groepen albums bevatten
+    :param path:
+    :param mother_id:
+    :param iscollectie:
+    :param step_in:
+    :return:
+    '''
     for d in os.listdir(path):
         p = u'{}/{}'.format(path, d)
         if os.path.isdir(p) and d not in skipdirs:
             process_a(p, mother_id, iscollectie, step_in)
-
-
-def process_dir(path, mother_id, iscollectie, cmd, step_in):
-    if cmd == 'sanatize':
-        sanatize_haakjes(path, step_in)
-    if cmd == 'cover':
-        rename_cover(path, step_in)
-    if cmd == 'get_albums':
-        get_albums(path, mother_id, iscollectie, step_in)
 
 
 def main():
@@ -105,29 +113,15 @@ def main():
     # componist = "Bartok"
     ComponistID = 8  # Beethoven
     # instrument = "Clavecimbel"
-    # cmd = 'sanatize'
-    # cmd = 'cover'
-    cmd = 'get_albums'
-    print(cmd)
 
-    # path = u"/Volumes/Media/Audio/Klassiek/Componisten/Bach/Rilling - Bach Complete Edition - Hanssler"
-    # path = u"/Volumes/Media/Audio/Klassiek/Componisten/Albert"
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Bach/Rilling - Sacred Works (11 cds)"
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven"
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/pianoconcerten"
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/symphonies"
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/symphonies/96k LvB 9Symphonies Karajan"
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/The Piano Trios - Beaux Arts"
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/cellosonates"
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/Beethoven Unknown Masterworks (9 cds)"
     path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/alle concerten - 96 - dgg (24)"
+    # album_id = process_album(path=path, mother_id=None, is_collectie=0)
     # process_pieces(path, album_id=666)
-    # process_dir(path=path, iscollectie=0, cmd=cmd, mother_id=2198, step_in=True) # Rilling
-    # process_dir(path=path, iscollectie=0, cmd=cmd, mother_id=2657, step_in=False)
+    # get_albums(path=path, mother_id=2198, iscollectie=0, step_in=True) # Rilling
     process_a(p=path, mother_id=None, iscollectie=0, step_in=True)
     # sanatize_haakjes(path, True)
-
-    # album_id = process_album(path=path, mother_id=None, is_collectie=0)
+    # rename_cover(path, True)
 
 
 if __name__ == '__main__':
