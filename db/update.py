@@ -26,7 +26,23 @@ def add_new_componist_to_album(name, albumid):
     if not id:
         id = new_componist(name)
     if id:
-        add_componist_to_album(id, albumid)
+        add_componist_to_album(id[0], albumid)
+
+
+def add_new_performer_to_album(name, albumid):
+    # name is not unambivalently translatable in firstname and lastname
+    # so we search for it existing first
+    sql = """
+    SELECT ID FROM Performer
+    WHERE FirstName || ' ' || LastName=?
+    """
+    con, c = connect()
+    id = c.execute(sql, (name, )).fetchone()
+    con.close()
+    if not id:
+        id = new_performer(name)
+    if id:
+        add_performer_to_album(id[0], albumid)
 
 
 def add_componist_to_album(componistid, albumid):
