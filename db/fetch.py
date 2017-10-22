@@ -1,8 +1,9 @@
 from .connect import connect
 
 
-def get_items_with_id(sql, oid):
+def get_items_with_parameter(sql, oid):
     conn, c = connect()
+    items = []
     try:
         items = [item for item in c.execute(sql, (oid,)).fetchall()]
     except:
@@ -47,7 +48,7 @@ def get_album_albums(id_album):
       GROUP BY Title
       ORDER BY Title COLLATE NOCASE
     '''
-    items = get_items_with_id(sql, id_album)
+    items = get_items_with_parameter(sql, id_album)
     out = []
     for nr, item in enumerate(items):
         componist = ''
@@ -107,7 +108,7 @@ def get_pieces(album_id):
       WHERE AlbumID=?
       ORDER BY Name
     '''
-    return get_items_with_id(sql, album_id)
+    return get_items_with_parameter(sql, album_id)
 
 
 def named_persons(items):
@@ -127,38 +128,36 @@ def named_persons(items):
     return out
 
 
-def get_componisten():
-    # sql = '''
-    #   SELECT FirstName, LastName, Path, Birth, Death, ID
-    #   FROM Componist
-    #   ORDER BY LastName
-    # '''
+def get_componisten(limit=0):
     sql = '''
-      SELECT FirstName, LastName, C.Path, Birth, Death,
-        C.ID, COUNT(A.ID) AS Albums
-       -- COUNT(A.ID)
-      FROM Componist C
-      JOIN Componist_Album CA
+SELECT *
+FROM (
+  SELECT
+    FirstName,
+    LastName,
+    C.Path,
+    Birth,
+    Death,
+    C.ID,
+    COUNT(A.ID) AS Albums
+  FROM Componist C
+    JOIN Componist_Album CA
       ON CA.ComponistID = C.ID
-      JOIN Album A
+    JOIN Album A
       ON CA.AlbumID = A.ID
-        GROUP BY C.ID
-      ORDER BY LastName
-      '''
-    items = get_items(sql)
+  GROUP BY C.ID
+  ORDER BY LastName
+)
+WHERE Albums > ?
+'''
+    items = get_items_with_parameter(sql, int(limit))
     return named_persons(items)
 
 
 def get_performers():
-    # sql = '''
-    #   SELECT FirstName, LastName, Path, Birth, Death, ID
-    #   FROM Performer
-    #   ORDER BY LastName
-    # '''
     sql = '''
       SELECT FirstName, LastName, C.Path, Birth, Death,
         C.ID, COUNT(A.ID) AS Albums
-       -- COUNT(A.ID)
       FROM Performer C
       JOIN Performer_Album CA
       ON CA.PerformerID = C.ID
@@ -215,7 +214,7 @@ def get_performer_albums(id_performer):
         WHERE Performer_Album.PerformerID =?
         ORDER BY Title COLLATE NOCASE
     '''
-    items = get_items_with_id(sql, id_performer)
+    items = get_items_with_parameter(sql, id_performer)
     named_items = named_albums_with_mother(items)
     return filter_contained_children(named_items)
     # return named_albums(items)
@@ -233,7 +232,7 @@ def get_tag_albums(id_tag):
         WHERE Tag_Album.TagID =?
         ORDER BY Title COLLATE NOCASE
     '''
-    items = get_items_with_id(sql, id_tag)
+    items = get_items_with_parameter(sql, id_tag)
     named_items = named_albums_with_mother(items)
     return filter_contained_children(named_items)
     # return named_albums(items)
@@ -283,7 +282,7 @@ def get_instrument_albums(id_instrument):
       WHERE InstrumentID=?
       ORDER BY Title COLLATE NOCASE
     '''
-    items = get_items_with_id(sql, id_instrument)
+    items = get_items_with_parameter(sql, id_instrument)
     named_items = named_albums_with_mother(items)
     return filter_contained_children(named_items)
 
@@ -300,7 +299,7 @@ def get_componist_albums(id_componist):
         WHERE Componist_Album.ComponistID =?
         ORDER BY Album.Title COLLATE NOCASE
     '''
-    items = get_items_with_id(sql, id_componist)
+    items = get_items_with_parameter(sql, id_componist)
     named_items = named_albums_with_mother(items)
     return filter_contained_children(named_items)
 
@@ -366,7 +365,7 @@ def get_album_tags(id_album):
             JOIN Album ON Album.ID = Tag_Album.AlbumID
         WHERE Tag_Album.AlbumID =?
     '''
-    items = get_items_with_id(sql, id_album, )
+    items = get_items_with_parameter(sql, id_album, )
     out = []
     for item in items:
         out.append({
@@ -387,7 +386,7 @@ def get_album_performers(id_album):
             JOIN Album ON Album.ID = Performer_Album.AlbumID
         WHERE Performer_Album.AlbumID =?
     '''
-    items = get_items_with_id(sql, id_album, )
+    items = get_items_with_parameter(sql, id_album, )
     out = []
     for item in items:
         out.append({
@@ -410,7 +409,7 @@ def get_album_componisten(id_album):
             JOIN Album ON Album.ID = Componist_Album.AlbumID
         WHERE Componist_Album.AlbumID =?
     '''
-    items = get_items_with_id(sql, id_album, )
+    items = get_items_with_parameter(sql, id_album, )
     out = []
     for item in items:
         out.append({

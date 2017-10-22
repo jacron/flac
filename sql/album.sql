@@ -171,35 +171,76 @@ where Path in (
 
 
 -- (1) Path duplicates
-select ID, Path, COUNT(*) as c
-from Album
-group by Path
-ORDER BY c DESC;
+select ID
+FROM (
+  SELECT
+    ID,
+    COUNT(*) AS c
+  FROM Album
+  GROUP BY Path
+  ORDER BY c
+    DESC
+) WHERE c > 1;
+
+633,645,671,677,650,656,663,647,644,687,673,665,670,700,678,667,662,694,684,639,640,675,648,683,646,660,654,661,688,642,697,635,669,692,652,643,672,676,674,2360,2012,2412,2209,2648,2651,2680,2152,
 
 -- (2) ID's for the duplicated Path
+select ID
+from Album
+where Path IN (
+  select Path from Album
+  where ID=633
+);
+
+198,273,345,417,489,561,633,
+
+-- (3) delete Albums by ID
+delete from Album
+where ID in (
+273,345,417,489,561,633
+);
+
+
 select ID, Path
 from Album
 where Path IN (
   select Path from Album
-  where ID=666
+  where ID IN (
+    select ID
+FROM (
+  SELECT
+    ID,
+    Path,
+    COUNT(*) AS c
+  FROM Album
+  GROUP BY Path
+  ORDER BY c
+    DESC
+) WHERE c > 1
+  )
 );
-
--- (3) delete Albums by ID
-delete from Album
-where ID in (291,363,435,507,579,651);
-
 
 update Album
 set AlbumID=41
 where (ID between 2365 AND 2373);
 
-      SELECT FirstName, LastName, C.Path, Birth, Death,
-        C.ID, COUNT(A.ID) AS AID
-       -- COUNT(A.ID)
-      FROM Componist C
-      JOIN Componist_Album CA
+SELECT *
+FROM (
+  SELECT
+    FirstName,
+    LastName,
+    C.Path,
+    Birth,
+    Death,
+    C.ID,
+    COUNT(A.ID) AS Albums
+  FROM Componist C
+    JOIN Componist_Album CA
       ON CA.ComponistID = C.ID
-      JOIN Album A
+    JOIN Album A
       ON CA.AlbumID = A.ID
-        GROUP BY C.ID
-      ORDER BY AID DESC;
+  GROUP BY C.ID
+  ORDER BY Albums
+    DESC
+)
+WHERE Albums > 1;

@@ -54,7 +54,15 @@
                     <i class="toggle-cue fa fa-caret-right"></i></div>
                 <ul class="content cue">
                     {% for line in cuesheet.cuesheet %}
-                        <li>{{ line }}</li>
+                        <li
+                        {% if not forloop.counter0 %}
+                            class="cue-header"
+                        {% endif %}
+                        ><span>{{ line }}</span>
+                        {% if not forloop.counter0 %}
+                            <span class="cue-plus">+</span>
+                        {% endif %}
+                        </li>
                     {% endfor %}
                 </ul>
             </div>

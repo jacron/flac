@@ -68,9 +68,11 @@ nav a.selected {
     cursor: pointer;
     font-size: 18px !important;
 }
-.content.stukken,
-.content.cue {
+.content.stukken {
     display: none;
+}
+.content.cue {
+    /*display: none;*/
 }
 .clear {
     clear: both;
@@ -134,4 +136,19 @@ fieldset {
 }
 .title {
     width: 80%;
+}
+.cue-header {
+    color: brown;
+}
+.cue-plus {
+    cursor: pointer;
+}
+.cue-header .cue-plus {
+    display: none;
+}
+.cue-header:hover .cue-plus {
+    display: inline-block;
+}
+.content.edit {
+    display: none;
 }

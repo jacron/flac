@@ -12,6 +12,14 @@ def componist(request, componist_id):
     return HttpResponse(template.render(context, request))
 
 
+def componisten_limited(request, min_limit):
+    template = loader.get_template('flac/componisten.html')
+    context = {
+        'items': get_componisten(min_limit),
+    }
+    return HttpResponse(template.render(context, request))
+
+
 def componisten(request):
     template = loader.get_template('flac/componisten.html')
     context = {

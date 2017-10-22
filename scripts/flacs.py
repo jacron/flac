@@ -110,12 +110,14 @@ def get_albums(path, mother_id, iscollectie, step_in):
 
 def main():
     global artiest, instrument, componist, ComponistID
-    # componist = "Bartok"
-    ComponistID = 8  # Beethoven
+    componist = "JS Bach"
+    # ComponistID = 8  # Beethoven
     # instrument = "Clavecimbel"
 
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/Beethoven Unknown Masterworks (9 cds)"
-    path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/alle concerten - 96 - dgg (24)"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/alle concerten - 96 - dgg (24)"
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/MLP - box 3"
+    path = "/Volumes/Media/Audio/Klassiek/Componisten/Bach/Brandenburgse concerten"
     # album_id = process_album(path=path, mother_id=None, is_collectie=0)
     # process_pieces(path, album_id=666)
     # get_albums(path=path, mother_id=2198, iscollectie=0, step_in=True) # Rilling

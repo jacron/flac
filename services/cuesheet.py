@@ -40,8 +40,9 @@ def display(cue):
     #     lines.append(rem)
 
     try:
+        lines.append(cue['title'])
         for file in cue['files']:
-            lines.append(file['name'])
+            # lines.append(file['name'])
             for track in file['tracks']:
                 title = track['title']
                 # lines.append('- {}'.format(title))
