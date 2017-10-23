@@ -8,7 +8,8 @@ from ..db import (
     add_new_componist_to_album, add_new_performer_to_album,
     remove_tag_from_album, remove_componist_from_album, remove_performer_from_album,
     remove_instrument_from_album, get_tags, get_componisten_typeahead, get_performers_typeahead,
-    new_tag, new_componist, new_performer, new_instrument, )
+    new_tag, new_componist, new_performer, new_instrument,
+    update_componistname, update_componistyears, )
 from django.conf import settings
 
 
@@ -48,8 +49,8 @@ def get_new_componist(name, albumid):
     return add_componist_to_album(int(componistid[0]), int(albumid))
 
 
-def remove_componist(id, albumid):
-    return remove_componist_from_album(id, albumid)
+def remove_componist(componist_id, albumid):
+    return remove_componist_from_album(componist_id, albumid)
 
 
 def add_performer(performerid, albumid):
@@ -61,12 +62,12 @@ def get_new_performer(name, albumid):
     return add_performer_to_album(int(performerid[0]), int(albumid))
 
 
-def remove_performer(id, albumid):
-    return remove_performer_from_album(id, albumid)
+def remove_performer(performer_id, albumid):
+    return remove_performer_from_album(performer_id, albumid)
 
 
-def remove_instrument(id, albumid):
-    return remove_instrument_from_album(id, albumid)
+def remove_instrument(albumid):
+    return remove_instrument_from_album(albumid)
 
 
 def add_instrument(instrumentid, albumid):
@@ -87,8 +88,16 @@ def get_new_tag(name, albumid):
     return add_tag_to_album(int(tagid[0]), int(albumid))
 
 
-def remove_tag(id, albumid):
-    return remove_tag_from_album(id, albumid)
+def remove_tag(tag_id, albumid):
+    return remove_tag_from_album(tag_id, albumid)
+
+
+def update_componist_name(name, componist_id):
+    return update_componistname(name, componist_id)
+
+
+def update_componist_years(years, componist_id):
+    return update_componistyears(years, componist_id)
 
 
 def do_post(post):
@@ -111,6 +120,10 @@ def do_post(post):
         return add_new_componist(post['name'], post['albumid'])
     if cmd == 'remove_componist':
         return remove_componist(post['id'], post['albumid'])
+    if cmd == 'update_componist_name':
+        return update_componist_name(post['name'], post['id'])
+    if cmd == 'update_componist_years':
+        return update_componist_years(post['years'], post['id'])
 
     # performer
     if cmd == 'add_performer':
@@ -128,7 +141,7 @@ def do_post(post):
     if cmd == 'new_instrument':
         return get_new_instrument(post['name'], post['albumid'])
     if cmd == 'remove_instrument':
-        return remove_instrument(post['id'], post['albumid'])
+        return remove_instrument(post['albumid'])
 
     # tag
     if cmd == 'add_tag':
@@ -141,7 +154,6 @@ def do_post(post):
 
 def do_get(get):
     cmd = get['cmd']
-    print(cmd)
     if cmd == 'tags':
         return json.dumps(get_tags())
     if cmd == 'componisten':

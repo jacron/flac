@@ -26,12 +26,12 @@ def directory(path):
     return image_path
 
 
-def dirname(file):
-    return '/'.join(file.split('/')[:-2])
+def dirname(ffile):
+    return '/'.join(ffile.split('/')[:-2])
 
 
-def filename(file):
-    return file.split('/')[-1]
+def filename(ffile):
+    return ffile.split('/')[-1]
 
 
 def dequote(line):
@@ -67,3 +67,8 @@ def splits_naam(naam):
     return c_firstname, c_lastname
 
 
+def splits_years(years):
+    c_years = years.split('-')
+    if len(c_years) < 2:
+        return years.strip(), ''
+    return c_years[0].strip(), c_years[1].strip()

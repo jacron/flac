@@ -85,8 +85,36 @@ $(function () {
     });
 });
 
+function editComponistName($this) {
+    const data = {
+        cmd: 'update_componist_name',
+        name: $this.text().trim(),
+        id: $this.attr('componist_id')
+    };
+    ajaxPost(data);
+}
+
+function editComponistYears($this) {
+    const data = {
+        cmd: 'update_componist_years',
+        years: $this.text().trim(),
+        id: $this.attr('componist_id')
+    };
+    ajaxPost(data);
+}
+
 $(function () {
     // componist
+    $('.edit-componist-name').keydown(function (e) {
+        if (e.key === 'Tab') {
+            editComponistName($(this));
+        }
+    });
+    $('.edit-componist-years').keydown(function (e) {
+        if (e.key === 'Tab') {
+            editComponistYears($(this));
+        }
+    });
     $('button.select-componist').click(function () {
         addComponist($('select.select-componist'));
     });

@@ -1,5 +1,5 @@
 from .connect import connect
-from ..services import splits_naam
+from ..services import splits_naam, splits_years
 
 
 def update_album_title(album_id, title):
@@ -21,12 +21,12 @@ def add_new_componist_to_album(name, albumid):
     WHERE FirstName || ' ' || LastName=?
     """
     con, c = connect()
-    id = c.execute(sql, (name, )).fetchone()
+    componist_id = c.execute(sql, (name, )).fetchone()
     con.close()
-    if not id:
-        id = new_componist(name)
-    if id:
-        add_componist_to_album(id[0], albumid)
+    if not componist_id:
+        componist_id = new_componist(name)
+    if componist_id:
+        add_componist_to_album(componist_id[0], albumid)
 
 
 def add_new_performer_to_album(name, albumid):
@@ -37,12 +37,12 @@ def add_new_performer_to_album(name, albumid):
     WHERE FirstName || ' ' || LastName=?
     """
     con, c = connect()
-    id = c.execute(sql, (name, )).fetchone()
+    performer_id = c.execute(sql, (name, )).fetchone()
     con.close()
-    if not id:
-        id = new_performer(name)
-    if id:
-        add_performer_to_album(id[0], albumid)
+    if not performer_id:
+        performer_id = new_performer(name)
+    if performer_id:
+        add_performer_to_album(performer_id[0], albumid)
 
 
 def add_componist_to_album(componistid, albumid):
@@ -88,27 +88,27 @@ def remove_tag_from_album(tagid, albumid):
     con.commit()
 
 
-def remove_componist_from_album(id, albumid):
+def remove_componist_from_album(componist_id, albumid):
     sql = """
     DELETE FROM Componist_Album
      WHERE ComponistID=? AND AlbumID=?
     """
     con, c = connect()
-    c.execute(sql, (id, albumid,)).fetchone()
+    c.execute(sql, (componist_id, albumid,)).fetchone()
     con.commit()
 
 
-def remove_performer_from_album(id, albumid):
+def remove_performer_from_album(performer_id, albumid):
     sql = """
     DELETE FROM Performer_Album
      WHERE PerformerID=? AND AlbumID=?
     """
     con, c = connect()
-    c.execute(sql, (id, albumid,)).fetchone()
+    c.execute(sql, (performer_id, albumid,)).fetchone()
     con.commit()
 
 
-def remove_instrument_from_album(id, albumid):
+def remove_instrument_from_album(albumid):
     if not albumid:
         print('error')
         return
@@ -193,3 +193,27 @@ def new_instrument(name):
     SELECT ID from Instrument WHERE Name=?
     '''
     return c.execute(sql, (name, )).fetchone()
+
+
+def update_componistname(name, componist_id):
+    first_name, last_name = splits_naam(name)
+    sql = """
+    UPDATE Componist
+    SET FirstName=?, LastName=?
+    WHERE ID=?
+    """
+    con, c = connect()
+    c.execute(sql, (first_name, last_name, componist_id, )).fetchone()
+    con.commit()
+
+
+def update_componistyears(years, componist_id):
+    birth, death = splits_years(years)
+    sql = """
+    UPDATE Componist
+    SET Birth=?, Death=?
+    WHERE ID=?
+    """
+    con, c = connect()
+    c.execute(sql, (birth, death, componist_id, )).fetchone()
+    con.commit()

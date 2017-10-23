@@ -109,8 +109,22 @@ function impl_performers_typeahead(performers) {
     });
 }
 
+function editAlbumTitle($this) {
+    const data = {
+        cmd: 'update_album_title',
+        title: $this.text().trim(),
+        albumid: $this.attr('albumid')
+    };
+    ajaxPost(data);
+}
+
 $(function () {
     var tags = ['test', 'test2'];
+    $('.edit-title').keydown(function (e) {
+        if (e.key === 'Tab') {
+            editAlbumTitle($(this));
+        }
+    });
     ajaxGet({
         cmd: 'tags'
     }, function(response){

@@ -19,15 +19,6 @@ function play(idPiece) {
     ajaxPost(data);
 }
 
-function editAlbumTitle($this) {
-    const data = {
-        cmd: 'update_album_title',
-        title: $this.text().trim(),
-        albumid: $this.attr('albumid')
-    };
-    ajaxPost(data);
-}
-
 function toggleContent($this, parent, sibling) {
     const next = $this.parents(parent).siblings(sibling);
     if ($this.hasClass('fa-caret-right')) {
@@ -58,11 +49,6 @@ function copyTitle($this) {
 $(function () {
     $('.album-image').click(function () {
         $(this).toggleClass('expanded');
-    });
-    $('.edit-title').keydown(function (e) {
-        if (e.key === 'Tab') {
-            editAlbumTitle($(this));
-        }
     });
     $('.toggle-content').click(function () {
         toggleContent($(this), 'div', 'table');
