@@ -133,6 +133,20 @@ def add_instrument_to_album(instrumentid, albumid):
     con.commit()
 
 
+def add_new_instrument_to_album(name, albumid):
+    sql = '''
+    SELECT ID FROM Instrument WHERE Name=?
+    '''
+    con, c = connect()
+    instrument_id = c.execute(sql, (name, )).fetchone()
+    con.close()
+    if not instrument_id:
+        instrument_id = new_instrument(name)
+    if instrument_id:
+        add_instrument_to_album(instrument_id[0], albumid)
+
+
+
 def new_componist(name):
     c_firstname, c_lastname = splits_naam(name)
     sql = """

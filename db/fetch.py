@@ -158,6 +158,21 @@ def get_performers_typeahead():
     return out
 
 
+def get_instruments_typeahead():
+    sql = '''
+      SELECT Name, ID
+      FROM Instrument
+    '''
+    items = get_items(sql)
+    out = []
+    for item in items:
+        out.append({
+            'Name': item[0],
+            'ID': item[1],
+        })
+    return out
+
+
 def get_componisten(limit=0):
     sql = '''
 SELECT *

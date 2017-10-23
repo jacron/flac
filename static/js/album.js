@@ -109,6 +109,36 @@ function impl_performers_typeahead(performers) {
     });
 }
 
+function impl_instruments_typeahead(instruments) {
+    var $typeahead = $('.album .instrument.typeahead');
+    $typeahead.typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1,
+            displayKey: 'Name'
+        },
+        {
+            name: 'instruments',
+            source: match(instruments)
+        }
+    ).keydown(function(e){
+        if (e.key === 'Enter') {
+            var result = $(e.target).val();
+            console.log(result);
+            const data = {
+                cmd: 'add_new_instrument',
+                name: result,
+                albumid: $('.edit-title').attr('albumid')
+            };
+            ajaxPost(data);
+            location.reload();
+        }
+        if (e.key === 'Escape') {
+            $typeahead.val('');
+        }
+    });
+}
+
 function editAlbumTitle($this) {
     const data = {
         cmd: 'update_album_title',
@@ -134,18 +164,18 @@ $(function () {
         });
         impl_tags_typeahead(tags);
     });
+
     var componisten = ['Bach JS', 'test2'];
     ajaxGet({
         cmd: 'componisten'
     }, function(response){
         componisten = [];
-        // console.log(response);
         response.forEach(function(componist) {
             componisten.push(componist.FullName);
         });
-        // console.log(componisten);
         impl_componisten_typeahead(componisten);
     });
+
     var performers = ['Paul van Nevel', 'test2'];
     ajaxGet({
         cmd: 'performers'
@@ -154,8 +184,19 @@ $(function () {
         response.forEach(function(performer) {
             performers.push(performer.FullName);
         });
-        // console.log(performers);
         impl_performers_typeahead(performers);
+    });
+
+    var instruments = ['Piano', 'test2'];
+    ajaxGet({
+        cmd: 'instruments'
+    }, function(response){
+        instruments = [];
+        response.forEach(function(instrument) {
+            instruments.push(instrument.Name);
+        });
+        // console.log(performers);
+        impl_instruments_typeahead(instruments);
     });
 });
 
