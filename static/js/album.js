@@ -50,8 +50,8 @@ function impl_tags_typeahead(tags) {
 }
 
 function impl_componisten_typeahead(componisten) {
-    var $tagTypeahead = $('.album .componist.typeahead');
-    $tagTypeahead.typeahead({
+    var $typeahead = $('.album .componist.typeahead');
+    $typeahead.typeahead({
             hint: true,
             highlight: true,
             minLength: 1,
@@ -74,14 +74,14 @@ function impl_componisten_typeahead(componisten) {
             location.reload();
         }
         if (e.key === 'Escape') {
-            $tagTypeahead.val('');
+            $typeahead.val('');
         }
     });
 }
 
 function impl_performers_typeahead(performers) {
-    var $tagTypeahead = $('.album .performer.typeahead');
-    $tagTypeahead.typeahead({
+    var $typeahead = $('.album .performer.typeahead');
+    $typeahead.typeahead({
             hint: true,
             highlight: true,
             minLength: 1,
@@ -104,7 +104,7 @@ function impl_performers_typeahead(performers) {
             location.reload();
         }
         if (e.key === 'Escape') {
-            $tagTypeahead.val('');
+            $typeahead.val('');
         }
     });
 }

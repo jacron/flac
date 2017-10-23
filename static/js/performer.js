@@ -35,7 +35,36 @@ function removePerformer($this) {
     location.reload();
 }
 
+function editPerformerName($this) {
+    const data = {
+        cmd: 'update_performer_name',
+        name: $this.text().trim(),
+        id: $this.attr('performer_id')
+    };
+    ajaxPost(data);
+}
+
+function editPerformerYears($this) {
+    const data = {
+        cmd: 'update_performer_years',
+        years: $this.text().trim(),
+        id: $this.attr('performer_id')
+    };
+    ajaxPost(data);
+}
+
 $(function() {
+    // performer
+    $('.edit-performer-name').keydown(function (e) {
+        if (e.key === 'Tab') {
+            editPerformerName($(this));
+        }
+    });
+    $('.edit-performer-years').keydown(function (e) {
+        if (e.key === 'Tab') {
+            editPerformerYears($(this));
+        }
+    });
    $('button.select-performer').click(function () {
        addPerformer($('select.select-performer'));
    });

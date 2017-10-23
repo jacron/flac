@@ -134,12 +134,14 @@ def add_instrument_to_album(instrumentid, albumid):
 
 
 def add_new_instrument_to_album(name, albumid):
+    print(albumid)
     sql = '''
     SELECT ID FROM Instrument WHERE Name=?
     '''
     con, c = connect()
     instrument_id = c.execute(sql, (name, )).fetchone()
     con.close()
+    print(instrument_id)
     if not instrument_id:
         instrument_id = new_instrument(name)
     if instrument_id:
@@ -230,4 +232,28 @@ def update_componistyears(years, componist_id):
     """
     con, c = connect()
     c.execute(sql, (birth, death, componist_id, )).fetchone()
+    con.commit()
+
+
+def update_performername(name, performer_id):
+    first_name, last_name = splits_naam(name)
+    sql = """
+    UPDATE Performer
+    SET FirstName=?, LastName=?
+    WHERE ID=?
+    """
+    con, c = connect()
+    c.execute(sql, (first_name, last_name, performer_id,)).fetchone()
+    con.commit()
+
+
+def update_performeryears(years, performer_id):
+    birth, death = splits_years(years)
+    sql = """
+    UPDATE Performer
+    SET Birth=?, Death=?
+    WHERE ID=?
+    """
+    con, c = connect()
+    c.execute(sql, (birth, death, performer_id,)).fetchone()
     con.commit()

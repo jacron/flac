@@ -5,12 +5,13 @@ from django.http import HttpResponse
 from ..db import (
     get_album, get_piece, update_album_title, add_tag_to_album,
     add_componist_to_album, add_performer_to_album, add_instrument_to_album,
-    add_new_componist_to_album, add_new_performer_to_album,
+    add_new_componist_to_album, add_new_performer_to_album, add_new_instrument_to_album,
     remove_tag_from_album, remove_componist_from_album, remove_performer_from_album,
     remove_instrument_from_album, get_tags,
     get_componisten_typeahead, get_performers_typeahead, get_instruments_typeahead,
     new_tag, new_componist, new_performer, new_instrument,
-    update_componistname, update_componistyears, )
+    update_componistname, update_componistyears, update_performername, update_performeryears,
+)
 from django.conf import settings
 
 
@@ -105,6 +106,14 @@ def update_componist_years(years, componist_id):
     return update_componistyears(years, componist_id)
 
 
+def update_performer_name(name, componist_id):
+    return update_performername(name, componist_id)
+
+
+def update_performer_years(years, componist_id):
+    return update_performeryears(years, componist_id)
+
+
 def do_post(post):
     cmd = post['cmd']
     if cmd == 'play':
@@ -139,6 +148,10 @@ def do_post(post):
         return add_new_performer(post['name'], post['albumid'])
     if cmd == 'remove_performer':
         return remove_performer(post['id'], post['albumid'])
+    if cmd == 'update_performer_name':
+        return update_performer_name(post['name'], post['id'])
+    if cmd == 'update_performer_years':
+        return update_performer_years(post['years'], post['id'])
 
     # instrument
     if cmd == 'add_instrument':
