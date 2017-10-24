@@ -64,8 +64,6 @@ $(function() {
         if (e.key === 'Tab') {
             editPerformerYears($(this));
         }
-    }).click(function(e){
-        selectElement(this);
     });
    $('button.select-performer').click(function () {
        addPerformer($('select.select-performer'));

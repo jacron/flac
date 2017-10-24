@@ -114,8 +114,6 @@ $(function () {
         if (e.key === 'Tab') {
             editComponistYears($(this));
         }
-    }).click(function(e){
-        selectElement(this);
     });
     $('button.select-componist').click(function () {
         addComponist($('select.select-componist'));
