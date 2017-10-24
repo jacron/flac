@@ -20,9 +20,9 @@
              class="album-image">
         <img src="/albumimage/{{ album.ID }}/back/"
              class="album-image">
-        <div contenteditable="true" name="title" class="edit-title" albumid="{{ album.ID }}">
+        <h4 contenteditable="true" name="title" class="edit-title" albumid="{{ album.ID }}">
             {{ album.Title }}
-        </div>
+        </h4>
         {% for tag in album_tags %}
             <i class="tag hyperlink"><a href="/tag/{{ tag.ID }}">{{ tag.Name }}</a>
                 <div class="fa fa-times-circle remove" id="{{ tag.ID }}" albumid="{{ album.ID }}"></div>
@@ -76,8 +76,8 @@
         <div class="clear"></div>
         {% albumlist albums %}
         <div class="clear"></div>
-        <div class="">
-            <div>Stukken <i class="toggle-content fa fa-caret-right"></i></div>
+        <div>
+            <div class="pieces">Stukken <i class="toggle-content fa fa-caret-right"></i></div>
             <table class="content stukken">
                 {% for item in items %}
                     <tr>

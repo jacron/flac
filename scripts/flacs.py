@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 # encoding: utf-8
 # coding=utf-8
+from flac.lib.color import ColorPrint
+
 """flac
 
 """
@@ -58,7 +60,8 @@ def process_album(path, mother_id, is_collectie):
         conn=conn,
         album_id=mother_id,
     )[0]
-    print("album_id={}".format(album_id))
+    ColorPrint.print_c("album_id={}".format(album_id), ColorPrint.LIGHTCYAN)
+    # print("album_id={}".format(album_id))
     insert_pieces(path, album_id, conn, c)
     if PerformerID:
         insert_performer_by_id(PerformerID, c, conn, album_id)
@@ -129,9 +132,11 @@ def main():
     # album_id = process_album(path=path, mother_id=None, is_collectie=0)
     # process_pieces(path, album_id=666)
     # get_albums(path=path, mother_id=2198, iscollectie=0, step_in=True) # Rilling
-    process_a(p=path, mother_id=None, iscollectie=0, step_in=True)
+    # process_a(p=path, mother_id=None, iscollectie=0, step_in=True)
     # sanatize_haakjes(path, True)
     # rename_cover(path, True)
+    # print('Some text \033[0;32m in color \033[0m no more color\n')
+    ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
 
 
 if __name__ == '__main__':

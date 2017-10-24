@@ -173,3 +173,13 @@ fieldset {
 .album-controls:hover .typeahead {
     display: inline-block;
 }
+.album .pieces {
+    height: 28px;
+    margin-bottom: 6px;
+}
+.album .hyperlink.componist {
+    color: brown;
+}
+.album .hyperlink.performer {
+    color: #1e347b;
+}
