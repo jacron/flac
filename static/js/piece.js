@@ -11,6 +11,22 @@ function openfinder(albumId) {
     ajaxPost(data);
 }
 
+function openfinderPerformer(performerId) {
+    const data = {
+        arg: performerId,
+        cmd: 'openfinder_performer'
+    };
+    ajaxPost(data);
+}
+
+function openfinderComponist(componistId) {
+    const data = {
+        arg: componistId,
+        cmd: 'openfinder_componist'
+    };
+    ajaxPost(data);
+}
+
 function play(idPiece) {
     const data = {
         arg: idPiece,

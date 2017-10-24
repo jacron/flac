@@ -1,3 +1,6 @@
+from flac.settings import COMPONIST_PATH, PERFORMER_PATH
+
+
 def replace_haakjes(s):
     for ch in ['[', '{']:
         if ch in s:
@@ -72,3 +75,13 @@ def splits_years(years):
     if len(c_years) < 2:
         return years.strip(), ''
     return c_years[0].strip(), c_years[1].strip()
+
+
+def syspath_componist(componist):
+    path = u'{}/{}'.format(COMPONIST_PATH, componist['LastName'])
+    return path
+
+
+def syspath_performer(performer):
+    path = u'{}/{}'.format(PERFORMER_PATH, performer['FullName'])
+    return path

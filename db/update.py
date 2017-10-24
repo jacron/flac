@@ -257,3 +257,25 @@ def update_performeryears(years, performer_id):
     con, c = connect()
     c.execute(sql, (birth, death, performer_id,)).fetchone()
     con.commit()
+
+
+def add_path_to_componist(componist_id, path):
+    sql = """
+    UPDATE Componist
+    SET Path=?
+    WHERE ID=?
+    """
+    con, c = connect()
+    c.execute(sql, (path, componist_id,)).fetchone()
+    con.commit()
+
+
+def add_path_to_performer(performer_id, path):
+    sql = """
+    UPDATE Performer
+    SET Path=?
+    WHERE ID=?
+    """
+    con, c = connect()
+    c.execute(sql, (path, performer_id,)).fetchone()
+    con.commit()

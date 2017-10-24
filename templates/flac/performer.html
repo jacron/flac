@@ -7,14 +7,18 @@
     <div class="w3-row performer">
         <form>{% csrf_token %}</form>
         <div class="w3-col m2 5">
+            <span class="hyperlink btn">
+                <a onclick="openfinderPerformer('{{ performer.ID }}')">open finder</a>
+            </span> |
+        <span>
+            <a target="_blank"
+                    href="https://google.nl/search?q={{ performer.FullName }}">google</a>
+        </span>
             <h4>
         <span contenteditable="true" name="title"
               class="edit-performer-name" performer_id="{{ performer.ID }}">
             {{ performer.FullName }}
         </span>
-                <span>
-                    ({{ items|length }})
-                </span>
                  </h4>
             <img src="/performerimage/{{ performer.ID }}/" class="instrument-image">
             <h4>

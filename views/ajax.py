@@ -2,14 +2,17 @@
 import json
 import os
 from django.http import HttpResponse
+
+from flac.services import syspath_performer, syspath_componist
 from ..db import (
     get_album, get_piece, update_album_title, add_tag_to_album,
     add_componist_to_album, add_performer_to_album, add_instrument_to_album,
     add_new_componist_to_album, add_new_performer_to_album, add_new_instrument_to_album,
     remove_tag_from_album, remove_componist_from_album, remove_performer_from_album,
-    remove_instrument_from_album, get_tags,
+    remove_instrument_from_album, get_tags, get_performer, get_componist,
     get_componisten_typeahead, get_performers_typeahead, get_instruments_typeahead,
     new_tag, new_componist, new_performer, new_instrument,
+    add_path_to_componist, add_path_to_performer,
     update_componistname, update_componistyears, update_performername, update_performeryears,
 )
 from django.conf import settings
@@ -27,6 +30,28 @@ def play(args):
 def openfinder(args):
     album = get_album(args)
     path = album['Path'].encode('utf-8')
+    os.system('open "{}"'.format(path))
+
+
+def openfinder_performer(args):
+    performer = get_performer(args)
+    path = performer['Path']
+    if path is None or len(path) == 0:
+        path = syspath_performer(performer).encode('utf-8')
+        if not os.path.exists(path):
+            os.mkdir(path)
+        add_path_to_performer(args, path)
+    os.system('open "{}"'.format(path))
+
+
+def openfinder_componist(args):
+    componist = get_componist(args)
+    path = componist['Path']
+    if path is None or len(path) == 0:
+        path = syspath_componist(componist).encode('utf-8')
+        if not os.path.exists(path):
+            os.mkdir(path)
+        add_path_to_componist(args, path)
     os.system('open "{}"'.format(path))
 
 
@@ -122,6 +147,12 @@ def do_post(post):
     if cmd == 'openfinder':
         openfinder(post['arg'])
         return 'Finder opened'
+    if cmd == 'openfinder_performer':
+        openfinder_performer(post['arg'])
+        return 'Finder (performer) opened'
+    if cmd == 'openfinder_componist':
+        openfinder_componist(post['arg'])
+        return 'Finder (componist) opened'
     if cmd == 'update_album_title':
         return do_update_album_title(post['title'], post['albumid'])
 

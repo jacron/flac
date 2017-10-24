@@ -7,14 +7,18 @@
     <div class="w3-row componist">
         <form>{% csrf_token %}</form>
         <div class="w3-col m2 5">
+            <span class="hyperlink btn">
+                <a onclick="openfinderComponist('{{ componist.ID }}')">open finder</a>
+            </span> |
+        <span>
+            <a target="_blank"
+                    href="https://google.nl/search?q={{ componist.FullName }}">google</a>
+        </span>
             <h4>
         <span contenteditable="true" name="title"
               class="edit-componist-name" componist_id="{{ componist.ID }}">
             {{ componist.FullName }}
         </span>
-                <span>
-                ({{ items.mothers|length }}, {{ items.children|length }})
-                </span>
             </h4>
             <img src="/componistimage/{{ componist.ID }}/" class="instrument-image">
             <h4>
