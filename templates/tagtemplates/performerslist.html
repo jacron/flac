@@ -3,7 +3,7 @@
         <li class="hyperlink">
             <a href="/performer/{{ item.ID }}">
                 <img src="/performerimage/{{ item.ID }}/" class="album-image-thumb">
-            <div>{{ item.FullName }}</div>
+            <div class="performer-naam" performerid="{{ item.ID }}">{{ item.FullName }}</div>
                 <div class="jaren">{{ item.Birth }} -
                     {% if item.Death %}
                         {{ item.Death }}

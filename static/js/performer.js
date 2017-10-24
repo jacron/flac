@@ -53,6 +53,58 @@ function editPerformerYears($this) {
     ajaxPost(data);
 }
 
+var match = function (items) {
+    return function findMatches(q, cb) {
+        var matches, substrRegex;
+
+        // an array that will be populated with substring matches
+        matches = [];
+
+        // regex used to determine if a string contains the substring `q`
+        substrRegex = new RegExp(q, 'i');
+
+        // iterate through the pool of strings and for any string that
+        // contains the substring `q`, add it to the `matches` array
+        $.each(items, function (i, str) {
+            if (substrRegex.test(str)) {
+                matches.push(str);
+            }
+        });
+
+        cb(matches);
+    };
+};
+
+$(function () {
+    var performers = [];
+    $('.performer-naam').each(function () {
+        var $this = $(this);
+        performers.push($this.text());
+    });
+    // console.log(performers);
+    $('.performers .typeahead').typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1,
+            display: 'name'
+        },
+        {
+            name: 'performers',
+            source: match(performers)
+        }
+    ).keydown(function(e){
+        if (e.key === 'Enter') {
+            var result = $('.typeahead').get(1).value;
+            $('.performer-naam').each(function () {
+                var $this = $(this);
+                if ($this.text() === result) {
+                    location.href = '/performer/' + $this.attr('performerid');
+                }
+            });
+        }
+    });
+});
+
 $(function() {
     // performer
     $('.edit-performer-name').keydown(function (e) {

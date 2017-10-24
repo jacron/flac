@@ -12,7 +12,7 @@ from venv.flac.scripts.helper.rename import (
     rename_cover, sanatize_haakjes
 )
 from venv.flac.scripts.helper.insert import (
-    insert_artiest, insert_composer, insert_componist_by_id, insert_pieces
+    insert_artiest, insert_composer, insert_componist_by_id, insert_performer_by_id, insert_pieces
 )
 
 
@@ -22,6 +22,7 @@ skipdirs = ['website', 'artwork', 'Artwork', 'etc', 'scans',
 artiest = None
 componist = None
 ComponistID = None
+PerformerID = None
 instrument = None
 
 
@@ -59,7 +60,11 @@ def process_album(path, mother_id, is_collectie):
     )[0]
     print("album_id={}".format(album_id))
     insert_pieces(path, album_id, conn, c)
-    insert_artiest(artiest, c, conn, album_id)
+    if PerformerID:
+        insert_performer_by_id(PerformerID, c, conn, album_id)
+    else:
+        insert_artiest(artiest, c, conn, album_id)
+
     if ComponistID:
         insert_componist_by_id(ComponistID, c, conn, album_id)
     else:
@@ -110,14 +115,17 @@ def get_albums(path, mother_id, iscollectie, step_in):
 
 def main():
     global artiest, instrument, componist, ComponistID
-    componist = "JS Bach"
+    # componist = "JS Bach"
     # ComponistID = 8  # Beethoven
     # instrument = "Clavecimbel"
+    PerformerID = 142 # Glenn Gould
+
 
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/Beethoven Unknown Masterworks (9 cds)"
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/alle concerten - 96 - dgg (24)"
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/MLP - box 3"
-    path = "/Volumes/Media/Audio/Klassiek/Componisten/Bach/Brandenburgse concerten"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Bach/Brandenburgse concerten"
+    path = "/Volumes/Media/Audio/Klassiek/Performers/Glenn Gould"
     # album_id = process_album(path=path, mother_id=None, is_collectie=0)
     # process_pieces(path, album_id=666)
     # get_albums(path=path, mother_id=2198, iscollectie=0, step_in=True) # Rilling

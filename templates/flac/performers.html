@@ -2,6 +2,9 @@
 {% load page_tags %}
 {% block title %}Artiesten{% endblock %}
 {% block page %}
-    <h3>Artiesten ({{ performers|length }})</h3>
+    <div class="performers">
+        <input class="typeahead" type="text" placeholder="Zoek artiest">
+    <h4>Artiesten ({{ performers|length }})</h4>
     {% performerslist performers %}
+    </div>
 {% endblock %}
