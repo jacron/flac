@@ -3,6 +3,15 @@
  */
 'use strict';
 
+function selectElement(elm) {
+    var range = document.createRange();
+    range.setStartBefore(elm.firstChild);
+    range.setEndAfter(elm.lastChild);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+}
+
 function openfinder(albumId) {
     const data = {
         arg: albumId,
