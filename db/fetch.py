@@ -303,6 +303,7 @@ def filter_contained_children(items):
     # return lists of mothers (with property mother is true) and children
     # N.B. sometimes a mother is a child, i.e. in the children list an album has property mother true
     # but somehow this is right
+    # Title, AlbumID, ID
     children = []
     mothers = []
     for album1 in items:
@@ -317,8 +318,12 @@ def filter_contained_children(items):
                 mothers.append(album1)
             else:
                 children.append(album1)
+    for album in children:
+        if album.get('mother'):
+            mothers.append(album)
+            children.remove(album)
     return {
-        'mothers': mothers,
+        'mothers': sorted(mothers, key=lambda album: album['Title'].lower),
         'children': children
     }
 
