@@ -56,7 +56,7 @@
         {% for cuesheet in cuesheet_output %}
             <div>
                 <div class="hyperlink cuesheet">
-                    <a onclick="play({{ cuesheet.ID }})">{{ cuesheet.Title }}</a>
+                    <a onclick="play({{ cuesheet.ID }})">{{ cuesheet.Filename }}</a>
                     <i class="toggle-cue fa fa-caret-right"></i></div>
                 <ul class="content cue">
                     {% for line in cuesheet.cuesheet %}

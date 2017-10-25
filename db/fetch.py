@@ -592,6 +592,26 @@ def get_album(id_album):
     }
 
 
+def get_album_by_path(path, c, conn):
+    sql = '''
+    SELECT Title, Label, Path, AlbumID, ID 
+    FROM Album 
+    WHERE Album.Path=?
+    '''
+    fields = c.execute(sql, (path,)).fetchone()
+    if not fields:
+        print(path)
+        print('has no items')
+        return {}
+    return {
+        "Title": fields[0],
+        "Label": fields[1],
+        "Path": fields[2],
+        "AlbumID": fields[3],
+        "ID": fields[4],
+    }
+
+
 def get_mother_title(id_album):
     sql = '''
     SELECT Title 
@@ -625,7 +645,7 @@ def get_album_by_title(title, c, conn):
     }
 
 
-def get_album_by_path(path, c, conn):
+def get_album_count_by_path(path, c, conn):
     sql = '''
     SELECT COUNT(ID) FROM Album
      WHERE Path=?

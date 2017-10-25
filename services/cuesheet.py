@@ -64,10 +64,6 @@ def parse(data):
     for line in data.split(b'\n'):
         if len(line) < 1:
             continue
-        # try:
-        #     line = line.strip()
-        # except:
-        #     print('line is niet te strippen')
 
         # rem = get_element(line, 'REM ')
         # if rem:
@@ -139,7 +135,8 @@ def get_full_cuesheet(path, id):
                 print('display cue failed')
                 lines = []
             return {
-                'Title': filename,
+                'Filename': filename,
+                'Title': cue['title'],
                 'ID': id,
                 'cuesheet': lines,
             }

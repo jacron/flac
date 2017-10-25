@@ -279,3 +279,13 @@ def add_path_to_performer(performer_id, path):
     con, c = connect()
     c.execute(sql, (path, performer_id,)).fetchone()
     con.commit()
+
+
+def set_album_title(album_id, title, c, con):
+    sql = """
+    UPDATE Album 
+    SET TITLE=? 
+    WHERE ID=?
+    """
+    c.execute(sql, (title, album_id,)).fetchone()
+    con.commit()

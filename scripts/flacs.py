@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 # encoding: utf-8
 # coding=utf-8
 from flac.lib.color import ColorPrint
+from flac.services import get_full_cuesheet
 
 """flac
 
@@ -9,12 +10,15 @@ from flac.lib.color import ColorPrint
 import os
 import sqlite3
 from venv.flac.db import (
-    insert_album, insert_instrument, get_album_by_path, )
+    insert_album, insert_instrument, get_album_count_by_path, get_album_by_path,
+    set_album_title,
+)
 from venv.flac.scripts.helper.rename import (
     rename_cover, sanatize_haakjes
 )
 from venv.flac.scripts.helper.insert import (
-    insert_artiest, insert_composer, insert_componist_by_id, insert_performer_by_id, insert_pieces
+    insert_artiest, insert_composer, insert_componist_by_id, insert_performer_by_id,
+    insert_pieces,
 )
 
 
@@ -78,8 +82,13 @@ def process_album(path, mother_id, is_collectie):
 
 def count_album_by_path(p):
     conn, c = script_connect()
-    found = get_album_by_path(p, c, conn)
+    found = get_album_count_by_path(p, c, conn)
     return found['Count']
+
+
+def album_by_path(p):
+    conn, c = script_connect()
+    return get_album_by_path(p, c, conn)
 
 
 def process_a(p, mother_id, iscollectie, step_in):
@@ -116,6 +125,23 @@ def get_albums(path, mother_id, iscollectie, step_in):
             process_a(p, mother_id, iscollectie, step_in)
 
 
+def rename_titles(path):
+    conn, c = script_connect()
+    for d in os.listdir(path):
+        p = u'{}/{}'.format(path, d)
+        if os.path.isdir(p) and d not in skipdirs:
+            nr = u'{}{}'.format(d[-2],d[-1])
+            if int(nr) > 10:
+                cuepath = u'{}/lijst.cue'.format(p)
+                cue = get_full_cuesheet(cuepath, 0)
+                full_title = '{} - {}'.format(nr, cue['Title'])
+                print(full_title)
+                album = album_by_path(p)
+                print(album['Title'])
+                set_album_title(album['ID'], full_title, c, conn)
+
+
+
 def main():
     global artiest, instrument, componist, ComponistID
     # componist = "JS Bach"
@@ -136,7 +162,9 @@ def main():
     # sanatize_haakjes(path, True)
     # rename_cover(path, True)
     # print('Some text \033[0;32m in color \033[0m no more color\n')
+    path = "/Volumes/Media/Audio/Klassiek/Collecties/Decca, The Decca Sound"
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
+    # rename_titles(path)
 
 
 if __name__ == '__main__':
