@@ -3,25 +3,28 @@ from django.template import loader
 from ..db import (
     get_albums, get_album, get_pieces, get_componisten, get_performers, get_instruments,
     get_album_albums, get_album_performers, get_album_componisten, get_album_instruments,
-    get_mother_title, get_tags, get_album_tags, )
+    get_mother_title, get_tags, get_album_tags, get_setting, )
 from ..services import get_full_cuesheet
 
 
 def organize_pieces(items, album_path):
     cuesheets = []
     pieces = []
+    read_cuesheet = get_setting('read_cuesheet')
+    print(read_cuesheet['VALUE'])
     for item in items:
         ffile = item[0]
         if ffile:
             extension = ffile.split('.')[-1]
             if extension == 'cue':
-                path = u'{}/{}'.format(album_path, ffile)
-                try:
-                    cuesheets.append(get_full_cuesheet(path, item[1]))
-                except:
-                    # path = '{}/{}'.format(album_path, ffile)
-                    # cuesheets.append(get_full_cuesheet(path, item[1]))
-                    print('could not get cuesheet for this path: ' + path)
+                if int(read_cuesheet['VALUE']) == 1:
+                    path = u'{}/{}'.format(album_path, ffile)
+                    try:
+                        cuesheets.append(get_full_cuesheet(path, item[1]))
+                    except:
+                        # path = '{}/{}'.format(album_path, ffile)
+                        # cuesheets.append(get_full_cuesheet(path, item[1]))
+                        print('could not get cuesheet for this path: ' + path)
             else:
                 pieces.append(item)
     return cuesheets, pieces

@@ -477,6 +477,19 @@ def get_album_componisten(id_album):
     return out
 
 
+def get_setting(name):
+    sql = '''
+    SELECT VALUE
+    FROM Settings
+    WHERE Name=?
+    '''
+    conn, c = connect()
+    fields = c.execute(sql, (name, )).fetchone()
+    return {
+        'VALUE': fields[0],
+    }
+
+
 def get_scarlatti():
     sql = '''
     SELECT FirstName, LastName, ID

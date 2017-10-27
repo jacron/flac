@@ -1,3 +1,6 @@
+import glob
+from shutil import copyfile
+
 from venv.flac.services import (
     has_haakjes, replace_haakjes,)
 import os
@@ -25,6 +28,23 @@ def rename_cover(path, step_in):
                 p2 = u'{}/{}'.format(path, d2)
                 if os.path.isdir(p2):
                     rename_cover_one(p2, d2)
+
+
+def rename_to_back_one(path):
+    jpgpath = u'{}/scan/Booklet*.jpg'.format(path)
+    for src in glob.iglob(jpgpath):
+        trg = '{}/back.jpg'.format(path)
+        if not os.path.exists(trg):
+            copyfile(src, trg)
+            print(src)
+            print('copied to:{}'.format(trg))
+
+
+def rename_to_back(path):
+    for d2 in os.listdir(path):
+        p2 = u'{}/{}'.format(path, d2)
+        if os.path.isdir(p2):
+            rename_to_back_one(p2)
 
 
 def restore_cover_one(path, fro, to):

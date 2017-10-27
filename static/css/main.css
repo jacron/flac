@@ -13,6 +13,10 @@ body {
 .content {
     padding: 6px;
 }
+.checkbox {
+    width: 14px;
+    height: 14px;
+}
 .hyperlink {
     cursor: pointer;
 }

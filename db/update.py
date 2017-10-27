@@ -289,3 +289,14 @@ def set_album_title(album_id, title, c, con):
     """
     c.execute(sql, (title, album_id,)).fetchone()
     con.commit()
+
+
+def toggle_setting(name):
+    sql = """
+    UPDATE Settings
+    SET VALUE = NOT VALUE 
+    WHERE Name=?
+    """
+    con, c = connect()
+    c.execute(sql, (name, )).fetchone()
+    con.commit()

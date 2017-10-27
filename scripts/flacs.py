@@ -16,7 +16,7 @@ from venv.flac.db import (
     set_album_title,
 )
 from venv.flac.scripts.helper.rename import (
-    rename_cover, restore_cover, sanatize_haakjes
+    rename_cover, restore_cover, sanatize_haakjes, rename_to_back,
 )
 from venv.flac.scripts.helper.insert import (
     insert_artiest, insert_composer, insert_componist_by_id, insert_performer_by_id,
@@ -141,7 +141,8 @@ def rename_titles(path):
                     cuepath = ncue
                     # return
             cue = get_full_cuesheet(cuepath, 0)
-            full_title = '{} - {}'.format(nr, cue['Title'])
+            # full_title = '{} - {}'.format(nr, cue['Title'])
+            full_title = '{}'.format(cue['Title'])
             print(full_title)
 
             album = album_by_path(p)
@@ -168,7 +169,6 @@ def main():
     # get_albums(path=path, mother_id=2198, iscollectie=0, step_in=True) # Rilling
     # process_a(p=path, mother_id=None, iscollectie=0, step_in=True)
     # sanatize_haakjes(path, True)
-    # rename_cover(path, True)
     # print('Some text \033[0;32m in color \033[0m no more color\n')
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/Decca, The Decca Sound"
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/Deutsche Harmonia Mundi Collectie 50 CD"
@@ -176,9 +176,12 @@ def main():
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/DG - the originals"
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/DG 111 years"
     path = "/Volumes/Media/Audio/Klassiek/Collecties/Harmonia Mundi - Liturgie"
+    path = "/Volumes/Media/Audio/Klassiek/Collecties/Franklin Mint"
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     # rename_titles(path)
-    restore_cover(path, True)
+    # restore_cover(path, True)
+    rename_to_back(path)
+
 
 if __name__ == '__main__':
     main()
