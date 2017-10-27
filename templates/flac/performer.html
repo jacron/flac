@@ -19,9 +19,9 @@
               class="edit-performer-name" performer_id="{{ performer.ID }}">
             {{ performer.FullName }}
         </span>
-                 </h4>
+            </h4>
             <img src="/performerimage/{{ performer.ID }}/" class="instrument-image">
-            <h4>
+            <h4 class="performer-years">
                 <span contenteditable="true" name="years" class="edit-performer-years"
                       performer_id="{{ performer.ID }}">
                 {{ performer.Birth }} - {% if performer.Death %}{{ performer.Death }}{% endif %}

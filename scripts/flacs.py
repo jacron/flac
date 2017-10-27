@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 # encoding: utf-8
 # coding=utf-8
+import glob
+
 from flac.lib.color import ColorPrint
 from flac.services import get_full_cuesheet
 
@@ -14,7 +16,7 @@ from venv.flac.db import (
     set_album_title,
 )
 from venv.flac.scripts.helper.rename import (
-    rename_cover, sanatize_haakjes
+    rename_cover, restore_cover, sanatize_haakjes
 )
 from venv.flac.scripts.helper.insert import (
     insert_artiest, insert_composer, insert_componist_by_id, insert_performer_by_id,
@@ -131,14 +133,20 @@ def rename_titles(path):
         p = u'{}/{}'.format(path, d)
         if os.path.isdir(p) and d not in skipdirs:
             nr = u'{}{}'.format(d[-2],d[-1])
-            if int(nr) > 10:
-                cuepath = u'{}/lijst.cue'.format(p)
-                cue = get_full_cuesheet(cuepath, 0)
-                full_title = '{} - {}'.format(nr, cue['Title'])
-                print(full_title)
-                album = album_by_path(p)
-                print(album['Title'])
-                set_album_title(album['ID'], full_title, c, conn)
+            # if int(nr) > 0:
+            cuepath = u'{}/lijst.cue'.format(p)
+            if not os.path.exists(cuepath):
+                cuepath = u'{}/*.cue'.format(p)
+                for ncue in glob.iglob(cuepath):
+                    cuepath = ncue
+                    # return
+            cue = get_full_cuesheet(cuepath, 0)
+            full_title = '{} - {}'.format(nr, cue['Title'])
+            print(full_title)
+
+            album = album_by_path(p)
+            print(album['Title'])
+            set_album_title(album['ID'], full_title, c, conn)
 
 
 
@@ -154,7 +162,7 @@ def main():
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/alle concerten - 96 - dgg (24)"
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/MLP - box 3"
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Bach/Brandenburgse concerten"
-    path = "/Volumes/Media/Audio/Klassiek/Performers/Glenn Gould"
+    # path = "/Volumes/Media/Audio/Klassiek/Performers/Glenn Gould"
     # album_id = process_album(path=path, mother_id=None, is_collectie=0)
     # process_pieces(path, album_id=666)
     # get_albums(path=path, mother_id=2198, iscollectie=0, step_in=True) # Rilling
@@ -162,10 +170,15 @@ def main():
     # sanatize_haakjes(path, True)
     # rename_cover(path, True)
     # print('Some text \033[0;32m in color \033[0m no more color\n')
-    path = "/Volumes/Media/Audio/Klassiek/Collecties/Decca, The Decca Sound"
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Decca, The Decca Sound"
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Deutsche Harmonia Mundi Collectie 50 CD"
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Deutsche Harmonia Mundi 50 Years"
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/DG - the originals"
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/DG 111 years"
+    path = "/Volumes/Media/Audio/Klassiek/Collecties/Harmonia Mundi - Liturgie"
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     # rename_titles(path)
-
+    restore_cover(path, True)
 
 if __name__ == '__main__':
     main()

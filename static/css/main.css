@@ -92,7 +92,9 @@ nav a.selected {
     display: inline-block;
 }
 .instrument-image {
-    height: 180px;
+    height: 200px;
+    position: absolute;
+    clip: rect(0px,200px,200px,0px);
 }
 .instruments-list li {
     float: left;
@@ -182,4 +184,7 @@ fieldset {
 }
 .album .hyperlink.performer {
     color: #1e347b;
+}
+.performer-years {
+    margin-top: 220px;
 }

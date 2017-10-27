@@ -21,8 +21,9 @@
         </span>
             </h4>
             <img src="/componistimage/{{ componist.ID }}/" class="instrument-image">
-            <h4>
-                <span contenteditable="true" name="years" class="edit-componist-years" componist_id="{{ componist.ID }}">
+            <h4 class="performer-years">
+                <span contenteditable="true" name="years" class="edit-componist-years"
+                      componist_id="{{ componist.ID }}">
                 {{ componist.Birth }} - {% if componist.Death %}{{ componist.Death }}{% endif %}
                 </span>
             </h4>
@@ -32,5 +33,5 @@
             <div class="clear"></div>
             {% albumlist items.children %}
         </div>
-    </div>
+        </div>
 {% endblock %}
