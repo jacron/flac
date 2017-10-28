@@ -192,3 +192,7 @@ fieldset {
 .performer-years {
     margin-top: 220px;
 }
+.input-album,
+.delete-album {
+    width: 90px;
+}

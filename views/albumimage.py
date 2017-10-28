@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from ..db import get_album, get_componist_path, get_performer_path, get_instrument
 from django.conf import settings
 import os
@@ -24,6 +24,8 @@ def instrumentimage(request, instrument_name):
 
 def albumimage(request, album_id):
     album = get_album(album_id)
+    if not album:
+        return HttpResponseNotFound('Dit album bestaat niet:"{}"'.format(album_id), )
     if not album['Path']:
         return empty_response()
     image_path = album['Path'] + settings.COVER_FILE
@@ -32,6 +34,8 @@ def albumimage(request, album_id):
 
 def albumimageback(request, album_id):
     album = get_album(album_id)
+    if not album:
+        return HttpResponseNotFound('Dit album bestaat niet:"{}"'.format(album_id), )
     if not album['Path']:
         return empty_response()
     image_path = album['Path'] + settings.BACK_FILE

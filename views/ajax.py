@@ -13,6 +13,7 @@ from ..db import (
     get_componisten_typeahead, get_performers_typeahead, get_instruments_typeahead,
     new_tag, new_componist, new_performer, new_instrument,
     add_path_to_componist, add_path_to_performer,
+    delete_album,
     update_componistname, update_componistyears, update_performername, update_performeryears,
 )
 from django.conf import settings
@@ -139,6 +140,10 @@ def update_performer_years(years, componist_id):
     return update_performeryears(years, componist_id)
 
 
+def delete_album_by_id(album_id):
+    return delete_album(album_id)
+
+
 def do_post(post):
     cmd = post['cmd']
     if cmd == 'play':
@@ -201,6 +206,10 @@ def do_post(post):
         return get_new_tag(post['name'], post['albumid'])
     if cmd == 'remove_tag':
         return remove_tag(post['id'], post['albumid'])
+
+    # album
+    if cmd == 'delete_album':
+        return delete_album_by_id(post['albumid'])
 
 
 def do_get(get):

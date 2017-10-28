@@ -247,6 +247,15 @@ def update_performername(name, performer_id):
     con.commit()
 
 
+def delete_album(album_id):
+    sql = """
+    DELETE FROM Album
+    WHERE ID=?"""
+    con, c = connect()
+    c.execute(sql, (album_id,)).fetchone()
+    con.commit()
+
+
 def update_performeryears(years, performer_id):
     birth, death = splits_years(years)
     sql = """

@@ -3,6 +3,7 @@
 {% load page_tags %}
 {% block title %}Extra{% endblock %}
 {% block page %}
+    <form>{% csrf_token %}</form>
     <div class="hyperlink">
         <a href="/extra/k">Scarlatti K-lijst</a>
     </div>
@@ -14,5 +15,15 @@
     </div>
         <a href="/extra/cue">lees cuesheets in voor album</a>
     </div>
+    <table>
+    <tr>
+        <td>naar album</td>
+        <td><input class="input-album" placeholder="ID"></td>
+    </tr>
+    <tr>
+        <td>delete album</td>
+        <td><input class="delete-album" placeholder="ID"></td>
+    </tr>
+    </table>
 
 {% endblock %}

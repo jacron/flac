@@ -200,6 +200,8 @@ where ID in (
 273,345,417,489,561,633
 );
 
+delete from Album
+where ID=2785;
 
 select ID, Path
 from Album

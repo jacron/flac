@@ -25,7 +25,7 @@ from venv.flac.scripts.helper.insert import (
 
 
 db_path = '../../db.sqlite3'
-skipdirs = ['website', 'artwork', 'Artwork', 'etc', 'scans',
+skipdirs = ['website', 'artwork', 'Artwork', 'etc', 'scans', 'Scans', 'scan',
             'website boxset', '#Booklets', 'Pixels', 'Graphics', ]
 artiest = None
 componist = None
@@ -97,11 +97,6 @@ def process_a(p, mother_id, iscollectie, step_in):
     '''
     Lees in directory p alle stukken in voor een album, onthoud album_id als mother.
     Als step_in waar is, doe hetzelfde in de subdirectories (1 niveau diep) met album_id als mother.
-    :param p:
-    :param mother_id:
-    :param iscollectie:
-    :param step_in:
-    :return:
     '''
     album_id = process_album(p, mother_id, iscollectie)
     if step_in:
@@ -115,11 +110,6 @@ def process_a(p, mother_id, iscollectie, step_in):
 def get_albums(path, mother_id, iscollectie, step_in):
     '''
     Behandel het path als plaats waar de subdirectories groepen albums bevatten
-    :param path:
-    :param mother_id:
-    :param iscollectie:
-    :param step_in:
-    :return:
     '''
     for d in os.listdir(path):
         p = u'{}/{}'.format(path, d)
@@ -150,37 +140,26 @@ def rename_titles(path):
             set_album_title(album['ID'], full_title, c, conn)
 
 
-
 def main():
-    global artiest, instrument, componist, ComponistID
+    global artiest, instrument, componist, ComponistID, PerformerID
     # componist = "JS Bach"
-    # ComponistID = 8  # Beethoven
     # instrument = "Clavecimbel"
-    PerformerID = 142 # Glenn Gould
+    # PerformerID = 142 # Glenn Gould
 
-
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/Beethoven Unknown Masterworks (9 cds)"
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Beethoven/alle concerten - 96 - dgg (24)"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/MLP - box 3"
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Bach/Brandenburgse concerten"
-    # path = "/Volumes/Media/Audio/Klassiek/Performers/Glenn Gould"
-    # album_id = process_album(path=path, mother_id=None, is_collectie=0)
     # process_pieces(path, album_id=666)
-    # get_albums(path=path, mother_id=2198, iscollectie=0, step_in=True) # Rilling
-    # process_a(p=path, mother_id=None, iscollectie=0, step_in=True)
     # sanatize_haakjes(path, True)
-    # print('Some text \033[0;32m in color \033[0m no more color\n')
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Decca, The Decca Sound"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Deutsche Harmonia Mundi Collectie 50 CD"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Deutsche Harmonia Mundi 50 Years"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/DG - the originals"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/DG 111 years"
-    path = "/Volumes/Media/Audio/Klassiek/Collecties/Harmonia Mundi - Liturgie"
-    path = "/Volumes/Media/Audio/Klassiek/Collecties/Franklin Mint"
+
+    ComponistID = 45
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Boito"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Bottesini"
+    path = "/Volumes/Media/Audio/Klassiek/Componisten/Brahms"
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     # rename_titles(path)
     # restore_cover(path, True)
-    rename_to_back(path)
+    # rename_to_back(path)
+    # process_a(p=path, mother_id=None, iscollectie=0, step_in=True)
+    get_albums(path=path, mother_id=None, iscollectie=0, step_in=True)
+    # album_id = process_album(path=path, mother_id=None, is_collectie=0)
 
 
 if __name__ == '__main__':
