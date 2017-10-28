@@ -13,7 +13,7 @@ from ..db import (
     get_componisten_typeahead, get_performers_typeahead, get_instruments_typeahead,
     new_tag, new_componist, new_performer, new_instrument,
     add_path_to_componist, add_path_to_performer,
-    delete_album,
+    delete_album, abs_insert_componist,
     update_componistname, update_componistyears, update_performername, update_performeryears,
 )
 from django.conf import settings
@@ -168,6 +168,10 @@ def do_post(post):
         return get_new_componist(post['name'], post['albumid'])
     if cmd == 'add_new_componist':
         return add_new_componist(post['name'], post['albumid'])
+    if cmd == 'abs_new_componist':
+        componist_id = abs_insert_componist(post['name'])
+        print(componist_id)
+        return componist_id
     if cmd == 'remove_componist':
         return remove_componist(post['id'], post['albumid'])
     if cmd == 'update_componist_name':

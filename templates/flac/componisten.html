@@ -3,7 +3,9 @@
 {% block title %}Componisten{% endblock %}
 {% block page %}
     <div class="componisten">
+        <form>{% csrf_token %}</form>
         <input class="typeahead" type="text" placeholder="Zoek componist">
+        <input class="add" type="text" placeholder="Voeg componist toe">
         <h4>Componisten ({{ items|length }})</h4>
         {% componistenlist items %}
     </div>

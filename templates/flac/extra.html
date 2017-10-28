@@ -5,7 +5,7 @@
 {% block page %}
     <form>{% csrf_token %}</form>
     <div class="hyperlink">
-        <a href="/extra/k">Scarlatti K-lijst</a>
+        <a href="{% url 'cmd' 'k' %}">Scarlatti K-lijst</a>
     </div>
     <div class="hyperlink">
     <div class="checkbox fa
@@ -13,7 +13,7 @@
            fa-check
            {% endif %}">
     </div>
-        <a href="/extra/cue">lees cuesheets in voor album</a>
+        <a href="{% url 'cmd' 'cue' %}">lees cuesheets in voor album</a>
     </div>
     <table>
     <tr>

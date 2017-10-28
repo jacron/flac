@@ -149,10 +149,13 @@ def main():
     # process_pieces(path, album_id=666)
     # sanatize_haakjes(path, True)
 
-    ComponistID = 45
+    # ComponistID = 106
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Boito"
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Bottesini"
-    path = "/Volumes/Media/Audio/Klassiek/Componisten/Brahms"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Brahms"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Bruch"
+    path = "/Volumes/Media/Audio/Klassiek/Componisten/Bruckner"
+    path = "/Volumes/Media/Audio/Klassiek/Componisten/Brumel"
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     # rename_titles(path)
     # restore_cover(path, True)

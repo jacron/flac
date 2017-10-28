@@ -196,3 +196,7 @@ fieldset {
 .delete-album {
     width: 90px;
 }
+.componisten .add {
+    position: relative;
+    top: 3px;
+}

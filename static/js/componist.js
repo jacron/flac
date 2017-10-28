@@ -24,6 +24,15 @@ function newComponist($input) {
     location.reload();
 }
 
+function addNewComponist($input) {
+    const data = {
+        cmd: 'abs_new_componist',
+        name: $input.val()
+    };
+    ajaxPost(data);
+    // location.reload();
+}
+
 function removeComponist($this) {
         const data = {
         cmd: 'remove_componist',
@@ -61,6 +70,13 @@ $(function () {
     $('.componist-naam').each(function () {
         var $this = $(this);
         componisten.push($this.text());
+    });
+    $('.componisten .add').keydown(function(e) {
+        if (e.key === 'Enter') {
+            var $target = $('.componisten input.add');
+            console.log($target);
+            addNewComponist($target);
+        }
     });
     $('.componisten .typeahead').typeahead({
             hint: true,

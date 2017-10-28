@@ -20,7 +20,7 @@
              class="album-image">
         <img src="/albumimage/{{ album.ID }}/back/"
              class="album-image">
-        <h4 contenteditable="true" name="title" class="edit-title" albumid="{{ album.ID }}">
+        <h4 contenteditable="true" class="edit-title" albumid="{{ album.ID }}">
             {{ album.Title }}
         </h4>
         {% for tag in album_tags %}
@@ -36,7 +36,7 @@
         {% endif %}
         {% for componist in album_componisten %}
             <div class="hyperlink componist">
-                <a href="/componist/{{ componist.ID }}/">{{ componist.FullName }}</a>
+                <a href="{% url 'componist' componist.ID %}">{{ componist.FullName }}</a>
                 <div class="fa fa-times-circle remove" id="{{ componist.ID }}" albumid="{{ album.ID }}"></div>
             </div>
         {% endfor %}

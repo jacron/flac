@@ -1,3 +1,4 @@
+from .connect import connect
 from ..services import splits_naam
 
 
@@ -15,6 +16,11 @@ def insert_album(title, path, instrument_id, album_id, is_collectie, c, conn):
     SELECT ID from Album WHERE Path=?
     '''
     return c.execute(sql, (path,)).fetchone()
+
+
+def abs_insert_componist(name):
+    conn, c = connect()
+    return insert_componist(name, c, conn)
 
 
 def insert_componist(componist, c, conn):
