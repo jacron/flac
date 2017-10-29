@@ -5,6 +5,7 @@ import glob
 
 from flac.lib.color import ColorPrint
 from flac.services import get_full_cuesheet
+from flac.views import openfinder_album
 
 """flac
 
@@ -13,10 +14,10 @@ import os
 import sqlite3
 from venv.flac.db import (
     insert_album, insert_instrument, get_album_count_by_path, get_album_by_path,
-    set_album_title,
+    set_album_title, get_componist_path_c, get_album_path_by_id,
 )
 from venv.flac.scripts.helper.rename import (
-    rename_cover, restore_cover, sanatize_haakjes, rename_to_back,
+    rename_cover, restore_cover, sanatize_haakjes, rename_to_back, rename_all_titles,
 )
 from venv.flac.scripts.helper.insert import (
     insert_artiest, insert_composer, insert_componist_by_id, insert_performer_by_id,
@@ -26,7 +27,7 @@ from venv.flac.scripts.helper.insert import (
 
 db_path = '../../db.sqlite3'
 skipdirs = ['website', 'artwork', 'Artwork', 'etc', 'scans', 'Scans', 'scan',
-            'website boxset', '#Booklets', 'Pixels', 'Graphics', ]
+            'website boxset', '#Booklets', 'Pixels', 'Graphics', 'Info + Art', ]
 artiest = None
 componist = None
 ComponistID = None
@@ -88,11 +89,6 @@ def count_album_by_path(p):
     return found['Count']
 
 
-def album_by_path(p):
-    conn, c = script_connect()
-    return get_album_by_path(p, c, conn)
-
-
 def process_a(p, mother_id, iscollectie, step_in):
     '''
     Lees in directory p alle stukken in voor een album, onthoud album_id als mother.
@@ -107,7 +103,7 @@ def process_a(p, mother_id, iscollectie, step_in):
                 process_album(p2, album_id, 0)
 
 
-def get_albums(path, mother_id, iscollectie, step_in):
+def get_album_groups(path, mother_id, iscollectie, step_in):
     '''
     Behandel het path als plaats waar de subdirectories groepen albums bevatten
     '''
@@ -117,53 +113,52 @@ def get_albums(path, mother_id, iscollectie, step_in):
             process_a(p, mother_id, iscollectie, step_in)
 
 
-def rename_titles(path):
-    conn, c = script_connect()
+def get_albums(path, mother_id, iscollectie):
+    '''
+    Behandel het path als plaats waar de albums staan
+    '''
     for d in os.listdir(path):
         p = u'{}/{}'.format(path, d)
         if os.path.isdir(p) and d not in skipdirs:
-            nr = u'{}{}'.format(d[-2],d[-1])
-            # if int(nr) > 0:
-            cuepath = u'{}/lijst.cue'.format(p)
-            if not os.path.exists(cuepath):
-                cuepath = u'{}/*.cue'.format(p)
-                for ncue in glob.iglob(cuepath):
-                    cuepath = ncue
-                    # return
-            cue = get_full_cuesheet(cuepath, 0)
-            # full_title = '{} - {}'.format(nr, cue['Title'])
-            full_title = '{}'.format(cue['Title'])
-            print(full_title)
+            process_album(p, mother_id, iscollectie)
 
-            album = album_by_path(p)
-            print(album['Title'])
-            set_album_title(album['ID'], full_title, c, conn)
+
+def rename_titles(path):
+    conn, c = script_connect()
+    rename_all_titles(path, skipdirs, c, conn)
+
+
+def get_path_of_componist(componist_id):
+    conn, c = script_connect()
+    return get_componist_path_c(componist_id, c)
+
+
+def get_path_by_albumid(album_id):
+    conn, c = script_connect()
+    return get_album_path_by_id(album_id, c)
 
 
 def main():
     global artiest, instrument, componist, ComponistID, PerformerID
-    # componist = "JS Bach"
-    # instrument = "Clavecimbel"
-    # PerformerID = 142 # Glenn Gould
-
     # process_pieces(path, album_id=666)
-    # sanatize_haakjes(path, True)
-
-    # ComponistID = 106
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Boito"
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Bottesini"
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Brahms"
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Bruch"
-    path = "/Volumes/Media/Audio/Klassiek/Componisten/Bruckner"
-    path = "/Volumes/Media/Audio/Klassiek/Componisten/Brumel"
+    ComponistID = 25
+    # AlbumID = 2039
+    # path = get_path_by_albumid(AlbumID)
+    path = get_path_of_componist(ComponistID)
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Debussy/The Debussy Edition - DG"
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
+    if path is None:
+        return
+    # sanatize_haakjes(path, True)
+    restore_cover(path=path, step_in=True)
+    # rename_cover(path=path, step_in=True)
     # rename_titles(path)
-    # restore_cover(path, True)
     # rename_to_back(path)
     # process_a(p=path, mother_id=None, iscollectie=0, step_in=True)
-    get_albums(path=path, mother_id=None, iscollectie=0, step_in=True)
+    # get_albums(path=path, mother_id=None, iscollectie=0)
+    # get_album_groups(path=path, mother_id=None, iscollectie=0, step_in=True)
     # album_id = process_album(path=path, mother_id=None, is_collectie=0)
-
+    # os.system('open "{}"'.format(path))
 
 if __name__ == '__main__':
     main()

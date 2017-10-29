@@ -24,12 +24,14 @@ body {
     color: darkgreen;
 }
 .hyperlink a{
-    /*color: #447e9b;*/
     text-decoration: none;
     cursor: pointer;
 }
 .artiest a {
     color: green;
+}
+.instrument a {
+    color: #447e9b;
 }
 .album-image {
     height: 360px;
@@ -199,4 +201,7 @@ fieldset {
 .componisten .add {
     position: relative;
     top: 3px;
+    border: 1px solid #ccc;
+    padding: 2px;
+    border-top: 2px solid #999;
 }

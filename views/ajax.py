@@ -3,7 +3,7 @@ import json
 import os
 from django.http import HttpResponse
 
-from flac.services import syspath_performer, syspath_componist
+from flac.services import syspath_performer, syspath_componist, COMPONIST_PATH
 from ..db import (
     get_album, get_piece, update_album_title, add_tag_to_album,
     add_componist_to_album, add_performer_to_album, add_instrument_to_album,
@@ -28,7 +28,7 @@ def play(args):
                                          "{}/{}".format(path, name)))
 
 
-def openfinder(args):
+def openfinder_album(args):
     album = get_album(args)
     path = album['Path'].encode('utf-8')
     os.system('open "{}"'.format(path))
@@ -46,13 +46,16 @@ def openfinder_performer(args):
 
 
 def openfinder_componist(args):
-    componist = get_componist(args)
-    path = componist['Path']
-    if path is None or len(path) == 0:
-        path = syspath_componist(componist).encode('utf-8')
-        if not os.path.exists(path):
-            os.mkdir(path)
-        add_path_to_componist(args, path)
+    if args is None or len(args) == 0:
+        path = COMPONIST_PATH
+    else:
+        componist = get_componist(args)
+        path = componist['Path']
+        if path is None or len(path) == 0:
+            path = syspath_componist(componist).encode('utf-8')
+            if not os.path.exists(path):
+                os.mkdir(path)
+            add_path_to_componist(args, path)
     os.system('open "{}"'.format(path))
 
 
@@ -150,11 +153,14 @@ def do_post(post):
         play(post['arg'])
         return 'Played'
     if cmd == 'openfinder':
-        openfinder(post['arg'])
+        openfinder_album(post['arg'])
         return 'Finder opened'
     if cmd == 'openfinder_performer':
         openfinder_performer(post['arg'])
         return 'Finder (performer) opened'
+    if cmd == 'openfinder_componist':
+        openfinder_componist(post['arg'])
+        return 'Finder (componist) opened'
     if cmd == 'openfinder_componist':
         openfinder_componist(post['arg'])
         return 'Finder (componist) opened'

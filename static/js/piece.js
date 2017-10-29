@@ -53,6 +53,14 @@ function openfinderComponist(componistId) {
     ajaxPost(data);
 }
 
+function openfinderComponisten() {
+    const data = {
+        arg: null,
+        cmd: 'openfinder_componist'
+    };
+    ajaxPost(data);
+}
+
 function play(idPiece) {
     const data = {
         arg: idPiece,

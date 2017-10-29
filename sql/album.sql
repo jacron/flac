@@ -200,8 +200,11 @@ where ID in (
 273,345,417,489,561,633
 );
 
+
 delete from Album
-where ID=2785;
+where ID in(
+    2887
+);
 
 select ID, Path
 from Album
@@ -250,3 +253,8 @@ WHERE Albums > 1;
 
 SELECT ID FROM Componist
     WHERE FirstName || ' ' || LastName='JS Bach';
+
+
+SELECT Path
+    FROM Componist
+    WHERE ID=175;

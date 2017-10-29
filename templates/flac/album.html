@@ -14,7 +14,7 @@
             <input class="tag typeahead" type="text" placeholder="Tag">
             <input class="componist typeahead" type="text" placeholder="Componist">
             <input class="performer typeahead" type="text" placeholder="Artiest">
-            <input class="instrument typeahead" type="text" placeholder="Instrument">
+            <input class="instrument typeahead" type="text" placeholder="Solo instrument">
         </div>
         <img src="/albumimage/{{ album.ID }}/"
              class="album-image">
@@ -87,25 +87,6 @@
                     </tr>
                 {% endfor %}
             </table>
-        </div>
-        <div>Bewerk <i class="toggle-edit fa fa-caret-down"></i></div>
-        <div class="content edit">
-            <fieldset>
-                <legend>Componist</legend>
-            {% editalbum 'select-componist' 'add-componist' album.ID componisten %}
-            </fieldset>
-            <fieldset>
-                <legend>Artiest</legend>
-            {% editalbum 'select-performer' 'add-performer' album.ID performers %}
-            </fieldset>
-            <fieldset>
-                <legend>Instrument</legend>
-            {% editalbum 'select-instrument' 'add-instrument' album.ID instrumenten %}
-            </fieldset>
-            <fieldset>
-                <legend>Tags</legend>
-                {% editalbum 'select-tag' 'add-tag' album.ID tags %}
-            </fieldset>
         </div>
     </div>
 {% endblock %}

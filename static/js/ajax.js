@@ -22,7 +22,7 @@ function ajaxGet(data, cb) {
     });
 }
 
-function ajaxPost(data) {
+function ajaxPost(data, cb) {
     const url = '/ajax/';
     const headers = {
         'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
@@ -35,6 +35,9 @@ function ajaxPost(data) {
         dataType: 'json'
     }).done(function(response){
         console.log(response);
+        if (cb) {
+            cb(response);
+        }
     }).fail(function(err) {
         // console.log(err.responseText);
     });

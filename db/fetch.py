@@ -585,6 +585,16 @@ def get_performer(id_performer):
     }
 
 
+def get_album_path_by_id(album_id, c):
+    sql = '''
+    SELECT Path 
+    FROM Album 
+    WHERE Album.ID=?
+    '''
+    fields = c.execute(sql, (album_id,)).fetchone()
+    return fields[0]
+
+
 def get_album(id_album):
     sql = '''
     SELECT Title, Label, Path, AlbumID, ID 
@@ -603,6 +613,17 @@ def get_album(id_album):
         "AlbumID": fields[3],
         "ID": fields[4],
     }
+
+
+def get_componist_path_c(componist_id, c):
+    print(componist_id)
+    sql = '''
+    SELECT Path
+    FROM Componist
+    WHERE ID=?
+    '''
+    fields = c.execute(sql, (componist_id,)).fetchone()
+    return fields[0]
 
 
 def get_album_by_path(path, c, conn):

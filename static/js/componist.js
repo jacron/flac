@@ -29,7 +29,10 @@ function addNewComponist($input) {
         cmd: 'abs_new_componist',
         name: $input.val()
     };
-    ajaxPost(data);
+    ajaxPost(data, function(id){
+        console.log(id);
+        $('.componist-added').text(id);
+    });
     // location.reload();
 }
 
@@ -74,7 +77,7 @@ $(function () {
     $('.componisten .add').keydown(function(e) {
         if (e.key === 'Enter') {
             var $target = $('.componisten input.add');
-            console.log($target);
+            // console.log($target);
             addNewComponist($target);
         }
     });
