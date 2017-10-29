@@ -203,7 +203,7 @@ where ID in (
 
 delete from Album
 where ID in(
-    2887
+    3369
 );
 
 select ID, Path

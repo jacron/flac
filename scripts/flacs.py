@@ -27,7 +27,7 @@ from venv.flac.scripts.helper.insert import (
 
 db_path = '../../db.sqlite3'
 skipdirs = ['website', 'artwork', 'Artwork', 'etc', 'scans', 'Scans', 'scan',
-            'website boxset', '#Booklets', 'Pixels', 'Graphics', 'Info + Art', ]
+            'website boxset', '#Booklets', 'Pixels', 'Graphics', 'Info + Art', 'Art', ]
 artiest = None
 componist = None
 ComponistID = None
@@ -129,8 +129,19 @@ def rename_titles(path):
 
 
 def get_path_of_componist(componist_id):
+    if componist_id is None:
+        print('No componist ID given, so quitting')
+        return
     conn, c = script_connect()
     return get_componist_path_c(componist_id, c)
+
+
+def get_path_of_album(album_id):
+    if album_id is None:
+        print('No album ID given, so quitting')
+        return
+    conn, c = script_connect()
+    return get_album_path_by_id(album_id, c)
 
 
 def get_path_by_albumid(album_id):
@@ -138,27 +149,44 @@ def get_path_by_albumid(album_id):
     return get_album_path_by_id(album_id, c)
 
 
+def open_finder_album(album_id):
+    path = get_path_by_albumid(album_id)
+    os.system('open "{}"'.format(path))
+
+
+def from_path(path):
+    if path is None:
+        raise Exception('No path given')
+    w = path.split('/')
+    return w[-1]
+
+
 def main():
     global artiest, instrument, componist, ComponistID, PerformerID
-    # process_pieces(path, album_id=666)
-    ComponistID = 25
-    # AlbumID = 2039
-    # path = get_path_by_albumid(AlbumID)
-    path = get_path_of_componist(ComponistID)
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Debussy/The Debussy Edition - DG"
+    # process_pieces(path, album_id=)
+    # ComponistID = 1
+    # componist = ""
+    # open_finder_album(album_id=)
+    # return
+    # path = get_path_of_componist(ComponistID)
+    album_id = 3414
+    path = get_path_of_album(album_id)
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Hamza El Din"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Sallinen"
+    # componist = from_path(path)
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     if path is None:
+        print('No path')
         return
-    # sanatize_haakjes(path, True)
+    sanatize_haakjes(path, True)
     restore_cover(path=path, step_in=True)
-    # rename_cover(path=path, step_in=True)
+    rename_cover(path=path, step_in=True)
     # rename_titles(path)
     # rename_to_back(path)
-    # process_a(p=path, mother_id=None, iscollectie=0, step_in=True)
+    process_a(p=path, mother_id=album_id, iscollectie=0, step_in=True)
     # get_albums(path=path, mother_id=None, iscollectie=0)
     # get_album_groups(path=path, mother_id=None, iscollectie=0, step_in=True)
     # album_id = process_album(path=path, mother_id=None, is_collectie=0)
-    # os.system('open "{}"'.format(path))
 
 if __name__ == '__main__':
     main()

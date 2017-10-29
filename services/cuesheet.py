@@ -141,7 +141,8 @@ def get_full_cuesheet(path, id):
                 'cuesheet': lines,
             }
     else:
-        print('Bestaat niet: {}'.format(path))
+        # print('Bestaat niet: {}'.format(path))
+        raise Exception('Bestaat niet: {}'.format(path))
 
 
 def get_cuesheet(filename, id):

@@ -13,11 +13,11 @@ back_nice = 'back.jpg'
 
 
 def rename_cover_one(path, name):
-    src = '{}/{}.jpg'.format(path, name)
+    src = u'{}/{}.jpg'.format(path, name)
     # print(src)
     if os.path.exists(src):
         # print(src)
-        trg = '{}/{}'.format(path, cover_nice)
+        trg = u'{}/{}'.format(path, cover_nice)
         if not os.path.exists(trg):
             os.rename(src, trg)
             print('renamed to:{}'.format(trg))
@@ -72,15 +72,15 @@ def rename_to_back(path):
 
 
 def restore_cover_one(path, fro, to):
-    src = '{}/{}.jpg'.format(path, fro)
+    src = u'{}/{}.jpg'.format(path, fro)
     # print(src)
     if os.path.exists(src):
-        trg = '{}/{}.jpg'.format(path, to)
+        trg = u'{}/{}.jpg'.format(path, to)
         # print(trg)
         if os.path.exists(trg):
             os.unlink(trg)
             os.rename(src, trg)
-            print('renamed to:{}'.format(trg))
+            print(u'renamed to:{}'.format(trg))
 
 
 def restore_cover(path, step_in):

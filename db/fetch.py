@@ -616,7 +616,6 @@ def get_album(id_album):
 
 
 def get_componist_path_c(componist_id, c):
-    print(componist_id)
     sql = '''
     SELECT Path
     FROM Componist

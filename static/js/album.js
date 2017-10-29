@@ -80,6 +80,7 @@ function impl_componisten_typeahead(componisten) {
 }
 
 function impl_performers_typeahead(performers) {
+    // console.log('performers', performers);
     var $typeahead = $('.album .performer.typeahead');
     $typeahead.typeahead({
             hint: true,
