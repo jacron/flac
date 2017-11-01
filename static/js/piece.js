@@ -82,6 +82,19 @@ function toggleContent($this, parent, sibling) {
     }
 }
 
+function toggleContents($this, parent, sibling) {
+    const next = $this.parents(parent).siblings(sibling);
+    if ($this.hasClass('fa-caret-right')) {
+        $this.addClass('fa-caret-down');
+        $this.removeClass('fa-caret-right');
+        next.show();
+    } else {
+        $this.addClass('fa-caret-right');
+        $this.removeClass('fa-caret-down');
+        next.hide();
+    }
+}
+
 function copyTitle($this) {
     var parent = $this.parents('.cue-header').find('span').first(),
         title = parent.text(),
@@ -108,6 +121,9 @@ $(function () {
     });
     $('.toggle-cue').click(function () {
         toggleContent($(this), 'div', '.content.cue');
+    });
+    $('.toggle-cue-lines').click(function () {
+        toggleContents($(this), 'li', '.content.cue-lines');
     });
     $('.cue-plus').click(function () {
         copyTitle($(this));

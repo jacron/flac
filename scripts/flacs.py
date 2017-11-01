@@ -169,7 +169,7 @@ def main():
     # open_finder_album(album_id=)
     # return
     # path = get_path_of_componist(ComponistID)
-    album_id = 3414
+    album_id = 249
     path = get_path_of_album(album_id)
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Hamza El Din"
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Sallinen"
@@ -178,13 +178,13 @@ def main():
     if path is None:
         print('No path')
         return
-    sanatize_haakjes(path, True)
-    restore_cover(path=path, step_in=True)
-    rename_cover(path=path, step_in=True)
+    # sanatize_haakjes(path, True)
+    # restore_cover(path=path, step_in=True)
+    # rename_cover(path=path, step_in=True)
     # rename_titles(path)
     # rename_to_back(path)
-    process_a(p=path, mother_id=album_id, iscollectie=0, step_in=True)
-    # get_albums(path=path, mother_id=None, iscollectie=0)
+    # process_a(p=path, mother_id=album_id, iscollectie=0, step_in=True)
+    get_albums(path=path, mother_id=None, iscollectie=0)
     # get_album_groups(path=path, mother_id=None, iscollectie=0, step_in=True)
     # album_id = process_album(path=path, mother_id=None, is_collectie=0)
 

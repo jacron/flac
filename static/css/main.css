@@ -27,11 +27,23 @@ body {
     text-decoration: none;
     cursor: pointer;
 }
+.hyperlink a:hover{
+    text-decoration: underline;
+}
 .artiest a {
     color: green;
 }
 .instrument a {
     color: #447e9b;
+}
+.album-details {
+    position: fixed;
+    left: 0;
+    top: 66px;
+    display: none;
+    background: #eee;
+    /*height: 360px;*/
+    /*width: 360px;*/
 }
 .album-image {
     height: 360px;
@@ -80,6 +92,9 @@ nav a.selected {
 }
 .content.cue {
     /*display: none;*/
+}
+.content.cue-lines {
+    display: none;
 }
 .clear {
     clear: both;
