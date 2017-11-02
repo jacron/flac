@@ -1,6 +1,4 @@
 # from __future__ import unicode_literals
-
-
 from .services import dequote
 import os
 

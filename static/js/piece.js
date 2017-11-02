@@ -100,13 +100,15 @@ function copyTitle($this) {
         title = parent.text(),
         $title = $('.edit-title');
 
-    $title.text(title);
-    const data = {
-        cmd: 'update_album_title',
-        title: title,
-        albumid: $title.attr('albumid')
-    };
-    ajaxPost(data);
+    if (confirm('Use this title for the album? ' + title)) {
+        $title.text(title);
+        const data = {
+            cmd: 'update_album_title',
+            title: title,
+            albumid: $title.attr('albumid')
+        };
+        ajaxPost(data);
+    }
 }
 
 $(function () {

@@ -16,9 +16,10 @@ mother-album
     {% endfor %}
 </ul>
 <div class="album-details hyperlink">
+    {% album_controls album.ID %}
     <img src="/albumimage/{{ item.ID }}/"
-         class="album-image">
-    <a href="/album/{{ item.ID }}/">
+         class="album-image expanded">
+    <a class="link" href="/album/{{ item.ID }}/">
     <div class="title">
         {{ item.Title }} - {{ item.Componist }}
     </div>

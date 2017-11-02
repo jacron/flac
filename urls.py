@@ -20,6 +20,8 @@ urlpatterns = [
     url(r'^$', views.home),
     url(r'^home/$', views.home),
     url(r'^album/(?P<album_id>.+)/$', views.album),
+    url(r'^next/(?P<album_id>.+)/$', views.album_next),
+    # url(r'^prev/(?P<album_id>.+)/$', views.album_prev),
     url(r'^album/$', views.albums),
     url(r'^performer/(?P<performer_id>.+)/$', views.performer),
     url(r'^performer/$', views.performers),

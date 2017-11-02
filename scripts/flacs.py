@@ -184,7 +184,7 @@ def main():
     # rename_titles(path)
     # rename_to_back(path)
     # process_a(p=path, mother_id=album_id, iscollectie=0, step_in=True)
-    get_albums(path=path, mother_id=None, iscollectie=0)
+    # get_albums(path=path, mother_id=None, iscollectie=0)
     # get_album_groups(path=path, mother_id=None, iscollectie=0, step_in=True)
     # album_id = process_album(path=path, mother_id=None, is_collectie=0)
 

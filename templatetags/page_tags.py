@@ -1,4 +1,8 @@
 from django.template import Library
+
+from flac.db import get_album, get_album_albums, get_mother_title, get_album_componisten, get_album_performers, \
+    get_album_instruments, get_album_tags
+from flac.views import organize_pieces
 from . import MENU_ITEMS
 
 
@@ -50,3 +54,36 @@ def performerslist(context, items):
 )
 def editalbum(select, add, albumid, options):
     return dict(select=select, add=add, albumid=albumid, options=options)
+
+
+@register.inclusion_tag(
+    'tagtemplates/album_controls.html',
+)
+def album_controls(album_id):
+    return dict(album_id=album_id)
+
+
+@register.inclusion_tag(
+    'tagtemplates/albumdetails.html',
+)
+def albumdetails(album_id):
+    mother_title = None
+    cuesheets, pieces = [], []
+    album_o = get_album(album_id)
+    if album_o['AlbumID']:
+        mother_title = get_mother_title(album_o['AlbumID'])
+        cuesheets, pieces = organize_pieces(album_id, album_o['Path'])
+    return {
+        'albumid': album_id,
+        'items': pieces,
+        'albums': get_album_albums(album_id),
+        'album': album_o,
+        'mother_title': mother_title,
+        'album_componisten': get_album_componisten(album_id),
+        'album_performers': get_album_performers(album_id),
+        'album_instrument': get_album_instruments(album_id),
+        'cuesheet_output': cuesheets,
+        'album_tags': get_album_tags(album_id),
+    }
+
+

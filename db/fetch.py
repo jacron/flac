@@ -62,6 +62,27 @@ def get_album_albums(id_album):
     return out
 
 
+def get_next_album(id_mother, id_album):
+    sql = '''
+      SELECT 
+      Title, 
+      Album.ID
+      FROM Album 
+      WHERE Album.AlbumID=?
+      GROUP BY Title
+      ORDER BY Title COLLATE NOCASE
+    '''
+    items = get_items_with_parameter(sql, id_mother)
+    match = None
+    for item in items:
+        if match:
+            return item[1]
+        print(item[1])
+        if int(item[1]) == int(id_album):
+            match = id_album
+    return None
+
+
 def get_albums():
     sql = '''
       SELECT Title, Album.ID, Componist.FirstName, Componist.LastName  

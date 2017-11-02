@@ -156,7 +156,7 @@ function albumDetails($target, $details) {
         title = $target.find('.title').text(),
         src = $target.find('img').attr('src');
 
-    $details.find('a').attr('href', '/album/' + id + '/');
+    $details.find('a.link').attr('href', '/album/' + id + '/');
     $details.find('img').attr('src', src);
     $details.find('.title').text(title);
     $details.show();
