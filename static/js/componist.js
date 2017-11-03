@@ -153,5 +153,18 @@ $(function () {
    $('.componist .remove').click(function(){
        removeComponist($(this));
    });
+    $('.add-componist').click(function(e) {
+        var $target = $(e.target),
+            id = $target.attr('id'),
+            albumId = $('#album_id').val();
+        // console.log(id, albumId);
+        const data = {
+            cmd: 'add_componist',
+            componistid: id,
+            albumid: albumId
+        };
+        ajaxPost(data);
+        location.reload();
+    });
 });
 

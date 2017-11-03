@@ -68,6 +68,7 @@ sqlAllAlbums = '''
       Album.ID
       FROM Album 
       WHERE Album.AlbumID=?
+      GROUP BY Title
       ORDER BY Title COLLATE NOCASE
     '''
 

@@ -17,7 +17,9 @@
             {{ album.Title }}
         </h4>
     {% albumdetails album.ID %}
-    <a href="/prev/{{ album.ID }}">prev</a> |
-    <a href="/next/{{ album.ID }}">next</a>
+        <div class="clear">
+            <a href="/prev/{{ album.ID }}">prev</a> |
+            <a href="/next/{{ album.ID }}">next</a>
+        </div>
     </div>
 {% endblock %}

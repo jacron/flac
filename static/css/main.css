@@ -220,3 +220,6 @@ fieldset {
     padding: 2px;
     border-top: 2px solid #999;
 }
+.add-componist, .add-performer {
+    cursor: pointer;
+}

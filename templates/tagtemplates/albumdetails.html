@@ -1,3 +1,4 @@
+<hr>
 {% for tag in album_tags %}
     <i class="tag hyperlink"><a href="/tag/{{ tag.ID }}">{{ tag.Name }}</a>
         <div class="fa fa-times-circle remove" id="{{ tag.ID }}" albumid="{{ album.ID }}"></div>
@@ -27,7 +28,7 @@
         <div class="fa fa-times-circle remove" id="{{ instrument.ID }}" albumid="{{ album.ID }}"></div>
     </div>
 {% endif %}
-<div class="clear"></div>
+<hr>
 {% for cuesheet in cuesheet_output %}
     <div>
         <div class="hyperlink cuesheet">
@@ -53,10 +54,8 @@
         </ul>
     </div>
 {% endfor %}
-<div class="clear"></div>
 {% albumlist albums %}
-<div class="clear"></div>
-<div>
+
     <div class="pieces">Stukken <i class="toggle-content fa fa-caret-right"></i></div>
     <table class="content stukken">
         {% for item in items %}
@@ -67,4 +66,11 @@
             </tr>
         {% endfor %}
     </table>
-</div>
+Proposals:
+{% for proposal in proposals %}
+    <a class="add-componist" id="{{ proposal.ID }}" title="{{ proposal.FullName }}">{{ proposal.LastName }}</a>,
+{% endfor %}<br>
+Artists:
+{% for proposal in artists %}
+    <a class="add-performer" id="{{ proposal.ID }}" title="{{ proposal.FullName }}">{{ proposal.LastName }}</a>,
+{% endfor %}

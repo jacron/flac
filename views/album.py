@@ -1,8 +1,47 @@
+# import unidecode as unidecode
+from unidecode import unidecode
+
 from django.http import HttpResponse
 from django.template import loader
 from ..db import (
-    get_albums, get_album, get_pieces, get_setting, get_next_album, get_prev_album)
+    get_albums, get_album, get_pieces, get_setting, get_next_album, get_prev_album, get_componisten, get_performers)
 from ..services import get_full_cuesheet
+
+
+def hasPerson(s, persons):
+    proposals = []
+    s = unidecode(s.upper())
+    for person in persons:
+        p = unidecode(person['LastName'].upper())
+        if p in s:
+            proposals.append(person)
+    return proposals
+
+
+def ontdubbel(persons):
+    npersons = []
+    for person in persons:
+        if person not in npersons:
+            npersons.append(person)
+    return npersons
+
+
+def get_proposals(cuesheets, album_title):
+    componisten = get_componisten()
+    proposals = []
+    for cuesheet in cuesheets:
+        proposals = proposals + hasPerson(cuesheet['Title'], componisten)
+    proposals = proposals + hasPerson(album_title, componisten)
+    return ontdubbel(proposals)
+
+
+def get_artists(cuesheets, album_title):
+    performers = get_performers()
+    proposals = []
+    for cuesheet in cuesheets:
+        proposals = proposals + hasPerson(cuesheet['Title'], performers)
+    proposals = proposals + hasPerson(album_title, performers)
+    return ontdubbel(proposals)
 
 
 def organize_pieces(album_id, album_path):

@@ -2,7 +2,7 @@ from django.template import Library
 
 from flac.db import get_album, get_album_albums, get_mother_title, get_album_componisten, get_album_performers, \
     get_album_instruments, get_album_tags
-from flac.views import organize_pieces
+from flac.views import organize_pieces, get_proposals, get_artists
 from . import MENU_ITEMS
 
 
@@ -68,11 +68,13 @@ def album_controls(album_id):
 )
 def albumdetails(album_id):
     mother_title = None
-    cuesheets, pieces = [], []
+    cuesheets, pieces, proposals, artists = [], [], [], []
     album_o = get_album(album_id)
     if album_o['AlbumID']:
         mother_title = get_mother_title(album_o['AlbumID'])
         cuesheets, pieces = organize_pieces(album_id, album_o['Path'])
+        proposals = get_proposals(cuesheets, album_o['Title'])
+        artists = get_artists(cuesheets, album_o['Title'])
     return {
         'albumid': album_id,
         'items': pieces,
@@ -84,6 +86,8 @@ def albumdetails(album_id):
         'album_instrument': get_album_instruments(album_id),
         'cuesheet_output': cuesheets,
         'album_tags': get_album_tags(album_id),
+        'proposals': proposals,
+        'artists': artists,
     }
 
 

@@ -136,4 +136,16 @@ $(function() {
    $('.performer .remove').click(function(){
        removePerformer($(this));
    });
+    $('.add-performer').click(function(e) {
+        var $target = $(e.target),
+            id = $target.attr('id'),
+            albumId = $('#album_id').val();
+        const data = {
+            cmd: 'add_performer',
+            performerid: id,
+            albumid: albumId
+        };
+        ajaxPost(data);
+        location.reload();
+    });
 });
