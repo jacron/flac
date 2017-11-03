@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
 from ..db import (
-    get_albums, get_album, get_pieces, get_setting, get_next_album)
+    get_albums, get_album, get_pieces, get_setting, get_next_album, get_prev_album)
 from ..services import get_full_cuesheet
 
 
@@ -34,6 +34,19 @@ def album_next(request, album_id):
         next_id = get_next_album(album_o['AlbumID'], album_id)
         if next_id:
             album_o = get_album(next_id)
+    context = {
+        'album': album_o,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+def album_prev(request, album_id):
+    template = loader.get_template('flac/album.html')
+    album_o = get_album(album_id)
+    if album_o['AlbumID']:
+        prev_id = get_prev_album(album_o['AlbumID'], album_id)
+        if prev_id:
+            album_o = get_album(prev_id)
     context = {
         'album': album_o,
     }

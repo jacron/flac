@@ -239,5 +239,18 @@ $(function () {
            }
         });
     });
+    $('body').keydown(function(e){
+        if ($('.album').length) {
+            const albumId = $('#album_id').val();
+            switch(e.key) {
+               case 'ArrowRight':
+                   document.location.href = '/next/' + albumId + '/';
+                   break;
+               case 'ArrowLeft':
+                   document.location.href = '/prev/' + albumId + '/';
+                   break;
+           }
+        }
+    });
 });
 
