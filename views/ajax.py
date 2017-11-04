@@ -3,7 +3,8 @@ import json
 import os
 from django.http import HttpResponse
 
-from flac.services import syspath_performer, syspath_componist, COMPONIST_PATH
+from flac.db.pieces import refetch_pieces
+from flac.services import (syspath_performer, syspath_componist, COMPONIST_PATH,)
 from ..db import (
     get_album, get_piece, update_album_title, add_tag_to_album,
     add_componist_to_album, add_performer_to_album, add_instrument_to_album,
@@ -147,6 +148,10 @@ def delete_album_by_id(album_id):
     return delete_album(album_id)
 
 
+def refetch(album_id):
+    return refetch_pieces(album_id)
+
+
 def do_post(post):
     cmd = post['cmd']
     if cmd == 'play':
@@ -220,6 +225,8 @@ def do_post(post):
     # album
     if cmd == 'delete_album':
         return delete_album_by_id(post['albumid'])
+    if cmd == 'refetch':
+        return refetch(post['albumid'])
 
 
 def do_get(get):
@@ -236,7 +243,7 @@ def do_get(get):
 
 
 def ajax(request):
-    msg = 'No post!'
+    msg = 'No post or get!'
     if request.POST:
         msg = do_post(request.POST)
     if request.GET:

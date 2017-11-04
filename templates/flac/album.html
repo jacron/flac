@@ -48,10 +48,16 @@
     </div>
 {% endif %}
 <hr>
-{% cuesheetlist cuesheet_output %}
-{% albumlist albums %}
-{% pieceslist items %}
+{% cuesheetlist cuesheets %}
+{% pieceslist pieces %}
+    <div class="hyperlink">
+    {% if notfounds|length %}
+    Niet gevonden: {{ notfounds|length }} |
+    {% endif %}
+        <a class="refetch">Haal opnieuw de stukken op</a>
+    </div>
 {% proposallist proposals artists %}
+{% albumlist albums %}
 <div class="clear">
     <a href="/prev/{{ album.ID }}">prev</a> |
     <a href="/next/{{ album.ID }}">next</a>

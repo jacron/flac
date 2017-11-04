@@ -18,20 +18,7 @@ def kirkpatrick(filepath):
 
 def filename(filepath):
     name = filepath.split('/')[-1]
-    return name.replace("_", " ")
-
-
-def insert_pieces(path, album_id, conn, c):
-    for card in play_types:
-        files_path = u"{}{}".format(path, "/*.{}".format(card))
-        for f in glob.iglob(files_path):
-            print(f)
-            insert_piece(
-                name=filename(f),
-                code=kirkpatrick(f),
-                album_id=album_id,
-                c=c,
-                conn=conn)
+    return name  # .replace("_", " ")
 
 
 def insert_artiest(artiest, c, conn, album_id):

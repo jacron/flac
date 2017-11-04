@@ -5,6 +5,14 @@ from .services import dequote
 import os
 
 
+class Error(Exception):
+    pass
+
+
+class NotFoundError(Error):
+    pass
+
+
 def get_title(data):
     for line in data.split('\n'):
         line = line.strip()
@@ -34,22 +42,20 @@ def replace_haakjes(s):
     return s
 
 
-def display(cue):
-    lines = []
-    # for rem in cue['rem']:
-    #     lines.append(rem)
-
-    try:
-        lines.append(cue['title'])
-        for file in cue['files']:
-            # lines.append(file['name'])
-            for track in file['tracks']:
-                title = track['title']
-                # lines.append('- {}'.format(title))
-                lines.append(title)
-    except:
-        print('making display of cuesheet failed.')
-    return lines
+# def display(cue):
+#     lines = []
+#     # for rem in cue['rem']:
+#     #     lines.append(rem)
+#
+#     try:
+#         lines.append(cue['title'])
+#         for file in cue['files']:
+#             for track in file['tracks']:
+#                 title = track['title']
+#                 lines.append(title)
+#     except:
+#         print('making display of cuesheet failed.')
+#     return lines
 
 
 def parse(data):
@@ -62,6 +68,10 @@ def parse(data):
     cfile = None
     ctrack = None
     for line in data.split(b'\n'):
+        try:
+            line = unidecode(line)
+        except Exception:
+            pass
         if len(line) < 1:
             continue
 
@@ -140,6 +150,6 @@ def get_full_cuesheet(path, id):
             }
     else:
         # print('Bestaat niet: {}'.format(path))
-        raise Exception('Bestaat niet: {}'.format(path))
+        raise NotFoundError
 
 

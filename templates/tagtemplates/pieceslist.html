@@ -1,7 +1,7 @@
-{% if items|length %}
+{% if pieces|length %}
 <div class="pieces">Stukken <i class="toggle-content fa fa-caret-right"></i></div>
 <table class="content stukken">
-    {% for item in items %}
+    {% for item in pieces %}
         <tr>
             <td class="hyperlink">
                 <a onclick="play({{ item.1 }})">{{ item.0 }}</a>

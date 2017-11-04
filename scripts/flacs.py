@@ -1,10 +1,10 @@
 from __future__ import unicode_literals
 # encoding: utf-8
 # coding=utf-8
-import glob
+# import glob
 
 from flac.lib.color import ColorPrint
-from flac.services import get_full_cuesheet
+from flac.services import get_full_cuesheet, insert_pieces
 from flac.views import openfinder_album
 
 """flac
@@ -21,7 +21,6 @@ from venv.flac.scripts.helper.rename import (
 )
 from venv.flac.scripts.helper.insert import (
     insert_artiest, insert_composer, insert_componist_by_id, insert_performer_by_id,
-    insert_pieces,
 )
 
 

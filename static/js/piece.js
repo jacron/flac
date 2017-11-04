@@ -3,32 +3,6 @@
  */
 'use strict';
 
-// function init() {
-//     var clicked = false;
-//
-//     $('.edit-componist-years').click(function(e){
-//         console.log(this);
-//         selectElement(this);
-//     });
-//     function selectElement(elm) {
-//         //https://stackoverflow.com/questions/4165010/use-jquery-to-auto-select-text-inside-a-span-tag-when-clicked
-//         var sel = window.getSelection();
-//         console.log(sel.rangeCount);
-//         if (!clicked) {
-//             var range = document.createRange();
-//             range.setStartBefore(elm.firstChild);
-//             range.setEndAfter(elm.lastChild);
-//             sel.removeAllRanges();
-//             sel.addRange(range);
-//             clicked = true;
-//         } else {
-//             sel.removeAllRanges();
-//             clicked = false;
-//         }
-//     }
-// }
-// init();
-
 function openfinder(albumId) {
     const data = {
         arg: albumId,

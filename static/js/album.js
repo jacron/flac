@@ -239,9 +239,22 @@ $(function () {
            }
         });
     });
-    $('body').keydown(function(e){
-        if ($('.album').length) {
-            const albumId = $('#album_id').val();
+
+    $('.refetch').click(function(e){
+        const albumId = $('#album_id').val();
+        const data = {
+            albumid: albumId,
+            cmd: 'refetch'
+        };
+        // console.log(data);
+        if (confirm("De stukken opniew ophalen?")) {
+            ajaxPost(data);
+            location.reload();
+        }
+    });
+    // $('body').keydown(function(e){
+    //     if ($('.album').length) {
+    //         const albumId = $('#album_id').val();
            //  switch(e.key) {
            //     case 'ArrowRight':
            //         document.location.href = '/next/' + albumId + '/';
@@ -250,7 +263,7 @@ $(function () {
            //         document.location.href = '/prev/' + albumId + '/';
            //         break;
            // }
-        }
-    });
+        // }
+    // });
 });
 

@@ -35,8 +35,8 @@ def cuesheetlist(cuesheets):
 @register.inclusion_tag(
     'tagtemplates/pieceslist.html',
 )
-def pieceslist(items):
-    return dict(items=items)
+def pieceslist(pieces):
+    return dict(pieces=pieces)
 
 
 @register.inclusion_tag(
