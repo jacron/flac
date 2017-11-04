@@ -21,6 +21,7 @@ var match = function (items) {
 
 function impl_tags_typeahead(tags) {
     var $tagTypeahead = $('.album .tag.typeahead');
+    const albumId = $('#album_id').val();
     $tagTypeahead.typeahead({
             hint: true,
             highlight: true,
@@ -38,7 +39,7 @@ function impl_tags_typeahead(tags) {
             const data = {
                 cmd: 'new_tag',
                 name: result,
-                albumid: $('.edit-title').attr('albumid')
+                albumid: albumId
             };
             ajaxPost(data);
             location.reload();
@@ -51,6 +52,7 @@ function impl_tags_typeahead(tags) {
 
 function impl_componisten_typeahead(componisten) {
     var $typeahead = $('.album .componist.typeahead');
+    const albumId = $('#album_id').val();
     $typeahead.typeahead({
             hint: true,
             highlight: true,
@@ -68,7 +70,7 @@ function impl_componisten_typeahead(componisten) {
             const data = {
                 cmd: 'add_new_componist',
                 name: result,
-                albumid: $('.edit-title').attr('albumid')
+                albumid: albumId
             };
             ajaxPost(data);
             location.reload();
@@ -80,8 +82,8 @@ function impl_componisten_typeahead(componisten) {
 }
 
 function impl_performers_typeahead(performers) {
-    // console.log('performers', performers);
     var $typeahead = $('.album .performer.typeahead');
+    const albumId = $('#album_id').val();
     $typeahead.typeahead({
             hint: true,
             highlight: true,
@@ -99,7 +101,7 @@ function impl_performers_typeahead(performers) {
             const data = {
                 cmd: 'add_new_performer',
                 name: result,
-                albumid: $('.edit-title').attr('albumid')
+                albumid: albumId
             };
             ajaxPost(data);
             location.reload();
@@ -112,6 +114,7 @@ function impl_performers_typeahead(performers) {
 
 function impl_instruments_typeahead(instruments) {
     var $typeahead = $('.album .instrument.typeahead');
+    const albumId = $('#album_id').val();
     $typeahead.typeahead({
             hint: true,
             highlight: true,
@@ -129,7 +132,7 @@ function impl_instruments_typeahead(instruments) {
             const data = {
                 cmd: 'add_new_instrument',
                 name: result,
-                albumid: $('.edit-title').attr('albumid')
+                albumid: albumId
             };
             ajaxPost(data);
             location.reload();
@@ -140,11 +143,11 @@ function impl_instruments_typeahead(instruments) {
     });
 }
 
-function editAlbumTitle($this) {
+function editAlbumTitle($this, albumId) {
     const data = {
         cmd: 'update_album_title',
         title: $this.text().trim(),
-        albumid: $this.attr('albumid')
+        albumid: albumId
     };
     ajaxPost(data);
 }
@@ -163,10 +166,13 @@ function albumDetails($target, $details) {
 }
 
 $(function () {
+
+    const albumId = $('#album_id').val();
+
     var tags = ['test', 'test2'];
     $('.edit-title').keydown(function (e) {
         if (e.key === 'Tab') {
-            editAlbumTitle($(this));
+            editAlbumTitle($(this), albumId);
         }
     });
     ajaxGet({
@@ -241,12 +247,11 @@ $(function () {
     });
 
     $('.refetch').click(function(e){
-        const albumId = $('#album_id').val();
+        // const albumId = $('#album_id').val();
         const data = {
             albumid: albumId,
             cmd: 'refetch'
         };
-        // console.log(data);
         if (confirm("De stukken opniew ophalen?")) {
             ajaxPost(data);
             location.reload();

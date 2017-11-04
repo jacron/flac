@@ -29,7 +29,8 @@ function removePerformer($this) {
         const data = {
         cmd: 'remove_performer',
         id: $this.attr('id'),
-        albumid: $this.attr('albumid')
+        albumid: $('#album_id').val()
+        // albumid: $this.attr('albumid')
     };
     ajaxPost(data);
     location.reload();

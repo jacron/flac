@@ -3,6 +3,8 @@ import json
 import os
 
 import subprocess
+import urllib
+
 from django.http import HttpResponse
 
 from flac.db.pieces import refetch_pieces
@@ -173,25 +175,52 @@ def upload_file(f, path):
             destination.write(chunk)
 
 
+def path_from_id_field(post):
+    path = None
+    componist_id = post.get('componist_id')
+    if componist_id:
+        path = create_componist_path(componist_id)
+    performer_id = post.get('performer_id')
+    if performer_id:
+        path = create_performer_path(performer_id)
+    return path
+
+
+def path_for_person(path):
+    return u'{}/person.jpg'.format(path)
+
+
 def upload(post, files):
     if post['cmd'] == 'upload':
         f = files['file']
-        path = None
-        componist_id = post.get('componist_id')
-        if componist_id:
-            path = create_componist_path(componist_id)
-        performer_id = post.get('performer_id')
-        if performer_id:
-            path = create_performer_path(performer_id)
+        path = path_from_id_field(post)
         if path:
-            upload_file(f, '{}/person.jpg'.format(path))
+            upload_file(f, path_for_person(path).encode('UTF-8'))
             return 'Uploaded'
         return 'Not a valid componist or performer'
     pass
 
 
+def write_file_from_url(url, path):
+    response = urllib.urlretrieve(url)
+    contents = open(response[0]).read()
+    f = open(path_for_person(path), 'w')
+    f.write(contents)
+    f.close()
+
+
+def person_by_url(post):
+    path = path_from_id_field(post)
+    if path:
+        write_file_from_url(post['url'], path)
+
+
+
 def do_post(post):
     cmd = post['cmd']
+    if cmd == 'url':
+        person_by_url(post)
+        return 'Person image fetched by url'
     if cmd == 'play':
         play(post['arg'])
         return 'Played'

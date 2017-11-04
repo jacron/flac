@@ -28,7 +28,8 @@ function removeTag($this) {
     const data = {
         cmd: 'remove_tag',
         id: $this.attr('id'),
-        albumid: $this.attr('albumid')
+        albumid: $('#album_id').val()
+        // albumid: $this.attr('albumid')
     };
     ajaxPost(data);
     location.reload();

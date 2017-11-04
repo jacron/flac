@@ -40,7 +40,8 @@ function removeComponist($this) {
     const data = {
         cmd: 'remove_componist',
         id: $this.attr('id'),
-        albumid: $this.attr('albumid')
+        albumid: $('#album_id').val()
+        // albumid: $this.attr('albumid')
     };
     ajaxPost(data);
     location.reload();
@@ -169,9 +170,21 @@ function handleFileUpload(files, obj, personId, fieldName) {
         var fd = new FormData();
         fd.append('file', file);
         fd.append('cmd', 'upload');
-        fd.append(fieldName, personId)
+        fd.append(fieldName, personId);
         uploadFile(fd, obj);
     }
+}
+
+function handleDroppedUrl(url, obj, personId, fieldName) {
+    const data = {
+        cmd: 'url',
+        url: url
+    };
+    data[fieldName] = personId;
+    ajaxPost(data, function(response) {
+        obj.css('border', 'none');
+        location.reload();
+    });
 }
 
 function handleDrop(obj, personId, fieldName) {
@@ -187,11 +200,15 @@ function handleDrop(obj, personId, fieldName) {
     obj.on('drop', function (e) {
         $(this).css('border', '2px dotted #0B85A1');
         e.preventDefault();
-        var files = e.originalEvent.dataTransfer.files;
-        console.log(files);
-
-        //We need to send dropped files to Server
-        handleFileUpload(files, obj, personId, fieldName);
+        const dt = e.originalEvent.dataTransfer;
+        const files = dt.files;
+        if (files.length) {
+            handleFileUpload(files, obj, personId, fieldName);
+        } else {
+            const url = dt.getData('url');
+            console.log(url);
+            handleDroppedUrl(url, obj, personId, fieldName);
+        }
     });
 }
 
@@ -230,7 +247,6 @@ $(function () {
         var $target = $(e.target),
             id = $target.attr('id'),
             albumId = $('#album_id').val();
-        // console.log(id, albumId);
         const data = {
             cmd: 'add_componist',
             componistid: id,
