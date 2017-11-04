@@ -9,11 +9,11 @@
         <form>{% csrf_token %}</form>
         <input type="hidden" id="album_id" value="{{ album.ID }}">
         {% album_controls album.ID %}
+    <img src="/albumimage/{{ album.ID }}/"
+         class="album-image">
+    <img src="/albumimage/{{ album.ID }}/back/"
+         class="album-image">
 
-<img src="/albumimage/{{ album.ID }}/"
-     class="album-image">
-<img src="/albumimage/{{ album.ID }}/back/"
-     class="album-image">
 <h4 contenteditable="true" class="edit-title" albumid="{{ album.ID }}">
     {{ album.Title }}
 </h4>

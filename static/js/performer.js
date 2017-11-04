@@ -148,4 +148,7 @@ $(function() {
         ajaxPost(data);
         location.reload();
     });
+    const performer_id = $('#performer_id').val();
+    handleDrop($('#drop-area-performer'), performer_id, 'performer_id');
+    preventSpilledDrop($('.performer'));
 });

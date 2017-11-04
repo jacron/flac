@@ -1,10 +1,12 @@
 # coding=utf-8
 import json
 import os
+
+import subprocess
 from django.http import HttpResponse
 
 from flac.db.pieces import refetch_pieces
-from flac.services import (syspath_performer, syspath_componist, COMPONIST_PATH,)
+from flac.services import (syspath_performer, syspath_componist, COMPONIST_PATH, unidecode)
 from ..db import (
     get_album, get_piece, update_album_title, add_tag_to_album,
     add_componist_to_album, add_performer_to_album, add_instrument_to_album,
@@ -35,29 +37,42 @@ def openfinder_album(args):
     os.system('open "{}"'.format(path))
 
 
-def openfinder_performer(args):
-    performer = get_performer(args)
+def create_componist_path(componist_id):
+    componist = get_componist(componist_id)
+    path = componist['Path']
+    if path is None or len(path) == 0:
+        path = syspath_componist(componist).encode('utf-8')
+        if not os.path.exists(path):
+            os.mkdir(path)
+        add_path_to_componist(componist_id, path)
+    return path
+
+
+def create_performer_path(performer_id):
+    performer = get_performer(performer_id)
     path = performer['Path']
     if path is None or len(path) == 0:
         path = syspath_performer(performer).encode('utf-8')
         if not os.path.exists(path):
             os.mkdir(path)
-        add_path_to_performer(args, path)
-    os.system('open "{}"'.format(path))
+        add_path_to_performer(performer_id, path)
+    return path
+
+
+def openfinder_performer(args):
+    path = create_performer_path(args)
+    cmd = u'open "{}"'.format(path).encode('UTF-8')
+    os.system(cmd)
 
 
 def openfinder_componist(args):
     if args is None or len(args) == 0:
         path = COMPONIST_PATH
     else:
-        componist = get_componist(args)
-        path = componist['Path']
-        if path is None or len(path) == 0:
-            path = syspath_componist(componist).encode('utf-8')
-            if not os.path.exists(path):
-                os.mkdir(path)
-            add_path_to_componist(args, path)
-    os.system('open "{}"'.format(path))
+        path = create_componist_path(args)
+    # subprocess.call(u'open "{}"'.format(path))
+    cmd = u'open "{}"'.format(path).encode('UTF-8')
+    os.system(cmd)
 
 
 def do_update_album_title(title, albumid):
@@ -152,6 +167,29 @@ def refetch(album_id):
     return refetch_pieces(album_id)
 
 
+def upload_file(f, path):
+    with open(path, 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
+
+def upload(post, files):
+    if post['cmd'] == 'upload':
+        f = files['file']
+        path = None
+        componist_id = post.get('componist_id')
+        if componist_id:
+            path = create_componist_path(componist_id)
+        performer_id = post.get('performer_id')
+        if performer_id:
+            path = create_performer_path(performer_id)
+        if path:
+            upload_file(f, '{}/person.jpg'.format(path))
+            return 'Uploaded'
+        return 'Not a valid componist or performer'
+    pass
+
+
 def do_post(post):
     cmd = post['cmd']
     if cmd == 'play':
@@ -243,7 +281,9 @@ def do_get(get):
 
 
 def ajax(request):
-    msg = 'No post or get!'
+    msg = 'No post, files or get!'
+    if request.FILES:
+        msg = upload(request.POST, request.FILES)
     if request.POST:
         msg = do_post(request.POST)
     if request.GET:

@@ -206,6 +206,9 @@ where ID in(
     1948
 );
 
+delete from Componist
+where ID=253;
+
 select ID, Path
 from Album
 where Path IN (
@@ -258,3 +261,4 @@ SELECT ID FROM Componist
 SELECT Path
     FROM Componist
     WHERE ID=175;
+m4dC2KTt 

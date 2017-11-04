@@ -78,10 +78,11 @@ def splits_years(years):
 
 
 def syspath_componist(componist):
-    path = u'{}/{}'.format(COMPONIST_PATH, componist['LastName'])
+    path = u'{}{}'.format(COMPONIST_PATH, componist['LastName'])
     return path
 
 
 def syspath_performer(performer):
-    path = u'{}/{}'.format(PERFORMER_PATH, performer['FullName'])
+    name = performer['FullName']
+    path = u'{}{}'.format(PERFORMER_PATH, name)
     return path
