@@ -5,13 +5,33 @@ from unidecode import unidecode
 from django.http import HttpResponse
 from django.template import loader
 from ..db import (
-    get_albums, get_album, get_pieces, get_setting, get_next_album, get_prev_album, get_componisten, get_performers,
+    get_albums, get_album, get_pieces, get_next_album, get_prev_album, get_componisten, get_performers,
     get_mother_title, get_album_albums, get_album_componisten, get_album_performers, get_album_instruments,
-    get_album_tags)
-from ..services import get_full_cuesheet, NotFoundError
+    get_album_tags, get_componist, get_componist_aliasses, get_performer_aliasses, get_performer)
+from ..services import get_full_cuesheet
 
 
-def hasPerson(s, persons):
+def has_alias(s, persons, id_field):
+    proposals = []
+    if s is None:
+        return []
+    s = s.replace('_', ' ')
+    try:
+        s = unidecode(s.upper())
+    except Exception:
+        s = s.upper()
+    for person in persons:
+        p = unidecode(person['Name'].upper())
+        if len(p) > 2 and p in s:
+            if id_field == 'ComponistID':
+                fperson = get_componist(person[id_field])
+            else:
+                fperson = get_performer(person[id_field])
+            proposals.append(fperson)
+    return proposals
+
+
+def has_person(s, persons):
     proposals = []
     if s is None:
         return []
@@ -37,21 +57,27 @@ def ontdubbel(persons):
 
 def get_proposals(cuesheets, album_title):
     componisten = get_componisten()
+    aliasses = get_componist_aliasses()
     proposals = []
     for cuesheet in cuesheets:
-        proposals = proposals + hasPerson(cuesheet['Title'], componisten)
-        proposals = proposals + hasPerson(cuesheet['Filename'], componisten)
-    proposals = proposals + hasPerson(album_title, componisten)
+        proposals = proposals + has_person(cuesheet['Title'], componisten)
+        proposals = proposals + has_person(cuesheet['Filename'], componisten)
+        proposals = proposals + has_alias(cuesheet['Title'], aliasses, 'ComponistID')
+        proposals = proposals + has_alias(cuesheet['Filename'], aliasses, 'ComponistID')
+    proposals = proposals + has_person(album_title, componisten)
     return ontdubbel(proposals)
 
 
 def get_artists(cuesheets, album_title):
     performers = get_performers()
+    aliasses = get_performer_aliasses()
     proposals = []
     for cuesheet in cuesheets:
-        proposals = proposals + hasPerson(cuesheet['Title'], performers)
-        proposals = proposals + hasPerson(cuesheet['Filename'], performers)
-    proposals = proposals + hasPerson(album_title, performers)
+        proposals = proposals + has_person(cuesheet['Title'], performers)
+        proposals = proposals + has_person(cuesheet['Filename'], performers)
+        proposals = proposals + has_alias(cuesheet['Title'], aliasses, 'PerformerID')
+        proposals = proposals + has_alias(cuesheet['Filename'], aliasses, 'PerformerID')
+    proposals = proposals + has_person(album_title, performers)
     return ontdubbel(proposals)
 
 
@@ -143,4 +169,3 @@ def albums(request):
         {
             'albums': get_albums(),
         }, request))
-# Antonio_Vivaldi_ La_Cetra_ op9_ CD 1

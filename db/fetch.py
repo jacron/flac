@@ -263,6 +263,36 @@ def get_instruments():
     return out
 
 
+def get_componist_aliasses():
+    sql = '''
+      SELECT Name, ComponistID 
+      FROM ComponistAlias
+    '''
+    items = get_items(sql)
+    out = []
+    for item in items:
+        out.append({
+            'Name': item[0],
+            'ComponistID': item[1],
+        })
+    return out
+
+
+def get_performer_aliasses():
+    sql = '''
+      SELECT Name, PerformerID
+      FROM PerformerAlias
+    '''
+    items = get_items(sql)
+    out = []
+    for item in items:
+        out.append({
+            'Name': item[0],
+            'PerformerID': item[1],
+        })
+    return out
+
+
 def get_tags():
     sql = '''
       SELECT Name, ID 
