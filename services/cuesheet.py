@@ -1,4 +1,6 @@
 # from __future__ import unicode_literals
+from unidecode import unidecode
+
 from .services import dequote
 import os
 
@@ -70,7 +72,10 @@ def parse(data):
         title = get_element(line, 'TITLE ')
         if title:
             if ctrack:
-                ctrack['title'] = replace_haakjes(dequote(title))
+                try:
+                    ctrack['title'] = unidecode(replace_haakjes(dequote(title)))
+                except Exception:
+                    ctrack['title'] = replace_haakjes(dequote(title))
             else:
                 cue['title'] = dequote(title)
 
@@ -127,25 +132,14 @@ def get_full_cuesheet(path, id):
                 cue = parse(data)
             except:
                 print('parse cue failed')
-            try:
-                lines = display(cue)
-            except:
-                print('display cue failed')
-                lines = []
             return {
                 'Filename': filename,
                 'Title': cue['title'],
                 'ID': id,
-                'cuesheet': lines,
+                'cue': cue,
             }
     else:
         # print('Bestaat niet: {}'.format(path))
         raise Exception('Bestaat niet: {}'.format(path))
 
 
-def get_cuesheet(filename, id):
-    filename = ' '.join(filename.split('.')[:-1])
-    return {
-        'Title': filename,
-        'ID': id,
-    }

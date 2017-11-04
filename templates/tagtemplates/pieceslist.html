@@ -1,0 +1,12 @@
+{% if items|length %}
+<div class="pieces">Stukken <i class="toggle-content fa fa-caret-right"></i></div>
+<table class="content stukken">
+    {% for item in items %}
+        <tr>
+            <td class="hyperlink">
+                <a onclick="play({{ item.1 }})">{{ item.0 }}</a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{% endif %}

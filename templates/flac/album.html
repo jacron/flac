@@ -9,17 +9,52 @@
         <form>{% csrf_token %}</form>
         <input type="hidden" id="album_id" value="{{ album.ID }}">
         {% album_controls album.ID %}
-        <img src="/albumimage/{{ album.ID }}/"
-             class="album-image">
-        <img src="/albumimage/{{ album.ID }}/back/"
-             class="album-image">
-        <h4 contenteditable="true" class="edit-title" albumid="{{ album.ID }}">
-            {{ album.Title }}
-        </h4>
-    {% albumdetails album.ID %}
-        <div class="clear">
-            <a href="/prev/{{ album.ID }}">prev</a> |
-            <a href="/next/{{ album.ID }}">next</a>
-        </div>
+
+<img src="/albumimage/{{ album.ID }}/"
+     class="album-image">
+<img src="/albumimage/{{ album.ID }}/back/"
+     class="album-image">
+<h4 contenteditable="true" class="edit-title" albumid="{{ album.ID }}">
+    {{ album.Title }}
+</h4>
+<hr>
+{% for tag in album_tags %}
+    <i class="tag hyperlink"><a href="/tag/{{ tag.ID }}">{{ tag.Name }}</a>
+        <div class="fa fa-times-circle remove" id="{{ tag.ID }}" albumid="{{ album.ID }}"></div>
+    </i>,
+{% endfor %}
+{% if album.AlbumID %}
+    <div class="hyperlink">
+        <span>Collectie: </span>
+        <a href="/album/{{ album.AlbumID }}">{{ mother_title }}</a>
     </div>
+{% endif %}
+{% for componist in album_componisten %}
+    <div class="hyperlink componist">
+        <a href="{% url 'componist' componist.ID %}">{{ componist.FullName }}</a>
+        <div class="fa fa-times-circle remove" id="{{ componist.ID }}" albumid="{{ album.ID }}"></div>
+    </div>
+{% endfor %}
+{% for performer in album_performers %}
+    <div class="hyperlink performer">
+        <a href="/performer/{{ performer.ID }}/">{{ performer.FullName }}</a>
+        <div class="fa fa-times-circle remove" id="{{ performer.ID }}" albumid="{{ album.ID }}"></div>
+    </div>
+{% endfor %}
+{% if album_instrument %}
+    <div class="hyperlink instrument">
+        <a href="/instrument/{{ album_instrument.ID }}/">{{ album_instrument.Name }}</a>
+        <div class="fa fa-times-circle remove" id="{{ instrument.ID }}" albumid="{{ album.ID }}"></div>
+    </div>
+{% endif %}
+<hr>
+{% cuesheetlist cuesheet_output %}
+{% albumlist albums %}
+{% pieceslist items %}
+{% proposallist proposals artists %}
+<div class="clear">
+    <a href="/prev/{{ album.ID }}">prev</a> |
+    <a href="/next/{{ album.ID }}">next</a>
+</div>
+</div>
 {% endblock %}

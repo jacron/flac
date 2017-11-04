@@ -1,0 +1,12 @@
+{% if proposals|length %}
+Proposals:
+{% for proposal in proposals %}
+    <a class="add-componist" id="{{ proposal.ID }}" title="{{ proposal.FullName }}">{{ proposal.LastName }}</a>,
+{% endfor %}<br>
+{% endif %}
+{% if artists|length %}
+Artists:
+{% for proposal in artists %}
+    <a class="add-performer" id="{{ proposal.ID }}" title="{{ proposal.FullName }}">{{ proposal.LastName }}</a>,
+{% endfor %}
+{% endif %}

@@ -1,0 +1,19 @@
+{% for cuesheet in cuesheets %}
+    <div>
+        <div class="hyperlink cuesheet">
+            <a onclick="play({{ cuesheet.ID }})">{{ cuesheet.Filename }}</a>
+        </div>
+        <ul class="cue">
+        <li class="cue-header">
+            {{ cuesheet.Title }}
+            <span class="cue-plus">+</span>
+            <i class="toggle-cue-lines fa fa-caret-right"></i>
+        </li>
+        {% for file in cuesheet.cue.files %}
+            {%  for track in file.tracks %}
+                <li class="content cue-lines">{{ track.title }}</li>
+            {% endfor %}
+        {% endfor %}
+        </ul>
+    </div>
+{% endfor %}
