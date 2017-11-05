@@ -12,6 +12,17 @@ def get_items_with_parameter(sql, oid):
     return items
 
 
+def get_items_with_2parameter(sql, a, b):
+    conn, c = connect()
+    items = []
+    try:
+        items = [item for item in c.execute(sql, (a, b, )).fetchall()]
+    except:
+        print('in db encoding error')
+    conn.close()
+    return items
+
+
 def get_items(sql):
     conn, c = connect()
     items = [item for item in c.execute(sql).fetchall()]
@@ -203,6 +214,51 @@ def get_instruments_typeahead():
             'ID': item[1],
         })
     return out
+
+
+def get_period_componisten(period):
+    # print('period={}'.format(period))
+    pp = period.split('-')
+    if len(pp) == 1:
+        pmin = period
+        pmax = 0
+    else:
+        if len(pp[0]) < 1:  # e.g. -1900
+            pmin = 0
+            pmax = pp[1]
+        else:
+            if len(pp[1]) < 1:  # e.g. 1800-
+                pmin = pp[0]
+                pmax = 0
+            else:
+                pmin = pp[0]
+                pmax = pp[1]
+    sql = '''
+    SELECT *
+    FROM (
+      SELECT
+        FirstName,
+        LastName,
+        C.Path,
+        Birth,
+        Death,
+        C.ID,
+        COUNT(A.ID) AS Albums
+      FROM Componist C
+        LEFT JOIN Componist_Album CA
+          ON CA.ComponistID = C.ID
+         LEFT JOIN Album A
+          ON CA.AlbumID = A.ID
+      GROUP BY C.ID
+      ORDER BY LastName
+    ) WHERE Death > ?
+    '''
+    if pmax > 0:
+        sql += 'AND Death < ?'
+        items = get_items_with_2parameter(sql, int(pmin), int(pmax))
+    else:
+        items = get_items_with_parameter(sql, int(pmin))
+    return named_persons(items)
 
 
 def get_componisten(limit=0):

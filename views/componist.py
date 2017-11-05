@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.template import loader
 
 from flac.services import alfabet
-from ..db import get_componist_albums, get_componisten, get_componist
+from ..db import get_componist_albums, get_componisten, get_componist, get_period_componisten
 
 
 def componist(request, componist_id):
@@ -10,6 +10,14 @@ def componist(request, componist_id):
     context = {
         'items': get_componist_albums(componist_id),
         'componist': get_componist(componist_id),
+    }
+    return HttpResponse(template.render(context, request))
+
+
+def componisten_period(request, period):
+    template = loader.get_template('flac/componisten.html')
+    context = {
+        'items': get_period_componisten(period),
     }
     return HttpResponse(template.render(context, request))
 

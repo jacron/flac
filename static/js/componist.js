@@ -303,7 +303,13 @@ $(function () {
     $('.alfabet a').click(function(e) {
         const $target = $(e.target),
             search = $target.text().trim();
-            jumpToSearched(search);
+        jumpToSearched(search);
+    });
+    $('.componist-period').keydown(function (e) {
+        if (e.key === 'Enter') {
+            const $target = $(e.target);
+            location.href = '/componist/' + $target.val() + '/period/';
+        }
     });
 });
 

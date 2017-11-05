@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^album/$', views.albums),
     url(r'^performer/(?P<performer_id>.+)/$', views.performer),
     url(r'^performer/$', views.performers),
+    url(r'^componist/(?P<period>.+)/period/$', views.componisten_period),
     url(r'^componist/(?P<min_limit>.+)/min/$', views.componisten_limited),
     url(r'^componist/(?P<componist_id>.+)/$', views.componist, name='componist'),
     url(r'^componist/$', views.componisten),

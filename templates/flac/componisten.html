@@ -10,7 +10,8 @@
         <input class="typeahead" type="text" placeholder="Zoek componist">
         <input class="add" type="text" placeholder="Voeg componist toe">
         <span class="componist-added"></span>
-        <input class="jump-to-letter" placeholder="Typ een letter">
+        <input class="jump-to-letter" placeholder="Zoek naar beginletters">
+        <input class="componist-period" placeholder="Kies een periode">
         <h4>Componisten ({{ items|length }})</h4>
         <div class="alfabet"><ul>
             {% for letter in letters %}<li><a>{{ letter|upper }}</a></li>{% endfor %}

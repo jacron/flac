@@ -210,6 +210,8 @@ def main():
         print('No path')
         return
     # process_pieces(path, album_id=album_id)
+    return
+
     sanatize_haakjes(path, True)
     restore_cover(path=path, step_in=True)
     rename_cover(path=path, step_in=True)
