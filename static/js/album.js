@@ -76,9 +76,9 @@ $(function () {
             }
         });
         ajaxGetItems('instruments', 'Name', $('.album .instrument.typeahead'), 'add_new_instrument');
-        ajaxGetItems('performers', 'FullName', $('.album .performer.typeahead'), 'add_new_instrument');
-        ajaxGetItems('componisten', 'FullName', $('.album .componist.typeahead'), 'add_new_instrument');
-        ajaxGetItems('tags', 'Name', $('.album .tag.typeahead'), 'add_new_instrument');
+        ajaxGetItems('performers', 'FullName', $('.album .performer.typeahead'), 'add_new_performer');
+        ajaxGetItems('componisten', 'FullName', $('.album .componist.typeahead'), 'add_new_componist');
+        ajaxGetItems('tags', 'Name', $('.album .tag.typeahead'), 'new_tag');
 
         $('.refetch').click(function(){
             const data = {
@@ -91,26 +91,6 @@ $(function () {
             }
         });
     }
-    // functions for the abums list
-    $('.test-scroll').click(function(){
-        // test to scroll to first 'K'
-        var items = $('li.hyperlink');
-        items.each(function(index){
-            // console.log(this);
-            var $li = $(this);
-            var title = $li.find('.title'),
-                text = $(title).text().trim();
-            // console.log(title, text);
-            if (text.indexOf('44') === 0) {
-                console.log(text);
-                $('html, body').animate({
-                    scrollTop: $(title).offset().top
-                },2000);
-
-                return false;
-            }
-        });
-    });
 
 });
 
