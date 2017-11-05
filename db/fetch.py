@@ -218,16 +218,17 @@ FROM (
     C.ID,
     COUNT(A.ID) AS Albums
   FROM Componist C
-    JOIN Componist_Album CA
+    LEFT JOIN Componist_Album CA
       ON CA.ComponistID = C.ID
-    JOIN Album A
+     LEFT JOIN Album A
       ON CA.AlbumID = A.ID
   GROUP BY C.ID
   ORDER BY LastName
 )
-WHERE Albums > ?
+-- WHERE Albums > ?
 '''
-    items = get_items_with_parameter(sql, int(limit))
+    # items = get_items_with_parameter(sql, int(limit))
+    items = get_items(sql)
     return named_persons(items)
 
 
@@ -654,6 +655,16 @@ def get_album_path_by_id(album_id, c):
     WHERE Album.ID=?
     '''
     fields = c.execute(sql, (album_id,)).fetchone()
+    return fields[0]
+
+
+def get_componist_path_by_id(componist_id, c):
+    sql = '''
+    SELECT Path 
+    FROM Componist 
+    WHERE ID=?
+    '''
+    fields = c.execute(sql, (componist_id,)).fetchone()
     return fields[0]
 
 

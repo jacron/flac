@@ -22,7 +22,7 @@ class ColorPrint():
 
     @staticmethod
     def str_c(s, c):
-        return '{}{}{}'.format(c, s, ColorPrint.NC)
+        return u'{}{}{}'.format(c, s, ColorPrint.NC)
 
 
 def main():

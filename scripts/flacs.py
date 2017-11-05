@@ -2,10 +2,10 @@ from __future__ import unicode_literals
 # encoding: utf-8
 # coding=utf-8
 # import glob
-
+from flac.db.pieces import insert_pieces
 from flac.lib.color import ColorPrint
-from flac.services import get_full_cuesheet, insert_pieces
-from flac.views import openfinder_album
+from flac.services import get_full_cuesheet
+from flac.views import openfinder_album, get_componist_path
 
 """flac
 
@@ -15,7 +15,7 @@ import sqlite3
 from venv.flac.db import (
     insert_album, insert_instrument, get_album_count_by_path, get_album_by_path,
     set_album_title, get_componist_path_c, get_album_path_by_id,
-)
+    insert_componist, get_componist_path_by_id)
 from venv.flac.scripts.helper.rename import (
     rename_cover, restore_cover, sanatize_haakjes, rename_to_back, rename_all_titles,
 )
@@ -148,8 +148,18 @@ def get_path_by_albumid(album_id):
     return get_album_path_by_id(album_id, c)
 
 
+def get_path_by_componistid(album_id):
+    conn, c = script_connect()
+    return get_componist_path_by_id(album_id, c)
+
+
 def open_finder_album(album_id):
     path = get_path_by_albumid(album_id)
+    os.system('open "{}"'.format(path))
+
+
+def open_finder_componist(componist_id):
+    path = get_path_by_componistid(componist_id)
     os.system('open "{}"'.format(path))
 
 
@@ -160,16 +170,27 @@ def from_path(path):
     return w[-1]
 
 
+def insert_composer(name):
+    conn, c = script_connect()
+    return insert_componist(name, c, conn)
+
+
 def main():
     global artiest, instrument, componist, ComponistID, PerformerID
+
+    # ComponistID = insert_composer('Zinnstag')[0]
+    # print(ComponistID)
+    # return
+
     # process_pieces(path, album_id=)
-    # ComponistID = 1
+    ComponistID = 269
     # componist = ""
     # open_finder_album(album_id=)
+    # open_finder_componist(ComponistID)
     # return
-    # path = get_path_of_componist(ComponistID)
-    album_id = 191
-    path = get_path_of_album(album_id)
+    path = get_path_of_componist(ComponistID)
+    # album_id = 3530
+    # path = get_path_of_album(album_id)
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Hamza El Din"
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Sallinen"
     # componist = from_path(path)
@@ -177,14 +198,14 @@ def main():
     if path is None:
         print('No path')
         return
-    # sanatize_haakjes(path, True)
+    sanatize_haakjes(path, True)
     restore_cover(path=path, step_in=True)
     # rename_cover(path=path, step_in=True)
     # rename_titles(path)
     # rename_to_back(path)
-    # process_a(p=path, mother_id=album_id, iscollectie=0, step_in=True)
+    # process_a(p=path, mother_id=None, iscollectie=0, step_in=True)
     # get_albums(path=path, mother_id=None, iscollectie=0)
-    # get_album_groups(path=path, mother_id=None, iscollectie=0, step_in=True)
+    get_album_groups(path=path, mother_id=None, iscollectie=0, step_in=True)
     # album_id = process_album(path=path, mother_id=None, is_collectie=0)
 
 if __name__ == '__main__':

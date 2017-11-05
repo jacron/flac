@@ -152,18 +152,18 @@ function editAlbumTitle($this, albumId) {
     ajaxPost(data);
 }
 
-function albumDetails($target, $details) {
-    if (!$target || !$target.length) { return; }
-
-    var id = $target.attr('id'),
-        title = $target.find('.title').text(),
-        src = $target.find('img').attr('src');
-
-    $details.find('a.link').attr('href', '/album/' + id + '/');
-    $details.find('img').attr('src', src);
-    $details.find('.title').text(title);
-    $details.show();
-}
+// function albumDetails($target, $details) {
+//     if (!$target || !$target.length) { return; }
+//
+//     var id = $target.attr('id'),
+//         title = $target.find('.title').text(),
+//         src = $target.find('img').attr('src');
+//
+//     $details.find('a.link').attr('href', '/album/' + id + '/');
+//     $details.find('img').attr('src', src);
+//     $details.find('.title').text(title);
+//     $details.show();
+// }
 
 $(function () {
 
@@ -218,33 +218,33 @@ $(function () {
         impl_instruments_typeahead(instruments);
     });
 
-    $('.album-list .hyperlink').click(function(e){
-        var $target = $(e.target).parents('li'),
-            $details = $('.album-details');
-
-        albumDetails($target, $details);
-        $('body').keydown(function(e){
-           switch(e.key) {
-               case 'ArrowRight':
-                   var $next = $target.next();
-                   if ($next.length) {
-                       $target = $next;
-                       albumDetails($target, $details);
-                   }
-                   break;
-               case 'ArrowLeft':
-                   var $prev = $target.prev();
-                   if ($prev.length) {
-                       $target = $prev;
-                       albumDetails($target, $details);
-                   }
-                   break;
-               case 'Escape':
-                   $details.hide();
-                   break;
-           }
-        });
-    });
+    // $('.album-list .hyperlink').click(function(e){
+    //     var $target = $(e.target).parents('li'),
+    //         $details = $('.album-details');
+    //
+    //     albumDetails($target, $details);
+    //     $('body').keydown(function(e){
+    //        switch(e.key) {
+    //            case 'ArrowRight':
+    //                var $next = $target.next();
+    //                if ($next.length) {
+    //                    $target = $next;
+    //                    albumDetails($target, $details);
+    //                }
+    //                break;
+    //            case 'ArrowLeft':
+    //                var $prev = $target.prev();
+    //                if ($prev.length) {
+    //                    $target = $prev;
+    //                    albumDetails($target, $details);
+    //                }
+    //                break;
+    //            case 'Escape':
+    //                $details.hide();
+    //                break;
+    //        }
+    //     });
+    // });
 
     $('.refetch').click(function(e){
         // const albumId = $('#album_id').val();
