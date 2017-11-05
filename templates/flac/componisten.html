@@ -12,6 +12,9 @@
         <span class="componist-added"></span>
         <input class="jump-to-letter" placeholder="Typ een letter">
         <h4>Componisten ({{ items|length }})</h4>
+        <div class="alfabet"><ul>
+            {% for letter in letters %}<li><a>{{ letter|upper }}</a></li>{% endfor %}
+        </ul></div>
         {% componistenlist items %}
     </div>
 {% endblock %}

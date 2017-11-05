@@ -237,6 +237,21 @@ function handleDrop(obj, personId, fieldName) {
     });
 }
 
+function jumpToSearched(search) {
+    var items = $('li.hyperlink');
+    items.each(function(index){
+        var $li = $(this);
+        var title = $li.find('.last-name'),
+            text = title.val().toUpperCase();
+        if (text.indexOf(search) === 0) {
+            $('html, body').animate({
+                scrollTop: $li.offset().top
+            },1500);
+            return false;
+        }
+    });
+}
+
 $(function () {
     // componist
     $('.edit-componist-name').keydown(function (e) {
@@ -281,25 +296,14 @@ $(function () {
     $('.jump-to-letter').keydown(function(e){
         const $target = $(e.target),
             search = $target.val().toUpperCase();
-        console.log(search);
         if (e.key === 'Enter') {
-            var items = $('li.hyperlink');
-            items.each(function(index){
-                var $li = $(this);
-                var title = $li.find('.last-name'),
-                    text = title.val().toUpperCase();
-                    // text = $(title).text().trim();
-                // console.log(text);
-                if (text.indexOf(search) === 0) {
-                    console.log(text);
-                    $('html, body').animate({
-                        scrollTop: $li.offset().top
-                    },2000);
-
-                    return false;
-                }
-            });
+            jumpToSearched(search);
         }
-    })
+    });
+    $('.alfabet a').click(function(e) {
+        const $target = $(e.target),
+            search = $target.text().trim();
+            jumpToSearched(search);
+    });
 });
 

@@ -86,3 +86,7 @@ def syspath_performer(performer):
     name = performer['FullName']
     path = u'{}{}'.format(PERFORMER_PATH, name)
     return path
+
+
+def alfabet():
+    return [chr(i) for i in range(ord('a'),ord('z')+1)]

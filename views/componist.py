@@ -1,5 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
+
+from flac.services import alfabet
 from ..db import get_componist_albums, get_componisten, get_componist
 
 
@@ -24,5 +26,6 @@ def componisten(request):
     template = loader.get_template('flac/componisten.html')
     context = {
         'items': get_componisten(),
+        'letters': alfabet()
     }
     return HttpResponse(template.render(context, request))

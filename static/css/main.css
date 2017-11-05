@@ -246,3 +246,15 @@ fieldset {
 .ID {
     color: #1b8dbb;
 }
+.alfabet li {
+    list-style: none;
+    line-height: 2;
+}
+.alfabet {
+    position: fixed;
+    right: 10px;
+    top: 50px;
+}
+.alfabet a {
+    cursor: pointer;
+}

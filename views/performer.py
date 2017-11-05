@@ -1,5 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
+
+from flac.services import alfabet
 from ..db import get_performers, get_performer_albums, get_performer
 
 
@@ -14,5 +16,5 @@ def performer(request, performer_id):
 
 def performers(request):
     template = loader.get_template('flac/performers.html')
-    context = {'performers': get_performers()}
+    context = {'performers': get_performers(), 'letters': alfabet()}
     return HttpResponse(template.render(context, request))

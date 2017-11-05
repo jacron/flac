@@ -3,8 +3,11 @@
 {% block title %}Artiesten{% endblock %}
 {% block page %}
     <div class="performers">
-        <input class="typeahead" type="text" placeholder="Zoek artiest">
+    <input class="typeahead" type="text" placeholder="Zoek artiest">
     <h4>Artiesten ({{ performers|length }})</h4>
+    <div class="alfabet"><ul>
+        {% for letter in letters %}<li><a>{{ letter|upper }}</a></li>{% endfor %}
+    </ul></div>
     {% performerslist performers %}
     </div>
 {% endblock %}
