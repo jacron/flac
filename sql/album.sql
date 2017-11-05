@@ -203,14 +203,14 @@ where ID in (
 
 delete from Album
 where ID in(
-    3795
+    3817
 );
 
 select * from Componist
 where LastName='Sweelinc';
 
 delete from Componist
-where ID=253;
+where ID=272;
 
 select ID, Path
 from Album

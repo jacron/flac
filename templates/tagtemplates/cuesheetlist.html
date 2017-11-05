@@ -5,13 +5,18 @@
         </div>
         <ul class="cue">
         <li class="cue-header">
-            {{ cuesheet.Title }}
+            {% if cuesheet.Title %}
+            {{ cuesheet.Title|unescape }}
+            {% endif %}
             <span class="cue-plus">+</span>
             <i class="toggle-cue-lines fa fa-caret-right"></i>
         </li>
+        <li class="ID">{{ cuesheet.cue.performer }}</li>
         {% for file in cuesheet.cue.files %}
             {%  for track in file.tracks %}
-                <li class="content cue-lines">{{ track.title }}</li>
+                {% if track.title %}
+                <li class="content cue-lines">{{ track.title|unescape }}</li>
+                {% endif %}
             {% endfor %}
         {% endfor %}
         </ul>

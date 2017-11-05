@@ -76,3 +76,9 @@ def proposallist(proposals, artists):
 )
 def album_controls(album_id):
     return dict(album_id=album_id)
+
+
+@register.filter( name='unescape' )
+def unescape(val):
+    return val.encode( 'string-escape' )
+    unescape.is_safe = True

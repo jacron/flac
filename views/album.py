@@ -75,7 +75,7 @@ def get_artists(cuesheets, album_title):
     for cuesheet in cuesheets:
         proposals = proposals + has_person(cuesheet['Title'], performers)
         proposals = proposals + has_person(cuesheet['Filename'], performers)
-        proposals = proposals + has_person(cuesheet.get('Performer'), performers)
+        proposals = proposals + has_person(cuesheet['cue'].get('performer'), performers)
         proposals = proposals + has_alias(cuesheet['Title'], aliasses, 'PerformerID')
         proposals = proposals + has_alias(cuesheet['Filename'], aliasses, 'PerformerID')
     proposals = proposals + has_person(album_title, performers)

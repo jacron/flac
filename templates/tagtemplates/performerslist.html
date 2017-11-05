@@ -1,6 +1,7 @@
 <ul class="album-list">
     {% for item in items %}
         <li class="hyperlink">
+        <div class="image-container">
             <a href="/performer/{{ item.ID }}">
                 <img src="/performerimage/{{ item.ID }}/" class="album-image-thumb">
             <div class="performer-naam" performerid="{{ item.ID }}">{{ item.FullName }}</div>
@@ -11,6 +12,7 @@
                 ({{ item.Albums }})
                 </div>
             </a>
+        </div>
         </li>
     {% endfor %}
 </ul>
