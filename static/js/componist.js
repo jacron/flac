@@ -4,14 +4,39 @@
 
 'use strict';
 
-function addComponist($select) {
+function addComponist0(componistId, albumId) {
     const data = {
         cmd: 'add_componist',
-        componistid: $select.val(),
-        albumid: $select.attr('albumid')
+        componistid: componistId,
+        albumid: albumId
     };
     ajaxPost(data);
     location.reload();
+}
+
+function addComponist($select) {
+    addComponist0($select.val(), $select.attr('albumid'));
+    // const data = {
+    //     cmd: 'add_componist',
+    //     componistid: $select.val(),
+    //     albumid: $select.attr('albumid')
+    // };
+    // ajaxPost(data);
+    // location.reload();
+}
+
+function addComponist2($target) {
+    // var $target = $(e.target);
+        // id = $target.attr('id'),
+        // albumId = $('#album_id').val();
+    addComponist0($target.attr('id'), $('#album_id').val());
+    // const data = {
+    //     cmd: 'add_componist',
+    //     componistid: id,
+    //     albumid: albumId
+    // };
+    // ajaxPost(data);
+    // location.reload();
 }
 
 function newComponist($input) {
@@ -244,19 +269,37 @@ $(function () {
         removeComponist($(this));
     });
     $('.add-componist').click(function (e) {
-        var $target = $(e.target),
-            id = $target.attr('id'),
-            albumId = $('#album_id').val();
-        const data = {
-            cmd: 'add_componist',
-            componistid: id,
-            albumid: albumId
-        };
-        ajaxPost(data);
-        location.reload();
+        addComponist2($(e.target));
     });
+
     const componist_id = $('#componist_id').val();
-    handleDrop($('#drop-area-componist'), componist_id, 'componist_id');
-    preventSpilledDrop($('.componist'));
+    if (componist_id) {
+        handleDrop($('#drop-area-componist'), componist_id, 'componist_id');
+        preventSpilledDrop($('.componist'));
+    }
+
+    $('.jump-to-letter').keydown(function(e){
+        const $target = $(e.target),
+            search = $target.val().toUpperCase();
+        console.log(search);
+        if (e.key === 'Enter') {
+            var items = $('li.hyperlink');
+            items.each(function(index){
+                var $li = $(this);
+                var title = $li.find('.last-name'),
+                    text = title.val().toUpperCase();
+                    // text = $(title).text().trim();
+                // console.log(text);
+                if (text.indexOf(search) === 0) {
+                    console.log(text);
+                    $('html, body').animate({
+                        scrollTop: $li.offset().top
+                    },2000);
+
+                    return false;
+                }
+            });
+        }
+    })
 });
 

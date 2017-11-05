@@ -3,7 +3,7 @@
 {% block title %}Tags{% endblock %}
 {% block page %}
     <div class="tags">
-    <h4>Tags ({{ tags_len }})</h4>
+    <h4>Tags ({{ tags|length }})</h4>
     <ul class="hyperlink">
     {% for tag in tags %}
         <li><a href="/tag/{{ tag.ID }}">{{ tag.Name }}</a></li>

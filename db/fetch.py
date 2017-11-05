@@ -309,10 +309,7 @@ def get_tags():
             'Name': item[0],
             'ID': item[1],
         })
-    return{
-        'tags': out,
-        'tags_len': len,
-    }
+    return out
 
 
 def get_performer_albums(id_performer):

@@ -218,7 +218,6 @@ def person_by_url(post):
         write_file_from_url(post['url'], path)
 
 
-
 def do_post(post):
     cmd = post['cmd']
     if cmd == 'url':
