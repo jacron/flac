@@ -1,8 +1,11 @@
 <ul class="album-list">
     {% for item in items %}
         <li class="hyperlink">
+        <div class="image-container">
             <a href="/componist/{{ item.ID }}">
                 <img src="/componistimage/{{ item.ID }}/" class="album-image-thumb">
+            </a>
+            <a href="/componist/{{ item.ID }}">
                 <div class="componist-naam" componistid="{{ item.ID }}">{{ item.FullName }}</div>
                 <div class="jaren">{{ item.Birth }} -
                     {% if item.Death %}
@@ -10,8 +13,8 @@
                     {% endif %}
                 ({{ item.Albums }})
                 </div>
-
             </a>
+        </div>
         </li>
     {% endfor %}
 </ul>

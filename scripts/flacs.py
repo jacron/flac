@@ -15,7 +15,7 @@ import sqlite3
 from venv.flac.db import (
     insert_album, insert_instrument, get_album_count_by_path, get_album_by_path,
     set_album_title, get_componist_path_c, get_album_path_by_id,
-    insert_componist, get_componist_path_by_id)
+    insert_componist, get_componist_path_by_id, get_componist_id_from_album)
 from venv.flac.scripts.helper.rename import (
     rename_cover, restore_cover, sanatize_haakjes, rename_to_back, rename_all_titles,
 )
@@ -46,6 +46,9 @@ def process_pieces(path, album_id):
 
 
 def process_album(path, mother_id, is_collectie):
+    """
+    haal stukken (cuesheets en music files) op voor een album
+    """
     if len(path.split('[')) > 1:
         print('cue_path mag geen vierkante haken ([]) bevatten! - quitting')
         return
@@ -77,7 +80,7 @@ def process_album(path, mother_id, is_collectie):
     if ComponistID:
         insert_componist_by_id(ComponistID, c, conn, album_id)
     else:
-        insert_composer(componist, c, conn, album_id)
+        insert_composer(componist)
     conn.close()
     return album_id
 
@@ -175,6 +178,12 @@ def insert_composer(name):
     return insert_componist(name, c, conn)
 
 
+def componist_from_album(album_id):
+    conn, c = script_connect()
+    cid = get_componist_id_from_album(album_id, c)
+    return cid
+
+
 def main():
     global artiest, instrument, componist, ComponistID, PerformerID
 
@@ -182,30 +191,31 @@ def main():
     # print(ComponistID)
     # return
 
-    # process_pieces(path, album_id=)
-    ComponistID = 269
+    # ComponistID = 269
     # componist = ""
     # open_finder_album(album_id=)
     # open_finder_componist(ComponistID)
     # return
-    path = get_path_of_componist(ComponistID)
-    # album_id = 3530
-    # path = get_path_of_album(album_id)
+    # path = get_path_of_componist(ComponistID)
+    album_id = 3302
+    path = get_path_of_album(album_id)
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Hamza El Din"
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Sallinen"
     # componist = from_path(path)
+    ComponistID = componist_from_album(album_id)
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     if path is None:
         print('No path')
         return
-    sanatize_haakjes(path, True)
-    restore_cover(path=path, step_in=True)
+    process_pieces(path, album_id=album_id)
+    # sanatize_haakjes(path, True)
+    # restore_cover(path=path, step_in=True)
     # rename_cover(path=path, step_in=True)
     # rename_titles(path)
     # rename_to_back(path)
     # process_a(p=path, mother_id=None, iscollectie=0, step_in=True)
     # get_albums(path=path, mother_id=None, iscollectie=0)
-    get_album_groups(path=path, mother_id=None, iscollectie=0, step_in=True)
+    # get_album_groups(path=path, mother_id=None, iscollectie=0, step_in=True)
     # album_id = process_album(path=path, mother_id=None, is_collectie=0)
 
 if __name__ == '__main__':

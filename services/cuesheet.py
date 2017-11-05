@@ -42,22 +42,6 @@ def replace_haakjes(s):
     return s
 
 
-# def display(cue):
-#     lines = []
-#     # for rem in cue['rem']:
-#     #     lines.append(rem)
-#
-#     try:
-#         lines.append(cue['title'])
-#         for file in cue['files']:
-#             for track in file['tracks']:
-#                 title = track['title']
-#                 lines.append(title)
-#     except:
-#         print('making display of cuesheet failed.')
-#     return lines
-
-
 def parse(data):
     cue = {
         'title': None,

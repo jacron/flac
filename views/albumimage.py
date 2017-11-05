@@ -23,17 +23,18 @@ def get_image(path, cached=None):
 
 
 def componistimage(request, componist_id):
-    cached = static_dir('componist/' + componist_id)
-    if os.path.exists(cached):
-        print('getting from cache')
-        image_data = open(cached, "rb").read()
-        return HttpResponse(image_data, content_type="image/png")
+    # cached = static_dir('componist/' + componist_id)
+    # if os.path.exists(cached):
+    #     print('getting from cache')
+    #     image_data = open(cached, "rb").read()
+    #     return HttpResponse(image_data, content_type="image/png")
 
     componist_path = get_componist_path(componist_id)
     if not componist_path:
         return empty_response()
     image_path = componist_path + settings.PERSON_FILE
-    return get_image(image_path, cached)
+    # return get_image(image_path, cached)
+    return get_image(image_path)
 
 
 def empty_response():

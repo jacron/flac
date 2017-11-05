@@ -75,6 +75,7 @@ def get_artists(cuesheets, album_title):
     for cuesheet in cuesheets:
         proposals = proposals + has_person(cuesheet['Title'], performers)
         proposals = proposals + has_person(cuesheet['Filename'], performers)
+        proposals = proposals + has_person(cuesheet.get('Performer'), performers)
         proposals = proposals + has_alias(cuesheet['Title'], aliasses, 'PerformerID')
         proposals = proposals + has_alias(cuesheet['Filename'], aliasses, 'PerformerID')
     proposals = proposals + has_person(album_title, performers)
@@ -131,13 +132,13 @@ def album_context(album_id):
         return None
 
     mother_title = None
-    cuesheets, pieces, notfounds, proposals, artists = [], [], [], [], []
+    # cuesheets, pieces, notfounds, proposals, artists = [], [], [], [], []
     album_o = get_album(album_id)
     if album_o['AlbumID']:
         mother_title = get_mother_title(album_o['AlbumID'])
-        cuesheets, pieces, notfounds = organize_pieces(album_id, album_o['Path'])
-        proposals = get_proposals(cuesheets, album_o['Title'])
-        artists = get_artists(cuesheets, album_o['Title'])
+    cuesheets, pieces, notfounds = organize_pieces(album_id, album_o['Path'])
+    proposals = get_proposals(cuesheets, album_o['Title'])
+    artists = get_artists(cuesheets, album_o['Title'])
     return {
         'albumid': album_id,
         'pieces': pieces,

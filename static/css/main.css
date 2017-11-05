@@ -1,4 +1,11 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800');
+/*@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800');*/
+@font-face {
+  font-family: 'Open Sans';
+  src: url('../fonts/OpenSans-Regular.ttf?v=4.7.0');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body  {
   font-family: 'Open Sans', 'Helvetica Nueue', Helvetica, Arial, sans-serif;
   font-size: 1rem;
@@ -231,4 +238,8 @@ fieldset {
 	/*border-style: solid;*/
 	/*box-shadow: inset 0 3px 4px #888;*/
     border: 1px #ccc dashed;
+}
+.image-container {
+    width: 160px;
+    overflow-x: hidden;
 }
