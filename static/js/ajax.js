@@ -39,6 +39,9 @@ function ajaxPost(data, cb) {
             cb(response);
         }
     }).fail(function(err) {
-        // console.log(err.responseText);
+        console.log(err);
+        if (cb) {
+            cb(err);
+        }
     });
 }

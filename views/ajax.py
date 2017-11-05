@@ -5,6 +5,7 @@ import os
 import subprocess
 import urllib
 
+import requests as requests
 from django.http import HttpResponse
 
 from flac.db.pieces import refetch_pieces
@@ -202,6 +203,8 @@ def upload(post, files):
 
 
 def write_file_from_url(url, path):
+    # r = requests.get(url)
+    # u = r.url
     response = urllib.urlretrieve(url)
     contents = open(response[0]).read()
     f = open(path_for_person(path), 'w')
