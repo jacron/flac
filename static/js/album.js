@@ -66,6 +66,15 @@ function ajaxGetItems(cmdGet, nameField,  $typeahead, cmdPost) {
     });
 }
 
+function refetch() {
+    ajaxPost({
+        albumid: albumId,
+        cmd: 'refetch'
+    }, function(){
+        location.reload();
+    });
+}
+
 $(function () {
     const albumId = $('#album_id').val();
     if (albumId) {
@@ -81,13 +90,8 @@ $(function () {
         ajaxGetItems('tags', 'Name', $('.album .tag.typeahead'), 'new_tag');
 
         $('.refetch').click(function(){
-            const data = {
-                albumid: albumId,
-                cmd: 'refetch'
-            };
             if (confirm("De stukken opniew ophalen?")) {
-                ajaxPost(data);
-                location.reload();
+                refetch();
             }
         });
     }

@@ -258,3 +258,6 @@ fieldset {
 .alfabet a {
     cursor: pointer;
 }
+.extra {
+    padding: 4px;
+}

@@ -57,7 +57,9 @@
         <a class="refetch">Haal opnieuw de stukken op</a>
     {% endif %}
     </div>
+    {% if show_proposals == '1' %}
 {% proposallist proposals artists %}
+    {% endif %}
 {% albumlist albums %}
 <div class="clear">
     <a href="/prev/{{ album.ID }}">prev</a> |

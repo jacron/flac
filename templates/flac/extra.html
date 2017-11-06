@@ -3,18 +3,28 @@
 {% load page_tags %}
 {% block title %}Extra{% endblock %}
 {% block page %}
+<div class="extra">
     <form>{% csrf_token %}</form>
     <div class="hyperlink">
         <a href="{% url 'cmd' 'k' %}">Scarlatti K-lijst</a>
     </div>
     <div class="hyperlink">
-    <div class="checkbox fa
-           {%  if read_cuesheet == '1' %}
-           fa-check
-           {% endif %}">
+        <div class="checkbox fa
+               {%  if read_cuesheet == '1' %}
+               fa-check
+               {% endif %}">
+        </div>
+            <a href="{% url 'cmd' 'cue' %}">lees cuesheets in voor album</a>
     </div>
-        <a href="{% url 'cmd' 'cue' %}">lees cuesheets in voor album</a>
+    <div class="hyperlink">
+        <div class="checkbox fa
+               {%  if show_proposals == '1' %}
+               fa-check
+               {% endif %}">
+        </div>
+            <a href="{% url 'cmd' 'proposals' %}">toon voorstellen op album pagina</a>
     </div>
+        <input class="add-componist" type="text" placeholder="Voeg componist toe">
     <table>
     <tr>
         <td>naar album</td>
@@ -25,5 +35,5 @@
         <td><input class="delete-album" placeholder="ID"></td>
     </tr>
     </table>
-
+</div>
 {% endblock %}

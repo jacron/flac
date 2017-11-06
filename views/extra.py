@@ -7,9 +7,11 @@ from ..db import (get_scarlatti_k_pieces, get_scarlatti, get_setting,
 def extra_view(request):
     template = loader.get_template('flac/extra.html')
     rc = get_setting('read_cuesheet')
+    sp = get_setting('show_proposals')
     return HttpResponse(template.render(
         {
-            'read_cuesheet': rc['VALUE']
+            'read_cuesheet': rc['VALUE'],
+            'show_proposals': sp['VALUE']
         }, request))
 
 
@@ -33,4 +35,8 @@ def cmd(request, cmd_code):
     if cmd_code == 'cue':
         toggle_setting('read_cuesheet')
         return extra_view(request)
+    if cmd_code == 'proposals':
+        toggle_setting('show_proposals')
+        return extra_view(request)
+
 

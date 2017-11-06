@@ -94,42 +94,6 @@ var match = function (items) {
     };
 };
 
-$(function () {
-    var componisten = [];
-    $('.componist-naam').each(function () {
-        var $this = $(this);
-        componisten.push($this.text());
-    });
-    $('.componisten .add').keydown(function (e) {
-        if (e.key === 'Enter') {
-            var $target = $('.componisten input.add');
-            // console.log($target);
-            addNewComponist($target);
-        }
-    });
-    $('.componisten .typeahead').typeahead({
-            hint: true,
-            highlight: true,
-            minLength: 1,
-            display: 'name'
-        },
-        {
-            name: 'componisten',
-            source: match(componisten)
-        }
-    ).keydown(function (e) {
-        if (e.key === 'Enter') {
-            var result = $('.typeahead').get(1).value;
-            $('.componist-naam').each(function () {
-                var $this = $(this);
-                if ($this.text() === result) {
-                    location.href = '/componist/' + $this.attr('componistid');
-                }
-            });
-        }
-    });
-});
-
 function editComponistName($this) {
     const data = {
         cmd: 'update_componist_name',
@@ -251,6 +215,42 @@ function jumpToSearched(search) {
         }
     });
 }
+
+$(function () {
+    var componisten = [];
+    $('.componist-naam').each(function () {
+        var $this = $(this);
+        componisten.push($this.text());
+    });
+    $('.extra .add-componist').keydown(function (e) {
+        if (e.key === 'Enter') {
+            var $target = $('.componisten input.add');
+            // console.log($target);
+            addNewComponist($target);
+        }
+    });
+    $('.componisten .typeahead').typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1,
+            display: 'name'
+        },
+        {
+            name: 'componisten',
+            source: match(componisten)
+        }
+    ).keydown(function (e) {
+        if (e.key === 'Enter') {
+            var result = $('.typeahead').get(1).value;
+            $('.componist-naam').each(function () {
+                var $this = $(this);
+                if ($this.text() === result) {
+                    location.href = '/componist/' + $this.attr('componistid');
+                }
+            });
+        }
+    });
+});
 
 $(function () {
     // componist

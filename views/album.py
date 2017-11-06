@@ -7,7 +7,7 @@ from django.template import loader
 from ..db import (
     get_albums, get_album, get_pieces, get_next_album, get_prev_album, get_componisten, get_performers,
     get_mother_title, get_album_albums, get_album_componisten, get_album_performers, get_album_instruments,
-    get_album_tags, get_componist, get_componist_aliasses, get_performer_aliasses, get_performer)
+    get_album_tags, get_componist, get_componist_aliasses, get_performer_aliasses, get_performer, get_setting)
 from ..services import get_full_cuesheet
 
 
@@ -137,8 +137,10 @@ def album_context(album_id):
     if album_o['AlbumID']:
         mother_title = get_mother_title(album_o['AlbumID'])
     cuesheets, pieces, notfounds = organize_pieces(album_id, album_o['Path'])
-    proposals = get_proposals(cuesheets, album_o['Title'])
     artists = get_artists(cuesheets, album_o['Title'])
+    sp = get_setting('show_proposals')
+    show_proposals = sp['VALUE']
+    proposals = get_proposals(cuesheets, album_o['Title'])
     return {
         'albumid': album_id,
         'pieces': pieces,
@@ -152,6 +154,7 @@ def album_context(album_id):
         'notfounds': notfounds,
         'album_tags': get_album_tags(album_id),
         'proposals': proposals,
+        'show_proposals': show_proposals,
         'artists': artists,
     }
 

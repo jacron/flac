@@ -14,20 +14,22 @@ def componist(request, componist_id):
     return HttpResponse(template.render(context, request))
 
 
-def componistenrequest(request, items):
+def componistenrequest(request, items, period=''):
     template = loader.get_template('flac/componisten.html')
     context = {
         'items': items,
-        'letters': alfabet()
+        'letters': alfabet(),
+        'period': period,
     }
     return HttpResponse(template.render(context, request))
 
 
 def componisten_period(request, period):
-    return componistenrequest(request, get_period_componisten(period))
+    return componistenrequest(request, get_period_componisten(period), period)
 
 
 def componisten_limited(request, min_limit):
+    # obsolete
     return componistenrequest(request, get_componisten(min_limit))
 
 
