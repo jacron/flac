@@ -65,6 +65,7 @@ def get_proposals(cuesheets, album_title):
         proposals = proposals + has_alias(cuesheet['Title'], aliasses, 'ComponistID')
         proposals = proposals + has_alias(cuesheet['Filename'], aliasses, 'ComponistID')
     proposals = proposals + has_person(album_title, componisten)
+    proposals = proposals + has_alias(album_title, aliasses, 'ComponistID')
     return ontdubbel(proposals)
 
 
