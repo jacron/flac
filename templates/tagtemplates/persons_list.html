@@ -2,9 +2,11 @@
 <ul>
 {% for person in persons %}
     <li class="hyperlink {{ type }}">
-        <a href="{{ person_url }}{{ person.ID }}/">
+        <a href="{{ person_url }}{{ person.ID }}/" title="{{ person.FullName }}">
             {{ person.LastName }}
+        </a>
             <div class="fa fa-times-circle remove" id="{{ person.ID }}"></div>
+        <a href="{{ person_url }}{{ person.ID }}/" title="{{ person.FullName }}">
         <div class="thumbnail-container">
     <img class="thumbnail" src="/image/{{ person.ID }}/{{ type }}/">
         </div>

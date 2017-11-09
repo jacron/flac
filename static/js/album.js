@@ -20,6 +20,12 @@ var match = function (items) {
                 matches.push(str);
             }
         });
+        // $.each(items, function (i, str) {
+        //     if (str.indexOf(q) !== -1) {
+        //         matches.push(str);
+        //     }
+        // });
+
         cb(matches);
     };
 };
@@ -34,6 +40,7 @@ function typeaheadPost(name, cmd) {
 }
 
 function impl_typeahead(items, $typeahead, cmd) {
+    // console.log('items', items);
     $typeahead.typeahead(typeaheadSettings,
         { source: match(items) }
     ).keydown(function(e){

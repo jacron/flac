@@ -64,37 +64,49 @@ def filter_provided(proposals, persons):
     return nproposals
 
 
-def get_proposals(cuesheets, album, album_componisten):
+def get_proposals_from_cuesheet(cuesheet, persons, aliasses, fieldname):
+    proposals = []
+    proposals += has_person(cuesheet['Title'], persons)
+    proposals += has_person(cuesheet['Filename'], persons)
+    proposals += has_person(cuesheet['cue'].get('performer'), persons)
+    proposals += has_alias(cuesheet['cue'].get('performer'), aliasses, fieldname)
+    proposals += has_alias(cuesheet['Title'], aliasses, fieldname)
+    proposals += has_alias(cuesheet['Filename'], aliasses, fieldname)
+    return proposals
+
+
+def get_other_proposals(album, persons, aliasses, fieldname, album_persons):
+    proposals = []
+    proposals += has_person(album['Title'], persons)
+    proposals += has_alias(album['Title'], aliasses, fieldname)
+    return proposals
+
+
+def filter_proposals(proposals, album_persons):
+    proposals = ontdubbel(proposals)
+    proposals = filter_provided(proposals, album_persons)
+    return proposals
+
+
+def get_proposals(cuesheets, pieces, album, album_componisten):
     componisten = get_componisten()
     aliasses = get_componist_aliasses()
     proposals = []
     for cuesheet in cuesheets:
-        proposals = proposals + has_person(cuesheet['Title'], componisten)
-        proposals = proposals + has_person(cuesheet['Filename'], componisten)
-        proposals = proposals + has_person(cuesheet['cue'].get('performer'), componisten)
-        proposals = proposals + has_alias(cuesheet['cue'].get('performer'), aliasses, 'ComponistID')
-        proposals = proposals + has_alias(cuesheet['Title'], aliasses, 'ComponistID')
-        proposals = proposals + has_alias(cuesheet['Filename'], aliasses, 'ComponistID')
-    proposals = proposals + has_person(album['Title'], componisten)
-    proposals = proposals + has_alias(album['Title'], aliasses, 'ComponistID')
-    proposals = ontdubbel(proposals)
-    proposals = filter_provided(proposals, album_componisten)
+        proposals += get_proposals_from_cuesheet(cuesheet, componisten, aliasses, 'ComponistID')
+    proposals += get_other_proposals(album, componisten, aliasses, 'ComponistID', album_componisten)
+    proposals = filter_proposals(proposals, album_componisten)
     return proposals
 
 
-def get_artists(cuesheets, album, album_performers):
+def get_artists(cuesheets, pieces, album, album_performers):
     performers = get_performers()
     aliasses = get_performer_aliasses()
     proposals = []
     for cuesheet in cuesheets:
-        proposals = proposals + has_person(cuesheet['Title'], performers)
-        proposals = proposals + has_person(cuesheet['Filename'], performers)
-        proposals = proposals + has_person(cuesheet['cue'].get('performer'), performers)
-        proposals = proposals + has_alias(cuesheet['Title'], aliasses, 'PerformerID')
-        proposals = proposals + has_alias(cuesheet['Filename'], aliasses, 'PerformerID')
-    proposals = proposals + has_person(album['Title'], performers)
-    proposals = ontdubbel(proposals)
-    proposals = filter_provided(proposals, album_performers)
+        proposals += get_proposals_from_cuesheet(cuesheet, performers, aliasses, 'PerformerID')
+    proposals += get_other_proposals(album, performers, aliasses, 'ComponistID', album_performers)
+    proposals = filter_proposals(proposals, album_performers)
     return proposals
 
 
@@ -135,8 +147,8 @@ def album_context(album_id):
     sp = get_setting('show_proposals')
     show_proposals = sp['VALUE']
     if show_proposals == '1':
-        proposals = get_proposals(cuesheets, album_o, album_componisten)
-        artists = get_artists(cuesheets, album_o, album_performers)
+        proposals = get_proposals(cuesheets, pieces, album_o, album_componisten)
+        artists = get_artists(cuesheets, pieces, album_o, album_performers)
     return {
         'albumid': album_id,
         'pieces': pieces,
