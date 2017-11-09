@@ -1,0 +1,15 @@
+<div>
+<ul>
+{% for person in persons %}
+    <li class="hyperlink {{ type }}">
+        <a href="{{ person_url }}{{ person.ID }}/">
+            {{ person.LastName }}
+            <div class="fa fa-times-circle remove" id="{{ person.ID }}"></div>
+        <div class="thumbnail-container">
+    <img class="thumbnail" src="/image/{{ person.ID }}/{{ type }}/">
+        </div>
+        </a>
+    </li>
+{% endfor %}
+</ul>
+</div>

@@ -72,3 +72,12 @@ def performerimage(request, performer_id):
         return empty_response()
     image_path = performer_path + settings.PERSON_FILE
     return get_image(image_path)
+
+
+def image(request, id, type):
+    if type == 'performer':
+        return performerimage(request, id)
+    if type == 'componist':
+        return componistimage(request, id)
+    if type == 'instrument':
+        return instrumentimage(request, id)

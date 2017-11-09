@@ -213,6 +213,11 @@ fieldset {
 .album .hyperlink.performer {
     color: #1e347b;
 }
+.hyperlink.componist,
+.hyperlink.performer {
+    float: left;
+    list-style: none;
+}
 .performer-years {
     margin-top: 220px;
 }
@@ -243,6 +248,11 @@ fieldset {
     width: 160px;
     overflow-x: hidden;
 }
+.thumbnail-container {
+    width: 90px;
+    margin-right: 8px;
+    overflow-x: hidden;
+}
 .ID {
     color: #1b8dbb;
 }
@@ -260,4 +270,22 @@ fieldset {
 }
 .extra {
     padding: 4px;
+}
+.thumbnail {
+    height: 100px;
+    /*margin-left:-20px;*/
+}
+.nav {
+    padding-bottom: 10px;
+}
+.nav a {
+    padding: 4px;
+    background-color: #ff9;
+    text-decoration: none;
+}
+.nav a:hover {
+    background-color: #9ff;
+}
+.refetch {
+    color: #993;
 }

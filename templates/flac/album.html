@@ -5,15 +5,14 @@
     {{ album.Title }}
 {% endblock %}
 {% block page %}
-    <div class="album">
-        <form>{% csrf_token %}</form>
-        <input type="hidden" id="album_id" value="{{ album.ID }}">
-        {% album_controls album.ID %}
-    <img src="/albumimage/{{ album.ID }}/"
-         class="album-image">
-    <img src="/albumimage/{{ album.ID }}/back/"
-         class="album-image">
-
+<div class="album">
+    <form>{% csrf_token %}</form>
+    <input type="hidden" id="album_id" value="{{ album.ID }}">
+    {% album_controls album.ID %}
+<img src="/albumimage/{{ album.ID }}/"
+     class="album-image">
+<img src="/albumimage/{{ album.ID }}/back/"
+     class="album-image">
 <h4 contenteditable="true" class="edit-title">
     <span class="ID">{{ album.ID }}</span>:
     {{ album.Title }}
@@ -30,40 +29,34 @@
         <a href="/album/{{ album.AlbumID }}">{{ mother_title }}</a>
     </div>
 {% endif %}
-{% for componist in album_componisten %}
-    <div class="hyperlink componist">
-        <a href="{% url 'componist' componist.ID %}">{{ componist.FullName }}</a>
-        <div class="fa fa-times-circle remove" id="{{ componist.ID }}"></div>
-    </div>
-{% endfor %}
-{% for performer in album_performers %}
-    <div class="hyperlink performer">
-        <a href="/performer/{{ performer.ID }}/">{{ performer.FullName }}</a>
-        <div class="fa fa-times-circle remove" id="{{ performer.ID }}"></div>
-    </div>
-{% endfor %}
+{% persons_list album_componisten '/componist/' 'componist' %}
+{% persons_list album_performers '/performer/' 'performer' %}
 {% if album_instrument %}
     <div class="hyperlink instrument">
-        <a href="/instrument/{{ album_instrument.ID }}/">{{ album_instrument.Name }}</a>
+        <a href="/instrument/{{ album_instrument.ID }}/">
+            {{ album_instrument.Name }}
+            <div class="thumbnail-container">
+            <img class="thumbnail" src="/image/{{ album_instrument.Name }}/instrument">
+                </div>
+        </a>
         <div class="fa fa-times-circle remove" id="{{ instrument.ID }}"></div>
     </div>
 {% endif %}
-<hr>
-{% cuesheetlist cuesheets %}
-{% pieceslist pieces %}
-    <div class="hyperlink">
-    {% if notfounds|length %}
-    Niet gevonden: {{ notfounds|length }} |
-        <a class="refetch">Haal opnieuw de stukken op</a>
-    {% endif %}
-    </div>
-    {% if show_proposals == '1' %}
-{% proposallist proposals artists %}
-    {% endif %}
-{% albumlist albums %}
-<div class="clear">
+<div class="clear nav">
     <a href="/prev/{{ album.ID }}">prev</a> |
     <a href="/next/{{ album.ID }}">next</a>
 </div>
+{% cuesheetlist cuesheets %}
+{% pieceslist pieces %}
+<div class="hyperlink">
+{% if notfounds|length %}
+Niet gevonden: {{ notfounds|length }} |
+    <a class="refetch">Haal opnieuw de stukken op</a>
+{% endif %}
+</div>
+{% if show_proposals == '1' %}
+    {% proposallist proposals artists %}
+{% endif %}
+{% albumlist albums %}
 </div>
 {% endblock %}

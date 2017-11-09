@@ -68,7 +68,7 @@ function ajaxGetItems(cmdGet, nameField,  $typeahead, cmdPost) {
 
 function refetch() {
     ajaxPost({
-        albumid: albumId,
+        albumid: $('#album_id').val(),
         cmd: 'refetch'
     }, function(){
         location.reload();
@@ -90,7 +90,8 @@ $(function () {
         ajaxGetItems('tags', 'Name', $('.album .tag.typeahead'), 'new_tag');
 
         $('.refetch').click(function(){
-            if (confirm("De stukken opniew ophalen?")) {
+            // if (confirm("De stukken opniew ophalen?"))
+            {
                 refetch();
             }
         });

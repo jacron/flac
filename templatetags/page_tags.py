@@ -78,7 +78,16 @@ def album_controls(album_id):
     return dict(album_id=album_id)
 
 
+@register.inclusion_tag(
+    'tagtemplates/persons_list.html',
+)
+def persons_list(persons, url, type):
+    return dict(persons=persons, person_url=url, type=type)
+
+
 @register.filter( name='unescape' )
 def unescape(val):
     return val.encode( 'string-escape' )
     unescape.is_safe = True
+
+

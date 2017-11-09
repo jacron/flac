@@ -43,4 +43,5 @@ urlpatterns = [
     url(r'^componistimage/(?P<componist_id>.+)/$', views.componistimage),
     url(r'^instrumentimage/(?P<instrument_name>.+)/$', views.instrumentimage),
     url(r'^performerimage/(?P<performer_id>.+)/$', views.performerimage),
+    url(r'^image/(?P<id>.+)/(?P<type>.+)/$', views.image),
 ]

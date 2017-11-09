@@ -198,8 +198,8 @@ def main():
     # open_finder_componist(ComponistID)
     # return
     # path = get_path_of_componist(ComponistID)
-    # album_id = 3932
-    # path = get_path_of_album(album_id)
+    album_id = 169
+    path = get_path_of_album(album_id)
     # mother_id = 3816
     # path = "/Volumes/Media/Audio/Klassiek/Verzamelalbums/_varia Savall"
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/Alban Berg Quartet - the teldec recordings - quartets"
@@ -211,8 +211,8 @@ def main():
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/Pierre Boulez - Box Set 44cds"
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/Casals - Festivals at Prades"
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/Casals - The complete published EMI recordings"
-    path = "/Volumes/Media/Audio/Klassiek/Collecties/Clara Haskil - Philips Recordings"
-    artiest = "Clara Haskil"
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Clara Haskil - Philips Recordings"
+    # artiest = "Clara Haskil"
     # componist = from_path(path)
     # ComponistID = componist_from_album(album_id)
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)

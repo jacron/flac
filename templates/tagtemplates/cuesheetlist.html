@@ -11,7 +11,9 @@
             <span class="cue-plus">+</span>
             <i class="toggle-cue-lines fa fa-caret-right"></i>
         </li>
-        <li class="ID">{{ cuesheet.cue.performer }}</li>
+        {%  if cuesheet.cue.performer %}
+        <li class="ID">{{ cuesheet.cue.performer|unescape }}</li>
+        {% endif %}
         {% for file in cuesheet.cue.files %}
             {%  for track in file.tracks %}
                 {% if track.title %}

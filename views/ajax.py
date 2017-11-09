@@ -188,7 +188,7 @@ def path_from_id_field(post):
 
 
 def path_for_person(path):
-    return u'{}/person.jpg'.format(path)
+    return u'{}/person.jpg'.format(path).encode('UTF-8')
 
 
 def upload(post, files):
