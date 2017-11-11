@@ -4,12 +4,19 @@
     <tr>
         <td>
             <input class="make-cuesheet" placeholder="make cuesheet">
+            <a class="test-lcs">lcs</a>
+        </td>
+    </tr>
+    <tr>
+        <td class="hyperlink control">
+            <a class="check-all">alles selecteren</a> |
+            <a class="check-nothing">niets selecteren</a>
         </td>
     </tr>
     {% for item in pieces %}
         <tr>
             <td class="hyperlink">
-                <input type="checkbox"
+                <input type="checkbox" title="voeg titel toe aan cuesheet"
                        id="{{ item.1 }}"
                        class="select-for-cuesheet">
                 <a onclick="play({{ item.1 }})">{{ item.0 }}</a>

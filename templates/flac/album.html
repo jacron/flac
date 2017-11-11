@@ -56,7 +56,8 @@
             {% endif %}
     >next</a>
 </div>
-{% cuesheetlist cuesheets %}
+{% cuesheetlist cuesheets 1 %}
+{% cuesheetlist invalidcues 0 %}
 {% pieceslist pieces %}
 <div class="hyperlink">
 {% if notfounds|length %}

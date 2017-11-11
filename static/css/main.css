@@ -121,6 +121,9 @@ nav a.selected {
 .album .content.stukken {
     margin-top: -20px;
 }
+.content.stukken .control a {
+    font-style: italic;
+}
 .album fieldset {
     width: 220px;
     display: inline-block;
@@ -294,4 +297,11 @@ fieldset {
 }
 .refetch {
     color: #993;
+}
+.error,
+.error a {
+    color: red;
+}
+.rename-cuesheet:hover {
+    text-decoration: underline;
 }

@@ -3,34 +3,11 @@
  */
 'use strict';
 
-function openfinder(albumId) {
+function openfinder(objectId, kind) {
     const data = {
-        arg: albumId,
-        cmd: 'openfinder'
-    };
-    ajaxPost(data);
-}
-
-function openfinderPerformer(performerId) {
-    const data = {
-        arg: performerId,
-        cmd: 'openfinder_performer'
-    };
-    ajaxPost(data);
-}
-
-function openfinderComponist(componistId) {
-    const data = {
-        arg: componistId,
-        cmd: 'openfinder_componist'
-    };
-    ajaxPost(data);
-}
-
-function openfinderComponisten() {
-    const data = {
-        arg: null,
-        cmd: 'openfinder_componist'
+        objectid: objectId,
+        cmd: 'openfinder',
+        kind: kind
     };
     ajaxPost(data);
 }
@@ -109,22 +86,20 @@ function getSelectedCuesheetIds($selectForCuesheet, $makeCuesheet) {
         if (val.checked) {
             if (!active) {
                 // first time making active true
-                $makeCuesheet.val(titleOfPiece($(val)));
+                if ($makeCuesheet.val() === '') {
+                    $makeCuesheet.val(titleOfPiece($(val)));
+                }
             }
             active = true;
             ids.push(val.id);
         }
     });
-    $makeCuesheet.toggle(active);
     return ids;
 }
 
 function selectSiblingsInBetween($selectForCuesheet) {
-    // console.log($selectForCuesheet);
     // if between checked items there are unchecked, check them
-    var active = false;
     var keys = [];
-    // var checkboxes = [];
     $.each($selectForCuesheet, function(key, val) {
         if (val.checked) {
             keys.push(key);
@@ -139,7 +114,80 @@ function selectSiblingsInBetween($selectForCuesheet) {
             }
         }
     }
-    // console.log(ids);
+}
+
+function getSmallest(lines) {
+    var small = '';
+    lines.forEach(function(line){
+        if (small.length < line.length) {
+            small = line;
+        }
+    });
+    return small;
+}
+
+function lcs(lines) {
+    var common = '';
+    var small = getSmallest(lines);
+    var temp_common = '';
+    for (var i=0; i< small.length; i++) {
+        var c = small[i];
+        temp_common += c;
+        $.each(lines, function(key, line) {
+            if (line.indexOf(temp_common) === -1) {
+                temp_common = c;
+                $.each(lines, function(key2, line2) {
+                    if (line2.indexOf(temp_common) === -1) {
+                        temp_common = '';
+                        return false;
+                    }
+                });
+                return false;
+            }
+        });
+        if (temp_common !== '' && temp_common.length > common.length) {
+            common = temp_common;
+        }
+    }
+    return common;
+}
+
+function test_lcs() {
+    var titles = [
+        '04 - Fantasiestucke, Op. 73 I. Zart und mut Ausdruck.flac',
+        '05 - Fantasiestucke, Op. 73 II. Lebhaft, leicht.flac',
+        '06 - Fantasiestucke, Op. 73 III. Rasch, mut Feuer.flac',
+    ];
+    console.log('lcs', lcs(titles));
+}
+
+function selectCheckboxes($selectForCuesheet, $makeCuesheet, mode) {
+    var active = false;
+    var ids = [];
+    $.each($selectForCuesheet, function(key, val) {
+        val.checked = mode;
+        if (mode) {
+            ids.push(val.id);
+            if (!active) {
+                // first time making active true: use title of piece for cuesheet title
+                if ($makeCuesheet.val() === '') {
+                    $makeCuesheet.val(titleOfPiece($(val)));
+                }
+                active = true;
+            }
+        }
+    });
+    return ids;
+}
+
+function lcs_pieces($selectForCuesheet, $makeCuesheet){
+    var titles = [];
+    $.each($selectForCuesheet, function(key, val) {
+        if (val.checked) {
+            titles.push(titleOfPiece($(val)));
+        }
+    });
+    $makeCuesheet.val(lcs(titles));
 }
 
 $(function () {
@@ -176,5 +224,26 @@ $(function () {
         if (e.key === 'Enter') {
             postMakeCuesheet($(e.target).val(), ids);
         }
-    })
+    });
+    $('.stukken .check-all').click(function() {
+        ids = selectCheckboxes($selectForCuesheet, $makeCuesheet, true);
+    });
+    $('.stukken .check-nothing').click(function() {
+        ids = selectCheckboxes($selectForCuesheet, $makeCuesheet, false);
+    });
+    $('.rename-cuesheet').click(function(){
+        console.log(this.id);
+        ajaxPost({
+            cmd: 'renamecue',
+            id: this.id,
+            albumid: $('#album_id').val()
+        }, function(response){
+            console.log(response)
+            location.reload();
+        })
+    });
+    $('.test-lcs').click(function(){
+        // test_lcs();
+        lcs_pieces($selectForCuesheet, $makeCuesheet);
+    });
 });

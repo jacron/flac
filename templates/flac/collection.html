@@ -7,7 +7,7 @@
 {% block page %}
     <form>{% csrf_token %}</form>
     <div class="hyperlink">
-        <a onclick="openfinder('{{ album.ID }}')">open finder</a>
+        <a onclick="openfinder('{{ album.ID }}', 'album')">open finder</a>
     </div>
     <img src="/albumimage/{{ album.ID }}/"
          class="album-image">

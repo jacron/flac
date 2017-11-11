@@ -28,8 +28,8 @@ def albumlist(context, albums):
 @register.inclusion_tag(
     'tagtemplates/cuesheetlist.html',
 )
-def cuesheetlist(cuesheets):
-    return dict(cuesheets=cuesheets)
+def cuesheetlist(cuesheets, valid):
+    return dict(cuesheets=cuesheets, valid=valid)
 
 
 @register.inclusion_tag(
