@@ -19,11 +19,11 @@ def has_alias(s, persons, id_field):
         s = s.upper()
     for person in persons:
         p = unidecode(person['Name'].upper())
-        if len(p) > 2 and p in s:
+        if len(p) > 2 and person.get(id_field) and p in s:
             if id_field == 'ComponistID':
-                fperson = get_componist(person[id_field])
+                fperson = get_componist(person.get(id_field))
             else:
-                fperson = get_performer(person[id_field])
+                fperson = get_performer(person.get(id_field))
             proposals.append(fperson)
     return proposals
 
@@ -64,6 +64,13 @@ def filter_provided(proposals, persons):
     return nproposals
 
 
+def get_proposals_from_piece(piece, persons, aliasses, fieldname):
+    proposals = []
+    proposals += has_person(piece[0], persons)
+    proposals += has_alias(piece[0], aliasses, fieldname)
+    return proposals
+
+
 def get_proposals_from_cuesheet(cuesheet, persons, aliasses, fieldname):
     proposals = []
     proposals += has_person(cuesheet['Title'], persons)
@@ -72,6 +79,12 @@ def get_proposals_from_cuesheet(cuesheet, persons, aliasses, fieldname):
     proposals += has_alias(cuesheet['cue'].get('performer'), aliasses, fieldname)
     proposals += has_alias(cuesheet['Title'], aliasses, fieldname)
     proposals += has_alias(cuesheet['Filename'], aliasses, fieldname)
+    for file in cuesheet['cue']['files']:
+        if file:
+            for track in file['tracks']:
+                if track:
+                    proposals += has_alias(track['title'], aliasses, fieldname)
+                    proposals += has_person(track['title'], persons)
     return proposals
 
 
@@ -94,6 +107,8 @@ def get_proposals(cuesheets, pieces, album, album_componisten):
     proposals = []
     for cuesheet in cuesheets:
         proposals += get_proposals_from_cuesheet(cuesheet, componisten, aliasses, 'ComponistID')
+    for piece in pieces:
+        proposals += get_proposals_from_piece(piece, componisten, aliasses, 'ComponistID')
     proposals += get_other_proposals(album, componisten, aliasses, 'ComponistID', album_componisten)
     proposals = filter_proposals(proposals, album_componisten)
     return proposals

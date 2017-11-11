@@ -26,7 +26,8 @@ from venv.flac.scripts.helper.insert import (
 
 db_path = '../../db.sqlite3'
 skipdirs = ['website', 'artwork', 'Artwork', 'etc', 'scans', 'Scans', 'scan',
-            'website boxset', '#Booklets', 'Pixels', 'Graphics', 'Info + Art', 'Art', ]
+            'website boxset', '#Booklets', 'Pixels', 'Graphics', 'Info + Art', 'Art',
+            'Covers', ]
 artiest = None
 componist = None
 ComponistID = None
@@ -103,7 +104,13 @@ def process_a(p, mother_id, iscollectie, step_in):
         for d2 in os.listdir(p):
             p2 = u'{}/{}'.format(p, d2)
             if os.path.isdir(p2) and d2 not in skipdirs:
-                process_album(p2, album_id, 0)
+                album_id2 = process_album(p2, album_id, 0)
+                if step_in == 2:
+                    # second recurisve step
+                    for d3 in os.listdir(p2):
+                        p3 = u'{}/{}'.format(p, d3)
+                        if os.path.isdir(p3) and d3 not in skipdirs:
+                            process_album(p3, album_id2, 0)
 
 
 def get_album_groups(path, mother_id, iscollectie, step_in):
@@ -198,23 +205,18 @@ def main():
     # open_finder_componist(ComponistID)
     # return
     # path = get_path_of_componist(ComponistID)
-    album_id = 169
-    path = get_path_of_album(album_id)
+    # album_id = 169
+    # path = get_path_of_album(album_id)
     # mother_id = 3816
-    # path = "/Volumes/Media/Audio/Klassiek/Verzamelalbums/_varia Savall"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Alban Berg Quartet - the teldec recordings - quartets"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/alfred brendel the complete vox"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Andreas Staier"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Anner Bylsma"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Arthur Grumiaux - Historic Philips Recordings 1953-1962 (5 CD box set APE)"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Boulez Conducts - 5CD (1995) (FLAC) (ERATO 4509-98496-2S)"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Pierre Boulez - Box Set 44cds"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Casals - Festivals at Prades"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Casals - The complete published EMI recordings"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Clara Haskil - Philips Recordings"
-    # artiest = "Clara Haskil"
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Anthology Of The Royal Concertgebouw Orchestra 1970-1980"
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Fritz Reiner - The Complete RDC Collection"
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Furtwangler - The Late Unforgettable Columbia Records (1949-1954)"
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Furtwangler The Legacy"
+    path = "/Volumes/Media/Audio/Klassiek/Collecties/Great pianists of the 20th century"
+    # artiest = "Fritz Reiner"
     # componist = from_path(path)
     # ComponistID = componist_from_album(album_id)
+    # PerformerID = 52
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     if path is None:
         print('No path')
@@ -222,12 +224,12 @@ def main():
     # process_pieces(path, album_id=album_id)
     # return
 
-    sanatize_haakjes(path, True)
-    restore_cover(path=path, step_in=True)
+    # sanatize_haakjes(path, True)
+    # restore_cover(path=path, step_in=True)
     rename_cover(path=path, step_in=True)
     # rename_titles(path)
     # rename_to_back(path)
-    process_a(p=path, mother_id=None, iscollectie=1, step_in=True)
+    # process_a(p=path, mother_id=None, iscollectie=1, step_in=1)
     # get_albums(path=path, mother_id=None, iscollectie=1)
     # get_album_groups(path=path, mother_id=None, iscollectie=0, step_in=True)
     # album_id = process_album(path=path, mother_id=None, is_collectie=0)

@@ -1,6 +1,12 @@
 from .connect import connect
 
 
+def make_fullname(FirstName, LastName):
+    if len(FirstName) == 0:
+        return LastName
+    return u'{} {}'.format(FirstName, LastName)
+
+
 def get_items_with_parameter(sql, oid):
     conn, c = connect()
     items = []
@@ -160,7 +166,7 @@ def named_persons(items):
         out.append({
             'FirstName': item[0],
             'LastName': item[1],
-            'FullName': u'{} {}'.format(item[0], item[1]),
+            'FullName': make_fullname(item[0], item[1]),
             'NameFull': u'{}, {}'.format(item[1], item[0]),
             'Path': item[2],
             'Birth': item[3],
@@ -180,7 +186,7 @@ def get_componisten_typeahead():
     out = []
     for item in items:
         out.append({
-            'FullName': u'{} {}'.format(item[0], item[1]),
+            'FullName': make_fullname(item[0], item[1]),
             'ID': item[2],
         })
     return out
@@ -195,7 +201,7 @@ def get_performers_typeahead():
     out = []
     for item in items:
         out.append({
-            'FullName': u'{} {}'.format(item[0], item[1]),
+            'FullName': make_fullname(item[0], item[1]),
             'ID': item[2],
         })
     return out
@@ -502,7 +508,7 @@ def get_componist(id_componist):
     return {
         "FirstName": fields[0],
         "LastName": fields[1],
-        "FullName": u'{} {}'.format(fields[0], fields[1]),
+        "FullName": make_fullname(fields[0], fields[1]),
         "Birth": fields[2],
         "Death": fields[3],
         "Path": fields[4],
@@ -564,7 +570,7 @@ def get_album_performers(id_album):
         out.append({
             'FirstName': item[0],
             'LastName': item[1],
-            'FullName': u'{} {}'.format(item[0], item[1]),
+            'FullName': make_fullname(item[0], item[1]),
             'ID': item[2],
         })
     return out
@@ -587,7 +593,7 @@ def get_album_componisten(id_album):
         out.append({
             'FirstName': item[0],
             'LastName': item[1],
-            'FullName': u'{} {}'.format(item[0], item[1]),
+            'FullName': make_fullname(item[0], item[1]),
             'ID': item[2],
         })
     return out
@@ -616,7 +622,7 @@ def get_scarlatti():
     conn, c = connect()
     fields = c.execute(sql).fetchone()
     return {
-        'FullName': '{} {}'.format(fields[0], fields[1]),
+        'FullName': make_fullname(fields[0], fields[1]),
         'ID': fields[2],
     }
 
@@ -693,7 +699,7 @@ def get_performer(id_performer):
     return {
         "FirstName": fields[0],
         "LastName": fields[1],
-        "FullName": u'{} {}'.format(fields[0], fields[1]),
+        "FullName": make_fullname(fields[0], fields[1]),
         "Birth": fields[2],
         "Death": fields[3],
         "Path": fields[4],

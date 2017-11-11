@@ -4,7 +4,7 @@
     {{ instrument.Name }}
 {% endblock %}
 {% block page %}
-    <h4>{{ instrument.Name }} ({{ items|length }})</h4>
+    <h4>{{ instrument.Name }} ({{ items.children|length }})</h4>
 {% albumlist items.mothers %}
     <div class="clear"></div>
 {% albumlist items.children %}

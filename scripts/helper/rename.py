@@ -6,14 +6,16 @@ from venv.flac.services import (
     has_haakjes, replace_haakjes, get_full_cuesheet)
 import os
 
-cover_names = ['box front', 'front', 'Cover', 'cover', 'Front']
+cover_names = ['box front', 'front', 'Cover', 'cover', 'Front', 'cover.jpeg', 'folder.png']
 cover_nice = 'folder.jpg'
 back_names = ['Back.jpg']
 back_nice = 'back.jpg'
 
 
 def rename_cover_one(path, name):
-    src = u'{}/{}.jpg'.format(path, name)
+    if not '.' in name:
+        name += '.jpg'
+    src = u'{}/{}'.format(path, name)
     # print(src)
     if os.path.exists(src):
         # print(src)

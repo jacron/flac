@@ -264,4 +264,10 @@ SELECT ID FROM Componist
 SELECT Path
     FROM Componist
     WHERE ID=175;
-m4dC2KTt 
+
+update Album
+set InstrumentID=1
+where AlbumID=4288;
+
+select Title from Album
+where AlbumID=4288;
