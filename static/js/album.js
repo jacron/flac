@@ -20,12 +20,6 @@ var match = function (items) {
                 matches.push(str);
             }
         });
-        // $.each(items, function (i, str) {
-        //     if (str.indexOf(q) !== -1) {
-        //         matches.push(str);
-        //     }
-        // });
-
         cb(matches);
     };
 };

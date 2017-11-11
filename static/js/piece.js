@@ -85,6 +85,63 @@ function copyTitle($this) {
     }
 }
 
+function titleOfPiece($val) {
+    var parent = $val.parents('.hyperlink').first();
+    return parent.find('a').first().text();
+}
+
+function postMakeCuesheet(name, ids) {
+    ajaxPost({
+        cmd: 'makecuesheet',
+        ids: ids,
+        name: name,
+        albumid: $('#album_id').val()
+    }, function(response){
+        console.log(response);
+        location.reload();
+    })
+}
+
+function getSelectedCuesheetIds($selectForCuesheet, $makeCuesheet) {
+    var active = false;
+    var ids = [];
+    $.each($selectForCuesheet, function(key, val) {
+        if (val.checked) {
+            if (!active) {
+                // first time making active true
+                $makeCuesheet.val(titleOfPiece($(val)));
+            }
+            active = true;
+            ids.push(val.id);
+        }
+    });
+    $makeCuesheet.toggle(active);
+    return ids;
+}
+
+function selectSiblingsInBetween($selectForCuesheet) {
+    // console.log($selectForCuesheet);
+    // if between checked items there are unchecked, check them
+    var active = false;
+    var keys = [];
+    // var checkboxes = [];
+    $.each($selectForCuesheet, function(key, val) {
+        if (val.checked) {
+            keys.push(key);
+        }
+    });
+    if (keys.length > 1) {
+        for (var i = 1; i < keys.length; i++) {
+            if (keys[i] - keys[i-1] > 1) {
+                for (var j = keys[i-1] + 1; j < keys[i]; j++) {
+                    $selectForCuesheet.get(j).checked = true;
+                }
+            }
+        }
+    }
+    // console.log(ids);
+}
+
 $(function () {
     $('.album-image').click(function () {
         $(this).toggleClass('expanded');
@@ -104,4 +161,20 @@ $(function () {
     $('.cue-plus').click(function () {
         copyTitle($(this));
     });
+
+    const $selectForCuesheet = $('.select-for-cuesheet'),
+          $makeCuesheet = $('.make-cuesheet');
+    var ids = [];
+
+    $selectForCuesheet.click(function(e){
+        if (e.shiftKey) {
+            selectSiblingsInBetween($selectForCuesheet);
+        }
+        ids = getSelectedCuesheetIds($selectForCuesheet, $makeCuesheet);
+    });
+    $makeCuesheet.keydown(function(e) {
+        if (e.key === 'Enter') {
+            postMakeCuesheet($(e.target).val(), ids);
+        }
+    })
 });

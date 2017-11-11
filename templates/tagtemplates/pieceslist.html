@@ -1,9 +1,17 @@
 {% if pieces|length %}
 <div class="pieces">Stukken <i class="toggle-content fa fa-caret-right"></i></div>
-<table class="content stukken">
+    <table class="content stukken">
+    <tr>
+        <td>
+            <input class="make-cuesheet" placeholder="make cuesheet">
+        </td>
+    </tr>
     {% for item in pieces %}
         <tr>
             <td class="hyperlink">
+                <input type="checkbox"
+                       id="{{ item.1 }}"
+                       class="select-for-cuesheet">
                 <a onclick="play({{ item.1 }})">{{ item.0 }}</a>
             </td>
         </tr>

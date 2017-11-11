@@ -37,6 +37,11 @@ def filename(ffile):
     return ffile.split('/')[-1]
 
 
+def trimextension(ffile):
+    ff = ffile.split('.')[:-1]
+    return '.'.join(ff)
+
+
 def dequote(line):
     line = line.strip()
     if line.startswith('"'):

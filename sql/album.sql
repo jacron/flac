@@ -269,5 +269,9 @@ update Album
 set InstrumentID=4
 where AlbumID=4511;
 
-select Title from Album
-where AlbumID=4288;
+update Performer_Album
+set PerformerID=279
+where AlbumID in (
+select ID from Album
+where AlbumID=4646);
+

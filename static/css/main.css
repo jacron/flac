@@ -95,7 +95,13 @@ nav a.selected {
     font-size: 18px !important;
 }
 .content.stukken {
-    display: none;
+    /*display: none;*/
+}
+.content.stukken .make-cuesheet {
+    /*display: none;*/
+}
+.make-cuesheet {
+    width: 700px;
 }
 .content.cue {
     /*display: none;*/
