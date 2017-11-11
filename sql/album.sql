@@ -266,8 +266,8 @@ SELECT Path
     WHERE ID=175;
 
 update Album
-set InstrumentID=1
-where AlbumID=4288;
+set InstrumentID=4
+where AlbumID=4511;
 
 select Title from Album
 where AlbumID=4288;

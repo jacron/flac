@@ -2,7 +2,7 @@ from .connect import connect
 
 
 def make_fullname(FirstName, LastName):
-    if len(FirstName) == 0:
+    if not FirstName or len(FirstName) == 0:
         return LastName
     return u'{} {}'.format(FirstName, LastName)
 
@@ -299,11 +299,11 @@ def get_performers():
       SELECT FirstName, LastName, C.Path, Birth, Death,
         C.ID, COUNT(A.ID) AS Albums
       FROM Performer C
-      JOIN Performer_Album CA
-      ON CA.PerformerID = C.ID
-      JOIN Album A
-      ON CA.AlbumID = A.ID
-        GROUP BY C.ID
+        LEFT JOIN Performer_Album CA
+          ON CA.PerformerID = C.ID
+        LEFT JOIN Album A
+          ON CA.AlbumID = A.ID
+      GROUP BY C.ID
       ORDER BY LastName
       '''
     items = get_items(sql)

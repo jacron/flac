@@ -83,8 +83,10 @@ def get_proposals_from_cuesheet(cuesheet, persons, aliasses, fieldname):
         if file:
             for track in file['tracks']:
                 if track:
-                    proposals += has_alias(track['title'], aliasses, fieldname)
-                    proposals += has_person(track['title'], persons)
+                    track_title = track.get('title')
+                    if track_title:
+                        proposals += has_alias(track_title, aliasses, fieldname)
+                        proposals += has_person(track_title, persons)
     return proposals
 
 

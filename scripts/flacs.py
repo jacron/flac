@@ -32,6 +32,7 @@ artiest = None
 componist = None
 ComponistID = None
 PerformerID = None
+PerformerID2 = None
 instrument = None
 
 
@@ -78,7 +79,8 @@ def process_album(path, mother_id, is_collectie):
     else:
         if artiest:
             insert_artiest(artiest, c, conn, album_id)
-
+    if PerformerID2:
+        insert_performer_by_id(PerformerID2, c, conn, album_id)
     if ComponistID:
         insert_componist_by_id(ComponistID, c, conn, album_id)
     else:
@@ -193,14 +195,13 @@ def componist_from_album(album_id):
 
 
 def main():
-    global artiest, instrument, componist, ComponistID, PerformerID
+    global artiest, instrument, componist, ComponistID, PerformerID, PerformerID2
 
+    path = ""
     # ComponistID = insert_composer('Zinnstag')[0]
     # print(ComponistID)
     # return
 
-    # ComponistID = 269
-    # componist = ""
     # open_finder_album(album_id=)
     # open_finder_componist(ComponistID)
     # return
@@ -208,16 +209,16 @@ def main():
     # album_id = 169
     # path = get_path_of_album(album_id)
     # mother_id = 3816
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Anthology Of The Royal Concertgebouw Orchestra 1970-1980"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Fritz Reiner - The Complete RDC Collection"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Furtwangler - The Late Unforgettable Columbia Records (1949-1954)"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Furtwangler The Legacy"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Great pianists of the 20th century"
-    path = "/Volumes/Media/Audio/Klassiek/Collecties/Gustav Leonardt Edition"
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Schnabel, maestro espressivo - vol2"
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Horowitz - The Complete Masterworks Recordings 1962 1973"
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Yehudi Menuhin - Die schoensten violinkonzerte"
+    path = "/Volumes/Media/Audio/Klassiek/Collecties/Yo Yo Ma 30 years outside the box"
     # artiest = "Fritz Reiner"
+    # ComponistID = 134
     # componist = from_path(path)
     # ComponistID = componist_from_album(album_id)
-    PerformerID = 44
+    PerformerID = 112
+    # PerformerID2 = 47
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     if path is None:
         print('No path')
@@ -226,8 +227,8 @@ def main():
     # return
 
     # sanatize_haakjes(path, True)
-    # restore_cover(path=path, step_in=True)
-    # rename_cover(path=path, step_in=True)
+    restore_cover(path=path, step_in=True)
+    rename_cover(path=path, step_in=True)
     # rename_titles(path)
     # rename_to_back(path)
     process_a(p=path, mother_id=None, iscollectie=1, step_in=1)

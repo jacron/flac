@@ -6,7 +6,8 @@ from venv.flac.services import (
     has_haakjes, replace_haakjes, get_full_cuesheet)
 import os
 
-cover_names = ['box front', 'front', 'Cover', 'cover', 'Front', 'cover.jpeg', 'folder.png']
+cover_names = ['box front', 'front', 'Cover', 'cover', 'Front', 'Folder',
+               'cover.jpeg', 'folder.png']
 cover_nice = 'folder.jpg'
 back_names = ['Back.jpg']
 back_nice = 'back.jpg'
