@@ -278,12 +278,12 @@ fieldset {
 .nav {
     padding-bottom: 10px;
 }
-.nav a {
+.nav a.enabled {
     padding: 4px;
     background-color: #ff9;
     text-decoration: none;
 }
-.nav a:hover {
+.nav a.enabled:hover {
     background-color: #9ff;
 }
 .refetch {

@@ -212,11 +212,12 @@ def main():
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/Fritz Reiner - The Complete RDC Collection"
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/Furtwangler - The Late Unforgettable Columbia Records (1949-1954)"
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/Furtwangler The Legacy"
-    path = "/Volumes/Media/Audio/Klassiek/Collecties/Great pianists of the 20th century"
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Great pianists of the 20th century"
+    path = "/Volumes/Media/Audio/Klassiek/Collecties/Gustav Leonardt Edition"
     # artiest = "Fritz Reiner"
     # componist = from_path(path)
     # ComponistID = componist_from_album(album_id)
-    # PerformerID = 52
+    PerformerID = 44
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     if path is None:
         print('No path')
@@ -226,10 +227,10 @@ def main():
 
     # sanatize_haakjes(path, True)
     # restore_cover(path=path, step_in=True)
-    rename_cover(path=path, step_in=True)
+    # rename_cover(path=path, step_in=True)
     # rename_titles(path)
     # rename_to_back(path)
-    # process_a(p=path, mother_id=None, iscollectie=1, step_in=1)
+    process_a(p=path, mother_id=None, iscollectie=1, step_in=1)
     # get_albums(path=path, mother_id=None, iscollectie=1)
     # get_album_groups(path=path, mother_id=None, iscollectie=0, step_in=True)
     # album_id = process_album(path=path, mother_id=None, is_collectie=0)

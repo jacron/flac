@@ -45,8 +45,16 @@
     </div>
 {% endif %}
 <div class="clear nav">
-    <a href="/prev/{{ album.ID }}">prev</a> |
-    <a href="/next/{{ album.ID }}">next</a>
+    <a {% if prev_id %}
+            href="/album/{{ prev_id }}"
+            class="enabled"
+       {% endif %}
+    >prev</a> |
+    <a {% if next_id %}
+            href="/album/{{ next_id }}"
+            class="enabled"
+            {% endif %}
+    >next</a>
 </div>
 {% cuesheetlist cuesheets %}
 {% pieceslist pieces %}
