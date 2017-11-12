@@ -76,6 +76,15 @@ function typeaheadAlbumComponisten($typeahead, $makeCuesheet) {
     });
 }
 
+function goResult($naam, val, href, attrId) {
+    $naam.each(function () {
+        var $this = $(this);
+        if ($this.text() === val) {
+            location.href = href + $this.attr(attrId);
+        }
+    });
+}
+
 function quickSearch($naam, $typeahead, href, attrId) {
     var items = [];
     $naam.each(function () {
@@ -86,19 +95,13 @@ function quickSearch($naam, $typeahead, href, attrId) {
         { source: match(items) }
     ).keydown(function(e){
         if (e.key === 'Enter') {
-            var result = $('.typeahead').get(1).value;
-            $naam.each(function () {
-                var $this = $(this);
-                if ($this.text() === result) {
-                    location.href = href + $this.attr(attrId);
-                }
-            });
+            goResult($naam, $typeahead.val(), href, attrId);
         }
     });
-
 }
 
-var movies = new Bloodhound({
+//https://stackoverflow.com/questions/21530063/how-do-we-set-remote-in-typeahead-js
+var albums = new Bloodhound({
     datumTokenizer: function (datum) {
         return Bloodhound.tokenizers.whitespace(datum.value);
     },
@@ -107,37 +110,37 @@ var movies = new Bloodhound({
         wildcard: '%QUERY',
         url: '/ajax/?cmd=generalsearch&query=%QUERY',
         transform: function(response) {
-            console.log(response);
+            // console.log(response);
             return $.map(response, function(movie) {
-                return {name:movie.name};
+                const name = movie.name + ' - ' + movie.ID;
+                return {name:name};
             });
         }
     }
 });
+
+function getId(s) {
+    var pos = s.indexOf(' - ');
+    return s.substr(pos + 3);
+}
 
 function generalSearch($typeahead) {
     $typeahead.typeahead(
         typeaheadSettings,
         {
             displayKey: 'name',
-            source: movies
-            // source: function(query, process) {
-            //     const data = {cmd:'generalsearch', query: query};
-            //     // return $.get('/ajax/', data, function(response) {
-            //     //     console.log(response);
-            //     //     const data = $.parseJSON(response);
-            //     //     return process(JSON.parse(data));
-            //     // });
-            //     return ajaxGet(data, function(response) {
-            //         console.log(response);
-            //         // var items = [];
-            //         // response.forEach(function(item) {
-            //         //     items.push(item.name);
-            //         // });
-            //         // console.log(items);
-            //         return process(response);
-            // })
-        // }
+            source: albums,
+            updater: function(item) {
+                console.log(item);
+                return item;
+            }
+        }).keydown(function(e) {
+        if (e.key === 'Enter') {
+            // console.log($(e.target).val());
+            const id = getId($(e.target).val());
+            console.log(id);
+            location.href = '/album/' + id;
+        }
     });
 }
 

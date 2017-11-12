@@ -333,3 +333,6 @@ fieldset {
 .rename-cuesheet:hover {
     text-decoration: underline;
 }
+.typeahead.general {
+    width: 600px;
+}
