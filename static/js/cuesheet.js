@@ -80,7 +80,6 @@ function typeaheadAlbumComponisten($typeahead, $makeCuesheet) {
     ).keydown(function(e){
         if (e.key === 'Enter') {
             copyComponist($typeahead.val(), $makeCuesheet);
-            // $typeahead.val('');
         }
         if (e.key === 'Escape') {
             $typeahead.val('');

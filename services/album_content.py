@@ -1,3 +1,4 @@
+# coding: utf-8
 import os
 
 from flac.services.proposals import get_proposals, get_artists
@@ -10,9 +11,10 @@ from ..services import get_full_cuesheet
 
 def has_notfound_files(cuesheet, album_path):
     for file in cuesheet['cue']['files']:
-        path = '{}/{}'.format(album_path, file['name'])
-        if not os.path.exists(path):
-            return True
+        fname = file['name'].encode('utf-8')
+        path = '{}/{}'.format(album_path, fname)
+        # if not os.path.exists(path.decode('utf-8')):
+        #     return True
     return False
 
 

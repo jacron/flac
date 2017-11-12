@@ -1,3 +1,4 @@
+import codecs
 import os
 
 from . import trimextension, filename
@@ -9,9 +10,10 @@ def write_cuesheet(name, album_id, content):
     cuename = u'{}.cue'.format(name)
     path = get_album_path_by_id(album_id, cursor)
     wpath = u'{}/{}'.format(path, cuename)
-    f = open(wpath, 'w')
-    f.write(content)
-    f.close()
+    # https://stackoverflow.com/questions/934160/write-to-utf-8-file-in-python
+    with codecs.open(wpath, 'w', 'utf-8') as f:
+        f.write(u'\ufeff')
+        f.write(u'{}'.format(content))
     insert_piece(
         name=cuename,
         code=0,
@@ -45,15 +47,11 @@ def make_cuesheet(name, ids, album_id):
         fpath = piece.get('Name')
         title = trimextension(filename(fpath))
         titles.append(title)
-        lines.append('FILE "{}" WAVE'.format(fpath))
-        lines.append('  TRACK 01 AUDIO')
-        lines.append('    TITLE "{}"'.format(title))
-        lines.append('    INDEX 01 00:00:00')
+        lines.append(u'FILE "{}" WAVE'.format(fpath))
+        lines.append(u'  TRACK 01 AUDIO')
+        lines.append(u'    TITLE "{}"'.format(title))
+        lines.append(u'    INDEX 01 00:00:00')
     content = ''
     for line in lines:
         content += line + '\n'
     write_cuesheet(name, album_id, content)
-    # common = get_common(titles)
-    # pass
-    # print(get_common(titles))
-    # print(titles)

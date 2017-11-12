@@ -87,7 +87,8 @@ def persons_list(persons, url, type):
 
 @register.filter( name='unescape' )
 def unescape(val):
-    return val.encode( 'string-escape' )
-    unescape.is_safe = True
+    return val
+    # return val.encode( 'string-escape' )
+    # unescape.is_safe = True
 
 

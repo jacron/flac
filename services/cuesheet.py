@@ -1,4 +1,6 @@
 # from __future__ import unicode_literals
+import codecs
+
 from unidecode import unidecode
 
 from .services import dequote
@@ -52,10 +54,10 @@ def parse(data):
     cfile = None
     ctrack = None
     for line in data.split(b'\n'):
-        try:
-            line = unidecode(line)
-        except Exception:
-            pass
+        # try:
+        #     line = unidecode(line)
+        # except Exception:
+        #     pass
         if len(line) < 1:
             continue
 
@@ -66,10 +68,10 @@ def parse(data):
         title = get_element(line, 'TITLE ')
         if title:
             if ctrack:
-                try:
-                    ctrack['title'] = unidecode(replace_haakjes(dequote(title)))
-                except Exception:
-                    ctrack['title'] = replace_haakjes(dequote(title))
+                # try:
+                #     ctrack['title'] = unidecode(replace_haakjes(dequote(title)))
+                # except Exception:
+                ctrack['title'] = replace_haakjes(dequote(title))
             else:
                 cue['title'] = dequote(title)
 
@@ -119,7 +121,8 @@ def get_full_cuesheet(path, id):
     filename = os.path.split(path)[1]
     filename = ' '.join(filename.split('.')[:-1])
     if os.path.exists(path):
-        with open(path, b'r') as f:
+        with codecs.open(path, 'r', 'utf-8') as f:
+            # with open(path, b'r') as f:
             data = f.read()
             cue = None
             try:
@@ -133,7 +136,6 @@ def get_full_cuesheet(path, id):
                 'cue': cue,
             }
     else:
-        # print('Bestaat niet: {}'.format(path))
         raise NotFoundError
 
 
