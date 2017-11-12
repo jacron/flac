@@ -93,6 +93,66 @@ function copyComponist(componist, $makeCuesheet) {
     $makeCuesheet.val(normalizedComponist + $makeCuesheet.val());
 }
 
+function similar($selectForCuesheet) {
+    var titles = [];
+    var ids = [];
+    var common = '';
+    var active = false;
+    var old_common = '';
+    $.each($selectForCuesheet, function(key, val) {
+        if (val.checked) {
+            active = true;
+        }
+        if (active) {
+            val.checked = false;
+            ids.push(val.id);
+            titles.push(titleOfPiece($(val)));
+            common = lcs(titles);
+            if (titles.length > 2 && common.length < old_common.length - 2) {
+                titles.pop();
+                ids.pop();
+                val.checked = true;
+                return false;  // break each()
+            }
+            old_common = common;
+        }
+    });
+    return {
+        titles: titles,
+        ids: ids
+    };
+}
+
+function trimNr(s) {
+    if (s.substr(s.length-1) === 'I') {
+        return s.substr(0, s.length-1);
+    }
+    return s;
+}
+
+function lcs_pieces($selectForCuesheet, $makeCuesheet){
+    var titles = [];
+    var ids = [];
+    $.each($selectForCuesheet, function(key, val) {
+        if (val.checked) {
+            titles.push(titleOfPiece($(val)));
+            ids.push(val.id);
+        }
+    });
+    if (titles.length === 1) {
+        const data = similar($selectForCuesheet);
+        titles = data.titles;
+        ids = data.ids;
+    }
+    $makeCuesheet.val(trimNr(lcs(titles)));
+    return ids;
+}
+
+function afterPostMake($makeCuesheet) {
+    // location.reload()
+    $makeCuesheet.val('');
+}
+
 $(function () {
     const albumId = $('#album_id').val();
     if (albumId) {
@@ -100,36 +160,41 @@ $(function () {
         const $selectForCuesheet = $('.select-for-cuesheet'),
             $makeCuesheet = $('.make-cuesheet'),
             $typeahead = $('.album-componist.typeahead');
-        var cusheetIds = [];
+        var cuesheetIds = [];
 
         $selectForCuesheet.click(function (e) {
             if (e.shiftKey) {
                 selectSiblingsInBetween($selectForCuesheet);
             }
-            cusheetIds = getSelectedCuesheetIds($selectForCuesheet, $makeCuesheet);
+            cuesheetIds = getSelectedCuesheetIds($selectForCuesheet, $makeCuesheet);
         });
         $makeCuesheet.keydown(function (e) {
             if (e.key === 'Enter') {
-                postMakeCuesheet($(e.target).val(), cusheetIds);
+                postMakeCuesheet($(e.target).val(), cuesheetIds, function(response) {
+                    afterPostMake($makeCuesheet)});
             }
         });
-        $('.stukken .check-all').click(function () {
-            cusheetIds = selectCheckboxes($selectForCuesheet, $makeCuesheet, true);
-        });
-        $('.stukken .check-nothing').click(function () {
-            cusheetIds = selectCheckboxes($selectForCuesheet, $makeCuesheet, false);
+        $('.test-lcs').click(function(){
+            cuesheetIds = lcs_pieces($selectForCuesheet, $makeCuesheet);
         });
         typeaheadAlbumComponisten($typeahead, $makeCuesheet);
         $('.album-componist-to-make').click(function () {
             copyComponist($typeahead.val(), $makeCuesheet);
         });
         $('.create-cuesheet').click(function(){
-            postMakeCuesheet($makeCuesheet.val(), cusheetIds, function(response) {});
+            postMakeCuesheet($makeCuesheet.val(), cuesheetIds, function(response) {
+                afterPostMake($makeCuesheet)});
         });
         $('.rename-cuesheet').click(function(){
             postRenameCuesheet(this.id, $('#album_id').val(), function(response) {
                 location.reload();
             });
+        });
+        $('.stukken .check-all').click(function () {
+            cuesheetIds = selectCheckboxes($selectForCuesheet, $makeCuesheet, true);
+        });
+        $('.stukken .check-nothing').click(function () {
+            cuesheetIds = selectCheckboxes($selectForCuesheet, $makeCuesheet, false);
         });
     }
 });

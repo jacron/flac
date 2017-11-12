@@ -40,54 +40,5 @@ function lcs(lines) {
     return common;
 }
 
-function similar($selectForCuesheet) {
-    var titles = [];
-    var common = '';
-    var active = false;
-    var old_common = '';
-    $.each($selectForCuesheet, function(key, val) {
-        if (val.checked) {
-            active = true;
-        }
-        if (active) {
-            val.checked = false;
-            titles.push(titleOfPiece($(val)));
-            common = lcs(titles);
-            if (titles.length > 2 && common.length < old_common.length - 2) {
-                titles.pop();
-                val.checked = true;
-                return false;  // break each()
-            }
-            old_common = common;
-        }
-    });
-    return titles;
-}
-
-function trimNr(s) {
-    if (s.substr(s.length-1) === 'I') {
-        return s.substr(0, s.length-1);
-    }
-    return s;
-}
-
-function lcs_pieces($selectForCuesheet, $makeCuesheet){
-    var titles = [];
-    $.each($selectForCuesheet, function(key, val) {
-        if (val.checked) {
-            titles.push(titleOfPiece($(val)));
-        }
-    });
-    if (titles.length === 1) {
-        titles = similar($selectForCuesheet);
-    }
-    $makeCuesheet.val(trimNr(lcs(titles)));
-}
-
 $(function () {
-    const $selectForCuesheet = $('.select-for-cuesheet'),
-          $makeCuesheet = $('.make-cuesheet');
-    $('.test-lcs').click(function(){
-        lcs_pieces($selectForCuesheet, $makeCuesheet);
-    });
 });
