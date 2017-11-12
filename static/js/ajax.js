@@ -67,7 +67,7 @@ function postMakeCuesheet(name, ids, cb) {
         ids: ids,
         name: name,
         albumid: $('#album_id').val()
-    }, function(response){cb(response);})
+    }, function(response){if (cb) {cb(response);}})
 }
 
 function postRenameCuesheet(pieceId, albumId) {
@@ -75,6 +75,15 @@ function postRenameCuesheet(pieceId, albumId) {
         cmd: 'renamecue',
         id: pieceId,
         albumid: albumId
-    }, function(response){cb(response);})
+    }, function(response){if (cb) {cb(response);}})
+}
+
+function refetch() {
+    ajaxPost({
+        albumid: $('#album_id').val(),
+        cmd: 'refetch'
+    }, function(){
+        location.reload();
+    });
 }
 
