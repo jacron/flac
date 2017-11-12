@@ -3,9 +3,13 @@
  */
 'use strict';
 
+function getTitle($this) {
+    const parent = $this.parents('.cue-header').find('span').first();
+    return parent.text();
+}
+
 function copyTitle($this) {
-    var parent = $this.parents('.cue-header').find('span').first(),
-        title = parent.text(),
+    const title = getTitle($this),
         $title = $('.edit-title');
 
     if (confirm('Use this title for the album? ' + title)) {
@@ -16,6 +20,11 @@ function copyTitle($this) {
             albumid: $title.attr('albumid')
         });
     }
+}
+
+function copyCueTitle($this) {
+    const title = getTitle($this);
+    $('.make-cuesheet').val(title);
 }
 
 $(function () {
@@ -38,6 +47,9 @@ $(function () {
         });
         $('.cue-plus').click(function () {
             copyTitle($(this));
+        });
+        $('.cue-title').click(function() {
+            copyCueTitle($(this));
         });
     }
 });

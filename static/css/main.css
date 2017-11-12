@@ -193,13 +193,19 @@ fieldset {
 .cue-header {
     color: brown;
 }
-.cue-plus {
+.cue-plus,
+.cue-title {
     cursor: pointer;
+    font-style: italic;
 }
-.cue-header .cue-plus {
+.cue-plus:hover,
+.cue-title:hover  {
+    text-decoration: underline;
+}
+.cue-header .cue-plus-container {
     display: none;
 }
-.cue-header:hover .cue-plus {
+.cue-header:hover .cue-plus-container {
     display: inline-block;
 }
 .content.edit {

@@ -64,23 +64,23 @@ function selectCheckboxes($selectForCuesheet, $makeCuesheet, mode) {
     return ids;
 }
 
-function getAlbumComponisten($typeahead) {
+function getAlbumComponisten() {
     var items = [];
     $.each($('li.hyperlink.componist'), function(key, li){
         items.push($(li).find('a').text().trim());
     });
-    if (items.length === 1) {$typeahead.val(items[0]); }
     return items;
 }
 
 function typeaheadAlbumComponisten($typeahead, $makeCuesheet) {
-    const items = getAlbumComponisten($typeahead);
+    const items = getAlbumComponisten();
+    if (items.length === 1) {$typeahead.val(items[0]); }
     $typeahead.typeahead(typeaheadSettings,
         { source: match(items) }
     ).keydown(function(e){
         if (e.key === 'Enter') {
-            $makeCuesheet.val($(e.target).val() + $makeCuesheet.val());
-            $typeahead.val('');
+            copyComponist($typeahead.val(), $makeCuesheet);
+            // $typeahead.val('');
         }
         if (e.key === 'Escape') {
             $typeahead.val('');
@@ -90,7 +90,9 @@ function typeaheadAlbumComponisten($typeahead, $makeCuesheet) {
 
 function copyComponist(componist, $makeCuesheet) {
     const normalizedComponist = componist.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-    $makeCuesheet.val(normalizedComponist + $makeCuesheet.val());
+    var val = $makeCuesheet.val();
+    if (val[0] !== ' ' && val[0] !== '-') {val = ' - ' + val;}
+    $makeCuesheet.val(normalizedComponist + val);
 }
 
 function similar($selectForCuesheet) {
@@ -151,7 +153,9 @@ function lcs_pieces($selectForCuesheet, $makeCuesheet){
 function afterPostMake($makeCuesheet, $typeahead) {
     // location.reload()
     $makeCuesheet.val('');
-    $typeahead.val('');
+    var items = getAlbumComponisten();
+    if (items.length === 1) {$typeahead.val(items[0]); }
+    else { $typeahead.val('')};
 }
 
 $(function () {

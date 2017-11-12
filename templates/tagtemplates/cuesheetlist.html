@@ -13,10 +13,12 @@
         <ul class="cue">
         <li class="cue-header">
             {% if cuesheet.Title %}
-            {{ cuesheet.Title|unescape }}
+            <span>{{ cuesheet.Title|unescape }}</span>
             {% endif %}
             <i class="toggle-cue-lines fa fa-caret-right"></i>
-            <span class="cue-plus">+</span>
+            <span class="cue-plus-container">
+                <span class="cue-plus">album-titel</span> | <span class="cue-title">cuesheet-titel</span>
+            </span>
         </li>
         {%  if cuesheet.cue.performer %}
         <li class="ID">{{ cuesheet.cue.performer|unescape }}</li>
