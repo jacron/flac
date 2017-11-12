@@ -148,9 +148,10 @@ function lcs_pieces($selectForCuesheet, $makeCuesheet){
     return ids;
 }
 
-function afterPostMake($makeCuesheet) {
+function afterPostMake($makeCuesheet, $typeahead) {
     // location.reload()
     $makeCuesheet.val('');
+    $typeahead.val('');
 }
 
 $(function () {
@@ -171,7 +172,7 @@ $(function () {
         $makeCuesheet.keydown(function (e) {
             if (e.key === 'Enter') {
                 postMakeCuesheet($(e.target).val(), cuesheetIds, function(response) {
-                    afterPostMake($makeCuesheet)});
+                    afterPostMake($makeCuesheet, $typeahead)});
             }
         });
         $('.test-lcs').click(function(){
@@ -183,7 +184,7 @@ $(function () {
         });
         $('.create-cuesheet').click(function(){
             postMakeCuesheet($makeCuesheet.val(), cuesheetIds, function(response) {
-                afterPostMake($makeCuesheet)});
+                afterPostMake($makeCuesheet, $typeahead)});
         });
         $('.rename-cuesheet').click(function(){
             postRenameCuesheet(this.id, $('#album_id').val(), function(response) {

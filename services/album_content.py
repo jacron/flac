@@ -10,7 +10,8 @@ from ..services import get_full_cuesheet
 
 def has_notfound_files(cuesheet, album_path):
     for file in cuesheet['cue']['files']:
-        if not os.path.exists(u'{}/{}'.format(album_path, file['name'])):
+        path = '{}/{}'.format(album_path, file['name'])
+        if not os.path.exists(path):
             return True
     return False
 

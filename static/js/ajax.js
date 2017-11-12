@@ -70,7 +70,7 @@ function postMakeCuesheet(name, ids, cb) {
     }, function(response){if (cb) {cb(response);}})
 }
 
-function postRenameCuesheet(pieceId, albumId) {
+function postRenameCuesheet(pieceId, albumId, cb) {
     ajaxPost({
         cmd: 'renamecue',
         id: pieceId,
