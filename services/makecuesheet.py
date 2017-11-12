@@ -40,7 +40,8 @@ def rename_cuesheet(piece_id, album_id):
 
 
 def make_cuesheet(name, ids, album_id):
-    lines = ['TITLE "{}"'.format(name)]
+    lines = []
+    lines.append(u'TITLE "{}"'.format(name))
     titles = []
     for piece_id in ids:
         piece = get_piece(piece_id)

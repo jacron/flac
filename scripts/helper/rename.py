@@ -58,7 +58,7 @@ def rename_back(path, step_in):
 
 
 def rename_to_back_one(path):
-    jpgpath = u'{}/scan/Booklet*.jpg'.format(path)
+    jpgpath = u'{}/scan/*Back.jpg'.format(path)
     for src in glob.iglob(jpgpath):
         trg = '{}/back.jpg'.format(path)
         if not os.path.exists(trg):

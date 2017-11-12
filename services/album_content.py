@@ -10,12 +10,13 @@ from ..services import get_full_cuesheet
 
 
 def has_notfound_files(cuesheet, album_path):
-    for file in cuesheet['cue']['files']:
-        fname = file['name'].encode('utf-8')
-        path = '{}/{}'.format(album_path, fname)
-        # if not os.path.exists(path.decode('utf-8')):
+    # for file in cuesheet['cue']['files']:
+        # fname = file['name'].encode('utf-8')
+        # path = '{}/{}'.format(album_path, fname)
+        # if not os.path.exists(path):
         #     return True
-    return False
+    # return False
+    pass
 
 
 def organize_pieces(album_id, album_path):

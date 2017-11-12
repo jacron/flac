@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from flac.db.pieces import insert_pieces
 from flac.lib.color import ColorPrint
 from flac.services import get_full_cuesheet
-from flac.views import openfinder_album, get_componist_path
+from flac.views import get_componist_path
 
 """flac
 
@@ -209,15 +209,13 @@ def main():
     # album_id = 169
     # path = get_path_of_album(album_id)
     # mother_id = 3816
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Schnabel, maestro espressivo - vol2"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Horowitz - The Complete Masterworks Recordings 1962 1973"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Yehudi Menuhin - Die schoensten violinkonzerte"
-    path = "/Volumes/Media/Audio/Klassiek/Collecties/Yo Yo Ma 30 years outside the box"
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Yo Yo Ma 30 years outside the box"
+    path = "/Volumes/Media/Audio/Klassiek/Collecties/Decca, The Decca Sound"
     # artiest = "Fritz Reiner"
     # ComponistID = 134
     # componist = from_path(path)
     # ComponistID = componist_from_album(album_id)
-    PerformerID = 112
+    # PerformerID = 112
     # PerformerID2 = 47
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     if path is None:
@@ -227,11 +225,11 @@ def main():
     # return
 
     # sanatize_haakjes(path, True)
-    restore_cover(path=path, step_in=True)
-    rename_cover(path=path, step_in=True)
+    # restore_cover(path=path, step_in=True)
+    # rename_cover(path=path, step_in=True)
     # rename_titles(path)
-    # rename_to_back(path)
-    process_a(p=path, mother_id=None, iscollectie=1, step_in=1)
+    rename_to_back(path)
+    # process_a(p=path, mother_id=None, iscollectie=1, step_in=1)
     # get_albums(path=path, mother_id=None, iscollectie=1)
     # get_album_groups(path=path, mother_id=None, iscollectie=0, step_in=True)
     # album_id = process_album(path=path, mother_id=None, is_collectie=0)

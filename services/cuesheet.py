@@ -120,10 +120,15 @@ def parse(data):
 def get_full_cuesheet(path, id):
     filename = os.path.split(path)[1]
     filename = ' '.join(filename.split('.')[:-1])
+    path = path.encode('utf-8')
     if os.path.exists(path):
-        with codecs.open(path, 'r', 'utf-8') as f:
-            # with open(path, b'r') as f:
-            data = f.read()
+        with codecs.open(path, b'r', 'utf-8') as f:
+            try:
+                data = f.read()
+            except:
+                print("can't read unicode here")
+                with open(path, b'r') as f:
+                    data = f.read()
             cue = None
             try:
                 cue = parse(data)

@@ -88,10 +88,10 @@ function typeaheadAlbumComponisten($typeahead, $makeCuesheet) {
 }
 
 function copyComponist(componist, $makeCuesheet) {
-    const normalizedComponist = componist.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+    // const normalizedComponist = componist.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
     var val = $makeCuesheet.val();
     if (val[0] !== ' ' && val[0] !== '-') {val = ' - ' + val;}
-    $makeCuesheet.val(normalizedComponist + val);
+    $makeCuesheet.val(componist + val);
 }
 
 function similar($selectForCuesheet) {
