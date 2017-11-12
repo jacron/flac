@@ -116,51 +116,6 @@ function selectSiblingsInBetween($selectForCuesheet) {
     }
 }
 
-function getSmallest(lines) {
-    var small = '';
-    lines.forEach(function(line){
-        if (small.length < line.length) {
-            small = line;
-        }
-    });
-    return small;
-}
-
-function lcs(lines) {
-    var common = '';
-    var small = getSmallest(lines);
-    var temp_common = '';
-    for (var i=0; i< small.length; i++) {
-        var c = small[i];
-        temp_common += c;
-        $.each(lines, function(key, line) {
-            if (line.indexOf(temp_common) === -1) {
-                temp_common = c;
-                $.each(lines, function(key2, line2) {
-                    if (line2.indexOf(temp_common) === -1) {
-                        temp_common = '';
-                        return false;
-                    }
-                });
-                return false;
-            }
-        });
-        if (temp_common !== '' && temp_common.length > common.length) {
-            common = temp_common;
-        }
-    }
-    return common;
-}
-
-function test_lcs() {
-    var titles = [
-        '04 - Fantasiestucke, Op. 73 I. Zart und mut Ausdruck.flac',
-        '05 - Fantasiestucke, Op. 73 II. Lebhaft, leicht.flac',
-        '06 - Fantasiestucke, Op. 73 III. Rasch, mut Feuer.flac',
-    ];
-    console.log('lcs', lcs(titles));
-}
-
 function selectCheckboxes($selectForCuesheet, $makeCuesheet, mode) {
     var active = false;
     var ids = [];
@@ -178,16 +133,6 @@ function selectCheckboxes($selectForCuesheet, $makeCuesheet, mode) {
         }
     });
     return ids;
-}
-
-function lcs_pieces($selectForCuesheet, $makeCuesheet){
-    var titles = [];
-    $.each($selectForCuesheet, function(key, val) {
-        if (val.checked) {
-            titles.push(titleOfPiece($(val)));
-        }
-    });
-    $makeCuesheet.val(lcs(titles));
 }
 
 $(function () {
@@ -238,12 +183,11 @@ $(function () {
             id: this.id,
             albumid: $('#album_id').val()
         }, function(response){
-            console.log(response)
+            console.log(response);
             location.reload();
         })
     });
-    $('.test-lcs').click(function(){
-        // test_lcs();
-        lcs_pieces($selectForCuesheet, $makeCuesheet);
+    $('.create-cuesheet').click(function(){
+        postMakeCuesheet($makeCuesheet.val(), ids);
     });
 });

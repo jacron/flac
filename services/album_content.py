@@ -54,8 +54,9 @@ def album_context(album_id):
     sp = get_setting('show_proposals')
     show_proposals = sp['VALUE']
     if show_proposals == '1':
-        proposals = get_proposals(cuesheets, pieces, album_o, album_componisten)
-        artists = get_artists(cuesheets, pieces, album_o, album_performers)
+        allsheets = cuesheets + invalidcues
+        proposals = get_proposals(allsheets, pieces, album_o, album_componisten)
+        artists = get_artists(allsheets, pieces, album_o, album_performers)
     return {
         'albumid': album_id,
         'pieces': pieces,

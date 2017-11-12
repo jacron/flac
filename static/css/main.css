@@ -103,6 +103,19 @@ nav a.selected {
 .make-cuesheet {
     width: 700px;
 }
+.album-componist.typeahead {
+    width: 100px;
+}
+.album-componist-to-make,
+.create-cuesheet,
+.test-lcs {
+    cursor: pointer;
+}
+.album-componist-to-make:hover,
+.create-cuesheet:hover,
+.test-lcs:hover {
+    text-decoration: underline;
+}
 .content.cue {
     /*display: none;*/
 }
