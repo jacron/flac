@@ -72,7 +72,7 @@ def do_post(post):
         print(componist_id)
         return componist_id
     if cmd == 'remove_componist':
-        return remove_componist_from_album(post['componist_id'], post['albumid'])
+        return remove_componist_from_album(post['id'], post['albumid'])
     if cmd == 'update_componist_name':
         return update_componistname(post['name'], post['id'])
     if cmd == 'update_componist_years':

@@ -66,7 +66,6 @@ function removeComponist($this) {
         cmd: 'remove_componist',
         id: $this.attr('id'),
         albumid: $('#album_id').val()
-        // albumid: $this.attr('albumid')
     };
     ajaxPost(data);
     location.reload();
