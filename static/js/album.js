@@ -3,21 +3,19 @@
  */
 'use strict';
 
-function editAlbumTitle($this, albumId) {
-    ajaxPost({
-        cmd: 'update_album_title',
-        title: $this.text().trim(),
-        albumid: albumId
-    });
-}
+function copyTitle($this) {
+    var parent = $this.parents('.cue-header').find('span').first(),
+        title = parent.text(),
+        $title = $('.edit-title');
 
-function refetch() {
-    ajaxPost({
-        albumid: $('#album_id').val(),
-        cmd: 'refetch'
-    }, function(){
-        location.reload();
-    });
+    if (confirm('Use this title for the album? ' + title)) {
+        $title.text(title);
+        ajaxPost({
+            cmd: 'update_album_title',
+            title: title,
+            albumid: $title.attr('albumid')
+        });
+    }
 }
 
 $(function () {
@@ -35,7 +33,12 @@ $(function () {
                 refetch();
             }
         });
+        $('.album-image').click(function () {
+            $(this).toggleClass('expanded');
+        });
+        $('.cue-plus').click(function () {
+            copyTitle($(this));
+        });
     }
-
 });
 

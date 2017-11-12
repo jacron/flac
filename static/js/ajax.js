@@ -45,3 +45,36 @@ function ajaxPost(data, cb) {
         }
     });
 }
+
+function openfinder(objectId, kind) {
+    ajaxPost({
+        objectid: objectId,
+        cmd: 'openfinder',
+        kind: kind
+    });
+}
+
+function play(idPiece) {
+    ajaxPost({
+        arg: idPiece,
+        cmd: 'play'
+    });
+}
+
+function postMakeCuesheet(name, ids, cb) {
+    ajaxPost({
+        cmd: 'makecuesheet',
+        ids: ids,
+        name: name,
+        albumid: $('#album_id').val()
+    }, function(response){cb(response);})
+}
+
+function postRenameCuesheet(pieceId, albumId) {
+    ajaxPost({
+        cmd: 'renamecue',
+        id: pieceId,
+        albumid: albumId
+    }, function(response){cb(response);})
+}
+

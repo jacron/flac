@@ -27,10 +27,10 @@ function lcs(lines) {
                 $.each(lines, function(key2, line2) {
                     if (line2.indexOf(temp_common) === -1) {
                         temp_common = '';
-                        return false;
+                        return false;  // break each()
                     }
                 });
-                return false;
+                return false;  // break each()
             }
         });
         if (temp_common !== '' && temp_common.length > common.length) {
@@ -50,18 +50,25 @@ function similar($selectForCuesheet) {
             active = true;
         }
         if (active) {
-            val.checked = true;
+            val.checked = false;
             titles.push(titleOfPiece($(val)));
             common = lcs(titles);
             if (titles.length > 2 && common.length < old_common.length - 2) {
                 titles.pop();
-                val.checked = false;
-                return false;
+                val.checked = true;
+                return false;  // break each()
             }
             old_common = common;
         }
     });
     return titles;
+}
+
+function trimNr(s) {
+    if (s.substr(s.length-1) === 'I') {
+        return s.substr(0, s.length-1);
+    }
+    return s;
 }
 
 function lcs_pieces($selectForCuesheet, $makeCuesheet){
@@ -74,11 +81,7 @@ function lcs_pieces($selectForCuesheet, $makeCuesheet){
     if (titles.length === 1) {
         titles = similar($selectForCuesheet);
     }
-    var common = lcs(titles);
-    if (common.substr(common.length-1) == 'I') {
-        common = common.substr(0, common.length-1);
-    }
-    $makeCuesheet.val(common);
+    $makeCuesheet.val(trimNr(lcs(titles)));
 }
 
 $(function () {
