@@ -20,4 +20,10 @@ $(function () {
             }
         }
     });
+    $('.extra .add-componist').keydown(function (e) {
+        if (e.key === 'Enter') {
+            var $target = $('.componisten input.add');
+            addNewComponist($target);
+        }
+    });
 });

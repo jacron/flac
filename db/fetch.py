@@ -207,6 +207,25 @@ def get_performers_typeahead():
     return out
 
 
+def get_general_search(query):
+    # get album by name, as a simple beginning
+    sql = '''
+      SELECT Title, ID
+      FROM Album
+      WHERE Album.Title LIKE ?
+      LIMIT 10
+    '''
+    items = get_items_with_parameter(sql, '%' + query + '%')
+    out = []
+    for item in items:
+        # out.append(item[0])
+        out.append({
+            'name': item[0],
+            'ID': item[1],
+        })
+    return out
+
+
 def get_instruments_typeahead():
     sql = '''
       SELECT Name, ID

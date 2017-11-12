@@ -72,21 +72,6 @@ function getAlbumComponisten() {
     return items;
 }
 
-function typeaheadAlbumComponisten($typeahead, $makeCuesheet) {
-    const items = getAlbumComponisten();
-    if (items.length === 1) {$typeahead.val(items[0]); }
-    $typeahead.typeahead(typeaheadSettings,
-        { source: match(items) }
-    ).keydown(function(e){
-        if (e.key === 'Enter') {
-            copyComponist($typeahead.val(), $makeCuesheet);
-        }
-        if (e.key === 'Escape') {
-            $typeahead.val('');
-        }
-    });
-}
-
 function copyComponist(componist, $makeCuesheet) {
     // const normalizedComponist = componist.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
     var val = $makeCuesheet.val();
@@ -150,7 +135,6 @@ function lcs_pieces($selectForCuesheet, $makeCuesheet){
 }
 
 function afterPostMake($makeCuesheet, $typeahead) {
-    // location.reload()
     $makeCuesheet.val('');
     var items = getAlbumComponisten();
     if (items.length === 1) {$typeahead.val(items[0]); }

@@ -1,5 +1,11 @@
 /**
  * Created by orion on 12/11/2017.
+ *
+ * "LCS"
+ *
+ * A new implementation that works just as well as the classical one, after
+ * earlier implementations that I made in Java and python,
+ * finding the Longest Common Substring in an array of strings.
  */
 
 'use strict';
@@ -39,6 +45,3 @@ function lcs(lines) {
     }
     return common;
 }
-
-$(function () {
-});

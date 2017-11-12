@@ -27,6 +27,19 @@ function copyCueTitle($this) {
     $('.make-cuesheet').val(title);
 }
 
+function cycleSizes($this) {
+    if ($this.hasClass('expanded')) {
+        $this.removeClass('expanded');
+        $this.addClass('super');
+    }
+    else if ($this.hasClass('super')) {
+        $this.removeClass('super');
+    }
+    else {
+        $this.addClass('expanded');
+    }
+}
+
 $(function () {
     const albumId = $('#album_id').val();
     if (albumId) {
@@ -43,7 +56,7 @@ $(function () {
             }
         });
         $('.album-image').click(function () {
-            $(this).toggleClass('expanded');
+            cycleSizes($(this));
         });
         $('.cue-plus').click(function () {
             copyTitle($(this));

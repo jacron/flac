@@ -4,7 +4,11 @@
 {% block title %}Extra{% endblock %}
 {% block page %}
 <div class="extra">
-    <form>{% csrf_token %}</form>
+    <form>{% csrf_token %}
+<div>
+    <input type="text" placeholder="zoek algemeen" class="typeahead general">
+</div>
+    </form>
     <div class="hyperlink">
         <a href="{% url 'cmd' 'k' %}">Scarlatti K-lijst</a>
     </div>

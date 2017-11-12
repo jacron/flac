@@ -1,4 +1,7 @@
 /*@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800');*/
+li {
+    list-style: none;
+}
 @font-face {
   font-family: 'Open Sans';
   src: url('../fonts/OpenSans-Regular.ttf?v=4.7.0');
@@ -18,6 +21,9 @@ body {
     margin: 0;
 }
 .content {
+    /*padding: 6px;*/
+}
+.album {
     padding: 6px;
 }
 .checkbox {
@@ -62,6 +68,9 @@ body {
 }
 .album-image.expanded {
     height: 560px;
+}
+.album-image.super {
+    height: 900px;
 }
 nav {
     background-color: rgba(21,21,100,.90);

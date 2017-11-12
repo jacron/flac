@@ -16,27 +16,10 @@ function addComponist0(componistId, albumId) {
 
 function addComponist($select) {
     addComponist0($select.val(), $select.attr('albumid'));
-    // const data = {
-    //     cmd: 'add_componist',
-    //     componistid: $select.val(),
-    //     albumid: $select.attr('albumid')
-    // };
-    // ajaxPost(data);
-    // location.reload();
 }
 
 function addComponist2($target) {
-    // var $target = $(e.target);
-        // id = $target.attr('id'),
-        // albumId = $('#album_id').val();
     addComponist0($target.attr('id'), $('#album_id').val());
-    // const data = {
-    //     cmd: 'add_componist',
-    //     componistid: id,
-    //     albumid: albumId
-    // };
-    // ajaxPost(data);
-    // location.reload();
 }
 
 function newComponist($input) {
@@ -70,28 +53,6 @@ function removeComponist($this) {
     ajaxPost(data);
     location.reload();
 }
-
-var match = function (items) {
-    return function findMatches(q, cb) {
-        var matches, substrRegex;
-
-        // an array that will be populated with substring matches
-        matches = [];
-
-        // regex used to determine if a string contains the substring `q`
-        substrRegex = new RegExp(q, 'i');
-
-        // iterate through the pool of strings and for any string that
-        // contains the substring `q`, add it to the `matches` array
-        $.each(items, function (i, str) {
-            if (substrRegex.test(str)) {
-                matches.push(str);
-            }
-        });
-
-        cb(matches);
-    };
-};
 
 function editComponistName($this) {
     const data = {
@@ -214,42 +175,6 @@ function jumpToSearched(search) {
         }
     });
 }
-
-$(function () {
-    var componisten = [];
-    $('.componist-naam').each(function () {
-        var $this = $(this);
-        componisten.push($this.text());
-    });
-    $('.extra .add-componist').keydown(function (e) {
-        if (e.key === 'Enter') {
-            var $target = $('.componisten input.add');
-            // console.log($target);
-            addNewComponist($target);
-        }
-    });
-    $('.componisten .typeahead').typeahead({
-            hint: true,
-            highlight: true,
-            minLength: 1,
-            display: 'name'
-        },
-        {
-            name: 'componisten',
-            source: match(componisten)
-        }
-    ).keydown(function (e) {
-        if (e.key === 'Enter') {
-            var result = $('.typeahead').get(1).value;
-            $('.componist-naam').each(function () {
-                var $this = $(this);
-                if ($this.text() === result) {
-                    location.href = '/componist/' + $this.attr('componistid');
-                }
-            });
-        }
-    });
-});
 
 $(function () {
     // componist
