@@ -1,6 +1,7 @@
 import urllib
 import os
 
+from flac.services import openpath
 from flac.services.makecuesheet import make_cuesheet, rename_cuesheet
 from flac.services.path import get_path, path_from_id_field
 from ..db import (abs_insert_componist, )
@@ -52,8 +53,7 @@ def person_by_url(post):
 def openfinder(objectid, kind):
     path = get_path(objectid, kind)
     if path:
-        cmd = u'open "{}"'.format(path).encode('UTF-8')
-        os.system(cmd)
+        openpath(path)
 
 
 def do_post(post):

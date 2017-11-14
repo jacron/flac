@@ -6,7 +6,7 @@
 <div class="extra">
     <form>{% csrf_token %}
 <div>
-    <input type="text" placeholder="zoek algemeen" class="typeahead general">
+    <input type="text" placeholder="zoek album" class="typeahead general">
 </div>
     </form>
     <div class="hyperlink">
@@ -39,5 +39,7 @@
         <td><input class="delete-album" placeholder="ID"></td>
     </tr>
     </table>
+<a href="{% url 'cmd' 'folder' %}">save clipboard as folder.jpg</a> |
+<a href="{% url 'cmd' 'back' %}">save clipboard as back.jpg</a>
 </div>
 {% endblock %}

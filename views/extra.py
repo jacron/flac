@@ -1,5 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
+
+from flac.services import save_cb_image
 from ..db import (get_scarlatti_k_pieces, get_scarlatti, get_setting,
                   toggle_setting, )
 
@@ -38,5 +40,14 @@ def cmd(request, cmd_code):
     if cmd_code == 'proposals':
         toggle_setting('show_proposals')
         return extra_view(request)
+    if cmd_code == 'folder':
+        save_cb_image('folder')
+        return extra_view(request)
+    if cmd_code == 'back':
+        save_cb_image('back')
+        return extra_view(request)
+    return extra_view(request)
+
+
 
 

@@ -2,18 +2,23 @@
 from PIL import ImageGrab
 
 from flac.lib.color import ColorPrint
+from flac.views.ajaxpost import openpath
 
 folderpath = '/Volumes/Media/tmp/folder.jpg'
-
+path = '/Volumes/Media/tmp'
 
 def save_cb_image():
     img = ImageGrab.grabclipboard()
     if img:
         img.save(folderpath)
         ColorPrint.print_c('front saved!', ColorPrint.LIGHTCYAN)
+        openpath(path)
+    else:
+        ColorPrint.print_c('No image on clipboard!', ColorPrint.RED)
 
 
 def main():
+    # openpath(path)
     save_cb_image()
 
 

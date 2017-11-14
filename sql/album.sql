@@ -169,7 +169,7 @@ where Path in (
   having COUNT(*) = 1
 );
 
-
+-- delete invalid albums that share the same path but have no content
 -- (1) Path duplicates
 select ID
 FROM (
@@ -203,8 +203,45 @@ where ID in (
 
 delete from Album
 where ID in(
-    3817
+    5026
 );
+
+-- select albums that have no children?
+  select AlbumID from Album
+  group by AlbumID;
+
+select a.ID, a.AlbumID from Album as a
+where a.AlbumID is not null;
+
+select
+  ID
+from
+  Album
+where
+  ID not in (
+  select
+    AlbumID
+  from
+    Album
+    GROUP BY AlbumID
+);
+
+
+-- select album without pieces
+  select AlbumID from Piece
+  group by AlbumID;
+-- 4735
+select id,AlbumID from Album
+WHERE ID BETWEEN 4735 and 5151 AND ID in (
+  select AlbumID from Piece
+  group by AlbumID
+);
+
+update Album
+set AlbumID = 5025
+where AlbumID=4735;
+select id from Album
+where AlbumID=4735;
 
 select * from Componist
 where LastName='Sweelinc';

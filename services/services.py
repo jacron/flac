@@ -1,4 +1,6 @@
-from flac.settings import COMPONIST_PATH, PERFORMER_PATH
+import os
+from flac.settings import COMPONIST_PATH, PERFORMER_PATH, COVER_PATH, TMP_PATH
+from PIL import ImageGrab
 
 
 def replace_haakjes(s):
@@ -95,3 +97,17 @@ def syspath_performer(performer):
 
 def alfabet():
     return [chr(i) for i in range(ord('a'),ord('z')+1)]
+
+
+def save_cb_image(cover):
+    img = ImageGrab.grabclipboard()
+    if img:
+        img.save(COVER_PATH.format(cover))
+        openpath(TMP_PATH)
+
+
+def openpath(path):
+    cmd = u'open "{}"'.format(path).encode('UTF-8')
+    os.system(cmd)
+
+

@@ -24,7 +24,7 @@ body {
     /*padding: 6px;*/
 }
 .album {
-    padding: 6px;
+    /*padding: 6px;*/
 }
 .checkbox {
     width: 14px;
@@ -103,8 +103,11 @@ nav a.selected {
     cursor: pointer;
     font-size: 18px !important;
 }
+.toggle-cue-lines {
+    width: 16px;
+}
 .content.stukken {
-    /*display: none;*/
+    display: none;
 }
 .content.stukken .make-cuesheet {
     /*display: none;*/
@@ -255,8 +258,11 @@ fieldset {
     float: left;
     list-style: none;
 }
+.componist-years {
+    margin-top: 2px;
+}
 .performer-years {
-    margin-top: 220px;
+    margin-top: 222px;
 }
 .input-album,
 .delete-album {
@@ -272,13 +278,10 @@ fieldset {
 .add-componist, .add-performer {
     cursor: pointer;
 }
-#drop-area {
+#drop-area-componist {
+    position: relative;
 }
 #drop-area:hover {
-	/*color: #f00;*/
-	/*border-color: #f00;*/
-	/*border-style: solid;*/
-	/*box-shadow: inset 0 3px 4px #888;*/
     border: 1px #ccc dashed;
 }
 .image-container {
@@ -313,7 +316,7 @@ fieldset {
     /*margin-left:-20px;*/
 }
 .nav {
-    padding-bottom: 10px;
+    padding: 10px;
 }
 .nav a.enabled {
     padding: 4px;
@@ -335,4 +338,39 @@ fieldset {
 }
 .typeahead.general {
     width: 600px;
+}
+.centered-cropped {
+    height: 200px;
+    width: 160px;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+div[class="pattern"] {
+    position: relative;
+    overflow: hidden;
+    width: 160px;
+    height: 200px;
+}
+div[class="pattern"] img {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -300px;
+}
+
+.crop {
+  color: white;
+  width: 200px;
+  height: 300px;
+  position: relative;
+}
+.c-image {
+  z-index: -1;
+  position: absolute;
+  background-position: center center;
+  background-size: cover;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
 }

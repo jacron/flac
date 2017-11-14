@@ -202,7 +202,7 @@ def main():
     # print(ComponistID)
     # return
 
-    # open_finder_album(album_id=)
+    open_finder_album(album_id=4286)
     # open_finder_componist(ComponistID)
     # return
     # path = get_path_of_componist(ComponistID)
@@ -210,7 +210,8 @@ def main():
     # path = get_path_of_album(album_id)
     # mother_id = 3816
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/Yo Yo Ma 30 years outside the box"
-    path = "/Volumes/Media/Audio/Klassiek/Collecties/Decca, The Decca Sound"
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Decca, The Decca Sound"
+    # path = "/Volumes/Media/Audio/Klassiek/Performers"
     # artiest = "Fritz Reiner"
     # ComponistID = 134
     # componist = from_path(path)
@@ -228,11 +229,11 @@ def main():
     # restore_cover(path=path, step_in=True)
     # rename_cover(path=path, step_in=True)
     # rename_titles(path)
-    rename_to_back(path)
+    # rename_to_back(path)
     # process_a(p=path, mother_id=None, iscollectie=1, step_in=1)
     # get_albums(path=path, mother_id=None, iscollectie=1)
     # get_album_groups(path=path, mother_id=None, iscollectie=0, step_in=True)
-    # album_id = process_album(path=path, mother_id=None, is_collectie=0)
+    # album_id = process_album(path=path, mother_id=None, is_collectie=1)
 
 if __name__ == '__main__':
     main()

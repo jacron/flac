@@ -10,3 +10,4 @@ from extra import *
 from collection import *
 from gather import *
 from tag import *
+from search import *

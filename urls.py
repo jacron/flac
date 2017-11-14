@@ -42,4 +42,6 @@ urlpatterns = [
     url(r'^instrumentimage/(?P<instrument_name>.+)/$', views.instrumentimage),
     url(r'^performerimage/(?P<performer_id>.+)/$', views.performerimage),
     url(r'^image/(?P<id>.+)/(?P<type>.+)/$', views.image),
+    url(r'^search/$', views.search),
+    url(r'^search/(?P<query>.+)$', views.searchq, name='query'),
 ]

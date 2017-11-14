@@ -91,6 +91,7 @@ sqlAllAlbums = '''
 
 
 def get_next_album(id_mother, id_album):
+    if not id_mother : return None
     items = get_items_with_parameter(sqlAllAlbums, id_mother)
     match = None
     for item in items:
@@ -102,6 +103,7 @@ def get_next_album(id_mother, id_album):
 
 
 def get_prev_album(id_mother, id_album):
+    if not id_mother : return None
     items = get_items_with_parameter(sqlAllAlbums, id_mother)
     match = None
     for item in items:
@@ -109,6 +111,26 @@ def get_prev_album(id_mother, id_album):
             return match
         match = int(item[1])
     return None
+
+
+def get_albums_by_title(q):
+    sql = '''
+      SELECT Title, Album.ID, Componist.FirstName, Componist.LastName  
+      FROM Album 
+      JOIN Componist_Album ON Album.ID=Componist_Album.AlbumID
+      JOIN Componist ON Componist.ID=Componist_Album.ComponistID
+      WHERE Title LIKE ?
+      ORDER BY Title COLLATE NOCASE
+    '''
+    items = get_items_with_parameter(sql, '%' + q + '%')
+    out = []
+    for nr, item in enumerate(items):
+        out.append({
+            'Title': item[0],
+            'ID': item[1],
+            'Componist': u'{} {}'.format(item[2], item[3]),
+        })
+    return out
 
 
 def get_albums():
@@ -733,6 +755,9 @@ def get_album_path_by_id(album_id, c):
     WHERE Album.ID=?
     '''
     fields = c.execute(sql, (album_id,)).fetchone()
+    if not fields:
+        print('ID not found')
+        return None
     return fields[0]
 
 

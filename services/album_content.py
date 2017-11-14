@@ -5,7 +5,7 @@ from flac.services.proposals import get_proposals, get_artists
 from ..db import (
     get_album, get_pieces,
     get_mother_title, get_album_albums, get_album_componisten, get_album_performers, get_album_instruments,
-    get_album_tags, get_setting)
+    get_album_tags, get_setting, get_prev_album, get_next_album)
 from ..services import get_full_cuesheet
 
 
@@ -46,17 +46,18 @@ def album_context(album_id):
     if not album_o:
         return None
 
-    mother_title = None
-    proposals, artists = [], []
+    mother_title, mother_id = None, None
     album_o = get_album(album_id)
     if album_o['AlbumID']:
-        mother_title = get_mother_title(album_o['AlbumID'])
+        mother_id = album_o['AlbumID']
+        mother_title = get_mother_title(mother_id)
     cuesheets, pieces, notfounds, invalidcues = organize_pieces(album_id, album_o['Path'])
     album_componisten = get_album_componisten(album_id)
     album_performers = get_album_performers(album_id)
     album_instruments = get_album_instruments(album_id)
     sp = get_setting('show_proposals')
     show_proposals = sp['VALUE']
+    proposals, artists = [], []
     if show_proposals == '1':
         allsheets = cuesheets + invalidcues
         proposals = get_proposals(allsheets, pieces, album_o, album_componisten)
@@ -77,4 +78,6 @@ def album_context(album_id):
         'proposals': proposals,
         'show_proposals': show_proposals,
         'artists': artists,
+        'prev_id': get_prev_album(mother_id, album_id),
+        'next_id': get_next_album(mother_id, album_id),
     }

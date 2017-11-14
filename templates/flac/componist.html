@@ -21,17 +21,23 @@
                 <h4>
                     <span contenteditable="true" name="title"
                           class="edit-componist-name" componist_id="{{ componist.ID }}">
-                        {{ componist.FullName }}
+                        {{ componist.FullName }}&nbsp;({{ items.children|length }})
                     </span>
-                    <span>({{ items.children|length }})</span>
                 </h4>
-                <img src="/componistimage/{{ componist.ID }}/" class="instrument-image">
-                <h4 class="performer-years">
+{#                <div style="position: relative">#}
+                    <div class="crop">
+                        <div class="c-image"
+                    style="background-image: url('/componistimage/{{ componist.ID }}/')"
+                        ></div>
+                    </div>
+{#                </div>#}
+                <h4 class="componist-years">
                     <span contenteditable="true" name="years" class="edit-componist-years"
                           componist_id="{{ componist.ID }}">
                     {{ componist.Birth }} - {% if componist.Death %}{{ componist.Death }}{% endif %}
                     </span>
                 </h4>
+{#                <img src="/componistimage/{{ componist.ID }}/" class="instrument-image">#}
             </div>
         </div>
         <div class="w3-col m10 19">

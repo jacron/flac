@@ -1,0 +1,9 @@
+{% extends "flac/base.html" %}
+{% load page_tags %}
+{% block title %}
+    search: {{ query }}
+{% endblock %}
+{% block page %}
+    search: {{ query }}
+    {% albumlist albums %}
+{% endblock %}

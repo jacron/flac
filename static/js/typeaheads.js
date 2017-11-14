@@ -7,8 +7,8 @@
 var typeaheadSettings = {
     hint: true,
     highlight: true,
-    minLength: 2,
-    limit: 10,
+    minLength: 1,
+    // limit: 10,
     name: 'name'
 };
 
@@ -110,8 +110,9 @@ var albums = new Bloodhound({
         wildcard: '%QUERY',
         url: '/ajax/?cmd=generalsearch&query=%QUERY',
         transform: function(response) {
-            // console.log(response);
+            albumIds = [];
             return $.map(response, function(movie) {
+                albumIds.push(movie.ID);
                 const name = movie.name + ' - ' + movie.ID;
                 return {name:name};
             });
@@ -119,8 +120,10 @@ var albums = new Bloodhound({
     }
 });
 
+var albumIds = [];
+
 function getId(s) {
-    var pos = s.indexOf(' - ');
+    var pos = s.lastIndexOf(' - ');
     return s.substr(pos + 3);
 }
 
@@ -133,13 +136,12 @@ function generalSearch($typeahead) {
             updater: function(item) {
                 console.log(item);
                 return item;
-            }
+            },
         }).keydown(function(e) {
         if (e.key === 'Enter') {
-            // console.log($(e.target).val());
             const id = getId($(e.target).val());
-            console.log(id);
-            location.href = '/album/' + id;
+            console.log(albumIds);
+            // location.href = '/album/' + id;
         }
     });
 }

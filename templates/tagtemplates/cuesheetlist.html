@@ -26,7 +26,7 @@
         {% for file in cuesheet.cue.files %}
             {%  for track in file.tracks %}
                 {% if track.title %}
-                <li class="content cue-lines">{{ track.title }}</li>
+                <li class="content cue-lines">{{ track.title|unescape }}</li>
                 {% endif %}
             {% endfor %}
         {% endfor %}
