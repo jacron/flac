@@ -4,6 +4,6 @@
     search: {{ query }}
 {% endblock %}
 {% block page %}
-    search: {{ query }}
+    <input class="search-title" placeholder="Zoek" value="{{ query }}">
     {% albumlist albums %}
 {% endblock %}
