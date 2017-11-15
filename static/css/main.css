@@ -374,3 +374,12 @@ div[class="pattern"] img {
   left: 0;
   right: 0;
 }
+.componist-name {
+    color: brown;
+}
+.tag-name {
+    color: darkgreen;
+}
+.search .album-list li {
+    height: 300px;
+}

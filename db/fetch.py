@@ -115,10 +115,14 @@ def get_prev_album(id_mother, id_album):
 
 def get_albums_by_title(q):
     sql = '''
-      SELECT Title, Album.ID, Componist.FirstName, Componist.LastName  
+      SELECT Title, Album.ID, 
+        Componist.FirstName, Componist.LastName,
+        Tag.Name
       FROM Album 
       JOIN Componist_Album ON Album.ID=Componist_Album.AlbumID
       JOIN Componist ON Componist.ID=Componist_Album.ComponistID
+      LEFT JOIN Tag_Album ON Album.ID = Tag_Album.AlbumID
+      LEFT JOIN Tag ON Tag.ID = Tag_Album.TagID
       WHERE Title LIKE ?
       ORDER BY Title COLLATE NOCASE
     '''
@@ -129,6 +133,7 @@ def get_albums_by_title(q):
             'Title': item[0],
             'ID': item[1],
             'Componist': u'{} {}'.format(item[2], item[3]),
+            'TagName': item[4],
         })
     return out
 
@@ -518,6 +523,25 @@ def get_componist_albums(id_componist):
         ORDER BY Album.Title COLLATE NOCASE
     '''
     items = get_items_with_parameter(sql, id_componist)
+    named_items = named_albums_with_mother(items)
+    return filter_contained_children(named_items)
+
+
+def get_componist_albums_query(id_componist, query):
+    if not query : return get_componist_albums(id_componist)
+    sql = '''
+        SELECT
+            Album.Title,
+            Album.AlbumID,
+            Album.ID
+        FROM Componist_Album
+            JOIN Componist ON Componist.ID = Componist_Album.ComponistID
+            JOIN Album ON Album.ID = Componist_Album.AlbumID
+        WHERE Componist_Album.ComponistID =?
+        AND Album.Title LIKE ?
+        ORDER BY Album.Title COLLATE NOCASE
+    '''
+    items = get_items_with_2parameter(sql, id_componist, '%' + query + '%')
     named_items = named_albums_with_mother(items)
     return filter_contained_children(named_items)
 

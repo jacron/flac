@@ -4,6 +4,10 @@
     search: {{ query }}
 {% endblock %}
 {% block page %}
+    <div class="search">
     <input class="search-title" placeholder="Zoek" value="{{ query }}">
+    <input class="tag typeahead" type="text" placeholder="Tag">
+        {{ albums|length }} albums
     {% albumlist albums %}
+    </div>
 {% endblock %}

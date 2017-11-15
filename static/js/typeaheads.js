@@ -136,14 +136,31 @@ function generalSearch($typeahead) {
             updater: function(item) {
                 console.log(item);
                 return item;
-            },
+            }
         }).keydown(function(e) {
         if (e.key === 'Enter') {
-            const id = getId($(e.target).val());
+            // const id = getId($(e.target).val());
             console.log(albumIds);
             // location.href = '/album/' + id;
         }
     });
+}
+
+function searchTagsTypeahead($typeahead, cmdGet, nameField) {
+    ajaxGet({
+        cmd: cmdGet
+    }, function(response){
+        var items = [];
+        response.forEach(function(item) {
+            items.push(item[nameField]);
+        });
+        $typeahead.typeahead(typeaheadSettings,
+            { source: match(items) }
+        ).keydown(function(e){
+
+        });
+    });
+
 }
 
 $(function () {
@@ -158,6 +175,7 @@ $(function () {
     quickSearch($('.performer-naam'), $('.performers .typeahead'), '/performer/', 'performerid');
     quickSearch($('.componist-naam'), $('.componisten .typeahead'), '/componist/', 'componistid');
     generalSearch($('.typeahead.general'));
+    searchTagsTypeahead($('.search .tag.typeahead'), 'tags', 'Name');
 });
 
 
