@@ -23,10 +23,3 @@ def insert_pieces(path, album_id, conn, c):
                 album_id=album_id,
                 c=c,
                 conn=conn)
-
-
-
-
-
-
-
