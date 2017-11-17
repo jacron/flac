@@ -3,5 +3,6 @@
 {% block title %}Collecties{% endblock %}
 {% block page %}
     <h4>Collecties ({{ albums|length }})</h4>
+            <input class="search-inside-collection" placeholder="Zoek" value="{{ query }}">
     {% albumlist albums %}
 {% endblock %}

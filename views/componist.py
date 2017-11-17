@@ -6,11 +6,12 @@ from ..db import get_componist_albums, get_componisten, get_componist, get_perio
     get_componist_albums_query
 
 
-def componistrequest(request, componist_id, items):
+def componistrequest(request, componist_id, items, query=''):
     template = loader.get_template('flac/componist.html')
     context = {
         'items': items,
         'componist': get_componist(componist_id),
+        'query': query,
     }
     return HttpResponse(template.render(context, request))
 
@@ -39,8 +40,7 @@ def componisten_limited(request, min_limit):
 
 
 def componist_search(request, componist_id, query):
-    # return componistenrequest(request, get_componist_albums_query(componist_id, query))
-    return componistrequest(request, componist_id, get_componist_albums_query(componist_id, query))
+    return componistrequest(request, componist_id, get_componist_albums_query(componist_id, query), query)
 
 
 def componisten(request):

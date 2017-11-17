@@ -3,7 +3,7 @@ MENU_ITEMS =[
      'label': 'Componist',
      },
     {'href': '/performer/',
-     'label': 'Artiest',
+     'label': 'Performer',
      },
     {'href': '/instrument/',
      'label': 'Solo instrument',

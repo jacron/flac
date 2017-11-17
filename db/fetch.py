@@ -168,6 +168,17 @@ def get_collections():
     return named_albums(items)
 
 
+def get_collections_query(query):
+    sql = '''
+      SELECT Title, ID FROM Album
+      WHERE IsCollection=1
+      AND Title LIKE ?
+      ORDER BY Title COLLATE NOCASE
+    '''
+    items = get_items_with_parameter(sql, '%' + query + '%')
+    return named_albums(items)
+
+
 def get_gatherers():
     sql = '''
       SELECT Title, ID FROM Album
@@ -506,6 +517,21 @@ def get_instrument_albums(id_instrument):
       ORDER BY Title COLLATE NOCASE
     '''
     items = get_items_with_parameter(sql, id_instrument)
+    named_items = named_albums_with_mother(items)
+    return filter_contained_children(named_items)
+
+
+def get_instrument_albums_search(id_instrument, query):
+    sql = '''
+      SELECT 
+       Title,
+       AlbumID,
+       ID FROM Album
+      WHERE InstrumentID=?
+      AND Title LIKE ?
+      ORDER BY Title COLLATE NOCASE
+    '''
+    items = get_items_with_2parameter(sql, id_instrument, '%' + query + '%')
     named_items = named_albums_with_mother(items)
     return filter_contained_children(named_items)
 
@@ -853,6 +879,18 @@ def get_album_by_path(path, c, conn):
         "AlbumID": fields[3],
         "ID": fields[4],
     }
+
+
+def get_album_id_by_path(path, c, conn):
+    sql = '''
+    SELECT ID 
+    FROM Album 
+    WHERE Album.Path=?
+    '''
+    fields = c.execute(sql, (path,)).fetchone()
+    if not fields:
+        return None
+    return fields[0]
 
 
 def get_mother_title(id_album):

@@ -24,8 +24,12 @@
             {{ performer.FullName }}
         </span>
                 </h4>
-                <img src="/performerimage/{{ performer.ID }}/" class="instrument-image">
-                <h4 class="performer-years">
+                    <div class="crop">
+                        <div class="c-image"
+                    style="background-image: url('/performerimage/{{ performer.ID }}/')"
+                        ></div>
+                    </div>
+                <h4 class="componist-years">
                 <span contenteditable="true" name="years" class="edit-performer-years"
                       performer_id="{{ performer.ID }}">
                 {{ performer.Birth }} - {% if performer.Death %}{{ performer.Death }}{% endif %}

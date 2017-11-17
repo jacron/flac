@@ -4,7 +4,12 @@
     {{ instrument.Name }}
 {% endblock %}
 {% block page %}
+    <form>
+        {% csrf_token %}
+        <input type="hidden" id="instrument_id" value="{{ instrument_id }}">
+    </form>
     <h4>{{ instrument.Name }} ({{ items.children|length }})</h4>
+    <input class="search-inside-instrument" placeholder="Zoek" value="{{ query }}">
 {% albumlist items.mothers %}
     <div class="clear"></div>
 {% albumlist items.children %}

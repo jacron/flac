@@ -28,6 +28,9 @@ db_path = '../../db.sqlite3'
 skipdirs = ['website', 'artwork', 'Artwork', 'etc', 'scans', 'Scans', 'scan',
             'website boxset', '#Booklets', 'Pixels', 'Graphics', 'Info + Art', 'Art',
             'Covers', ]
+uskipdirs = [u'website', u'artwork', u'Artwork', u'etc', u'scans', u'Scans', u'scan',
+            u'website boxset', u'#Booklets', u'Pixels', u'Graphics', u'Info + Art', u'Art',
+            u'Covers', ]
 artiest = None
 componist = None
 ComponistID = None
