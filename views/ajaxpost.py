@@ -4,7 +4,7 @@ import os
 from flac.services import openpath
 from flac.services.makecuesheet import make_cuesheet, rename_cuesheet
 from flac.services.path import get_path, path_from_id_field
-from ..db import (abs_insert_componist, )
+from ..db import (abs_insert_componist, update_componistbirth, update_componistdeath)
 from flac.db.pieces import refetch_pieces
 from ..db import (
     get_album, get_piece, update_album_title, add_tag_to_album,
@@ -77,6 +77,10 @@ def do_post(post):
         return update_componistname(post['name'], post['id'])
     if cmd == 'update_componist_years':
         return update_componistyears(post['years'], post['id'])
+    if cmd == 'update_componist_birth':
+        return update_componistbirth(post['years'], post['id'])
+    if cmd == 'update_componist_death':
+        return update_componistdeath(post['years'], post['id'])
 
     # performer
     if cmd == 'add_performer':

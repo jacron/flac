@@ -171,6 +171,13 @@ nav a.selected {
 .tags li {
     list-style: none;
 }
+.left-pane {
+    float: left;
+    width: 200px;
+}
+.content-pane {
+    float: left;
+}
 .tag div.remove,
 .componist .remove,
 .performer .remove,
@@ -186,11 +193,11 @@ nav a.selected {
 .instrument:hover .remove {
     display: inline-block;
 }
+.componist-years {
+    width: 200px;
+}
 fieldset {
     color: rgba(21,21,100,.90);
-}
-.left-pane {
-    float: left;
 }
 .edit-album {
     font-size: 14px;
@@ -280,6 +287,9 @@ fieldset {
 }
 #drop-area-componist {
     position: relative;
+}
+#drop-area-componist h4 {
+    width: 220px;
 }
 #drop-area:hover {
     border: 1px #ccc dashed;
@@ -392,4 +402,8 @@ div[class="pattern"] img {
 }
 .search .album-list li {
     height: 300px;
+}
+.edit-componist-birth,
+.edit-componist-death {
+    width: 50px;
 }

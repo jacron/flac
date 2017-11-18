@@ -4,12 +4,12 @@
     {{ componist.FullName }}
 {% endblock %}
 {% block page %}
-    <div class="w3-row componist">
+    <div class="componist">
+    <div class="left-pane">
         <form>
             {% csrf_token %}
             <input type="hidden" id="componist_id" value="{{ componist.ID }}">
         </form>
-        <div class="w3-col m2 5">
             <span class="hyperlink btn">
                 <a onclick="openfinder('{{ componist.ID }}', 'componist')">open finder</a>
             </span> |
@@ -32,16 +32,19 @@
                 style="background-image: url('/image/{{ componist.ID }}/componist/')"
                     ></div>
                 </div>
-                <h4 class="componist-years">
-                    <span contenteditable="true" name="years" class="edit-componist-years"
-                          componist_id="{{ componist.ID }}">
-                    {{ componist.Birth }} - {% if componist.Death %}{{ componist.Death }}{% endif %}
-                    </span>
-                </h4>
+            </div>
+            <div class="componist-years">
+                <input type="text"
+                        name="birth" class="edit-componist-birth"
+                      componist_id="{{ componist.ID }}" value="{{ componist.Birth }}">
+                </input> - <input type="text"
+                        name="death" class="edit-componist-death"
+                      componist_id="{{ componist.ID }}" value="{{ componist.Death }}">
+                </input>
             </div>
         </div>
         {% alfabet %}
-        <div class="w3-col m10 19">
+        <div class="content-pane">
             {% albumlist items.mothers componist.ID 'componist' %}
             <div class="clear"></div>
             {% albumlist items.children componist.ID 'componist' %}

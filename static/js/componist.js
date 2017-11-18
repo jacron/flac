@@ -63,116 +63,19 @@ function editComponistName($this) {
     ajaxPost(data);
 }
 
-function editComponistYears($this) {
+function editComponistYears($this, cmd, val) {
     const data = {
-        cmd: 'update_componist_years',
-        years: $this.text().trim(),
+        cmd: cmd,
+        years: val.trim(),
         id: $this.attr('componist_id')
     };
+    console.log('data', data);
     ajaxPost(data);
 }
 
-function preventSpilledDrop(obj) {
-    obj.on('dragenter', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-    });
-    obj.on('dragover', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-        obj.css('border', '2px dotted #0B85A1');
-    });
-    obj.on('drop', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-    });
-}
-
-function uploadFile(fd, obj) {
-    const url = '/ajax/';
-    const headers = {
-        'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
-    };
-    $.ajax({
-        url: url,
-        data: fd,
-        type: 'POST',
-        contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
-        processData: false, // NEEDED, DON'T OMIT THIS
-        headers: headers,
-        success: function(msg){
-            console.log(msg);
-            obj.css('border', 'none');
-            location.reload();
-        },
-        failure: function(msg){
-            console.log(msg);
-            obj.css('border', 'none');
-        }
-    });
-}
-
-function handleFileUpload(files, obj, personId, fieldName) {
-    for (var i = 0; i < files.length; i++) {
-        const file = files[i];
-        console.log(file);
-        var fd = new FormData();
-        fd.append('file', file);
-        fd.append('cmd', 'upload');
-        fd.append(fieldName, personId);
-        uploadFile(fd, obj);
-    }
-}
-
-function handleDroppedUrl(url, obj, personId, fieldName) {
-    const data = {
-        cmd: 'url',
-        url: url
-    };
-    data[fieldName] = personId;
-    ajaxPost(data, function() {
-        obj.css('border', 'none');
-        location.reload();
-    });
-}
-
-function handleDrop(obj, personId, fieldName) {
-    obj.on('dragenter', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-        $(this).css('border', '2px solid #0B85A1');
-    });
-    obj.on('dragover', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-    });
-    obj.on('drop', function (e) {
-        $(this).css('border', '2px dotted #0B85A1');
-        e.preventDefault();
-        const dt = e.originalEvent.dataTransfer;
-        const files = dt.files;
-        if (files.length) {
-            handleFileUpload(files, obj, personId, fieldName);
-        } else {
-            const url = dt.getData('url');
-            console.log(url);
-            handleDroppedUrl(url, obj, personId, fieldName);
-        }
-    });
-}
 
 $(function () {
     // componist
-    $('.edit-componist-name').keydown(function (e) {
-        if (e.key === 'Tab') {
-            editComponistName($(this));
-        }
-    });
-    $('.edit-componist-years').keydown(function (e) {
-        if (e.key === 'Tab') {
-            editComponistYears($(this));
-        }
-    });
     $('button.select-componist').click(function () {
         addComponist($('select.select-componist'));
     });
@@ -189,18 +92,9 @@ $(function () {
             addComponist($('select.select-componist'));
         }
     });
-    $('.componist .remove').click(function () {
-        removeComponist($(this));
-    });
     $('.add-componist').click(function (e) {
         addComponist2($(e.target));
     });
-
-    const componist_id = $('#componist_id').val();
-    if (componist_id) {
-        handleDrop($('#drop-area-componist'), componist_id, 'componist_id');
-        preventSpilledDrop($('.componist'));
-    }
 
     $('.jump-to-letter').keydown(function(e){
         const $target = $(e.target),
@@ -215,5 +109,38 @@ $(function () {
             location.href = '/componist/' + $target.val() + '/period/';
         }
     });
+    const componist_id = $('#componist_id').val();
+    if (componist_id) {
+        $('.componist .remove').click(function () {
+            removeComponist($(this));
+        });
+
+        $('.edit-componist-name').keydown(function (e) {
+            if (e.key === 'Tab') {
+                editComponistName($(this));
+            }
+        });
+        // $('.edit-componist-years').keydown(function (e) {
+        //     if (e.key === 'Tab') {
+        //         editComponistYears($(this), 'update_componist_years', $(this).attr);
+        //     }
+        // });
+        $('.edit-componist-birth')
+            .focus(function(){$(this).select()})
+            .mouseup(function(e){e.preventDefault()})
+            .keydown(function(e) {
+            if (e.key === 'Tab' || e.key === 'Enter') {
+                editComponistYears($(this), 'update_componist_birth', $(this).val());
+            }
+        });
+        $('.edit-componist-death')
+            .focus(function(){$(this).select()})
+            .mouseup(function(e){e.preventDefault()})
+            .keydown(function(e) {
+            if (e.key === 'Tab' || e.key === 'Enter') {
+                editComponistYears($(this), 'update_componist_death', $(this).val());
+            }
+        });
+    }
 });
 

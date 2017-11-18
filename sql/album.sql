@@ -246,8 +246,11 @@ where AlbumID=4735;
 select * from Componist
 where LastName='Sweelinc';
 
+delete from Componist_Album
+where AlbumID=293;
 delete from Componist
-where ID=272;
+where ID=293;
+
 
 select ID, Path
 from Album
@@ -316,3 +319,7 @@ where AlbumID=4646);
 -- set id=5049;
 select * from Piece
 where AlbumID=5049;
+
+    UPDATE Componist
+    SET Birth=1694
+    WHERE ID=344;
