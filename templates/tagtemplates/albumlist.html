@@ -7,9 +7,14 @@
 mother-album
 {% endif %}
 ">
-    <a href="/album/{{ item.ID }}/">
+
+    <a href="/album/{{ item.ID }}/
+{% if list_name %}
+{{ list_name }}/{{ list_id }}
+{% endif %}
+">
         <div class="image-container">
-            <img src="/albumimage/{{ item.ID }}/"
+            <img src="/image/{{ item.ID }}/album/"
                  class="album-image-thumb">
         </div>
         <div class="title">

@@ -21,8 +21,10 @@ def navbar(context):
     'tagtemplates/albumlist.html',
     takes_context=True
 )
-def albumlist(context, albums):
+def albumlist(context, albums, list_id=None, list_name=None):
     context['albums'] = albums
+    context['list_id'] = list_id
+    context['list_name'] = list_name
     return context
 
 

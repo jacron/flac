@@ -19,32 +19,40 @@ from . import views
 urlpatterns = [
     url(r'^$', views.home),
     url(r'^home/$', views.home),
+
+    # url(r'^componist/(?P<componist_id>.+)/(?P<album_id>.+)/album/$', views.componist_album),
+    url(r'^album/(?P<album_id>.+)/(?P<list_name>.+)/(?P<list_id>.+)/$', views.album_list),
     url(r'^album/(?P<album_id>.+)/$', views.album),
     url(r'^album/$', views.albums),
+
     url(r'^performer/(?P<performer_id>.+)/$', views.performer),
     url(r'^performer/$', views.performers),
+
     url(r'^componist/(?P<period>.+)/period/$', views.componisten_period),
     url(r'^componist/(?P<min_limit>.+)/min/$', views.componisten_limited),
     url(r'^componist/(?P<componist_id>.+)/search/(?P<query>.+)/$', views.componist_search),
     url(r'^componist/(?P<componist_id>.+)/$', views.componist, name='componist'),
     url(r'^componist/$', views.componisten),
+
     url(r'^instrument/(?P<instrument_id>.+)/search/(?P<query>.+)/$', views.instrument_search),
     url(r'^instrument/(?P<instrument_id>.+)/$', views.instrument),
     url(r'^instrument/$', views.instrumenten),
+
     url(r'^extra/$', views.extra),
     url(r'^extra/(?P<cmd_code>.+)/$', views.cmd, name='cmd'),
+
     url(r'^collection/(?P<query>.+)/search$', views.collections_search),
     url(r'^collection/$', views.collections),
+
     url(r'^ajax/$', views.ajax),
     url(r'^gather/$', views.gather),
+
     url(r'^tag/(?P<tag_id>.+)/$', views.tag),
     url(r'^tag/$', views.tags),
-    url(r'^albumimage/(?P<album_id>.+)/back/$', views.albumimageback),
-    url(r'^albumimage/(?P<album_id>.+)/$', views.albumimage),
-    url(r'^componistimage/(?P<componist_id>.+)/$', views.componistimage),
-    url(r'^instrumentimage/(?P<instrument_name>.+)/$', views.instrumentimage),
-    url(r'^performerimage/(?P<performer_id>.+)/$', views.performerimage),
+
     url(r'^image/(?P<id>.+)/(?P<type>.+)/$', views.image),
+    url(r'^imageback/(?P<id>.+)/(?P<type>.+)/$', views.imageback),
+
     url(r'^search/$', views.search),
     url(r'^search/(?P<query>.+)$', views.searchq, name='query'),
 ]

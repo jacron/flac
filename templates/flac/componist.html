@@ -29,7 +29,7 @@
                 </h4>
                 <div class="crop">
                     <div class="c-image"
-                style="background-image: url('/componistimage/{{ componist.ID }}/')"
+                style="background-image: url('/image/{{ componist.ID }}/componist/')"
                     ></div>
                 </div>
                 <h4 class="componist-years">
@@ -42,9 +42,9 @@
         </div>
         {% alfabet %}
         <div class="w3-col m10 19">
-            {% albumlist items.mothers %}
+            {% albumlist items.mothers componist.ID 'componist' %}
             <div class="clear"></div>
-            {% albumlist items.children %}
+            {% albumlist items.children componist.ID 'componist' %}
         </div>
     </div>
 {% endblock %}

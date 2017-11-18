@@ -22,7 +22,7 @@ def get_image(path, cached=None):
         return HttpResponse('Dit pad bestaat niet:"{}"'.format(image_path))
 
 
-def componistimage(request, componist_id):
+def componistimage(componist_id):
     # cached = static_dir('componist/' + componist_id)
     # if os.path.exists(cached):
     #     print('getting from cache')
@@ -41,12 +41,12 @@ def empty_response():
     return HttpResponse()
 
 
-def instrumentimage(request, instrument_name):
+def instrumentimage(instrument_name):
     image_path = '{}{}.jpg'.format(settings.INSTRUMENTS_PATH, instrument_name)
     return get_image(image_path)
 
 
-def albumimage(request, album_id):
+def albumimage(album_id):
     album = get_album(album_id)
     if not album:
         return HttpResponseNotFound('Dit album bestaat niet:"{}"'.format(album_id), )
@@ -56,7 +56,7 @@ def albumimage(request, album_id):
     return get_image(image_path)
 
 
-def albumimageback(request, album_id):
+def albumimageback(album_id):
     album = get_album(album_id)
     if not album:
         return HttpResponseNotFound('Dit album bestaat niet:"{}"'.format(album_id), )
@@ -66,7 +66,7 @@ def albumimageback(request, album_id):
     return get_image(image_path)
 
 
-def performerimage(request, performer_id):
+def performerimage(performer_id):
     performer_path = get_performer_path(performer_id)
     if not performer_path:
         return empty_response()
@@ -74,10 +74,17 @@ def performerimage(request, performer_id):
     return get_image(image_path)
 
 
+def imageback(request, id, type):
+    if type == 'album':
+        return albumimageback(id)
+
+
 def image(request, id, type):
+    if type == 'album':
+        return albumimage(id)
     if type == 'performer':
-        return performerimage(request, id)
+        return performerimage(id)
     if type == 'componist':
-        return componistimage(request, id)
+        return componistimage(id)
     if type == 'instrument':
-        return instrumentimage(request, id)
+        return instrumentimage(id)

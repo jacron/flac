@@ -303,7 +303,7 @@ fieldset {
 .alfabet {
     position: fixed;
     right: 10px;
-    top: 50px;
+    top: 60px;
     z-index: 1;
     background-color: #fff;
 }
