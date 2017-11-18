@@ -1,8 +1,8 @@
 import glob
 
-# from ..db import insert_piece
+from ..scripts import play_types, filename, kirkpatrick
 from . import insert_piece, connect, get_album_path_by_id, delete_pieces_of_album
-from flac.scripts.helper.insert import play_types, filename, kirkpatrick
+# from venv.flac.scripts.helper import play_types, filename, kirkpatrick
 
 
 def refetch_pieces(album_id):

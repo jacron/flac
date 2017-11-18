@@ -1,5 +1,6 @@
 from django.template import Library
 from . import MENU_ITEMS
+from flac.services import alfabet as alph
 
 
 register = Library()
@@ -83,6 +84,13 @@ def album_controls(album_id):
 )
 def persons_list(persons, url, type):
     return dict(persons=persons, person_url=url, type=type)
+
+
+@register.inclusion_tag(
+    'tagtemplates/alfabet.html',
+)
+def alfabet():
+    return dict(letters=alph())
 
 
 @register.filter( name='unescape' )

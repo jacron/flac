@@ -1,7 +1,6 @@
-import glob
 from venv.flac.db import (
     insert_componist, insert_performer,
-    insert_piece, insert_album_performer, insert_album_componist, )
+    insert_album_performer, insert_album_componist, )
 
 play_types = ('cue', "flac", "ape", "mp3", "iso", "wma", "wav", "mp3", "m4a", )
 k_split = None
@@ -30,12 +29,12 @@ def insert_artiest(artiest, c, conn, album_id):
         insert_album_performer(performer_id, album_id, c, conn)
 
 
-def insert_componist_by_id(id, c, conn, album_id):
-    insert_album_componist(id, album_id, c, conn)
+def insert_componist_by_id(cid, c, conn, album_id):
+    insert_album_componist(cid, album_id, c, conn)
 
 
-def insert_performer_by_id(id, c, conn, album_id):
-    insert_album_performer(id, album_id, c, conn)
+def insert_performer_by_id(cid, c, conn, album_id):
+    insert_album_performer(cid, album_id, c, conn)
 
 
 def insert_composer(componist, c, conn, album_id):

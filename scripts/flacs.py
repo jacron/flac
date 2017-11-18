@@ -1,11 +1,13 @@
 from __future__ import unicode_literals
 # encoding: utf-8
 # coding=utf-8
-# import glob
-from flac.db.pieces import insert_pieces
+import glob
+# from flac.db.pieces import insert_pieces
 from flac.lib.color import ColorPrint
 from flac.services import get_full_cuesheet
 from flac.views import get_componist_path
+from venv.flac.services import filename
+from venv.flac.scripts.helper.insert import play_types, insert_componist_by_id, kirkpatrick
 
 """flac
 
@@ -14,7 +16,7 @@ import os
 import sqlite3
 from venv.flac.db import (
     insert_album, insert_instrument, get_album_count_by_path, get_album_by_path,
-    set_album_title, get_componist_path_c, get_album_path_by_id,
+    set_album_title, get_componist_path_c, get_album_path_by_id, insert_piece,
     insert_componist, get_componist_path_by_id, get_componist_id_from_album)
 from venv.flac.scripts.helper.rename import (
     rename_cover, restore_cover, sanatize_haakjes, rename_to_back, rename_all_titles,
@@ -43,6 +45,19 @@ def script_connect():
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
     return conn, c
+
+
+def insert_pieces(path, album_id, conn, c):
+    for card in play_types:
+        files_path = u"{}{}".format(path, "/*.{}".format(card))
+        for f in glob.iglob(files_path):
+            print(f)
+            insert_piece(
+                name=filename(f),
+                code=kirkpatrick(f),
+                album_id=album_id,
+                c=c,
+                conn=conn)
 
 
 def process_pieces(path, album_id):
@@ -84,11 +99,10 @@ def process_album(path, mother_id, is_collectie):
             insert_artiest(artiest, c, conn, album_id)
     if PerformerID2:
         insert_performer_by_id(PerformerID2, c, conn, album_id)
+    if componist:
+        ComponistID = insert_composer(componist)[0]
     if ComponistID:
         insert_componist_by_id(ComponistID, c, conn, album_id)
-    else:
-        if componist:
-            insert_composer(componist)
     conn.close()
     return album_id
 

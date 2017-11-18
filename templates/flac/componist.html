@@ -27,22 +27,20 @@
                         {{ componist.FullName }}&nbsp;({{ items.children|length }})
                     </span>
                 </h4>
-{#                <div style="position: relative">#}
-                    <div class="crop">
-                        <div class="c-image"
-                    style="background-image: url('/componistimage/{{ componist.ID }}/')"
-                        ></div>
-                    </div>
-{#                </div>#}
+                <div class="crop">
+                    <div class="c-image"
+                style="background-image: url('/componistimage/{{ componist.ID }}/')"
+                    ></div>
+                </div>
                 <h4 class="componist-years">
                     <span contenteditable="true" name="years" class="edit-componist-years"
                           componist_id="{{ componist.ID }}">
                     {{ componist.Birth }} - {% if componist.Death %}{{ componist.Death }}{% endif %}
                     </span>
                 </h4>
-{#                <img src="/componistimage/{{ componist.ID }}/" class="instrument-image">#}
             </div>
         </div>
+        {% alfabet %}
         <div class="w3-col m10 19">
             {% albumlist items.mothers %}
             <div class="clear"></div>

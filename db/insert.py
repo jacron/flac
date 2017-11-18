@@ -2,6 +2,27 @@ from .connect import connect
 from ..services import splits_naam
 
 
+def delete_album_completely(album_id,c, conn):
+    sql = '''
+    DELETE FROM Piece
+    WHERE AlbumID=?
+    '''
+    c.execute(sql, (album_id,))
+    conn.commit()
+    sql = '''
+    DELETE FROM Componist_Album
+    WHERE AlbumID=?
+    '''
+    c.execute(sql, (album_id,))
+    conn.commit()
+    sql = '''
+    DELETE FROM Album
+    WHERE ID=?
+    '''
+    c.execute(sql, (album_id,))
+    conn.commit()
+
+
 def insert_album(title, path, instrument_id, album_id, is_collectie, c, conn):
     print(title)
     print(path)
@@ -37,6 +58,13 @@ def insert_componist(componist, c, conn):
     SELECT ID from Componist WHERE FirstName=? AND LastName=?
     '''
     return c.execute(sql, (c_firstname, c_lastname)).fetchone()
+
+
+def get_componist_by_lastname(lastname, c):
+    sql = '''
+    SELECT ID from Componist WHERE LastName=?
+    '''
+    return c.execute(sql, (lastname)).fetchone()
 
 
 def insert_piece(name, code, album_id, c, conn):

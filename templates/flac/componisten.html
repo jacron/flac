@@ -12,9 +12,7 @@
 {#        <input class="jump-to-letter" placeholder="Zoek naar beginletters">#}
         <input class="componist-period" placeholder="Kies een periode" value="{{ period }}">
         <h4>Componisten ({{ items|length }})</h4>
-        <div class="alfabet"><ul>
-            {% for letter in letters %}<li><a>{{ letter|upper }}</a></li>{% endfor %}
-        </ul></div>
+        {% alfabet %}
         {% componistenlist items %}
     </div>
 {% endblock %}

@@ -130,7 +130,7 @@ function handleDroppedUrl(url, obj, personId, fieldName) {
         url: url
     };
     data[fieldName] = personId;
-    ajaxPost(data, function(response) {
+    ajaxPost(data, function() {
         obj.css('border', 'none');
         location.reload();
     });
@@ -157,21 +157,6 @@ function handleDrop(obj, personId, fieldName) {
             const url = dt.getData('url');
             console.log(url);
             handleDroppedUrl(url, obj, personId, fieldName);
-        }
-    });
-}
-
-function jumpToSearched(search) {
-    var items = $('li.hyperlink');
-    items.each(function(index){
-        var $li = $(this);
-        var title = $li.find('.last-name'),
-            text = title.val().toUpperCase();
-        if (text.indexOf(search) === 0) {
-            $('html, body').animate({
-                scrollTop: $li.offset().top
-            },1500);
-            return false;
         }
     });
 }
@@ -223,11 +208,6 @@ $(function () {
         if (e.key === 'Enter') {
             jumpToSearched(search);
         }
-    });
-    $('.alfabet a').click(function(e) {
-        const $target = $(e.target),
-            search = $target.text().trim();
-        jumpToSearched(search);
     });
     $('.componist-period').keydown(function (e) {
         if (e.key === 'Enter') {

@@ -312,3 +312,7 @@ where AlbumID in (
 select ID from Album
 where AlbumID=4646);
 
+-- verwijder album en zijn stukken
+-- set id=5049;
+select * from Piece
+where AlbumID=5049;
