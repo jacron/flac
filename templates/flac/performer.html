@@ -29,12 +29,15 @@
                     style="background-image: url('/image/{{ performer.ID }}/performer/')"
                         ></div>
                     </div>
-                <h4 class="componist-years">
-                <span contenteditable="true" name="years" class="edit-performer-years"
-                      performer_id="{{ performer.ID }}">
-                {{ performer.Birth }} - {% if performer.Death %}{{ performer.Death }}{% endif %}
-                </span>
-                </h4>
+            <div class="performer-years">
+                <input type="text"
+                        name="birth" class="edit-performer-birth"
+                      value="{{ performer.Birth }}">
+                </input> - <input type="text"
+                        name="death" class="edit-performer-death"
+                      value="{{ performer.Death }}">
+                </input>
+            </div>
             </div>
         </div>
     {% alfabet %}

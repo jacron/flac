@@ -269,7 +269,7 @@ fieldset {
     margin-top: 2px;
 }
 .performer-years {
-    margin-top: 222px;
+    margin-top: 2px;
 }
 .input-album,
 .delete-album {
@@ -404,6 +404,8 @@ div[class="pattern"] img {
     height: 300px;
 }
 .edit-componist-birth,
-.edit-componist-death {
+.edit-componist-death,
+.edit-performer-birth,
+.edit-performer-death {
     width: 50px;
 }

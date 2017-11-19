@@ -257,6 +257,28 @@ def update_componistdeath(years, componist_id):
     con.commit()
 
 
+def update_performerbirth(years, person_id):
+    sql = """
+    UPDATE Performer
+    SET Birth=?
+    WHERE ID=?
+    """
+    con, c = connect()
+    c.execute(sql, (years, person_id,)).fetchone()
+    con.commit()
+
+
+def update_performerdeath(years, person_id):
+    sql = """
+    UPDATE Performer
+    SET Death=?
+    WHERE ID=?
+    """
+    con, c = connect()
+    c.execute(sql, (years, person_id,)).fetchone()
+    con.commit()
+
+
 def update_performername(name, performer_id):
     first_name, last_name = splits_naam(name)
     sql = """

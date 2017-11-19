@@ -54,16 +54,6 @@ function editPerformerYears($this) {
 
 $(function() {
     // performer
-    $('.edit-performer-name').keydown(function (e) {
-        if (e.key === 'Tab') {
-            editPerformerName($(this));
-        }
-    });
-    $('.edit-performer-years').keydown(function (e) {
-        if (e.key === 'Tab') {
-            editPerformerYears($(this));
-        }
-    });
    $('button.select-performer').click(function () {
        addPerformer($('select.select-performer'));
    });
@@ -80,9 +70,6 @@ $(function() {
         addPerformer($('select.select-performer'));
        }
    });
-   $('.performer .remove').click(function(){
-       removePerformer($(this));
-   });
     $('.add-performer').click(function(e) {
         var $target = $(e.target),
             id = $target.attr('id'),
@@ -95,4 +82,17 @@ $(function() {
         ajaxPost(data);
         location.reload();
     });
+    const performer_id = $('#performer_id').val();
+    if (performer_id) {
+        $('.performer .remove').click(function(){
+           removePerformer($(this));
+        });
+        $('.edit-performer-name').keydown(function (e) {
+            if (e.key === 'Tab') {
+                editPerformerName($(this));
+            }
+        });
+        saveInputYears($('.edit-performer-birth'), 'update_performer_birth', performer_id);
+        saveInputYears($('.edit-performer-death'), 'update_performer_death', performer_id);
+    }
 });

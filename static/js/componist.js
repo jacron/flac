@@ -63,23 +63,23 @@ function editComponistName($this) {
     ajaxPost(data);
 }
 
-function editComponistYears($this, cmd) {
+function editPersonYears($this, cmd, person_id) {
     const data = {
         cmd: cmd,
         years: $this.val().trim(),
-        id: $this.attr('componist_id')
+        id: person_id
     };
     ajaxPost(data);
 }
 
-function saveInputYears($input, cmd) {
+function saveInputYears($input, cmd, person_id) {
     $input
         .focus(function(){$(this).select()})
         .mouseup(function(e){e.preventDefault()})
         .keydown(function(e) {
             console.log(e);
         if (e.key === 'Tab' || e.key === 'Enter') {
-            editComponistYears($(this), cmd);
+            editPersonYears($(this), cmd, person_id);
         }
     });
 }
@@ -123,8 +123,8 @@ $(function () {
                 editComponistName($(this));
             }
         });
-        saveInputYears($('.edit-componist-birth'), 'update_componist_birth');
-        saveInputYears($('.edit-componist-death'), 'update_componist_death');
+        saveInputYears($('.edit-componist-birth'), 'update_componist_birth', componist_id);
+        saveInputYears($('.edit-componist-death'), 'update_componist_death', componist_id);
     }
 });
 
