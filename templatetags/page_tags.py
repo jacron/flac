@@ -43,6 +43,27 @@ def pieceslist(pieces):
 
 
 @register.inclusion_tag(
+    'tagtemplates/pages.html',
+)
+def pages(prev_id, next_id):
+    return dict(prev_id=prev_id,next_id=next_id)
+
+
+@register.inclusion_tag(
+    'tagtemplates/album_instrument_list.html',
+)
+def album_instrument_list(album_instrument):
+    return dict(album_instrument=album_instrument)
+
+
+@register.inclusion_tag(
+    'tagtemplates/album_collection_list.html',
+)
+def album_collection_list(album, mother_title):
+    return dict(album=album, mother_title=mother_title)
+
+
+@register.inclusion_tag(
     'tagtemplates/componistenlist.html',
     takes_context=True
 )

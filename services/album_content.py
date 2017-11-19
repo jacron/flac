@@ -41,11 +41,17 @@ def organize_pieces(album_id, album_path):
     return cuesheets, pieces, notfounds, invalidcues
 
 
+def check_subdirs(path):
+    for d in os.listdir(path):
+        if os.path.isdir(os.path.join(path, d)):
+            return True
+    return False
+
+
 def album_context(album_id):
     album_o = get_album(album_id)
     if not album_o:
         return None
-
     mother_title, mother_id = None, None
     album_o = get_album(album_id)
     if album_o['AlbumID']:
@@ -80,4 +86,5 @@ def album_context(album_id):
         'artists': artists,
         'prev_id': get_prev_album(mother_id, album_id),
         'next_id': get_next_album(mother_id, album_id),
+        'has_subdirs': check_subdirs(album_o['Path']),
     }

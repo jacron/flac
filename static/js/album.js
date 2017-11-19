@@ -3,44 +3,51 @@
  */
 'use strict';
 
-function getTitle($this) {
-    const parent = $this.parents('.cue-header').find('span').first();
-    return parent.text();
-}
-
-function copyTitle($this) {
-    const title = getTitle($this),
-        $title = $('.edit-title');
-
-    if (confirm('Use this title for the album? ' + title)) {
-        $title.text(title);
-        ajaxPost({
-            cmd: 'update_album_title',
-            title: title,
-            albumid: $title.attr('albumid')
-        });
-    }
-}
-
-function copyCueTitle($this) {
-    const title = getTitle($this);
-    $('.make-cuesheet').val(title);
-}
-
-function cycleSizes($this) {
-    if ($this.hasClass('expanded')) {
-        $this.removeClass('expanded');
-        $this.addClass('super');
-    }
-    else if ($this.hasClass('super')) {
-        $this.removeClass('super');
-    }
-    else {
-        $this.addClass('expanded');
-    }
-}
 
 $(function () {
+    function getTitle($this) {
+        const parent = $this.parents('.cue-header').find('span').first();
+        return parent.text();
+    }
+
+    function copyTitle($this) {
+        const title = getTitle($this),
+            $title = $('.edit-title');
+
+        if (confirm('Use this title for the album? ' + title)) {
+            $title.text(title);
+            ajaxPost({
+                cmd: 'update_album_title',
+                title: title,
+                albumid: $title.attr('albumid')
+            });
+        }
+    }
+    function copyCueTitle($this) {
+        const title = getTitle($this);
+        $('.make-cuesheet').val(title);
+    }
+
+    function cycleSizes($this) {
+        if ($this.hasClass('expanded')) {
+            $this.removeClass('expanded');
+            $this.addClass('super');
+        }
+        else if ($this.hasClass('super')) {
+            $this.removeClass('super');
+        }
+        else {
+            $this.addClass('expanded');
+        }
+    }
+    function makeSubs(albumId) {
+        ajaxPost({
+            cmd: 'makesubs',
+            albumid: albumId
+        }, function() {
+            refetch();
+        });
+    }
     const albumId = $('#album_id').val();
     if (albumId) {
         // functions for the single album page
@@ -63,6 +70,9 @@ $(function () {
         });
         $('.cue-title').click(function() {
             copyCueTitle($(this));
+        });
+        $('.make-subs').click(function() {
+            makeSubs(albumId);
         });
     }
 });

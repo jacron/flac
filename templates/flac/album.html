@@ -17,7 +17,6 @@
     <span class="ID">{{ album.ID }}</span>:
     {{ album.Title }}
 </h4>
-<hr>
 {% for tag in album_tags %}
     <i class="tag hyperlink"><a href="/tag/{{ tag.ID }}">{{ tag.Name }}</a>
         <div class="fa fa-times-circle remove" id="{{ tag.ID }}"></div>
@@ -25,39 +24,10 @@
 {% endfor %}
 {% persons_list album_componisten '/componist/' 'componist' %}
 {% persons_list album_performers '/performer/' 'performer' %}
-{% if album_instrument %}
-    <div class="hyperlink instrument">
-        <a href="/instrument/{{ album_instrument.ID }}/">
-            {{ album_instrument.Name }}
-        </a>
-        <div class="fa fa-times-circle remove" id="{{ instrument.ID }}"></div>
-        <a href="/instrument/{{ album_instrument.ID }}/">
-            <div class="thumbnail-container">
-            <img class="thumbnail" src="/image/{{ album_instrument.Name }}/instrument">
-                </div>
-        </a>
-    </div>
-{% endif %}
+{%  album_instrument_list album_instrument  %}
 <div class="clear nav">
-    {% if album.AlbumID %}
-        <div class="hyperlink">
-            <span>Collectie: </span>
-            <a href="/album/{{ album.AlbumID }}">{{ mother_title }}</a>
-        </div>
-    {% endif %}
-    {% if prev_id or next_id %}
-        <a {% if prev_id %}
-                href="/album/{{ prev_id }}"
-                class="enabled"
-           {% endif %}
-        >prev</a> |
-        <a {% if next_id %}
-                href="/album/{{ next_id }}"
-                class="enabled"
-                {% endif %}
-        >next</a>
-    {% endif %}
-<hr>
+{% album_collection_list album mother_title %}
+    {% pages prev_id next_id %}
     {% cuesheetlist cuesheets 1 %}
     {% cuesheetlist invalidcues 0 %}
     {% pieceslist pieces %}
@@ -66,6 +36,9 @@
     Niet gevonden: {{ notfounds|length }} |
     {% endif %}
         <a class="refetch">Haal opnieuw de stukken op</a>
+        {% if has_subdirs %}|
+    <a class="make-subs">Maak cuelist voor subdirectories</a>
+    {% endif %}
     </div>
     {% if show_proposals == '1' %}
         {% proposallist proposals artists %}

@@ -75,6 +75,12 @@ def insert_piece(name, code, album_id, c, conn):
     '''
     c.execute(sql, (name, album_id, code))
     conn.commit()
+    sql = '''
+    SELECT ID from Piece 
+    WHERE Name=?
+    AND album_id=?
+    '''
+    return c.execute(sql, (name, album_id, )).fetchone()
 
 
 def insert_instrument(name, c, conn):

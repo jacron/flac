@@ -409,3 +409,8 @@ div[class="pattern"] img {
 .edit-performer-death {
     width: 50px;
 }
+.pages {
+    border: 1px solid #efefef;
+    padding: 6px;
+    width: 120px;
+}
