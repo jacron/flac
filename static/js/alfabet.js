@@ -24,6 +24,12 @@ $(function () {
             }
         });
     }
+    $('.collections .alfabet a').click(function (e) {
+        const $target = $(e.target),
+            search = $target.text().trim();
+        // console.log(search);
+        jumpToSearched(search, '.title', false);
+    });
     $('.componisten .alfabet a').click(function (e) {
         const $target = $(e.target),
             search = $target.text().trim();
