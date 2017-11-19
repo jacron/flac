@@ -41,6 +41,10 @@ $(function () {
         }
     }
     function makeSubs(albumId) {
+        console.log({
+            cmd: 'makesubs',
+            albumid: albumId
+        });
         ajaxPost({
             cmd: 'makesubs',
             albumid: albumId

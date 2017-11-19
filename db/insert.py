@@ -78,7 +78,7 @@ def insert_piece(name, code, album_id, c, conn):
     sql = '''
     SELECT ID from Piece 
     WHERE Name=?
-    AND album_id=?
+    AND AlbumID=?
     '''
     return c.execute(sql, (name, album_id, )).fetchone()
 

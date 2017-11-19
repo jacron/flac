@@ -90,12 +90,13 @@ def make_sub_cuesheet(path, album_id):
     lines = []
     for card in play_types:
         files_path = u"{}{}".format(path, "/*.{}".format(card))
-        for f in glob.iglob(files_path):
+        for f in sorted(glob.iglob(files_path)):
             print(f)
-            fname = os.path.join(f.split('/')[-2:])  # include subdir in fname
+            parts = f.split('/')[-2:]
+            fname = '/'.join(parts)  # include subdir in fname
             title = trimextension(filename(f))
             lines.append(u'TITLE "{}"'.format(title))
-            lines.append(u'FILE "{}" WAVE'.format(f))
+            lines.append(u'FILE "{}" WAVE'.format(fname))
             lines.append(u'  TRACK 01 AUDIO')
             lines.append(u'    TITLE "{}"'.format(title))
             lines.append(u'    INDEX 01 00:00:00')

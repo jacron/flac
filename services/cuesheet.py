@@ -1,9 +1,7 @@
 # from __future__ import unicode_literals
 import codecs
 
-from unidecode import unidecode
 
-from flac.db import get_album_path_by_id, connect
 from .services import dequote
 import os
 
