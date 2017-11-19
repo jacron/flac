@@ -54,11 +54,11 @@ function removeComponist($this) {
     location.reload();
 }
 
-function editComponistName($this) {
+function editComponistName($this, componist_id) {
     const data = {
         cmd: 'update_componist_name',
         name: $this.text().trim(),
-        id: $this.attr('componist_id')
+        id: componist_id
     };
     ajaxPost(data);
 }
@@ -112,15 +112,14 @@ $(function () {
             location.href = '/componist/' + $target.val() + '/period/';
         }
     });
+    $('.componist .remove').click(function () {
+        removeComponist($(this));
+    });
     const componist_id = $('#componist_id').val();
     if (componist_id) {
-        $('.componist .remove').click(function () {
-            removeComponist($(this));
-        });
-
         $('.edit-componist-name').keydown(function (e) {
             if (e.key === 'Tab') {
-                editComponistName($(this));
+                editComponistName($(this), componist_id);
             }
         });
         saveInputYears($('.edit-componist-birth'), 'update_componist_birth', componist_id);

@@ -34,23 +34,23 @@ function removePerformer($this) {
     location.reload();
 }
 
-function editPerformerName($this) {
+function editPerformerName($this, performer_id) {
     const data = {
         cmd: 'update_performer_name',
         name: $this.text().trim(),
-        id: $this.attr('performer_id')
+        id: performer_id
     };
     ajaxPost(data);
 }
 
-function editPerformerYears($this) {
-    const data = {
-        cmd: 'update_performer_years',
-        years: $this.text().trim(),
-        id: $this.attr('performer_id')
-    };
-    ajaxPost(data);
-}
+// function editPerformerYears($this) {
+//     const data = {
+//         cmd: 'update_performer_years',
+//         years: $this.text().trim(),
+//         id: $this.attr('performer_id')
+//     };
+//     ajaxPost(data);
+// }
 
 $(function() {
     // performer
@@ -82,14 +82,14 @@ $(function() {
         ajaxPost(data);
         location.reload();
     });
+    $('.performer .remove').click(function(){
+       removePerformer($(this));
+    });
     const performer_id = $('#performer_id').val();
     if (performer_id) {
-        $('.performer .remove').click(function(){
-           removePerformer($(this));
-        });
         $('.edit-performer-name').keydown(function (e) {
             if (e.key === 'Tab') {
-                editPerformerName($(this));
+                editPerformerName($(this), performer_id);
             }
         });
         saveInputYears($('.edit-performer-birth'), 'update_performer_birth', performer_id);
