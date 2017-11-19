@@ -231,17 +231,13 @@ def main():
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/Decca, The Decca Sound"
     # path = "/Volumes/Media/Audio/Klassiek/Performers"
     # artiest = "Fritz Reiner"
-    ComponistID = 154
+    ComponistID = 121
     # componist = from_path(path)
     # ComponistID = componist_from_album(album_id)
     # PerformerID = 3
     # PerformerID2 = 47
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Schubert - Piano Sonatas, Impromptus - Andras Schiff (2011) (FLAC) (Decca 478 3018)"
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Sjostakowich/Shostakovich - Symphonies Nos. 5, 8 and 9 - Boston SO, Nelsons"
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Sjostakowich/27 cd boxset"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Anthology Of The Royal Concertgebouw Orchestra 1980-1990"
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Glass/Bang on a Can - 2004 - Philip Glass - Music in Fiths & Two Pages"
-    path = "/Volumes/Media/Audio/Klassiek/Componisten/Colombe/Atma ACD22275 Jean de Sainte-Colombe - Concerts a deux violes esgales, Volume I (Les Voix humaines)"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Colombe/Atma ACD22275 Jean de Sainte-Colombe - Concerts a deux violes esgales, Volume I (Les Voix humaines)"
+    path = "/Volumes/Media/Audio/Klassiek/Componisten/Lassus/Lassus - Lagrime di San Pietro - Ars Nova, Bo Holten"
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     if path is None:
         print('No path')
@@ -254,11 +250,11 @@ def main():
     # rename_cover(path=path, step_in=True)
     # rename_titles(path)
     # rename_to_back(path)
-    process_a(p=path, mother_id=None, iscollectie=0, step_in=1)
+    # process_a(p=path, mother_id=None, iscollectie=0, step_in=1)
     # get_albums(path=path, mother_id=None, iscollectie=1)
     # get_album_groups(path=path, mother_id=None, iscollectie=0, step_in=True)
     # album_id = \
-    # process_album(path=path, mother_id=None, is_collectie=0)
+    process_album(path=path, mother_id=None, is_collectie=0)
 
 if __name__ == '__main__':
     main()

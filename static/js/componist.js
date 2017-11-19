@@ -91,9 +91,9 @@ $(function () {
     $('button.add-componist').click(function () {
         newComponist($('input.add-componist'));
     });
-    $('input.add-componist').keydown(function (e) {
+    $('input.add-componist-extra').keydown(function (e) {
         if (e.key === 'Enter') {
-            newComponist($('input.add-componist'));
+            newComponist($('input.add-componist-extra'));
         }
     });
     $('select.select-componist').keydown(function (e) {
