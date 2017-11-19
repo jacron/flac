@@ -49,4 +49,11 @@ $(function () {
             search = $target.text().trim();
         jumpToSearched(search, '.title', false);
     });
+    $('.jump-to-letter').keydown(function(e){
+        const $target = $(e.target),
+            search = $target.val().toUpperCase();
+        if (e.key === 'Enter') {
+            jumpToSearched(search);
+        }
+    });
 });

@@ -247,10 +247,11 @@ select * from Componist
 where LastName='Sweelinc';
 
 delete from Componist_Album
-where AlbumID=293;
+where ComponistID=379;
 delete from Componist
-where ID=293;
+where ID=379;
 
+-- 152
 
 select ID, Path
 from Album

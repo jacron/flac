@@ -63,16 +63,26 @@ function editComponistName($this) {
     ajaxPost(data);
 }
 
-function editComponistYears($this, cmd, val) {
+function editComponistYears($this, cmd) {
     const data = {
         cmd: cmd,
-        years: val.trim(),
+        years: $this.val().trim(),
         id: $this.attr('componist_id')
     };
-    console.log('data', data);
     ajaxPost(data);
 }
 
+function saveInputYears($input, cmd) {
+    $input
+        .focus(function(){$(this).select()})
+        .mouseup(function(e){e.preventDefault()})
+        .keydown(function(e) {
+            console.log(e);
+        if (e.key === 'Tab' || e.key === 'Enter') {
+            editComponistYears($(this), cmd);
+        }
+    });
+}
 
 $(function () {
     // componist
@@ -96,13 +106,6 @@ $(function () {
         addComponist2($(e.target));
     });
 
-    $('.jump-to-letter').keydown(function(e){
-        const $target = $(e.target),
-            search = $target.val().toUpperCase();
-        if (e.key === 'Enter') {
-            jumpToSearched(search);
-        }
-    });
     $('.componist-period').keydown(function (e) {
         if (e.key === 'Enter') {
             const $target = $(e.target);
@@ -120,27 +123,8 @@ $(function () {
                 editComponistName($(this));
             }
         });
-        // $('.edit-componist-years').keydown(function (e) {
-        //     if (e.key === 'Tab') {
-        //         editComponistYears($(this), 'update_componist_years', $(this).attr);
-        //     }
-        // });
-        $('.edit-componist-birth')
-            .focus(function(){$(this).select()})
-            .mouseup(function(e){e.preventDefault()})
-            .keydown(function(e) {
-            if (e.key === 'Tab' || e.key === 'Enter') {
-                editComponistYears($(this), 'update_componist_birth', $(this).val());
-            }
-        });
-        $('.edit-componist-death')
-            .focus(function(){$(this).select()})
-            .mouseup(function(e){e.preventDefault()})
-            .keydown(function(e) {
-            if (e.key === 'Tab' || e.key === 'Enter') {
-                editComponistYears($(this), 'update_componist_death', $(this).val());
-            }
-        });
+        saveInputYears($('.edit-componist-birth'), 'update_componist_birth');
+        saveInputYears($('.edit-componist-death'), 'update_componist_death');
     }
 });
 
