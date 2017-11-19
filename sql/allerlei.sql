@@ -4,7 +4,7 @@ DROP TABLE Album;
 DROP TABLE Performer;
 DROP TABLE Piece;
 
-delete from album;
+delete from Album;
 delete from piece;
 delete from Componist;
 delete from Instrument;

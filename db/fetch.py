@@ -904,7 +904,7 @@ def get_componist_id_from_album(album_id, c):
 def get_album(id_album):
     sql = '''
     SELECT Title, Label, Path, AlbumID, ID 
-    FROM Album 
+    FROM Album
     WHERE Album.ID=?
     '''
     fields = get_item_with_id(sql, id_album)

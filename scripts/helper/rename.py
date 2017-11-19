@@ -24,7 +24,7 @@ def rename_cover_one(path, name):
         trg = u'{}/{}'.format(path, cover_nice)
         if not os.path.exists(trg):
             os.rename(src, trg)
-            ColorPrint('renamed to:{}'.format(trg), ColorPrint.GREEN)
+            ColorPrint.print_c('renamed to:{}'.format(trg), ColorPrint.GREEN)
 
 
 def rename_cover(path, step_in):
@@ -44,7 +44,7 @@ def rename_back_one(path, name):
         trg = '{}/{}'.format(path, back_nice)
         if not os.path.exists(trg):
             os.rename(src, trg)
-            ColorPrint('renamed to:{}'.format(trg), ColorPrint.GREEN)
+            ColorPrint.print_c('renamed to:{}'.format(trg), ColorPrint.GREEN)
 
 
 def rename_back(path, step_in):
@@ -84,7 +84,7 @@ def restore_cover_one(path, fro, to):
         if os.path.exists(trg):
             os.unlink(trg)
             os.rename(src, trg)
-            ColorPrint('renamed to:{}'.format(trg), ColorPrint.GREEN)
+            ColorPrint.print_c('renamed to:{}'.format(trg), ColorPrint.GREEN)
 
 
 def restore_cover(path, step_in):
