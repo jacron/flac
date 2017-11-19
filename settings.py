@@ -150,3 +150,6 @@ COMPONIST_PATH = '/Volumes/Media/Audio/Klassiek/Componisten/'
 PERFORMER_PATH = '/Volumes/Media/Audio/Klassiek/Performers/'
 COVER_PATH = '/Volumes/Media/tmp/{}.jpg'
 TMP_PATH = '/Volumes/Media/tmp'
+SKIP_DIRS = ['website', 'artwork', 'Artwork', 'etc', 'scans', 'Scans', 'scan',
+            'website boxset', '#Booklets', 'Pixels', 'Graphics', 'Info + Art', 'Art',
+            'Covers', ]

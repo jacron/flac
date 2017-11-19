@@ -31,7 +31,7 @@ body {
     height: 14px;
 }
 .hyperlink {
-    cursor: pointer;
+    /*cursor: pointer;*/
 }
 .hyperlink.cuesheet {
     color: darkgreen;
@@ -413,4 +413,7 @@ div[class="pattern"] img {
     border: 1px solid #efefef;
     padding: 6px;
     width: 120px;
+}
+.album-collection a {
+    color: darkgreen;
 }

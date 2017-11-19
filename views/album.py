@@ -7,7 +7,7 @@ from flac.services.album_content import album_context
 
 def album_list(request, album_id, list_id, list_name):
     template = loader.get_template('flac/album.html')
-    context = album_context(album_id)
+    context = album_context(album_id, list_name, list_id)
     if not context:
         return HttpResponse()
     return HttpResponse(template.render(context, request))

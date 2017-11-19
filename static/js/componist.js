@@ -77,7 +77,6 @@ function saveInputYears($input, cmd, person_id) {
         .focus(function(){$(this).select()})
         .mouseup(function(e){e.preventDefault()})
         .keydown(function(e) {
-            console.log(e);
         if (e.key === 'Tab' || e.key === 'Enter') {
             editPersonYears($(this), cmd, person_id);
         }

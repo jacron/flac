@@ -13,9 +13,11 @@
      class="album-image">
 <img src="/imageback/{{ album.ID }}/album/"
      class="album-image">
-<h4 contenteditable="true" class="edit-title">
+<h4>
     <span class="ID">{{ album.ID }}</span>:
+    <span contenteditable="true" class="edit-title">
     {{ album.Title }}
+    </span>
 </h4>
 {% for tag in album_tags %}
     <i class="tag hyperlink"><a href="/tag/{{ tag.ID }}">{{ tag.Name }}</a>
@@ -27,7 +29,8 @@
 {%  album_instrument_list album_instrument  %}
 <div class="clear nav">
 {% album_collection_list album mother_title %}
-    {% pages prev_id next_id %}
+    {% pages prev_id next_id 'collectie' %}
+    {% pages prev_list_id next_list_id 'componist' %}
     {% cuesheetlist cuesheets 1 %}
     {% cuesheetlist invalidcues 0 %}
     {% pieceslist pieces %}

@@ -90,6 +90,19 @@ sqlAllAlbums = '''
     '''
 
 
+sqlCompAlbums = '''
+      SELECT 
+      Title, 
+      Album.ID
+      FROM Album
+       JOIN Componist_Album AS c
+       ON c.AlbumID=Album.ID
+      WHERE c.ComponistID=?
+      GROUP BY Title
+      ORDER BY Title COLLATE NOCASE
+    '''
+
+
 def get_next_album(id_mother, id_album):
     if not id_mother : return None
     items = get_items_with_parameter(sqlAllAlbums, id_mother)
@@ -102,6 +115,22 @@ def get_next_album(id_mother, id_album):
     return None
 
 
+def get_next_list_album(id_album, list_name, list_id):
+    if not list_name or not list_id:
+        return None
+    items = None
+    if list_name == 'componist':
+        items = get_items_with_parameter(sqlCompAlbums, list_id)
+    if items:
+        match = None
+        for item in items:
+            if match:
+                return item[1]
+            if int(item[1]) == int(id_album):
+                match = id_album
+    return None
+
+
 def get_prev_album(id_mother, id_album):
     if not id_mother : return None
     items = get_items_with_parameter(sqlAllAlbums, id_mother)
@@ -110,6 +139,21 @@ def get_prev_album(id_mother, id_album):
         if match and int(item[1]) == int(id_album):
             return match
         match = int(item[1])
+    return None
+
+
+def get_prev_list_album(id_album, list_name, list_id):
+    if not list_name or not list_id:
+        return None
+    items = None
+    if list_name == 'componist':
+        items = get_items_with_parameter(sqlCompAlbums, list_id)
+    if items:
+        match = None
+        for item in items:
+            if match and int(item[1] == int(id_album)):
+                return match
+            match = int(item[1])
     return None
 
 

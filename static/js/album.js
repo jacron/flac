@@ -9,8 +9,14 @@ $(function () {
         const parent = $this.parents('.cue-header').find('span').first();
         return parent.text();
     }
-
-    function copyTitle($this) {
+    function editAlbumTitle($this, albumId) {
+        ajaxPost({
+            cmd: 'update_album_title',
+            title: $this.text(),
+            albumid: albumId
+        })
+    }
+    function copyTitle($this, albumId) {
         const title = getTitle($this),
             $title = $('.edit-title');
 
@@ -19,7 +25,7 @@ $(function () {
             ajaxPost({
                 cmd: 'update_album_title',
                 title: title,
-                albumid: $title.attr('albumid')
+                albumid: albumId
             });
         }
     }
@@ -70,7 +76,7 @@ $(function () {
             cycleSizes($(this));
         });
         $('.cue-plus').click(function () {
-            copyTitle($(this));
+            copyTitle($(this), albumId);
         });
         $('.cue-title').click(function() {
             copyCueTitle($(this));
