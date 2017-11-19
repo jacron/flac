@@ -103,6 +103,19 @@ sqlCompAlbums = '''
     '''
 
 
+sqlPerfAlbums = '''
+      SELECT 
+      Title, 
+      Album.ID
+      FROM Album
+       JOIN Performer_Album AS c
+       ON c.AlbumID=Album.ID
+      WHERE c.PerformerID=?
+      GROUP BY Title
+      ORDER BY Title COLLATE NOCASE
+    '''
+
+
 def get_next_album(id_mother, id_album):
     if not id_mother : return None
     items = get_items_with_parameter(sqlAllAlbums, id_mother)
@@ -118,10 +131,13 @@ def get_next_album(id_mother, id_album):
 def get_next_list_album(id_album, list_name, list_id):
     if not list_name or not list_id:
         return None
-    items = None
+    sql = None
     if list_name == 'componist':
-        items = get_items_with_parameter(sqlCompAlbums, list_id)
-    if items:
+        sql = sqlCompAlbums
+    if list_name == 'performer':
+        sql= sqlPerfAlbums
+    if sql:
+        items = get_items_with_parameter(sql, list_id)
         match = None
         for item in items:
             if match:

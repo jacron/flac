@@ -71,7 +71,7 @@ def process_album(path, mother_id, is_collectie):
     """
     global componist, ComponistID, PerformerID, artiest
     if len(path.split('[')) > 1:
-        print('cue_path mag geen vierkante haken ([]) bevatten! - quitting')
+        ColorPrint('cue_path mag geen vierkante haken ([]) bevatten! - quitting', ColorPrint.RED)
         return
     conn, c = script_connect()
     w = path.split('/')
@@ -159,7 +159,7 @@ def rename_titles(path):
 
 def get_path_of_componist(componist_id):
     if componist_id is None:
-        print('No componist ID given, so quitting')
+        ColorPrint('No componist ID given, so quitting', ColorPrint.RED)
         return
     conn, c = script_connect()
     return get_componist_path_c(componist_id, c)
@@ -167,7 +167,7 @@ def get_path_of_componist(componist_id):
 
 def get_path_of_album(album_id):
     if album_id is None:
-        print('No album ID given, so quitting')
+        ColorPrint('No album ID given, so quitting', ColorPrint.RED)
         return
     conn, c = script_connect()
     return get_album_path_by_id(album_id, c)
@@ -219,7 +219,7 @@ def main():
     # print(ComponistID)
     # return
 
-    open_finder_album(album_id=4286)
+    # open_finder_album(album_id=4286)
     # open_finder_componist(ComponistID)
     # return
     # path = get_path_of_componist(ComponistID)
@@ -230,11 +230,16 @@ def main():
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/Decca, The Decca Sound"
     # path = "/Volumes/Media/Audio/Klassiek/Performers"
     # artiest = "Fritz Reiner"
-    # ComponistID = 134
+    ComponistID = 10
     # componist = from_path(path)
     # ComponistID = componist_from_album(album_id)
-    # PerformerID = 112
+    # PerformerID = 3
     # PerformerID2 = 47
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Schubert - Piano Sonatas, Impromptus - Andras Schiff (2011) (FLAC) (Decca 478 3018)"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Sjostakowich/Shostakovich - Symphonies Nos. 5, 8 and 9 - Boston SO, Nelsons"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Sjostakowich/27 cd boxset"
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Anthology Of The Royal Concertgebouw Orchestra 1980-1990"
+    path = "/Volumes/Media/Audio/Klassiek/Componisten/Glass/Bang on a Can - 2004 - Philip Glass - Music in Fiths & Two Pages"
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     if path is None:
         print('No path')
@@ -244,13 +249,13 @@ def main():
 
     # sanatize_haakjes(path, True)
     # restore_cover(path=path, step_in=True)
-    # rename_cover(path=path, step_in=True)
+    rename_cover(path=path, step_in=True)
     # rename_titles(path)
     # rename_to_back(path)
     # process_a(p=path, mother_id=None, iscollectie=1, step_in=1)
     # get_albums(path=path, mother_id=None, iscollectie=1)
     # get_album_groups(path=path, mother_id=None, iscollectie=0, step_in=True)
-    # album_id = process_album(path=path, mother_id=None, is_collectie=1)
+    album_id = process_album(path=path, mother_id=None, is_collectie=0)
 
 if __name__ == '__main__':
     main()

@@ -42,9 +42,9 @@
         </div>
     {% alfabet %}
         <div class="w3-col m10 19">
-            {% albumlist items.mothers %}
+            {% albumlist items.mothers performer.ID 'performer' %}
             <div class="clear"></div>
-            {% albumlist items.children %}
+            {% albumlist items.children performer.ID 'performer' %}
         </div>
     </div>
 {% endblock %}

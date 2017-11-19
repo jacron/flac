@@ -7,7 +7,7 @@ from ..db import (
     get_album, get_pieces,
     get_mother_title, get_album_albums, get_album_componisten, get_album_performers, get_album_instruments,
     get_album_tags, get_setting, get_prev_album, get_next_album, get_prev_list_album,
-    get_next_list_album)
+    get_next_list_album, get_componist, get_performer)
 from ..services import get_full_cuesheet
 
 
@@ -51,6 +51,16 @@ def check_subdirs(path):
     return False
 
 
+def get_title_for_list(list_name, list_id):
+    person = None
+    if list_name == 'componist':
+        person = get_componist(list_id)
+    if list_name == 'performer':
+        person = get_performer(list_id)
+    if person:
+        return person['FullName']
+
+
 def album_context(album_id, list_name=None, list_id=None):
     album_o = get_album(album_id)
     if not album_o:
@@ -77,6 +87,9 @@ def album_context(album_id, list_name=None, list_id=None):
         next_list_id = '{}/{}/{}/'.format(next_list_id, list_name, list_id)
     if prev_list_id:
         prev_list_id = '{}/{}/{}/'.format(prev_list_id, list_name, list_id)
+    list_title = None
+    if next_list_id or prev_list_id:
+        list_title = get_title_for_list(list_name, list_id)
     return {
         'albumid': album_id,
         'pieces': pieces,
@@ -97,5 +110,8 @@ def album_context(album_id, list_name=None, list_id=None):
         'next_id': get_next_album(mother_id, album_id),
         'prev_list_id': prev_list_id,
         'next_list_id': next_list_id,
+        'list_name': list_name,
+        'list_title': list_title,
+        'list_id': list_id,
         'has_subdirs': check_subdirs(album_o['Path']),
     }

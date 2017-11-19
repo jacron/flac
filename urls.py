@@ -20,7 +20,6 @@ urlpatterns = [
     url(r'^$', views.home),
     url(r'^home/$', views.home),
 
-    # url(r'^componist/(?P<componist_id>.+)/(?P<album_id>.+)/album/$', views.componist_album),
     url(r'^album/(?P<album_id>.+)/(?P<list_name>.+)/(?P<list_id>.+)/$', views.album_list),
     url(r'^album/(?P<album_id>.+)/$', views.album),
     url(r'^album/$', views.albums),

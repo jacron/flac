@@ -2,6 +2,7 @@ import glob
 from shutil import copyfile
 
 from flac.db import set_album_title, get_album_by_path
+from flac.lib.color import ColorPrint
 from venv.flac.services import (
     has_haakjes, replace_haakjes, get_full_cuesheet)
 import os
@@ -23,7 +24,7 @@ def rename_cover_one(path, name):
         trg = u'{}/{}'.format(path, cover_nice)
         if not os.path.exists(trg):
             os.rename(src, trg)
-            print('renamed to:{}'.format(trg))
+            ColorPrint('renamed to:{}'.format(trg), ColorPrint.GREEN)
 
 
 def rename_cover(path, step_in):
@@ -43,7 +44,7 @@ def rename_back_one(path, name):
         trg = '{}/{}'.format(path, back_nice)
         if not os.path.exists(trg):
             os.rename(src, trg)
-            print('renamed to:{}'.format(trg))
+            ColorPrint('renamed to:{}'.format(trg), ColorPrint.GREEN)
 
 
 def rename_back(path, step_in):
@@ -83,7 +84,7 @@ def restore_cover_one(path, fro, to):
         if os.path.exists(trg):
             os.unlink(trg)
             os.rename(src, trg)
-            print(u'renamed to:{}'.format(trg))
+            ColorPrint('renamed to:{}'.format(trg), ColorPrint.GREEN)
 
 
 def restore_cover(path, step_in):

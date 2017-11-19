@@ -247,6 +247,8 @@ select * from Componist
 where LastName='Sweelinc';
 
 delete from Componist_Album
+where AlbumID BETWEEN 5095 AND 5109;
+
 where ComponistID=379;
 delete from Componist
 where ID=379;

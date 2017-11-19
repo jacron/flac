@@ -1,6 +1,8 @@
 {% if prev_id or next_id %}
     <div class="pages">
-    <span>{{ list_name }}</span>
+    <div>
+        <a href="/{{ list_name }}/{{ list_id }}/">{{ list_title }}</a>
+    </div>
     <a {% if prev_id %}
             href="/album/{{ prev_id }}"
             class="enabled"
