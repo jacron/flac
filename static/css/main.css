@@ -417,3 +417,9 @@ div[class="pattern"] img {
 .album-collection a {
     color: darkgreen;
 }
+.album .ID .remove {
+    display: none;
+}
+.album .ID:hover .remove {
+    display: inline-block;
+}

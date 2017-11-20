@@ -14,8 +14,10 @@
 <img src="/imageback/{{ album.ID }}/album/"
      class="album-image">
 <h4>
-    <span class="ID">{{ album.ID }}</span>:
-    <span contenteditable="true" class="edit-title">
+    <span class="ID">{{ album.ID }}
+            <div class="fa fa-times-circle remove" id="{{ person.ID }}"></div>
+        </span>
+    <span contenteditable="true" class="edit-title">:
     {{ album.Title }}
     </span>
 </h4>

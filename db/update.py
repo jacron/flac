@@ -308,6 +308,12 @@ def delete_album(album_id):
     con, c = connect()
     c.execute(sql, (album_id,)).fetchone()
     con.commit()
+    sql = """
+    DELETE FROM Componist_Album
+    WHERE AlbumID=?"""
+    con, c = connect()
+    c.execute(sql, (album_id,)).fetchone()
+    con.commit()
 
 
 def update_performeryears(years, performer_id):

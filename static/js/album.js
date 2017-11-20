@@ -58,6 +58,16 @@ $(function () {
             refetch();
         });
     }
+    function removeAlbum(albumId, idText) {
+        if (confirm('Album ' + albumId + ' verwijderen?')) {
+            ajaxPost({
+                cmd: 'delete_album',
+                album_id: albumId
+            }, function() {
+                idText.hide();
+            });
+        }
+    }
     const albumId = $('#album_id').val();
     if (albumId) {
         // functions for the single album page
@@ -83,6 +93,9 @@ $(function () {
         });
         $('.make-subs').click(function() {
             makeSubs(albumId);
+        });
+        $('.album .ID .remove').click(function() {
+            removeAlbum(albumId, $('.album .ID'));
         });
     }
 });
