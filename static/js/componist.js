@@ -22,14 +22,15 @@ function addComponist2($target) {
     addComponist0($target.attr('id'), $('#album_id').val());
 }
 
-function newComponist($input) {
+function newComponist($input, cb) {
     const data = {
         cmd: 'new_componist',
         name: $input.val(),
         albumid: $input.attr('albumid')
     };
-    ajaxPost(data);
-    location.reload();
+    ajaxPost(data, function(response) {
+        if (cb) { cb(response); }
+    });
 }
 
 function addNewComponist($input) {
@@ -89,11 +90,17 @@ $(function () {
         addComponist($('select.select-componist'));
     });
     $('button.add-componist').click(function () {
-        newComponist($('input.add-componist'));
+        newComponist($('input.add-componist'), function() {
+            location.reload();
+        });
     });
     $('input.add-componist-extra').keydown(function (e) {
         if (e.key === 'Enter') {
-            newComponist($('input.add-componist-extra'));
+            var $input = $('input.add-componist-extra');
+            newComponist($input, function(response) {
+                $('.componist-extra-added').text($input.val());
+                $input.val();
+            });
         }
     });
     $('select.select-componist').keydown(function (e) {
