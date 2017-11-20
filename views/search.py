@@ -1,9 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
-from django.shortcuts import render
 
-from flac.db import get_albums_by_title, get_general_search
-from flac.forms import SearchForm
+from flac.db import get_albums_by_title
 
 
 def searchresponse(context, request):
@@ -21,4 +19,3 @@ def searchq(request, query):
 
 def search(request):
     return searchresponse({}, request)
-

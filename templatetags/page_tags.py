@@ -103,6 +103,13 @@ def album_controls(album_id):
 
 
 @register.inclusion_tag(
+    'tagtemplates/upload_controls.html',
+)
+def upload_controls():
+    return dict()
+
+
+@register.inclusion_tag(
     'tagtemplates/persons_list.html',
 )
 def persons_list(persons, url, type):

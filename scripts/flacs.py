@@ -72,7 +72,7 @@ def process_album(path, mother_id, is_collectie):
     """
     global componist, ComponistID, PerformerID, artiest
     if len(path.split('[')) > 1:
-        ColorPrint('cue_path mag geen vierkante haken ([]) bevatten! - quitting', ColorPrint.RED)
+        ColorPrint.print_c('cue_path mag geen accolades of vierkante haken bevatten - quitting', ColorPrint.RED)
         return
     conn, c = script_connect()
     w = path.split('/')
@@ -160,7 +160,7 @@ def rename_titles(path):
 
 def get_path_of_componist(componist_id):
     if componist_id is None:
-        ColorPrint('No componist ID given, so quitting', ColorPrint.RED)
+        ColorPrint.print_c('No componist ID given, so quitting', ColorPrint.RED)
         return
     conn, c = script_connect()
     return get_componist_path_c(componist_id, c)
@@ -168,7 +168,7 @@ def get_path_of_componist(componist_id):
 
 def get_path_of_album(album_id):
     if album_id is None:
-        ColorPrint('No album ID given, so quitting', ColorPrint.RED)
+        ColorPrint.print_c('No album ID given, so quitting', ColorPrint.RED)
         return
     conn, c = script_connect()
     return get_album_path_by_id(album_id, c)
@@ -231,16 +231,18 @@ def main():
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/Decca, The Decca Sound"
     # path = "/Volumes/Media/Audio/Klassiek/Performers"
     # artiest = "Fritz Reiner"
-    # ComponistID = 389
+    ComponistID = 122
     # componist = from_path(path)
     # ComponistID = componist_from_album(album_id)
-    PerformerID = 300
+    # PerformerID = 300
     # PerformerID2 = 47
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Colombe/Atma ACD22275 Jean de Sainte-Colombe - Concerts a deux violes esgales, Volume I (Les Voix humaines)"
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Lassus/Lassus - Lagrime di San Pietro - Ars Nova, Bo Holten"
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Japart/Michael Form, Les Flamboyants & Michael Feyfar - La Maitre de Fricassee - Secular Music of Jean Japart"
     # path = "/Volumes/Media/Audio/Klassiek/Performers/Emma Kirkby/Emma Kirkby and Jakob Lindberg - Music For Voice and Lute Circa 1600"
-    path = "/Volumes/Media/Audio/Klassiek/Collecties/Emma Kirkby - The Complete Recitals (2015) (Decca)"
+    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Emma Kirkby - The Complete Recitals (2015) (Decca)"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Gombert/Nicolas Gombert - Motets II - Beauty Farm (2017) [DD] {Fra Bernardo}"
+    path = "/Volumes/Media/Audio/Klassiek/Componisten/Gombert/Nicolas Gombert - Motets II - Beauty Farm (2017) (Fra Bernardo)"
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     if path is None:
         print('No path')

@@ -1,0 +1,31 @@
+{% extends "flac/base.html" %}
+{% load page_tags %}
+{% block title %}
+    upload
+{% endblock %}
+{% block page %}
+    <div id="drop-album">
+    {% upload_controls %}
+    <h4>upload</h4>
+    <input class="upload-album" placeholder="pad">
+        <table>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>Collection</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>Herstel namen covers</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>Herstel 'big' covers</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>Repareer haakjes in paden</td>
+            </tr>
+        </table>
+<button class="upload fa fa-upload"> recur</button>
+    </div>
+{% endblock %}
