@@ -131,7 +131,7 @@ def sanatize_haakjes(path, step_in):
 
 
 def album_by_path(p, c, conn):
-    return get_album_by_path(p, c, conn)
+    return get_album_by_path(p, c)
 
 
 def rename_all_titles(path, skipdirs, c, conn):
@@ -151,7 +151,7 @@ def rename_all_titles(path, skipdirs, c, conn):
             full_title = '{}'.format(cue['Title'])
             print(full_title)
 
-            album = album_by_path(p, c, conn)
+            album = album_by_path(p, c)
             print(album['Title'])
             set_album_title(album['ID'], full_title, c, conn)
 

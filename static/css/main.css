@@ -426,3 +426,6 @@ div[class="pattern"] img {
 #drop-album {
     padding: 6px;
 }
+.upload-album-path {
+    width: 700px;
+}

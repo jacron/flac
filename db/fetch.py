@@ -933,7 +933,7 @@ def get_componist_path_c(componist_id, c):
     return fields[0]
 
 
-def get_album_by_path(path, c, conn):
+def get_album_by_path(path, c):
     sql = '''
     SELECT Title, Label, Path, AlbumID, ID 
     FROM Album 
