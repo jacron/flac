@@ -2,7 +2,7 @@ import codecs
 import glob
 import os
 
-from flac.scripts import play_types, kirkpatrick
+from flac.scripts import play_types, kirkpatrick, ColorPrint
 from flac.scripts.splitflac import split_flac
 from . import trimextension, filename
 from ..db import connect, get_album_path_by_id, insert_piece, get_piece
@@ -29,7 +29,7 @@ def write_cuesheet(name, album_id, lines):
 
 
 def split_cued_file(piece_id, album_id):
-    print(piece_id, album_id)
+    # ColorPrint.print_c(piece_id, album_id)
     conn, cursor = connect()
     path = get_album_path_by_id(album_id, cursor)
     piece = get_piece(piece_id)

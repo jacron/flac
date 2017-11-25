@@ -1,3 +1,4 @@
+from flac.lib.color import ColorPrint
 from flac.services import get_full_cuesheet
 import os, subprocess
 
@@ -71,14 +72,12 @@ def split_file(flac, filepath):
     if flac['duration']:
         cmd += ['-t', to_duration(flac['duration']),]
     cmd.append(flac['path'])
-    print(flac['path'])
+    ColorPrint.print_c(flac['path'], ColorPrint.CYAN)
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = process.communicate()
     print 'STDOUT:{}'.format(out)
     print 'ERR:{}'.format(err)
 
-# /Volumes/Media/Audio/Klassiek/Collecties/BBC Legends/BBCL4128 - Arturo Benedetti Michelangeli - BBC Legends_ Michelangeli/Arturo Benedetti Michelangeli - BBC Legends Michelangeli.ape: No such file or directory
-# /Volumes/Media/Audio/Klassiek/Collecties/BBC Legends/BBCL4128 - Arturo Benedetti Michelangeli - BBC Legends_ Michelangeli/Arturo Benedetti Michelangeli - BBC Legends  Michelangeli.ape
 
 def get_flac(index, track, basedir, tracks, file_duration):
     outfile = os.path.join(basedir, track['title'] + '.flac')

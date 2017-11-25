@@ -8,10 +8,16 @@ from ..services import splits_naam, splits_years
 def get_library_code(name):
     parts = name.split('K. ')
     if len(parts) < 2:
+        parts = name.split('K.')
+    if len(parts) < 2:
+        parts = name.split('KK.')
+    if len(parts) < 2:
         return None
     kk = parts[1].split(' ')
     if len(kk) < 2:
         kk = parts[1].split('.')
+    if len(kk) < 2:
+        kk = parts[1].split(',')
     return 'K ' + kk[0]
 
 
