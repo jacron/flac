@@ -219,12 +219,14 @@ fieldset {
     color: brown;
 }
 .cue-plus,
-.cue-title {
+.cue-title,
+.cue-split {
     cursor: pointer;
     font-style: italic;
 }
 .cue-plus:hover,
-.cue-title:hover  {
+.cue-title:hover,
+.cue-split:hover {
     text-decoration: underline;
 }
 .cue-header .cue-plus-container {

@@ -67,15 +67,18 @@ def timedif(time2, time1):
 
 def split_file(flac, filepath):
     cmd = [FFMPEG, '-i', filepath,
-           '-ss', to_duration(flac['time']),
-           '-t', to_duration(flac['duration']),
-           flac['path']]
+           '-ss', to_duration(flac['time'])]
+    if flac['duration']:
+        cmd += ['-t', to_duration(flac['duration']),]
+    cmd.append(flac['path'])
     print(flac['path'])
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = process.communicate()
     print 'STDOUT:{}'.format(out)
     print 'ERR:{}'.format(err)
 
+# /Volumes/Media/Audio/Klassiek/Collecties/BBC Legends/BBCL4128 - Arturo Benedetti Michelangeli - BBC Legends_ Michelangeli/Arturo Benedetti Michelangeli - BBC Legends Michelangeli.ape: No such file or directory
+# /Volumes/Media/Audio/Klassiek/Collecties/BBC Legends/BBCL4128 - Arturo Benedetti Michelangeli - BBC Legends_ Michelangeli/Arturo Benedetti Michelangeli - BBC Legends  Michelangeli.ape
 
 def get_flac(index, track, basedir, tracks, file_duration):
     outfile = os.path.join(basedir, track['title'] + '.flac')
@@ -84,7 +87,10 @@ def get_flac(index, track, basedir, tracks, file_duration):
         time2 = tracks[index + 1]['index']['time']
         duration = timedif(time2, time)
     else:
-        duration = timedif(file_duration, time)
+        if file_duration:
+            duration = timedif(file_duration, time)
+        else:
+            duration = None
     return {
         'path': outfile,
         'time': time,
@@ -97,6 +103,8 @@ def get_duration(filepath):
            '-of', 'default=noprint_wrappers=1:nokey=1', '-sexagesimal', filepath]
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = process.communicate()
+    if len(out) == 0:
+        return None
     return normtime(out)
 
 
@@ -108,6 +116,9 @@ def split_flac(cuepath):
     tracks = cfile['tracks']
     filepath = os.path.join(basedir, filename)
     file_duration = get_duration(filepath)
+    if not file_duration:
+        print('unknown duration for: ' + filepath)
+        # return
     flacs = []
     for index, track in enumerate(tracks):
         flacs.append(get_flac(index, track, basedir, tracks, file_duration))

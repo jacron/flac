@@ -17,7 +17,9 @@
             {% endif %}
             <i class="toggle-cue-lines fa fa-caret-right"></i>
             <span class="cue-plus-container">
-                <span class="cue-plus">album-titel</span> | <span class="cue-title">cuesheet-titel</span>
+                <span class="cue-plus">album-titel</span> |
+                <span class="cue-title">cuesheet-titel</span> |
+                <span class="cue-split" id="{{ cuesheet.ID }}">bestand splitsen</span>
             </span>
         </li>
         {%  if cuesheet.cue.performer %}

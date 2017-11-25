@@ -3,6 +3,7 @@ import glob
 import os
 
 from flac.scripts import play_types, kirkpatrick
+from flac.scripts.splitflac import split_flac
 from . import trimextension, filename
 from ..db import connect, get_album_path_by_id, insert_piece, get_piece
 
@@ -25,6 +26,16 @@ def write_cuesheet(name, album_id, lines):
         album_id=album_id,
         c=cursor,
         conn=conn)
+
+
+def split_cued_file(piece_id, album_id):
+    print(piece_id, album_id)
+    conn, cursor = connect()
+    path = get_album_path_by_id(album_id, cursor)
+    piece = get_piece(piece_id)
+    src = u'{}/{}'.format(path, piece['Name'])
+    split_flac(src)
+    return src
 
 
 def rename_cuesheet(piece_id, album_id):
@@ -66,23 +77,6 @@ def get_dirs(path):
         if os.path.isdir(os.path.join(path, d)):
             dirs.append(d)
     return dirs
-
-
-# def insert_sub_pieces(path, album_id, conn, c):
-#     ids = []
-#     for card in play_types:
-#         files_path = u"{}{}".format(path, "/*.{}".format(card))
-#         for f in glob.iglob(files_path):
-#             print(f)
-#             fname = os.path.join(f.split('/')[-2:])  # include subdir in fname
-#             id = insert_piece(
-#                 name=fname,
-#                 code=kirkpatrick(f),
-#                 album_id=album_id,
-#                 c=c,
-#                 conn=conn)
-#             ids.append(id)
-#     return ids
 
 
 def make_sub_cuesheet(path, album_id):

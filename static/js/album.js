@@ -33,7 +33,15 @@ $(function () {
         const title = getTitle($this);
         $('.make-cuesheet').val(title);
     }
-
+    function splitCuedFile($this, albumid) {
+        ajaxPost({
+            cmd: 'split_cued_file',
+            cue_id: $this.attr('id'),
+            albumid: albumid
+        }, function(response) {
+           // console.log(response)
+        });
+    }
     function cycleSizes($this) {
         if ($this.hasClass('expanded')) {
             $this.removeClass('expanded');
@@ -107,6 +115,9 @@ $(function () {
         });
         $('.cue-title').click(function() {
             copyCueTitle($(this));
+        });
+        $('.cue-split').click(function() {
+            splitCuedFile($(this), albumId);
         });
         $('.make-subs').click(function() {
             makeSubs(albumId);

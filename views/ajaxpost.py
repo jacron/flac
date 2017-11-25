@@ -2,7 +2,7 @@ import urllib
 import os
 
 from flac.services import openpath
-from flac.services.makecuesheet import make_cuesheet, rename_cuesheet, make_subs_cuesheet
+from flac.services.makecuesheet import make_cuesheet, rename_cuesheet, make_subs_cuesheet, split_cued_file
 from flac.services.path import get_path, path_from_id_field
 from ..db import (abs_insert_componist, update_componistbirth, update_componistdeath, update_performerbirth,
                   update_performerdeath, adjust_kk, inherit_elements)
@@ -151,3 +151,5 @@ def do_post(post):
         return rename_cuesheet(post['id'], post['albumid'])
     if cmd == 'makesubs':
         return make_subs_cuesheet(post['albumid'])
+    if cmd == 'split_cued_file':
+        return split_cued_file(post['cue_id'], post['albumid'])
