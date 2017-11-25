@@ -28,12 +28,6 @@ from venv.flac.scripts.helper.insert import (
 
 
 db_path = '../../db.sqlite3'
-# SKIP_DIRS = ['website', 'artwork', 'Artwork', 'etc', 'scans', 'Scans', 'scan',
-#             'website boxset', '#Booklets', 'Pixels', 'Graphics', 'Info + Art', 'Art',
-#             'Covers', ]
-# uSKIP_DIRS = [u'website', u'artwork', u'Artwork', u'etc', u'scans', u'Scans', u'scan',
-#             u'website boxset', u'#Booklets', u'Pixels', u'Graphics', u'Info + Art', u'Art',
-#             u'Covers', ]
 artiest = None
 componist = None
 ComponistID = None
@@ -231,15 +225,16 @@ def main():
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/Decca, The Decca Sound"
     # path = "/Volumes/Media/Audio/Klassiek/Performers"
     # artiest = "Fritz Reiner"
-    ComponistID = 267
+    ComponistID = 1
     # componist = from_path(path)
     # ComponistID = componist_from_album(album_id)
-    # PerformerID = 300
+    PerformerID = 331
     # PerformerID2 = 47
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Gombert/Nicolas Gombert - Motets II - Beauty Farm (2017) (Fra Bernardo)"
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Andriessen/Louis Andriessen - Garden of Eros (Schoenberg Quartet)"
-    path = "/Volumes/Media/Audio/Klassiek/Componisten/Xenakis/xenakis_kraanerg_drury"
-    path = "/Volumes/Media/Audio/Klassiek/Componisten/Xenakis/Xenakis - Works for Piano (A. Takahashi) 1999"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Xenakis/xenakis_kraanerg_drury"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Xenakis/Xenakis - Works for Piano (A. Takahashi) 1999"
+    path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten clavecimbel/scott ross -the keyboard sonatas"
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     if path is None:
         print('No path')
@@ -252,11 +247,11 @@ def main():
     # rename_cover(path=path, step_in=True)
     # rename_titles(path)
     # rename_to_back(path)
-    # process_a(p=path, mother_id=None, iscollectie=1, step_in=1)
+    process_a(p=path, mother_id=None, iscollectie=0, step_in=1)
     # get_albums(path=path, mother_id=None, iscollectie=1)
     # get_album_groups(path=path, mother_id=None, iscollectie=0, step_in=True)
     # album_id = \
-    process_album(path=path, mother_id=None, is_collectie=0)
+    # process_album(path=path, mother_id=None, is_collectie=0)
 
 if __name__ == '__main__':
     main()
