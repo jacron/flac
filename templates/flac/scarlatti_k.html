@@ -7,15 +7,25 @@
     <h4>{{ page_title }} ({{ items|length }})</h4>
 <img src="/componistimage/{{ scarlatti.ID }}/" class="instrument-image">
     <table cellpadding="4">
+    <tr>
+        <th>K</th>
+        <th>Pianist</th>
+        <th>Instrument</th>
+        <th>Album</th>
+        <th>Stuk</th>
+    </tr>
         {% for item in items %}
             <tr>
             <td class="code">{{ item.k_code }}</td>
             <td class="artiest hyperlink">
                 <a href="/performer/{{ item.Artiest.ID }}">{{ item.Artiest.Name }}</a></td>
-            <td class="hyperlink">
+            <td class="instrument hyperlink">
                 <a href="/instrument/{{ item.Instrument.ID }}">{{ item.Instrument.Name }}</a>
             </td>
-            <td class="hyperlink">
+            <td class="album hyperlink">
+                <a href="/album/{{ item.Album.ID }}">{{ item.Album.Title }}</a>
+            </td>
+            <td class="piece hyperlink">
                 <div onclick="play({{ item.Piece.ID }})">{{ item.Piece.Name }}</div>
             </td>
             </tr>

@@ -46,6 +46,13 @@ body {
 .artiest a {
     color: green;
 }
+.piece.hyperlink {
+    color: brown;
+    cursor: pointer;
+}
+.piece.hyperlink:hover {
+    text-decoration: underline;
+}
 .instrument a {
     color: #447e9b;
 }

@@ -116,6 +116,19 @@ sqlPerfAlbums = '''
     '''
 
 
+sqlTagAlbums = '''
+      SELECT 
+      Title, 
+      Album.ID
+      FROM Album
+       JOIN Tag_Album AS c
+       ON c.AlbumID=Album.ID
+      WHERE c.TagID=?
+      GROUP BY Title
+      ORDER BY Title COLLATE NOCASE
+    '''
+
+
 def get_next_album(id_mother, id_album):
     if not id_mother : return None
     items = get_items_with_parameter(sqlAllAlbums, id_mother)
@@ -136,6 +149,8 @@ def get_next_list_album(id_album, list_name, list_id):
         sql = sqlCompAlbums
     if list_name == 'performer':
         sql= sqlPerfAlbums
+    if list_name == 'tag':
+        sql = sqlTagAlbums
     if sql:
         items = get_items_with_parameter(sql, list_id)
         match = None
@@ -161,9 +176,14 @@ def get_prev_album(id_mother, id_album):
 def get_prev_list_album(id_album, list_name, list_id):
     if not list_name or not list_id:
         return None
-    items = None
+    sql = None
     if list_name == 'componist':
-        items = get_items_with_parameter(sqlCompAlbums, list_id)
+        sql = sqlCompAlbums
+    if list_name == 'performer':
+        sql = sqlPerfAlbums
+    if list_name == 'tag':
+        sql = sqlTagAlbums
+    items = get_items_with_parameter(sql, list_id)
     if items:
         match = None
         for item in items:
@@ -790,7 +810,9 @@ def get_scarlatti_k_pieces():
         Performer.LastName, 
         Performer.ID, 
         Instrument.Name,
-        Instrument.ID
+        Instrument.ID,
+        Album.Title,
+        Album.ID
       FROM Piece
        JOIN Album
        ON Piece.AlbumID = Album.ID
@@ -820,6 +842,10 @@ def get_scarlatti_k_pieces():
                 'Name': item[6],
                 'ID': item[7],
             },
+            'Album': {
+                'Title': item[8],
+                'ID': item[9],
+            }
         })
     return out
 

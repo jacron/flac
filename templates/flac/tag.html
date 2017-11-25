@@ -9,6 +9,6 @@
     ({{ items.mothers.length }})
     {% endif %}
     ({{ items.children|length }})</h4>
-{% albumlist items.mothers %}
-{% albumlist items.children %}
+{% albumlist items.mothers tag.ID 'tag' %}
+{% albumlist items.children tag.ID 'tag' %}
 {% endblock %}
