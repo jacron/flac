@@ -1,0 +1,16 @@
+#drop-album {
+    padding: 6px;
+}
+.upload-album-path {
+    width: 700px;
+}
+.upload-controls .autofill {
+    display: none;
+    cursor: pointer;
+}
+.upload-controls .autofill:hover {
+    text-decoration: underline;
+}
+.upload-controls li:hover .autofill.active {
+    display: inline-block;
+}

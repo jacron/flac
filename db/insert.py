@@ -130,3 +130,13 @@ def insert_album_componist(componist_id, album_id, c, conn):
     '''
     c.execute(sql, (componist_id, album_id))
     conn.commit()
+
+
+def insert_album_instrument(instrument_id, album_id, c, conn):
+    sql = '''
+    UPDATE Album
+    SET InstrumentID=?
+    WHERE ID=?
+    '''
+    c.execute(sql, (instrument_id, album_id))
+    conn.commit()

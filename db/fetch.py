@@ -959,6 +959,49 @@ def get_componist_path_c(componist_id, c):
     return fields[0]
 
 
+def get_element(album_id, name, c):
+    if name == 'instrument':
+        sql = '''
+        SELECT Name, ID
+        FROM Instrument
+        WHERE ID in (
+          SELECT InstrumentID
+          FROM Album
+          WHERE Album.ID = ?
+        )
+        '''
+        fields = c.execute(sql, (album_id,)).fetchone()
+        if fields:
+            return fields[0] + '_' + str(fields[1])
+        return None
+    if name == 'componist':
+        sql = '''
+        SELECT LastName, Componist.ID
+        FROM Componist
+        LEFT JOIN Componist_Album
+        ON ComponistID=Componist.ID
+        WHERE AlbumID=?
+        '''
+    if name == 'performer':
+        sql = '''
+        SELECT LastName, Performer.ID
+        FROM Performer
+        LEFT JOIN Performer_Album
+        ON PerformerID=Performer.ID
+        WHERE AlbumID=?
+        '''
+    if name == 'tag':
+        sql = '''
+        SELECT Name, Tag.ID
+        FROM Tag
+        LEFT JOIN Tag_Album
+        ON TagID=Tag.ID
+        WHERE AlbumID=?
+        '''
+    fields = c.execute(sql, (album_id,)).fetchone()
+    return fields[0] + '_' + str(fields[1])
+
+
 def get_album_by_path(path, c):
     sql = '''
     SELECT Title, Label, Path, AlbumID, ID 

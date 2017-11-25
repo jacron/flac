@@ -114,7 +114,7 @@ nav a.selected {
     width: 16px;
 }
 .content.stukken {
-    display: none;
+    /*display: none;*/
 }
 .content.stukken .make-cuesheet {
     /*display: none;*/
@@ -127,12 +127,14 @@ nav a.selected {
 }
 .album-componist-to-make,
 .create-cuesheet,
-.test-lcs {
+.test-lcs,
+.kk {
     cursor: pointer;
 }
 .album-componist-to-make:hover,
 .create-cuesheet:hover,
-.test-lcs:hover {
+.test-lcs:hover,
+.kk:hover {
     text-decoration: underline;
 }
 .content.cue {
@@ -143,9 +145,6 @@ nav a.selected {
 }
 .clear {
     clear: both;
-}
-.tt-menu {
-    background: #fff;
 }
 .album ul {
     margin-top: 0;
@@ -313,28 +312,6 @@ fieldset {
 .ID {
     color: #1b8dbb;
 }
-.alfabet li {
-    list-style: none;
-    line-height: 2;
-}
-.alfabet {
-    position: fixed;
-    right: 10px;
-    top: 60px;
-    z-index: 1;
-    background-color: #fff;
-}
-.alfabet a {
-    cursor: pointer;
-    padding: 4px;
-}
-.alfabet a:hover {
-    background-color: #99ffff;
-}
-.alfabet ul {
-    padding: 0;
-    margin: 0;
-}
 .extra {
     padding: 4px;
 }
@@ -429,10 +406,4 @@ div[class="pattern"] img {
 }
 .album .ID:hover .remove {
     display: inline-block;
-}
-#drop-album {
-    padding: 6px;
-}
-.upload-album-path {
-    width: 700px;
 }

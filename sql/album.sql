@@ -262,3 +262,9 @@ where AlbumID=5049;
     UPDATE Componist
     SET Birth=1694
     WHERE ID=344;
+
+  SELECT Name, Tag.ID
+        FROM Tag
+         JOIN Tag_Album
+        ON TagID=Tag.ID
+        where AlbumID=3380;

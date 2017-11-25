@@ -1,5 +1,50 @@
+from flac.db import (get_pieces, get_album_albums,
+                     get_album_componisten, get_album_performers, get_album_instruments, insert_componist,
+                     insert_album_componist, insert_album_performer, insert_album_instrument)
 from .connect import connect
 from ..services import splits_naam, splits_years
+
+
+def get_library_code(name):
+    parts = name.split('Kk ')
+    if len(parts) < 2:
+        return None
+    kk = parts[1].split(' ')
+    return 'K ' + kk[0]
+
+
+def adjust_kk(album_id):
+    pieces = get_pieces(album_id)
+    for piece in pieces:
+        library_code = get_library_code(piece[0])
+        if library_code:
+            update_piece_library_code(piece[1], library_code)
+
+
+def inherit_elements(album_id):
+    albums = get_album_albums(album_id)
+    componisten = get_album_componisten(album_id)
+    performers = get_album_performers(album_id)
+    instrument = get_album_instruments(album_id)
+    conn, c = connect()
+    componist_id = componisten[0]['ID']
+    performer_id = performers[0]['ID']
+    instrument_id = instrument['ID']
+    for album in albums:
+        insert_album_componist(componist_id, album['ID'], c, conn)
+        insert_album_performer(performer_id, album['ID'], c, conn)
+        insert_album_instrument(instrument_id, album['ID'], c, conn)
+
+
+def update_piece_library_code(id, code):
+    sql = '''
+    UPDATE Piece
+    SET LibraryCode=?
+    WHERE ID=?
+    '''
+    con, c = connect()
+    c.execute(sql, (code, id, )).fetchone()
+    con.commit()
 
 
 def update_album_title(album_id, title):

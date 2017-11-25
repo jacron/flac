@@ -5,7 +5,7 @@ from flac.services import openpath
 from flac.services.makecuesheet import make_cuesheet, rename_cuesheet, make_subs_cuesheet
 from flac.services.path import get_path, path_from_id_field
 from ..db import (abs_insert_componist, update_componistbirth, update_componistdeath, update_performerbirth,
-                  update_performerdeath)
+                  update_performerdeath, adjust_kk, inherit_elements)
 from flac.db.pieces import refetch_pieces
 from ..db import (
     get_album, get_piece, update_album_title, add_tag_to_album,
@@ -139,6 +139,10 @@ def do_post(post):
         return 'Finder opened'
     if cmd == 'update_album_title':
         return update_album_title(album_id=int(post['albumid']), title=post['title'])
+    if cmd == 'adjust_kk':
+        return adjust_kk(album_id=int(post['albumid']))
+    if cmd == 'inherit_elements':
+        return inherit_elements(post['albumid'])
 
     # cuesheets
     if cmd == 'makecuesheet':

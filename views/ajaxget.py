@@ -3,7 +3,7 @@ import json
 from ..db import (
     get_tags,
     get_componisten_typeahead, get_performers_typeahead, get_instruments_typeahead,
-    get_general_search, get_album_by_path, connect)
+    get_general_search, get_album_by_path, connect, get_element)
 
 
 def do_get(get):
@@ -21,4 +21,7 @@ def do_get(get):
     if cmd == 'album_by_path':
         conn, c = connect()
         return json.dumps(get_album_by_path(get['path'], c))
+    if cmd == 'element':
+        conn, c = connect()
+        return json.dumps(get_element(get['albumid'], get['name'], c))
     return 'unknown cmd'

@@ -68,6 +68,23 @@ $(function () {
             });
         }
     }
+    function adjustKk(album_id, $this) {
+        ajaxPost({
+            cmd: 'adjust_kk',
+            albumid: album_id
+        }, function(){
+            $this.hide();
+        });
+    }
+    function inheritElements(albumId) {
+        ajaxPost({
+            cmd: 'inherit_elements',
+            albumid: albumId
+        }, function(response) {
+
+        });
+    }
+
     const albumId = $('#album_id').val();
     if (albumId) {
         // functions for the single album page
@@ -96,6 +113,12 @@ $(function () {
         });
         $('.album .ID .remove').click(function() {
             removeAlbum(albumId, $('.album .ID'));
+        });
+        $('.kk').click(function() {
+            adjustKk(albumId, $(this));
+        });
+        $('.inherit-elements').click(function(){
+            inheritElements(albumId);
         });
     }
 });

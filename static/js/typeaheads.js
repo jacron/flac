@@ -200,10 +200,14 @@ $(function () {
     const uploadAlbumPath = $('.upload-album-path');
     if (uploadAlbumPath.length) {
         // functions for the upload page
-        typeAheadUpload('instruments', 'Name', $('.upload-controls .instrument.typeahead'));
-        typeAheadUpload('performers', 'LastName', $('.upload-controls .performer.typeahead'));
-        typeAheadUpload('componisten', 'LastName', $('.upload-controls .componist.typeahead'));
-        typeAheadUpload('tags', 'Name', $('.upload-controls .tag.typeahead'));
+        typeAheadUpload('instruments', 'Name',
+            $('.upload-controls .instrument .typeahead'));
+        typeAheadUpload('performers', 'LastName',
+            $('.upload-controls .performer .typeahead'));
+        typeAheadUpload('componisten', 'LastName',
+            $('.upload-controls .componist .typeahead'));
+        typeAheadUpload('tags', 'Name',
+            $('.upload-controls .tag .typeahead'));
     }
 });
 

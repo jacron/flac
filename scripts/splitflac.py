@@ -2,6 +2,18 @@ from flac.services import get_full_cuesheet
 import os, subprocess
 
 
+"""
+er van uitgaande dat een cuesheet een enkel muziekbestand adresseert dat het in stukken verdeelt
+laten we in dit script ffmpeg zorgen dat de afzonderlijke stukken in flac files worden weggeschreven
+
+dit is de enige methode om albums werkelijk op te delen in muziekstukken, bijv. concerten
+omdat een cuesheet dat een paar delen bevat nooit perfect kan werken op een enkele muziekfile
+
+(je houd 'resten' over omdat een cuesheet alleen begin- en geen eind-tijden aan kan geven)
+
+november 2017 - jan h croonen
+"""
+
 cuepath = "/Volumes/Media/Audio/Klassiek/Collecties/BBC Legends/BBCL4015 - Gilels - Schumane, Scarlatti, Bach/Emil Gilels - Gilels (BBC legends).cue"
 FFMPEG = 'ffmpeg'
 
@@ -65,35 +77,46 @@ def split_file(flac, filepath):
     print 'ERR:{}'.format(err)
 
 
-def main():
+def get_flac(index, track, basedir, tracks, file_duration):
+    outfile = os.path.join(basedir, track['title'] + '.flac')
+    time = track['index']['time']
+    if index < len(tracks) - 1:
+        time2 = tracks[index + 1]['index']['time']
+        duration = timedif(time2, time)
+    else:
+        duration = timedif(file_duration, time)
+    return {
+        'path': outfile,
+        'time': time,
+        'duration': duration,
+    }
+
+
+def get_duration(filepath):
+    cmd = ['ffprobe', '-v', 'error', '-show_entries', 'format=duration',
+           '-of', 'default=noprint_wrappers=1:nokey=1', '-sexagesimal', filepath]
+    process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = process.communicate()
+    return normtime(out)
+
+
+def split_flac(cuepath):
     cuesheet = get_full_cuesheet(cuepath, 0)
     basedir = os.path.dirname(cuepath)
     cfile = cuesheet['cue']['files'][0]
     filename = cfile['name']
     tracks = cfile['tracks']
     filepath = os.path.join(basedir, filename)
-    cmd = ['ffprobe', '-v', 'error', '-show_entries', 'format=duration',
-           '-of', 'default=noprint_wrappers=1:nokey=1', '-sexagesimal', filepath]
-    process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    out, err = process.communicate()
-    file_duration = normtime(out)  # out.split('.')[:-1][0]
+    file_duration = get_duration(filepath)
     flacs = []
     for index, track in enumerate(tracks):
-        outfile = os.path.join(basedir, track['title'] + '.flac')
-        time = track['index']['time']
-        if index < len(tracks) - 1:
-            time2 = tracks[index + 1]['index']['time']
-            duration = timedif(time2, time)
-        else:
-            duration = timedif(file_duration, time)
-        flacs.append({
-            'path': outfile,
-            'time': time,
-            'duration': duration,
-        })
-    # split_file(flacs[1], filepath)
+        flacs.append(get_flac(index, track, basedir, tracks, file_duration))
     for flac in flacs:
         split_file(flac, filepath)
+
+
+def main():
+    split_flac(cuepath)
 
 
 if __name__ == '__main__':
