@@ -285,6 +285,7 @@ def get_componisten_typeahead():
     for item in items:
         out.append({
             'FullName': make_fullname(item[0], item[1]),
+            'LastName': item[1],
             'ID': item[2],
         })
     return out
@@ -300,6 +301,7 @@ def get_performers_typeahead():
     for item in items:
         out.append({
             'FullName': make_fullname(item[0], item[1]),
+            'LastName': item[1],
             'ID': item[2],
         })
     return out

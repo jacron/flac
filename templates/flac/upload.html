@@ -5,27 +5,30 @@
 {% endblock %}
 {% block page %}
     <div id="drop-album">
-    {% upload_controls %}
     <h4>upload</h4>
-    <input class="upload-album" placeholder="pad">
+    <input type="text" class="upload-album-path" placeholder="pad">
+        <ul class="hyperlink">
+            <li>
+                <a class="corrigeer-cover-namen">normaliseer cover namen</a>
+            </li>
+            <li>
+                <a class="big-cover-namen">corrigeer 'big' cover namen</a>
+            </li>
+            <li>
+                <a class="normaliseer-paden">normaliseer paden (accolades)</a>
+            </li>
+        </ul>
+    {% upload_controls %}
         <table>
             <tr>
-                <td><input type="checkbox"></td>
+                <td><input type="checkbox" class="check-collection"></td>
                 <td>Collection</td>
             </tr>
             <tr>
-                <td><input type="checkbox"></td>
-                <td>Herstel namen covers</td>
-            </tr>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>Herstel 'big' covers</td>
-            </tr>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>Repareer haakjes in paden</td>
+                <td><input type="checkbox" class="check-stepin"></td>
+                <td>Stepin</td>
             </tr>
         </table>
-<button class="upload fa fa-upload"> recur</button>
+    <button class="upload fa fa-upload">ga</button>
     </div>
 {% endblock %}

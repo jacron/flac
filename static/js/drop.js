@@ -68,7 +68,7 @@ $(function () {
             location.reload();
         });
     }
-    function handleDrop(obj, personId, fieldName, type) {
+    function prepareDrop(obj) {
         obj.on('dragenter', function (e) {
             e.stopPropagation();
             e.preventDefault();
@@ -78,6 +78,9 @@ $(function () {
             e.stopPropagation();
             e.preventDefault();
         });
+    }
+    function handleDrop(obj, personId, fieldName, type) {
+        prepareDrop(obj);
         obj.on('drop', function (e) {
             $(this).css('border', '2px dotted #0B85A1');
             e.preventDefault();
@@ -95,6 +98,11 @@ $(function () {
             }
         });
     }
+    function handleAlbumDrop(obj) {
+        prepareDrop(obj);
+        obj.on('drop', function (e) {
+        });
+    }
 
     const componist_id = $('#componist_id').val();
     if (componist_id) {
@@ -105,5 +113,9 @@ $(function () {
     if (performer_id) {
         handleDrop($('#drop-area-performer'), performer_id, 'performer_id', 'person');
         preventSpilledDrop($('.performer'));
+    }
+    const dropAlbum = $('#drop-album');
+    if (dropAlbum.length) {
+        handleAlbumDrop(dropAlbum);
     }
 });

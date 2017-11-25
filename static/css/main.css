@@ -423,3 +423,6 @@ div[class="pattern"] img {
 .album .ID:hover .remove {
     display: inline-block;
 }
+#drop-album {
+    padding: 6px;
+}
