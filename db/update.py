@@ -12,6 +12,8 @@ def get_library_code(name):
     if len(parts) < 2:
         parts = name.split('KK.')
     if len(parts) < 2:
+        parts = name.split('K ')
+    if len(parts) < 2:
         return None
     kk = parts[1].split(' ')
     if len(kk) < 2:
@@ -37,11 +39,12 @@ def inherit_elements(album_id):
     conn, c = connect()
     componist_id = componisten[0]['ID']
     performer_id = performers[0]['ID']
-    instrument_id = instrument['ID']
     for album in albums:
         insert_album_componist(componist_id, album['ID'], c, conn)
         insert_album_performer(performer_id, album['ID'], c, conn)
-        insert_album_instrument(instrument_id, album['ID'], c, conn)
+        if instrument:
+            instrument_id = instrument['ID']
+            insert_album_instrument(instrument_id, album['ID'], c, conn)
 
 
 def update_piece_library_code(id, code):

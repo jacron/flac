@@ -8,7 +8,7 @@
 <div class="album">
     <form>{% csrf_token %}</form>
     <input type="hidden" id="album_id" value="{{ album.ID }}">
-    {% album_controls album.ID %}
+    {% album_controls album.ID website %}
 <img src="/image/{{ album.ID }}/album/"
      class="album-image">
 <img src="/imageback/{{ album.ID }}/album/"

@@ -256,6 +256,7 @@ where AlbumID=4646);
 
 -- verwijder album en zijn stukken
 -- set id=5049;
+
 select * from Piece
 where AlbumID=5049;
 
@@ -268,3 +269,8 @@ where AlbumID=5049;
          JOIN Tag_Album
         ON TagID=Tag.ID
         where AlbumID=3380;
+
+select Name, ID, instr(Name, 'BWV') position1,
+  instr(substr(Name, instr(Name, 'BWV') + 4), ' ') position2
+from Piece
+where Name like '%BWV%';

@@ -1,4 +1,5 @@
 # coding: utf-8
+import glob
 import os
 
 from flac.services.proposals import get_proposals, get_artists
@@ -63,6 +64,20 @@ def get_title_for_list(list_name, list_id):
         return get_tag(list_id)['Name']
 
 
+def get_elements(album_id):
+    return get_album_componisten(album_id), get_album_performers(album_id), get_album_instruments(album_id)
+
+
+def get_website(path):
+    website_path = os.path.join(path, 'website')
+    if os.path.exists(website_path):
+        for f in glob.iglob(os.path.join(website_path, '*.html')):
+            return f
+        for f in glob.iglob(os.path.join(website_path, '*.htm')):
+            return f
+    return None
+
+
 def album_context(album_id, list_name=None, list_id=None):
     album_o = get_album(album_id)
     if not album_o:
@@ -73,9 +88,7 @@ def album_context(album_id, list_name=None, list_id=None):
         mother_id = album_o['AlbumID']
         mother_title = get_mother_title(mother_id)
     cuesheets, pieces, notfounds, invalidcues = organize_pieces(album_id, album_o['Path'])
-    album_componisten = get_album_componisten(album_id)
-    album_performers = get_album_performers(album_id)
-    album_instruments = get_album_instruments(album_id)
+    album_componisten, album_performers, album_instruments = get_elements(album_id)
     sp = get_setting('show_proposals')
     show_proposals = sp['VALUE']
     proposals, artists = [], []
@@ -116,4 +129,5 @@ def album_context(album_id, list_name=None, list_id=None):
         'list_title': list_title,
         'list_id': list_id,
         'has_subdirs': check_subdirs(album_o['Path']),
+        'website': get_website(album_o['Path']),
     }

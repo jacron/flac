@@ -2,6 +2,7 @@ import urllib
 import os
 
 from flac.services import openpath
+from flac.services.album_content import get_website
 from flac.services.makecuesheet import make_cuesheet, rename_cuesheet, make_subs_cuesheet, split_cued_file
 from flac.services.path import get_path, path_from_id_field
 from ..db import (abs_insert_componist, update_componistbirth, update_componistdeath, update_performerbirth,
@@ -15,7 +16,7 @@ from ..db import (
     remove_instrument_from_album,
     new_tag, new_componist, new_performer, new_instrument,
     delete_album,
-    update_componistname, update_componistyears, update_performername, update_performeryears,
+    update_componistname, update_performername, 
 )
 from django.conf import settings
 
@@ -53,6 +54,13 @@ def person_by_url(post):
 
 def openfinder(objectid, kind):
     path = get_path(objectid, kind)
+    if path:
+        openpath(path)
+
+
+def openwebsite(album_id):
+    album = get_album(album_id)
+    path = get_website(album['Path'])
     if path:
         openpath(path)
 
@@ -137,6 +145,9 @@ def do_post(post):
     if cmd == 'openfinder':
         openfinder(post['objectid'], post['kind'])
         return 'Finder opened'
+    if cmd == 'openwebsite':
+        openwebsite(post['albumid'])
+        return 'Website opened'
     if cmd == 'update_album_title':
         return update_album_title(album_id=int(post['albumid']), title=post['title'])
     if cmd == 'adjust_kk':

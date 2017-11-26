@@ -46,7 +46,8 @@ def pieceslist(pieces):
     'tagtemplates/pages.html',
 )
 def pages(prev_id, next_id, list_title, list_name, list_id):
-    return dict(prev_id=prev_id,next_id=next_id,list_title=list_title,list_name=list_name,list_id=list_id)
+    return dict(prev_id=prev_id, next_id=next_id, list_title=list_title,
+                list_name=list_name, list_id=list_id)
 
 
 @register.inclusion_tag(
@@ -92,14 +93,14 @@ def editalbum(select, add, albumid, options):
     'tagtemplates/proposallist.html',
 )
 def proposallist(proposals, artists):
-    return dict(proposals=proposals,artists=artists)
+    return dict(proposals=proposals, artists=artists)
 
 
 @register.inclusion_tag(
     'tagtemplates/album_controls.html',
 )
-def album_controls(album_id):
-    return dict(album_id=album_id)
+def album_controls(album_id, website):
+    return dict(album_id=album_id, website=website)
 
 
 @register.inclusion_tag(
@@ -112,8 +113,8 @@ def upload_controls():
 @register.inclusion_tag(
     'tagtemplates/persons_list.html',
 )
-def persons_list(persons, url, type):
-    return dict(persons=persons, person_url=url, type=type)
+def persons_list(persons, url, ptype):
+    return dict(persons=persons, person_url=url, type=ptype)
 
 
 @register.inclusion_tag(
@@ -123,12 +124,10 @@ def alfabet():
     return dict(letters=alph())
 
 
-@register.filter( name='unescape' )
+@register.filter(name='unescape')
 def unescape(val):
     unescape.is_safe = True
     if isinstance(val, str):
-        return val.encode( 'string-escape' )
+        return val.encode('string-escape')
     else:
         return val
-
-

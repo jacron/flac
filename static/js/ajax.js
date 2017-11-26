@@ -54,6 +54,13 @@ function openfinder(objectId, kind) {
     });
 }
 
+function openwebsite(albumId) {
+    ajaxPost({
+        cmd: 'openwebsite',
+        albumid: albumId
+    })
+}
+
 function play(idPiece) {
     ajaxPost({
         arg: idPiece,
