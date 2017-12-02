@@ -118,7 +118,6 @@ $(function () {
             var li = $(this),
                 title = li.find('.title'),
                 text = title.text().toLowerCase();
-            // console.log(title.text());
             if (!search.length || text.indexOf($input.val()) !== -1) {
                 li.show();
             } else {
@@ -174,11 +173,13 @@ $(function () {
         $('.inherit-elements').click(function(){
             inheritElements(albumId);
         });
-        $('.filter-albums').keydown(function(e){
-            if (e.key === 'Enter') {
-                filterAlbums($(this));
-            }
-        })
     }
+    // albumlist also lives on componist page etc
+    $('.filter-albums').keydown(function(e){
+        if (e.key === 'Enter') {
+            filterAlbums($(this));
+        }
+    })
+
 });
 
