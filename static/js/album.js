@@ -112,6 +112,20 @@ $(function () {
 
         });
     }
+    function filterAlbums($input) {
+        var search = $input.val().toLowerCase();
+        $('.album-list li').each(function() {
+            var li = $(this),
+                title = li.find('.title'),
+                text = title.text().toLowerCase();
+            // console.log(title.text());
+            if (!search.length || text.indexOf($input.val()) !== -1) {
+                li.show();
+            } else {
+                li.hide();
+            }
+        });
+    }
 
     const albumId = $('#album_id').val();
     if (albumId) {
@@ -160,6 +174,11 @@ $(function () {
         $('.inherit-elements').click(function(){
             inheritElements(albumId);
         });
+        $('.filter-albums').keydown(function(e){
+            if (e.key === 'Enter') {
+                filterAlbums($(this));
+            }
+        })
     }
 });
 
