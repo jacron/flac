@@ -114,7 +114,7 @@ nav a.selected {
     width: 16px;
 }
 .content.stukken {
-    /*display: none;*/
+    display: none;
 }
 .content.stukken .make-cuesheet {
     /*display: none;*/
@@ -220,7 +220,8 @@ fieldset {
 }
 .cue-plus,
 .cue-title,
-.cue-split {
+.cue-split,
+.cue-edit {
     cursor: pointer;
     font-style: italic;
 }
@@ -253,7 +254,7 @@ fieldset {
     height: 36px;
 }
 .album-controls .typeahead {
-    display: none;
+    /*display: none;*/
 }
 .album-controls:hover .typeahead {
     display: inline-block;
@@ -398,7 +399,7 @@ div[class="pattern"] img {
 .pages {
     border: 1px solid #efefef;
     padding: 6px;
-    width: 300px;
+    width: 500px;
 }
 .album-collection a {
     color: darkgreen;

@@ -3,7 +3,9 @@
         <a onclick="openfinder('{{ album_id }}', 'album')">open finder</a>
     </span>
     {% if website %}
+    <span class="hyperlink btn">
     <a onclick="openwebsite('{{ album_id }}')">website</a>
+    </span>
     {% endif %}
     <input class="tag typeahead" type="text" placeholder="Tag">
     <input class="componist typeahead" type="text" placeholder="Componist">

@@ -17,9 +17,14 @@
             {% endif %}
             <i class="toggle-cue-lines fa fa-caret-right"></i>
             <span class="cue-plus-container">
-                <span class="cue-plus">album-titel</span> |
-                <span class="cue-title">cuesheet-titel</span> |
-                <span class="cue-split" id="{{ cuesheet.ID }}">bestand splitsen</span>
+                <span class="cue-plus" title="bewaar als albumtitel">
+                    album-titel</span> |
+                <span class="cue-title" title="kopieer naar titel voor nieuwe cuesheet">
+                    cuesheet-titel</span> |
+                <span class="cue-split" id="{{ cuesheet.ID }}" title="splits in flacs">
+                    splits</span> |
+                <span class="cue-edit" id="{{ cuesheet.ID }}" title="bewerk cuesheet in sublime">
+                    bewerk</span>
             </span>
         </li>
         {%  if cuesheet.cue.performer %}

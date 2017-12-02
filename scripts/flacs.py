@@ -49,7 +49,7 @@ def insert_pieces(path, album_id, conn, c):
             print(f)
             insert_piece(
                 name=filename(f),
-                code=kirkpatrick(f),
+                code=kirkpatrick(f, 'K ', ' '),
                 album_id=album_id,
                 c=c,
                 conn=conn)
@@ -218,24 +218,20 @@ def main():
     # open_finder_componist(ComponistID)
     # return
     # path = get_path_of_componist(ComponistID)
-    album_id = 4374
+    album_id = 4029
     path = get_path_of_album(album_id)
     # mother_id = 3816
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/Yo Yo Ma 30 years outside the box"
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/Decca, The Decca Sound"
     # path = "/Volumes/Media/Audio/Klassiek/Performers"
     # artiest = "Fritz Reiner"
-    # ComponistID = 1
+    ComponistID = 1
     # componist = from_path(path)
     # ComponistID = componist_from_album(album_id)
-    PerformerID = 575
+    # PerformerID = 575
     # PerformerID2 = 47
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Gombert/Nicolas Gombert - Motets II - Beauty Farm (2017) (Fra Bernardo)"
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Andriessen/Louis Andriessen - Garden of Eros (Schoenberg Quartet)"
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Xenakis/xenakis_kraanerg_drury"
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Xenakis/Xenakis - Works for Piano (A. Takahashi) 1999"
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten clavecimbel/scott ross -the keyboard sonatas"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Great pianists of the 20th century/Box 016 Robert Casadesus"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Dvorak/Busch Trio and Miguel Da Silva - Dvorak Piano Quartets Nos. 1 and 2 (2017) (24-96 Qobuz)"
+
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     if path is None:
         print('No path')

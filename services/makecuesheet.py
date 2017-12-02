@@ -4,7 +4,7 @@ import os
 
 from flac.scripts import play_types, kirkpatrick, ColorPrint
 from flac.scripts.splitflac import split_flac
-from . import trimextension, filename
+from . import trimextension, filename, subl_path, get_full_cuesheet
 from ..db import connect, get_album_path_by_id, insert_piece, get_piece
 
 
@@ -36,6 +36,14 @@ def split_cued_file(piece_id, album_id):
     src = u'{}/{}'.format(path, piece['Name'])
     split_flac(src)
     return src
+
+
+def edit_cuesheet(piece_id, album_id):
+    conn, cursor = connect()
+    path = get_album_path_by_id(album_id, cursor)
+    piece = get_piece(piece_id)
+    src = u'{}/{}'.format(path, piece['Name'])
+    subl_path(src)
 
 
 def rename_cuesheet(piece_id, album_id):
@@ -79,10 +87,16 @@ def get_dirs(path):
     return dirs
 
 
-def make_sub_cuesheet(path, album_id):
-    cue_title = filename(path)
+def make_sub_cuesheet(path):
+    """
+    Create lines for a new cuesheet
+    :param path:
+    :return:
+    """
     lines = []
     for card in play_types:
+        if card == 'cue':
+            continue
         files_path = u"{}{}".format(path, "/*.{}".format(card))
         for f in sorted(glob.iglob(files_path)):
             print(f)
@@ -94,13 +108,58 @@ def make_sub_cuesheet(path, album_id):
             lines.append(u'  TRACK 01 AUDIO')
             lines.append(u'    TITLE "{}"'.format(title))
             lines.append(u'    INDEX 01 00:00:00')
-    write_cuesheet(cue_title, album_id, lines)
+    return lines
 
 
 def make_subs_cuesheet(album_id):
+    """
+    For each subdirectory, create cuesheet for pieces
+    :param album_id:
+    :return:
+    """
     conn, c = connect()
     path = get_album_path_by_id(album_id, c)
     dirs = get_dirs(path)
     for d in dirs:
         p = os.path.join(path, d)
-        make_sub_cuesheet(p, album_id)
+        lines = make_sub_cuesheet(p)
+        if len(lines):
+            write_cuesheet(filename(p), album_id, lines)
+
+
+def read_cuesheets(p, album_id):
+    lines = []
+    files_path = u"{}{}".format(p, "/*.cue")
+    for f in glob.iglob(files_path):
+        parts = f.split('/')[-2:]
+        dirname = parts[0]
+        cuesheet = get_full_cuesheet(f, album_id)
+        for cfile in cuesheet['cue']['files']:
+            fpath = os.path.join(dirname, cfile['name'])
+            lines.append(u'FILE "{}" WAVE'.format(fpath))
+            for track in cfile['tracks']:
+                lines.append(u'  TRACK {} AUDIO'.format(track['nr']))
+                lines.append(u'    TITLE "{}"'.format(track['title']))
+                lines.append(u'    INDEX {} {}'.format(
+                    track['index']['nr'], track['index']['time']))
+    return lines
+
+
+def combine_sub_cuesheets(album_id):
+    """
+    Combine cuesheets in each subdirectory in one, which you write in the directory
+    :param album_id:
+    :return:
+    """
+    conn, c = connect()
+    path = get_album_path_by_id(album_id, c)
+    dirs = get_dirs(path)
+    lines = []
+    title = 'combined'
+    lines.append(u'TITLE "{}"'.format(title))
+    for d in dirs:
+        p = os.path.join(path, d)
+        lines += read_cuesheets(p, album_id)
+    if len(lines):
+        write_cuesheet(title, album_id, lines)
+

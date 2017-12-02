@@ -33,6 +33,13 @@ $(function () {
         const title = getTitle($this);
         $('.make-cuesheet').val(title);
     }
+    function editCuesheet($this, albumid) {
+        ajaxPost({
+            cmd: 'editcuesheet',
+            id: $this.attr('id'),
+            albumid: albumid
+        })
+    }
     function splitCuedFile($this, albumid) {
         ajaxPost({
             cmd: 'split_cued_file',
@@ -54,11 +61,15 @@ $(function () {
             $this.addClass('expanded');
         }
     }
-    function makeSubs(albumId) {
-        console.log({
-            cmd: 'makesubs',
+    function combineCuesheets(albumId) {
+        ajaxPost({
+            cmd: 'combinesubs',
             albumid: albumId
+        }, function() {
+            // refetch();
         });
+    }
+    function makeSubs(albumId) {
         ajaxPost({
             cmd: 'makesubs',
             albumid: albumId
@@ -119,8 +130,14 @@ $(function () {
         $('.cue-split').click(function() {
             splitCuedFile($(this), albumId);
         });
+        $('.cue-edit').click(function() {
+            editCuesheet($(this), albumId);
+        });
         $('.make-subs').click(function() {
             makeSubs(albumId);
+        });
+        $('.combine-subs').click(function() {
+            combineCuesheets(albumId);
         });
         $('.album .ID .remove').click(function() {
             removeAlbum(albumId, $('.album .ID'));

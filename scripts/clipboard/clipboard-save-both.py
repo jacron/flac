@@ -37,9 +37,9 @@ def save_cb_image():
     img = ImageGrab.grabclipboard()
     if img:
         print(img.size)
-        # save_front(img)
-        # save_back(img)
-        img.save(backpath)
+        save_front(img)
+        save_back(img)
+        # img.save(backpath)
         # img.save(folderpath)
     else:
         ColorPrint.print_c('No image on clipboard!', ColorPrint.RED)

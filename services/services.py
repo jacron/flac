@@ -111,3 +111,6 @@ def openpath(path):
     os.system(cmd)
 
 
+def subl_path(path):
+    cmd = u'subl "{}"'.format(path).encode('UTF-8')
+    os.system(cmd)

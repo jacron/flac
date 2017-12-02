@@ -40,10 +40,14 @@
     {% if notfounds|length %}
     Niet gevonden: {{ notfounds|length }} |
     {% endif %}
-        <a class="refetch">Haal opnieuw de stukken op</a>
+    <a class="refetch">Haal opnieuw de stukken op</a>
         {% if has_subdirs %}|
-    <a class="make-subs">Maak cuelist voor subdirectories</a> |
-            <a class="inherit-elements">erf eigenschappen</a>
+    <a class="make-subs" title="Maak cuelist voor subdirectories">
+        Maak cuelist voor subs</a> |
+    <a class="combine-subs" title="Combineer cuelist voor subdirectories">
+        Combineer sub-cuelists</a> |
+    <a class="inherit-elements" title="Erf eigenschappen in subalbums">
+        Erf</a>
     {% endif %}
     </div>
     {% if show_proposals == '1' %}

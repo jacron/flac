@@ -3,15 +3,16 @@ from venv.flac.db import (
     insert_album_performer, insert_album_componist, )
 
 play_types = ('cue', "flac", "ape", "mp3", "iso", "wma", "wav", "mp3", "m4a", )
-k_split = None
+# k_split = None
 
 
-def kirkpatrick(filepath):
+def kirkpatrick(filepath, k_split='K ', end_limit=' '):
     if k_split:
         w = filepath.split('/')
         name = w[-1]
-        k = name.split(k_split)[1]
-        return k.split()[0]
+        k = name.split(k_split)
+        if len(k) > 1:
+            return 'K ' + k[1].split(end_limit)[0]
     return 0
 
 

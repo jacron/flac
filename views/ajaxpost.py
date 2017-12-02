@@ -3,7 +3,8 @@ import os
 
 from flac.services import openpath
 from flac.services.album_content import get_website
-from flac.services.makecuesheet import make_cuesheet, rename_cuesheet, make_subs_cuesheet, split_cued_file
+from flac.services.makecuesheet import make_cuesheet, rename_cuesheet, make_subs_cuesheet, split_cued_file, \
+    edit_cuesheet, combine_sub_cuesheets
 from flac.services.path import get_path, path_from_id_field
 from ..db import (abs_insert_componist, update_componistbirth, update_componistdeath, update_performerbirth,
                   update_performerdeath, adjust_kk, inherit_elements)
@@ -16,7 +17,7 @@ from ..db import (
     remove_instrument_from_album,
     new_tag, new_componist, new_performer, new_instrument,
     delete_album,
-    update_componistname, update_performername, 
+    update_componistname, update_performername,
 )
 from django.conf import settings
 
@@ -164,3 +165,7 @@ def do_post(post):
         return make_subs_cuesheet(post['albumid'])
     if cmd == 'split_cued_file':
         return split_cued_file(post['cue_id'], post['albumid'])
+    if cmd == 'editcuesheet':
+        return edit_cuesheet(post['id'], post['albumid'])
+    if cmd == 'combinesubs':
+        return combine_sub_cuesheets(post['albumid'])
