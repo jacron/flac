@@ -60,9 +60,9 @@ def parse(data):
         if len(line) < 1:
             continue
 
-        # rem = get_element(line, 'REM ')
-        # if rem:
-        #     cue['rem'].append(rem)
+        rem = get_element(line, 'REM ')
+        if rem:
+            cue['rem'].append(rem)
 
         title = get_element(line, 'TITLE ')
         if title:

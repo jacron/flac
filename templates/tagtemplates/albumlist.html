@@ -1,30 +1,29 @@
 <div style="position:relative;">
-<ul class="album-list">
-    {% for item in albums %}
-        <li id="{{ item.ID }}"
-                class="hyperlink
-{% if item.mother %}
-mother-album
+{% if albums|length %}
+    <div class="items">{{ albums|length }} albums</div>
 {% endif %}
-">
-
+    <ul class="album-list">
+        {% for item in albums %}
+            <li id="{{ item.ID }}"
+                    class="hyperlink
+    {% if item.mother %}
+        mother-album
+    {% endif %}
+    ">
     <a href="/album/{{ item.ID }}/
-{% if list_name %}
-{{ list_name }}/{{ list_id }}
-{% endif %}
-">
-        <div class="image-container">
-            <img src="/image/{{ item.ID }}/album/"
-                 class="album-image-thumb">
-        </div>
-        <div class="title">
-            {{ item.Title }} - <span class="componist-name">{{ item.Componist }}</span>
-            {% if item.TagName %} - <span class="tag-name">{{ item.TagName }}</span>
-            {% endif %}
-        </div>
+    {% if list_name %}{{ list_name }}/{{ list_id }}{% endif %}
+    ">
+    <div class="image-container">
+        <img src="/image/{{ item.ID }}/album/"
+             class="album-image-thumb">
+    </div>
+    <div class="title">
+        {{ item.Title }} - <span class="componist-name">{{ item.Componist }}</span>
+        {% if item.TagName %} - <span class="tag-name">{{ item.TagName }}</span>{% endif %}
+    </div>
     </a>
-</li>
-    {% endfor %}
-</ul>
+    </li>
+        {% endfor %}
+    </ul>
 
 </div>

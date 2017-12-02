@@ -4,7 +4,7 @@ import os
 
 from flac.scripts import play_types, kirkpatrick, ColorPrint
 from flac.scripts.splitflac import split_flac
-from . import trimextension, filename, subl_path, get_full_cuesheet
+from . import trimextension, filename, subl_path, get_full_cuesheet, dirname
 from ..db import connect, get_album_path_by_id, insert_piece, get_piece
 
 
@@ -127,6 +127,45 @@ def make_subs_cuesheet(album_id):
             write_cuesheet(filename(p), album_id, lines)
 
 
+def norm_cuesheet(piece_id, album_id):
+    conn, cursor = connect()
+    path = get_album_path_by_id(album_id, cursor)
+    piece = get_piece(piece_id)
+    src = u'{}/{}'.format(path, piece['Name'])
+    cuesheet = get_full_cuesheet(src, album_id)
+    lines = []
+    lines.append(u'TITLE "{}"'.format(cuesheet['Title']))
+    cue = cuesheet['cue']
+    for rem in cue['rem']:
+        lines.append(u'REM {}'.format(rem))
+    if cue['performer']:
+        lines.append((u'PERFORMER {}'.format(cue['performer'])))
+    for cfile in cue['files']:
+        fpath = os.path.join(path, cfile['name'])
+        lines.append(u'FILE "{}" WAVE'.format(fpath))
+        stored_title = None
+        for track in cfile['tracks']:
+            track_title = track['title']
+            if stored_title and track_title[0] == '-':
+                track_title = stored_title + track_title
+            else:
+                parts = track_title.split('-')
+                stored_title = parts[0]
+            lines.append(u'  TRACK {} AUDIO'.format(track['nr']))
+            lines.append(u'    TITLE "{}"'.format(track_title))
+            if track['performer']:
+                lines.append((u'    PERFORMER {}'.format(track['performer'])))
+            lines.append(u'    INDEX {} {}'.format(
+                track['index']['nr'], track['index']['time']))
+    content = ''
+    for line in lines:
+        content += line + '\n'
+    trg = os.path.dirname(src) + '/norm_' + filename(src)
+    with codecs.open(trg, 'w', 'utf-8') as f:
+        f.write(u'\ufeff')
+        f.write(u'{}'.format(content))
+
+
 def read_cuesheets(p, album_id):
     lines = []
     files_path = u"{}{}".format(p, "/*.cue")
@@ -134,12 +173,19 @@ def read_cuesheets(p, album_id):
         parts = f.split('/')[-2:]
         dirname = parts[0]
         cuesheet = get_full_cuesheet(f, album_id)
-        for cfile in cuesheet['cue']['files']:
+        cue = cuesheet['cue']
+        for rem in cue['rem']:
+            lines.append(u'REM {}'.format(rem))
+        if cue['performer']:
+            lines.append((u'PERFORMER {}'.format(cue['performer'])))
+        for cfile in cue['files']:
             fpath = os.path.join(dirname, cfile['name'])
             lines.append(u'FILE "{}" WAVE'.format(fpath))
             for track in cfile['tracks']:
                 lines.append(u'  TRACK {} AUDIO'.format(track['nr']))
                 lines.append(u'    TITLE "{}"'.format(track['title']))
+                if track['performer']:
+                    lines.append((u'    PERFORMER {}'.format(track['performer'])))
                 lines.append(u'    INDEX {} {}'.format(
                     track['index']['nr'], track['index']['time']))
     return lines
@@ -162,4 +208,3 @@ def combine_sub_cuesheets(album_id):
         lines += read_cuesheets(p, album_id)
     if len(lines):
         write_cuesheet(title, album_id, lines)
-

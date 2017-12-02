@@ -75,8 +75,8 @@ def split_file(flac, filepath):
     ColorPrint.print_c(flac['path'], ColorPrint.CYAN)
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = process.communicate()
-    print 'STDOUT:{}'.format(out)
-    print 'ERR:{}'.format(err)
+    # print 'STDOUT:{}'.format(out)
+    # print 'ERR:{}'.format(err)
 
 
 def get_flac(index, track, basedir, tracks, file_duration):

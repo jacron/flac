@@ -66,7 +66,7 @@ $(function () {
             cmd: 'combinesubs',
             albumid: albumId
         }, function() {
-            // refetch();
+            refetch();
         });
     }
     function makeSubs(albumId) {
@@ -74,6 +74,15 @@ $(function () {
             cmd: 'makesubs',
             albumid: albumId
         }, function() {
+            refetch();
+        });
+    }
+    function normCuesheet($this, albumid) {
+        ajaxPost({
+            cmd: 'normcuesheet',
+            albumid: albumid,
+            id: $this.attr('id')
+        }, function()  {
             refetch();
         });
     }
@@ -132,6 +141,9 @@ $(function () {
         });
         $('.cue-edit').click(function() {
             editCuesheet($(this), albumId);
+        });
+        $('.cue-norm').click(function() {
+            normCuesheet($(this), albumId);
         });
         $('.make-subs').click(function() {
             makeSubs(albumId);
