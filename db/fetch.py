@@ -79,18 +79,17 @@ def get_album_albums(id_album):
     return out
 
 
-sqlAllAlbums = '''
-      SELECT 
-      Title, 
-      Album.ID
-      FROM Album 
-      WHERE Album.AlbumID=?
-      GROUP BY Title
-      ORDER BY Title COLLATE NOCASE
-    '''
-
-
-sqlCompAlbums = '''
+sql_albums = {
+    'all': '''
+              SELECT 
+              Title, 
+              Album.ID
+              FROM Album 
+              WHERE Album.AlbumID=?
+              GROUP BY Title
+              ORDER BY Title COLLATE NOCASE
+            ''',
+    'componist': '''
       SELECT 
       Title, 
       Album.ID
@@ -100,10 +99,8 @@ sqlCompAlbums = '''
       WHERE c.ComponistID=?
       GROUP BY Title
       ORDER BY Title COLLATE NOCASE
-    '''
-
-
-sqlPerfAlbums = '''
+    ''',
+    'performer': '''
       SELECT 
       Title, 
       Album.ID
@@ -113,10 +110,8 @@ sqlPerfAlbums = '''
       WHERE c.PerformerID=?
       GROUP BY Title
       ORDER BY Title COLLATE NOCASE
-    '''
-
-
-sqlTagAlbums = '''
+    ''',
+    'tag': '''
       SELECT 
       Title, 
       Album.ID
@@ -126,12 +121,22 @@ sqlTagAlbums = '''
       WHERE c.TagID=?
       GROUP BY Title
       ORDER BY Title COLLATE NOCASE
+    ''',
+    'gather': '''
+      SELECT 
+      Title, 
+      Album.ID
+      FROM Album
+      WHERE IsCollection=2
+      GROUP BY Title
+      ORDER BY Title COLLATE NOCASE
     '''
+}
 
 
 def get_next_album(id_mother, id_album):
     if not id_mother : return None
-    items = get_items_with_parameter(sqlAllAlbums, id_mother)
+    items = get_items_with_parameter(sql_albums.get('all'), id_mother)
     match = None
     for item in items:
         if match:
@@ -141,30 +146,30 @@ def get_next_album(id_mother, id_album):
     return None
 
 
+def get_list_album_items(list_name, list_id):
+    sql = sql_albums.get(list_name)
+    if list_name == 'gather':
+        return get_items(sql)
+    else:
+        return get_items_with_parameter(sql, list_id)
+
+
 def get_next_list_album(id_album, list_name, list_id):
     if not list_name or not list_id:
         return None
-    sql = None
-    if list_name == 'componist':
-        sql = sqlCompAlbums
-    if list_name == 'performer':
-        sql= sqlPerfAlbums
-    if list_name == 'tag':
-        sql = sqlTagAlbums
-    if sql:
-        items = get_items_with_parameter(sql, list_id)
-        match = None
-        for item in items:
-            if match:
-                return item[1]
-            if int(item[1]) == int(id_album):
-                match = id_album
+    items = get_list_album_items(list_name, list_id)
+    match = None
+    for item in items:
+        if match:
+            return item[1]
+        if int(item[1]) == int(id_album):
+            match = id_album
     return None
 
 
 def get_prev_album(id_mother, id_album):
     if not id_mother : return None
-    items = get_items_with_parameter(sqlAllAlbums, id_mother)
+    items = get_items_with_parameter(sql_albums.get('all'), id_mother)
     match = None
     for item in items:
         if match and int(item[1]) == int(id_album):
@@ -176,14 +181,7 @@ def get_prev_album(id_mother, id_album):
 def get_prev_list_album(id_album, list_name, list_id):
     if not list_name or not list_id:
         return None
-    sql = None
-    if list_name == 'componist':
-        sql = sqlCompAlbums
-    if list_name == 'performer':
-        sql = sqlPerfAlbums
-    if list_name == 'tag':
-        sql = sqlTagAlbums
-    items = get_items_with_parameter(sql, list_id)
+    items = get_list_album_items(list_name, list_id)
     if items:
         match = None
         for item in items:
@@ -909,16 +907,6 @@ def get_componist_path_by_id(componist_id, c):
     return fields[0]
 
 
-def get_album_path_by_id(album_id, c):
-    sql = '''
-    SELECT Path 
-    FROM Album 
-    WHERE ID=?
-    '''
-    fields = c.execute(sql, (album_id,)).fetchone()
-    return fields[0]
-
-
 def get_componist_id_from_album(album_id, c):
     sql = '''
     SELECT ComponistID 
@@ -960,6 +948,7 @@ def get_componist_path_c(componist_id, c):
 
 
 def get_element(album_id, name, c):
+    sql = None
     if name == 'instrument':
         sql = '''
         SELECT Name, ID
@@ -998,8 +987,10 @@ def get_element(album_id, name, c):
         ON TagID=Tag.ID
         WHERE AlbumID=?
         '''
-    fields = c.execute(sql, (album_id,)).fetchone()
-    return fields[0] + '_' + str(fields[1])
+    if sql:
+        fields = c.execute(sql, (album_id,)).fetchone()
+        return fields[0] + '_' + str(fields[1])
+    return None
 
 
 def get_album_by_path(path, c):
