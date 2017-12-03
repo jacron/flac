@@ -42,4 +42,10 @@ $(function () {
     $('.toggle-cue-lines').click(function () {
         toggleContents($(this), 'li', '.content.cue-lines');
     });
+    $('.toggle-cue-content').click(function() {
+        toggleContent($(this), 'div', '.cue');
+    });
+    $('.toggle-cuesheets-content').click(function() {
+        toggleContent($(this), 'div', '.cuesheets-content');
+    });
 });

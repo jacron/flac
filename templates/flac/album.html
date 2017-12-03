@@ -36,23 +36,25 @@
     {% cuesheetlist cuesheets 1 %}
     {% cuesheetlist invalidcues 0 %}
     {% pieceslist pieces %}
-    <div class="hyperlink">
-    {% if notfounds|length %}
-    Niet gevonden: {{ notfounds|length }} |
-    {% endif %}
-    <a class="refetch">Haal opnieuw de stukken op</a>
-        {% if has_subdirs %}|
-    <a class="make-subs" title="Maak cuelist voor subdirectories">
-        Maak cuelist voor subs</a> |
-    <a class="combine-subs" title="Combineer cuelist voor subdirectories">
-        Combineer sub-cuelists</a> |
-    <a class="inherit-elements" title="Erf eigenschappen in subalbums">
-        Erf</a>
-    {% endif %}
+    <div class="hyperlink album-tail">
+        {% if notfounds|length %}
+        Niet gevonden: {{ notfounds|length }} |
+        {% endif %}
+        <a class="refetch">Haal opnieuw de stukken op</a>
+            {% if has_subdirs %}|
+        <a class="make-subs" title="Maak cuelist voor subdirectories">
+            Maak cuelist voor subs</a> |
+        <a class="combine-subs" title="Combineer cuelist voor subdirectories">
+            Combineer sub-cuelists</a> |
+        <a class="inherit-elements" title="Erf eigenschappen in subalbums">
+            Erf</a>
+        {% endif %}
+        {% if show_proposals == '1' %}
+            <div>
+            {% proposallist proposals artists %}
+            </div>
+        {% endif %}
     </div>
-    {% if show_proposals == '1' %}
-        {% proposallist proposals artists %}
-    {% endif %}
     {% alfabet %}
     {% albumlist albums %}
     </div>

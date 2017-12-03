@@ -80,19 +80,23 @@ def get_album_albums(id_album):
 
 
 sql_albums = {
+    """queries that only have to fetch id's but need titles to order correctly.
+    these are used for getting next or previous album in a list
+    
+    """
     'all': '''
-              SELECT 
-              Title, 
-              Album.ID
-              FROM Album 
-              WHERE Album.AlbumID=?
-              GROUP BY Title
-              ORDER BY Title COLLATE NOCASE
-            ''',
+      SELECT 
+        Title, 
+        Album.ID
+      FROM Album 
+      WHERE Album.AlbumID=?
+      GROUP BY Title
+      ORDER BY Title COLLATE NOCASE
+    ''',
     'componist': '''
       SELECT 
-      Title, 
-      Album.ID
+        Title, 
+        Album.ID
       FROM Album
        JOIN Componist_Album AS c
        ON c.AlbumID=Album.ID
@@ -102,8 +106,8 @@ sql_albums = {
     ''',
     'performer': '''
       SELECT 
-      Title, 
-      Album.ID
+        Title, 
+        Album.ID
       FROM Album
        JOIN Performer_Album AS c
        ON c.AlbumID=Album.ID
@@ -113,8 +117,8 @@ sql_albums = {
     ''',
     'tag': '''
       SELECT 
-      Title, 
-      Album.ID
+        Title, 
+        Album.ID
       FROM Album
        JOIN Tag_Album AS c
        ON c.AlbumID=Album.ID
@@ -124,8 +128,8 @@ sql_albums = {
     ''',
     'gather': '''
       SELECT 
-      Title, 
-      Album.ID
+        Title, 
+        Album.ID
       FROM Album
       WHERE IsCollection=2
       GROUP BY Title
@@ -148,7 +152,7 @@ def get_next_album(id_mother, id_album):
 
 def get_list_album_items(list_name, list_id):
     sql = sql_albums.get(list_name)
-    if list_name == 'gather':
+    if int(list_id) == 0:
         return get_items(sql)
     else:
         return get_items_with_parameter(sql, list_id)

@@ -45,6 +45,7 @@ urlpatterns = [
 
     url(r'^ajax/$', views.ajax),
     url(r'^gather/$', views.gather),
+    url(r'^gather/0/$', views.gather),
 
     url(r'^tag/(?P<tag_id>.+)/$', views.tag),
     url(r'^tag/$', views.tags),

@@ -140,7 +140,9 @@ nav a.selected {
 .content.cue {
     /*display: none;*/
 }
-.content.cue-lines {
+.content.cue-lines,
+.cuesheets-content,
+.cue {
     display: none;
 }
 .clear {
@@ -150,7 +152,7 @@ nav a.selected {
     margin-top: 0;
 }
 .album .content.stukken {
-    margin-top: -20px;
+    margin: 0 6px 6px 6px;
 }
 .content.stukken .control a {
     font-style: italic;
@@ -262,7 +264,7 @@ fieldset {
 }
 .album .pieces {
     height: 28px;
-    margin-bottom: 6px;
+    margin: 0 0 6px 10px;
 }
 .album .hyperlink.componist {
     color: brown;
@@ -414,4 +416,10 @@ div[class="pattern"] img {
 }
 .items {
     margin: 4px;
+}
+.album-tail {
+    padding: 6px;
+}
+.cuesheets {
+    margin-top: 8px;
 }

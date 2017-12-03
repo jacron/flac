@@ -62,6 +62,8 @@ def get_title_for_list(list_name, list_id):
         return person['FullName']
     if list_name == 'tag':
         return get_tag(list_id)['Name']
+    if list_name == 'gather':
+        return 'verzamelalbums'
 
 
 def get_elements(album_id):
