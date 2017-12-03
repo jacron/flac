@@ -140,7 +140,7 @@ nav a.selected {
 .content.cue {
     /*display: none;*/
 }
-.content.cue-lines,
+/*.content.cue-lines,*/
 .cuesheets-content,
 .cue {
     display: none;

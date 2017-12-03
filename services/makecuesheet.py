@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import codecs
 import glob
 import os
@@ -179,7 +180,7 @@ def read_cuesheets(p, album_id):
         if cue['performer']:
             lines.append((u'PERFORMER {}'.format(cue['performer'])))
         for cfile in cue['files']:
-            fpath = os.path.join(dirname, cfile['name'])
+            fpath = u'{}/{}'.format(dirname, cfile['name'])
             lines.append(u'FILE "{}" WAVE'.format(fpath))
             for track in cfile['tracks']:
                 lines.append(u'  TRACK {} AUDIO'.format(track['nr']))

@@ -1,28 +1,29 @@
 <div style="position:relative;">
 {% if albums|length %}
     <div class="items">{{ albums|length }} albums</div>
+    <span class="export-albums">export</span>
     <input class="filter-albums" placeholder="zoek">
 {% endif %}
     <ul class="album-list">
         {% for item in albums %}
-            <li id="{{ item.ID }}"
+        <li id="{{ item.ID }}"
                     class="hyperlink
-    {% if item.mother %}
-        mother-album
-    {% endif %}
-    ">
-    <a href="/album/{{ item.ID }}/{% if list_name %}{{ list_name }}/{{ list_id }}{% endif %}
-    ">
-    <div class="image-container">
-        <img src="/image/{{ item.ID }}/album/"
-             class="album-image-thumb">
-    </div>
-    <div class="title">
-        {{ item.Title }} - <span class="componist-name">{{ item.Componist }}</span>
-        {% if item.TagName %} - <span class="tag-name">{{ item.TagName }}</span>{% endif %}
-    </div>
-    </a>
-    </li>
+            {% if item.mother %}
+                mother-album
+            {% endif %}
+            ">
+            <a href="/album/{{ item.ID }}/{% if list_name %}{{ list_name }}/{{ list_id }}{% endif %}
+            ">
+            <div class="image-container">
+                <img src="/image/{{ item.ID }}/album/"
+                     class="album-image-thumb">
+            </div>
+            <div class="title">
+                {{ item.Title }} - <span class="componist-name">{{ item.Componist }}</span>
+                {% if item.TagName %} - <span class="tag-name">{{ item.TagName }}</span>{% endif %}
+            </div>
+            </a>
+        </li>
         {% endfor %}
     </ul>
 

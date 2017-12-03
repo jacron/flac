@@ -2,7 +2,8 @@
 {% if cuesheets|length %}
 <div class="cuesheets">
 Cuesheets ({{ cuesheets | length }})
-    <i class="toggle-cuesheets-content fa fa-caret-right"></i></div>
+    <i class="toggle-cuesheets-content fa fa-caret-right"></i>
+</div>
     <div class="cuesheets-content">
 {% for cuesheet in cuesheets %}
     <div {% if not valid %}
@@ -21,7 +22,6 @@ Cuesheets ({{ cuesheets | length }})
             {% if cuesheet.Title %}
             <span>{{ cuesheet.Title|unescape }}</span>
             {% endif %}
-            <i class="toggle-cue-lines fa fa-caret-right"></i>
             <span class="cue-plus-container">
                 <span class="cue-plus" title="bewaar als albumtitel">
                     album-titel</span> |

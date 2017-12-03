@@ -1,7 +1,8 @@
 delete from Componist_Album
-where AlbumID BETWEEN 5095 AND 5109;
+where AlbumID
+-- BETWEEN 5095 AND 5109;
 
-where ComponistID=379;
+-- where ComponistID=379;
 delete from Componist
 where ID=379;
 
@@ -40,7 +41,7 @@ where ID in (
 
 delete from Album
 where ID in(
-    5116
+    2120
 );
 
 delete from Album
