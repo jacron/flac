@@ -31,20 +31,23 @@ def adjust_kk(album_id):
             update_piece_library_code(piece[1], library_code)
 
 
+def inherit_album(album, componisten, performers, instrument, c, conn):
+    for componist in componisten:
+        insert_album_componist(componist['ID'], album['ID'], c, conn)
+    for performer in performers:
+        insert_album_performer(performer['ID'], album['ID'], c, conn)
+    if instrument:
+        insert_album_instrument(instrument['ID'], album['ID'], c, conn)
+
+
 def inherit_elements(album_id):
     albums = get_album_albums(album_id)
     componisten = get_album_componisten(album_id)
     performers = get_album_performers(album_id)
     instrument = get_album_instruments(album_id)
     conn, c = connect()
-    componist_id = componisten[0]['ID']
-    performer_id = performers[0]['ID']
     for album in albums:
-        insert_album_componist(componist_id, album['ID'], c, conn)
-        insert_album_performer(performer_id, album['ID'], c, conn)
-        if instrument:
-            instrument_id = instrument['ID']
-            insert_album_instrument(instrument_id, album['ID'], c, conn)
+        inherit_album(album, componisten, performers, instrument, c, conn)
 
 
 def update_piece_library_code(id, code):
