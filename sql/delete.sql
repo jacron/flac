@@ -4,7 +4,7 @@ where AlbumID
 
 -- where ComponistID=379;
 delete from Componist
-where ID=379;
+where ID=426;
 
 -- 152
 -- delete invalid albums that share the same path but have no content

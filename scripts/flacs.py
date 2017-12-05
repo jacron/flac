@@ -218,14 +218,14 @@ def main():
     # open_finder_componist(ComponistID)
     # return
     # path = get_path_of_componist(ComponistID)
-    album_id = 4029
+    album_id = 2058
     path = get_path_of_album(album_id)
     # mother_id = 3816
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/Yo Yo Ma 30 years outside the box"
     # path = "/Volumes/Media/Audio/Klassiek/Collecties/Decca, The Decca Sound"
     # path = "/Volumes/Media/Audio/Klassiek/Performers"
     # artiest = "Fritz Reiner"
-    ComponistID = 1
+    # ComponistID = 1
     # componist = from_path(path)
     # ComponistID = componist_from_album(album_id)
     # PerformerID = 575
@@ -241,12 +241,12 @@ def main():
 
     # sanatize_haakjes(path, True)
     # restore_cover(path=path, step_in=True)
-    # rename_cover(path=path, step_in=True)
+    rename_cover(path=path, step_in=True)
     # rename_titles(path)
     # rename_to_back(path)
-    process_a(p=path, mother_id=None, iscollectie=0, step_in=1)
+    # process_a(p=path, mother_id=None, iscollectie=0, step_in=1)
     # get_albums(path=path, mother_id=None, iscollectie=1)
-    # get_album_groups(path=path, mother_id=None, iscollectie=0, step_in=True)
+    # get_album_groups(path=path, mother_id=album_id, iscollectie=0, step_in=0)
     # album_id = \
     # process_album(path=path, mother_id=None, is_collectie=0)
 
