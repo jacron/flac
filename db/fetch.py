@@ -140,7 +140,18 @@ sql_albums = {
 
 def get_next_album(id_mother, id_album):
     if not id_mother : return None
-    items = get_items_with_parameter(sql_albums.get('all'), id_mother)
+    # a = 'all'
+    # sql = sql_albums[a]
+    sql = '''
+      SELECT 
+        Title, 
+        Album.ID
+      FROM Album 
+      WHERE Album.AlbumID=?
+      GROUP BY Title
+      ORDER BY Title COLLATE NOCASE
+    '''
+    items = get_items_with_parameter(sql, id_mother)
     match = None
     for item in items:
         if match:
