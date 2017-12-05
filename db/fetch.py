@@ -138,11 +138,7 @@ sql_albums = {
 }
 
 
-def get_next_album(id_mother, id_album):
-    if not id_mother : return None
-    # a = 'all'
-    # sql = sql_albums[a]
-    sql = '''
+sql_mother_albums = '''
       SELECT 
         Title, 
         Album.ID
@@ -151,7 +147,13 @@ def get_next_album(id_mother, id_album):
       GROUP BY Title
       ORDER BY Title COLLATE NOCASE
     '''
-    items = get_items_with_parameter(sql, id_mother)
+
+
+def get_next_album(id_mother, id_album):
+    if not id_mother : return None
+    # a = 'all'
+    # sql = sql_albums[a]
+    items = get_items_with_parameter(sql_mother_albums, id_mother)
     match = None
     for item in items:
         if match:
@@ -184,7 +186,8 @@ def get_next_list_album(id_album, list_name, list_id):
 
 def get_prev_album(id_mother, id_album):
     if not id_mother : return None
-    items = get_items_with_parameter(sql_albums.get('all'), id_mother)
+    # items = get_items_with_parameter(sql_albums.get('all'), id_mother)
+    items = get_items_with_parameter(sql_mother_albums, id_mother)
     match = None
     for item in items:
         if match and int(item[1]) == int(id_album):
