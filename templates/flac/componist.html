@@ -16,7 +16,10 @@
             <span>
                 <a target="_blank"
                    href="https://google.nl/search?q={{ componist.FullName }}">google</a>
-            </span>
+            </span> |
+            <span class="hyperlink btn">
+                <a onclick="exportAlbums('{{ componist.ID }}', 'componist')">export</a>
+            </span> |
         <span>
             <input class="search-inside-componist" placeholder="Zoek" value="{{ query }}">
         </span>

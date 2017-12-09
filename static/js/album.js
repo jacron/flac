@@ -125,16 +125,6 @@ $(function () {
             }
         });
     }
-    function exportAlbums($this) {
-        var div = $this.parents('div').first(),
-            lis = div.find('.album-list li'),
-            ids = [];
-        lis.each(function() {
-            var li = $(this);
-            ids.push(li.attr('id'));
-        });
-        console.log(ids);
-    }
 
     const albumId = $('#album_id').val();
     if (albumId) {
@@ -189,9 +179,6 @@ $(function () {
         if (e.key === 'Enter') {
             filterAlbums($(this));
         }
-    });
-    $('.export-albums').click(function() {
-        exportAlbums($(this));
     });
 
 });

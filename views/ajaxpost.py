@@ -3,6 +3,7 @@ import os
 
 from flac.services import openpath
 from flac.services.album_content import get_website
+from flac.services.export import export_albums
 from flac.services.makecuesheet import make_cuesheet, rename_cuesheet, make_subs_cuesheet, split_cued_file, \
     edit_cuesheet, combine_sub_cuesheets, norm_cuesheet
 from flac.services.path import get_path, path_from_id_field
@@ -146,6 +147,8 @@ def do_post(post):
     if cmd == 'openfinder':
         openfinder(post['objectid'], post['kind'])
         return 'Finder opened'
+    if cmd == 'exportalbums':
+        return export_albums(post['objectid'], post['kind'])
     if cmd == 'openwebsite':
         openwebsite(post['albumid'])
         return 'Website opened'

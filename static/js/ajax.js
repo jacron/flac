@@ -54,6 +54,14 @@ function openfinder(objectId, kind) {
     });
 }
 
+function exportAlbums(objectId, kind) {
+    ajaxPost({
+        objectid: objectId,
+        cmd: 'exportalbums',
+        kind: kind
+    });
+}
+
 function openwebsite(albumId) {
     ajaxPost({
         cmd: 'openwebsite',
