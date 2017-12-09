@@ -15,8 +15,8 @@
             <a href="/album/{{ item.ID }}/{% if list_name %}{{ list_name }}/{{ list_id }}{% endif %}
             ">
             <div class="image-container">
-                <img src="/image/{{ item.ID }}/album/"
-                     class="album-image-thumb">
+                <img data-src="/image/{{ item.ID }}/album/"
+                     class="album-image-thumb lazy">
             </div>
             <div class="title">
                 {{ item.Title }} - <span class="componist-name">{{ item.Componist }}</span>
