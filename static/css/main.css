@@ -428,3 +428,10 @@ div[class="pattern"] img {
 .cuesheets {
     margin-top: 8px;
 }
+.upload-controls .clear {
+    cursor: pointer;
+    padding: 0 2px;
+}
+.upload-controls .clear:hover {
+    background-color: #ccf;
+}

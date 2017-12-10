@@ -76,6 +76,17 @@ function query() {
     document.location.href = '/search' + q;
 }
 
+function impl_typeahead(items, $typeahead) {
+    const $typeahead = $('.upload-controls .' + type + ' .typeahead');
+    $typeahead.typeahead(typeaheadSettings,
+        { source: match(items) }
+    ).keydown(function(e){
+        if (e.key === 'Escape') {
+            $typeahead.val('');
+        }
+    });
+}
+
 function impl_query_typeahead(items, type) {
     const $typeahead = $('.upload-controls .' + type + ' .typeahead');
     $typeahead.typeahead(typeaheadSettings,
@@ -83,7 +94,7 @@ function impl_query_typeahead(items, type) {
     ).keydown(function(e){
         if (e.key === 'Enter') {
             // console.log(getId($typeahead.val()));
-            $('.search input[name=' + type + ']').val(getId($typeahead.val()))
+            // $('.search input[name=' + type + ']').val(getId($typeahead.val()))
         }
         if (e.key === 'Escape') {
             $typeahead.val('');
@@ -91,14 +102,19 @@ function impl_query_typeahead(items, type) {
     });
 }
 
-function impl_typeahead(items, $typeahead) {
-    $typeahead.typeahead(typeaheadSettings,
-        { source: match(items) }
-    ).keydown(function(e){
-        if (e.key === 'Escape') {
-            $typeahead.val('');
-        }
+function prepareQuery() {
+    const types = ['componist', 'performer', 'tag', 'instrument'];
+    types.forEach(function(type) {
+        var $typeahead = $('.upload-controls .' + type + ' .typeahead.tt-input');
+        // console.log($typeahead.val());
+        $('.search input[name=' + type + ']').val(getId($typeahead.val()))
     });
+}
+
+function clearSearch($this) {
+    const $li = $this.parent('li').first();
+    // console.log($li);
+    $li.find('.typeahead.tt-input').val('');
 }
 
 function typeAheadAlbumItems(cmdGet, nameField, $typeahead, cmdPost) {
@@ -113,7 +129,7 @@ function typeAheadAlbumItems(cmdGet, nameField, $typeahead, cmdPost) {
     });
 }
 
-function typeAheadUpload(cmdGet, nameField, $typeahead) {
+function typeAheadUpload(cmdGet, nameField, type) {
     ajaxGet({
         cmd: cmdGet
     }, function(response){
@@ -121,7 +137,7 @@ function typeAheadUpload(cmdGet, nameField, $typeahead) {
         response.forEach(function(item) {
             items.push(item[nameField] + '_' + item.ID);
         });
-        impl_typeahead(items, $typeahead);
+        impl_typeahead(items, type);
     });
 }
 
@@ -253,23 +269,26 @@ $(function () {
     searchTagsTypeahead($('.search .tag.typeahead'), 'tags', 'Name');
     if ($('.upload-album-path').length) {
         // functions for the upload page
-        typeAheadUpload('instruments', 'Name',
-            $('.upload-controls .instrument .typeahead'));
-        typeAheadUpload('performers', 'FullName',
-            $('.upload-controls .performer .typeahead'));
-        typeAheadUpload('componisten', 'FullName',
-            $('.upload-controls .componist .typeahead'));
-        typeAheadUpload('tags', 'Name',
-            $('.upload-controls .tag .typeahead'));
+        typeAheadUpload('instruments', 'Name', 'instrument');
+        typeAheadUpload('performers', 'FullName', 'performer');
+        typeAheadUpload('componisten', 'FullName', 'componist');
+        typeAheadUpload('tags', 'Name', 'tag');
     }
     if ($('.search').length) {
-        // functions for the searcvh page
+        // functions for the search page
         typeAheadSearch('instruments', 'Name', 'instrument');
         typeAheadSearch('performers', 'FullName', 'performer');
         typeAheadSearch('componisten', 'FullName', 'componist');
         typeAheadSearch('tags', 'Name', 'tag');
         $('.do-search').click(function() {
             query();
+        });
+        $('.search input[type=submit]').click(function() {
+            prepareQuery();
+            return true;
+        });
+        $('.search .clear').click(function(){
+            clearSearch($(this));
         });
     }
 });

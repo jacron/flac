@@ -6,28 +6,27 @@
 {% block page %}
 <div class="search">
     <form>
-    <span>{{ componist_name }}</span>
 <div class="upload-controls">
     <ul>
         <li class="componist">
-            <input class="typeahead" type="text" placeholder="Componist">
+            <input class="typeahead" type="text" placeholder="Componist" value="{{ componist_name }}">
             <input type="hidden" name="componist">
-            <span class="autofill">+</span>
+            <span class="clear">x</span>
         </li>
         <li class="tag">
-            <input class="typeahead" type="text" placeholder="Tag">
+            <input class="typeahead" type="text" placeholder="Tag" value="{{ tag_name }}">
             <input type="hidden" name="tag">
-            <span class="autofill">+</span>
+            <span class="clear">x</span>
         </li>
         <li class="performer">
-            <input class="typeahead" type="text" placeholder="Performer">
+            <input class="typeahead" type="text" placeholder="Performer" value="{{ performer_name }}">
             <input type="hidden" name="performer">
-            <span class="autofill">+</span>
+            <span class="clear">x</span>
         </li>
         <li class="instrument">
-            <input class="typeahead" type="text" placeholder="Solo instrument">
+            <input class="typeahead" type="text" placeholder="Solo instrument" value="{{ instrument_name }}">
             <input type="hidden" name="instrument">
-            <span class="autofill">+</span>
+            <span class="clear">x</span>
         </li>
     </ul>
 </div>

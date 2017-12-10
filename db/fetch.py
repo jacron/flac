@@ -672,11 +672,12 @@ def get_componist_albums_query(id_componist, query):
 
 def get_instrument(id_instrument):
     sql = '''
-    SELECT Name FROM Instrument WHERE ID=?
+    SELECT Name, ID FROM Instrument WHERE ID=?
     '''
     fields = get_item_with_id(sql, id_instrument)
     return {
         "Name": fields[0],
+        "ID": fields[1]
     }
 
 
@@ -754,6 +755,8 @@ def get_componist(id_componist):
     FROM Componist WHERE ID=?
     '''
     fields = get_item_with_id(sql, id_componist)
+    if not fields:
+        return {}
     return {
         "FirstName": fields[0],
         "LastName": fields[1],
