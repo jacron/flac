@@ -99,6 +99,17 @@ def list_paging(album_id, list_name, list_id):
     return next_list_id, prev_list_id, list_title
 
 
+def images_album(album_o):
+    album_folder_image, album_back_image = None, None
+    path = os.path.join(album_o['Path'], 'folder.jpg')
+    if os.path.exists(path):
+        album_folder_image = True
+    path = os.path.join(album_o['Path'], 'back.jpg')
+    if os.path.exists(path):
+        album_back_image = True
+    return album_folder_image, album_back_image
+
+
 def album_context(album_id, list_name=None, list_id=None):
     album_o = get_album(album_id)
     if not album_o:
@@ -119,8 +130,11 @@ def album_context(album_id, list_name=None, list_id=None):
         artists = get_artists(allsheets, pieces, album_o, album_performers)
     next_list_id, prev_list_id, list_title = list_paging(album_id, list_name, list_id)
     prev_id, next_id = album_paging(mother_id, album_id)  # for collections
+    album_folder_image, album_back_image = images_album(album_o)
     return {
         'albumid': album_id,
+        'album_folder_image': album_folder_image,
+        'album_back_image': album_back_image,
         'pieces': pieces,
         'albums': get_album_albums(album_id),
         'album': album_o,

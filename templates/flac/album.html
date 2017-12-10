@@ -9,10 +9,14 @@
     <form>{% csrf_token %}</form>
     <input type="hidden" id="album_id" value="{{ album.ID }}">
     {% album_controls album.ID website %}
+{% if album_folder_image %}
 <img src="/image/{{ album.ID }}/album/"
      class="album-image">
+{% endif %}
+{% if album_back_image %}
 <img src="/imageback/{{ album.ID }}/album/"
      class="album-image">
+{% endif %}
 <h4>
     <span class="ID">{{ album.ID }}
             <div class="fa fa-times-circle remove" id="{{ person.ID }}"></div>

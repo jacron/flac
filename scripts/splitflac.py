@@ -110,19 +110,20 @@ def get_duration(filepath):
 def split_flac(cuepath):
     cuesheet = get_full_cuesheet(cuepath, 0)
     basedir = os.path.dirname(cuepath)
-    cfile = cuesheet['cue']['files'][0]
-    filename = cfile['name']
-    tracks = cfile['tracks']
-    filepath = os.path.join(basedir, filename)
-    file_duration = get_duration(filepath)
-    if not file_duration:
-        print('unknown duration for: ' + filepath)
-        # return
-    flacs = []
-    for index, track in enumerate(tracks):
-        flacs.append(get_flac(index, track, basedir, tracks, file_duration))
-    for flac in flacs:
-        split_file(flac, filepath)
+    for cfile in cuesheet['cue']['files']:
+        # cfile = cuesheet['cue']['files'][0]
+        filename = cfile['name']
+        tracks = cfile['tracks']
+        filepath = os.path.join(basedir, filename)
+        file_duration = get_duration(filepath)
+        if not file_duration:
+            print('unknown duration for: ' + filepath)
+            # return
+        flacs = []
+        for index, track in enumerate(tracks):
+            flacs.append(get_flac(index, track, basedir, tracks, file_duration))
+        for flac in flacs:
+            split_file(flac, filepath)
 
 
 def main():

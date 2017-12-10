@@ -57,10 +57,11 @@ def write_script(wpath, lines):
 
 
 def export_albums(objectid, kind):
-    print 'exporting albums...'
+    target = '/Volumes/Media/tmp'
+    print 'creating export script with target=', target
     wpath = 'export.sh'
     lines = []
-    target = '/Volumes/Media/tmp'
+    lines.append('#!/usr/bin/env bash')
     if kind == 'componist':
         componist = get_componist(objectid)
         target = os.path.join(target, componist['LastName'])

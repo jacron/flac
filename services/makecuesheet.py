@@ -185,8 +185,8 @@ def read_cuesheets(p, album_id):
             for track in cfile['tracks']:
                 lines.append(u'  TRACK {} AUDIO'.format(track['nr']))
                 lines.append(u'    TITLE "{}"'.format(track['title']))
-                if track['performer']:
-                    lines.append((u'    PERFORMER {}'.format(track['performer'])))
+                if track.get('performer'):
+                    lines.append(u'    PERFORMER {}'.format(track['performer']))
                 lines.append(u'    INDEX {} {}'.format(
                     track['index']['nr'], track['index']['time']))
     return lines

@@ -65,7 +65,7 @@ $(function () {
         data[fieldName] = personId;
         ajaxPost(data, function() {
             obj.css('border', 'none');
-            location.reload();
+            // location.reload();
         });
     }
     function prepareDrop(obj) {
@@ -86,14 +86,18 @@ $(function () {
             e.preventDefault();
             const dt = e.originalEvent.dataTransfer;
             const files = dt.files;
+            console.log('dt', dt);
             if (files.length) {
                 if (type === 'person') {
                     handleFileUpload(files, obj, personId, fieldName);
                 }
             } else {
-                console.log('dt', dt);
-                const url = dt.getData('url');
-                console.log(url);
+                var url = dt.getData('url');
+                console.log('url', url);
+                if (!url) {
+                    url = dt.getData('text/plain');
+                    console.log('text', url);
+                }
                 handleDroppedUrl(url, obj, personId, fieldName, type);
             }
         });

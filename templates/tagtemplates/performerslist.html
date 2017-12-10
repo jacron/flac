@@ -4,7 +4,8 @@
         <div class="image-container">
             <a href="/performer/{{ item.ID }}">
                 <input type="hidden" value="{{ item.LastName }}" class="last-name">
-                <img src="/image/{{ item.ID }}/performer/" class="album-image-thumb">
+                <img data-src="/image/{{ item.ID }}/performer/"
+                     class="album-image-thumb lazy">
             <div class="performer-naam" performerid="{{ item.ID }}">{{ item.FullName }}</div>
                 <div class="jaren">{{ item.Birth }} -
                     {% if item.Death %}

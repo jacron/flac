@@ -3,7 +3,8 @@
         <li class="hyperlink">
         <div class="image-container">
             <a href="/componist/{{ item.ID }}">
-                <img src="/image/{{ item.ID }}/componist/" class="album-image-thumb">
+                <img data-src="/image/{{ item.ID }}/componist/"
+                     class="album-image-thumb lazy">
             </a>
             <a href="/componist/{{ item.ID }}">
                 <input type="hidden" value="{{ item.LastName }}" class="last-name">
