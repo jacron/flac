@@ -76,12 +76,14 @@ function query() {
     document.location.href = '/search' + q;
 }
 
-function impl_query_typeahead(items, $typeahead) {
+function impl_query_typeahead(items, type) {
+    const $typeahead = $('.upload-controls .' + type + ' .typeahead');
     $typeahead.typeahead(typeaheadSettings,
         { source: match(items) }
     ).keydown(function(e){
         if (e.key === 'Enter') {
-            // query();
+            // console.log(getId($typeahead.val()));
+            $('.search input[name=' + type + ']').val(getId($typeahead.val()))
         }
         if (e.key === 'Escape') {
             $typeahead.val('');
@@ -123,8 +125,7 @@ function typeAheadUpload(cmdGet, nameField, $typeahead) {
     });
 }
 
-function typeAheadSearch(cmdGet, nameField, $typeahead) {
-    // console.log(cmdGet, $typeahead.get(0));
+function typeAheadSearch(cmdGet, nameField, type) {
     ajaxGet({
         cmd: cmdGet
     }, function(response){
@@ -132,7 +133,7 @@ function typeAheadSearch(cmdGet, nameField, $typeahead) {
         response.forEach(function(item) {
             items.push(item[nameField] + '_' + item.ID);
         });
-        impl_query_typeahead(items, $typeahead);
+        impl_query_typeahead(items, type);
     });
 }
 
@@ -263,14 +264,10 @@ $(function () {
     }
     if ($('.search').length) {
         // functions for the searcvh page
-        typeAheadSearch('instruments', 'Name',
-            $('.upload-controls .instrument .typeahead'));
-        typeAheadSearch('performers', 'FullName',
-            $('.upload-controls .performer .typeahead'));
-        typeAheadSearch('componisten', 'FullName',
-            $('.upload-controls .componist .typeahead'));
-        typeAheadSearch('tags', 'Name',
-            $('.upload-controls .tag .typeahead'));
+        typeAheadSearch('instruments', 'Name', 'instrument');
+        typeAheadSearch('performers', 'FullName', 'performer');
+        typeAheadSearch('componisten', 'FullName', 'componist');
+        typeAheadSearch('tags', 'Name', 'tag');
         $('.do-search').click(function() {
             query();
         });

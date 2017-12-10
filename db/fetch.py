@@ -725,7 +725,7 @@ def get_albums_by_cql(cql):
             JOIN Tag_Album ON Tag_Album.AlbumID = Album.ID
         '''
         where_sql = add_to_where(where_sql, 'Tag_Album.TagID=?')
-        parameters.append(cql.get('componist'))
+        parameters.append(cql.get('tag'))
     if cql.get('instrument'):
         where_sql = add_to_where(where_sql, 'Album.InstrumentID=?')
         parameters.append(cql.get('instrument'))

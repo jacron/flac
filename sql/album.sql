@@ -298,3 +298,14 @@ where Name like '%BWV%';
             JOIN Performer_Album ON Performer_Album.AlbumID = Album.ID
         WHERE Performer_Album.PerformerID=161
         ORDER BY Album.Title COLLATE NOCASE;
+
+
+        SELECT
+            Album.Title,
+            Album.AlbumID,
+            Album.ID
+        FROM Album
+
+            JOIN Tag_Album ON Tag_Album.AlbumID = Album.ID
+        WHERE Tag_Album.TagID=?
+        ORDER BY Album.Title COLLATE NOCASE;
