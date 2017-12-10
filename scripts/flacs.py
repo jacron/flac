@@ -227,7 +227,8 @@ def main():
     # ComponistID = componist_from_album(album_id)
     # PerformerID = 575
     # PerformerID2 = 47
-    path = "/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano/106 - Inventions & Sinfonias"
+    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano/106 - Inventions & Sinfonias"
+    path = "/Volumes/Media/Audio/Klassiek/Performers/Janine Jansen/Janine Jansen - Inventionen"
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     if path is None:
         print('No path')
@@ -237,7 +238,7 @@ def main():
 
     # sanatize_haakjes(path, True)
     # restore_cover(path=path, step_in=True)
-    # rename_cover(path=path, step_in=True)
+    rename_cover(path=path, step_in=True)
     # rename_titles(path)
     # rename_to_back(path)
     process_a(p=path, mother_id=None, iscollectie=0, step_in=1)

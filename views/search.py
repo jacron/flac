@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
 
-from flac.db import get_albums_by_title, get_albums_by_cql
+from flac.db import get_albums_by_title, get_albums_by_cql, get_componist
 
 
 def searchresponse(context, request):
@@ -19,8 +19,14 @@ def searchq(request, query):
 
 def search(request):
     albums = get_albums_by_cql(request.GET)
+    # componist_name = None
+    # componist = get_componist(request.GET.get('componist'))
+    # if componist:
+    #     componist_name = componist['FullName']
+        # componist_name = '{}_{}'.format(componist['FullName'], componist['ID'])
     return searchresponse({
         'albums': albums,
-        'mothers': albums['mothers'],
-        'children': albums['children'],
+        'mothers': albums.get('mothers'),
+        'children': albums.get('children'),
+        # 'componist_name': componist_name
     }, request)

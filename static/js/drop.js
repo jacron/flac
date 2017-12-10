@@ -65,7 +65,7 @@ $(function () {
         data[fieldName] = personId;
         ajaxPost(data, function() {
             obj.css('border', 'none');
-            // location.reload();
+            location.reload();
         });
     }
     function prepareDrop(obj) {

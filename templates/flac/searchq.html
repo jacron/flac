@@ -5,7 +5,11 @@
 {% endblock %}
 {% block page %}
 <div class="search">
-    <form>{% csrf_token %}</form>
+    <form>{% csrf_token %}
+        <input name="componist" value="{{ componist_name }}">
+        <input type="submit" value="verzenden">
+    </form>
+    <span>{{ componist_name }}</span>
     {% upload_controls %}
     <button class="do-search">zoek</button>
     {% albumlist mothers %}

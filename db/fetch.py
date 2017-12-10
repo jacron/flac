@@ -719,7 +719,7 @@ def get_albums_by_cql(cql):
             JOIN Performer_Album ON Performer_Album.AlbumID = Album.ID
         '''
         where_sql = add_to_where(where_sql, 'Performer_Album.PerformerID=?')
-        parameters.append(cql.get('componist'))
+        parameters.append(cql.get('performer'))
     if cql.get('tag'):
         sql += '''
             JOIN Tag_Album ON Tag_Album.AlbumID = Album.ID
@@ -745,7 +745,7 @@ def get_albums_by_cql(cql):
         # return named_items
         grouped_items = filter_contained_children(named_items)
         return grouped_items
-    return []
+    return {}
 
 
 def get_componist(id_componist):
