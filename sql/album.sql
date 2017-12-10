@@ -274,3 +274,16 @@ select Name, ID, instr(Name, 'BWV') position1,
   instr(substr(Name, instr(Name, 'BWV') + 4), ' ') position2
 from Piece
 where Name like '%BWV%';
+
+
+
+
+        SELECT
+            Album.Title,
+            Album.AlbumID,
+            Album.ID
+        FROM Album
+
+            JOIN Componist_Album ON Componist_Album.AlbumID = Album.ID
+        WHERE Componist_Album.ComponistID=9 AND Album.InstrumentID=1
+        ORDER BY Album.Title COLLATE NOCASE

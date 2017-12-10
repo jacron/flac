@@ -6,10 +6,10 @@
 {% block page %}
 <div class="search">
     <form>{% csrf_token %}</form>
-    <input class="search-title" placeholder="Zoek titel" value="{{ query }}">
-    <input class="tag typeahead" type="text" placeholder="Tag">
-        {{ albums|length }} albums
     {% upload_controls %}
-    {% albumlist albums %}
+    <button class="do-search">zoek</button>
+    {% albumlist mothers %}
+    <div class="clear"></div>
+    {% albumlist children %}
 </div>
 {% endblock %}

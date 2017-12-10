@@ -688,6 +688,66 @@ def get_componist_path(id_componist):
     return get_item_with_id(sql, id_componist)[0]
 
 
+def add_to_where(where_sql, cql):
+    if len(where_sql) == 0:
+        where_sql = 'WHERE '
+    else:
+        where_sql += ' AND '
+    where_sql += cql
+    return where_sql
+
+
+def get_albums_by_cql(cql):
+    print cql
+    parameters = []
+    where_sql = ''
+    sql = '''
+        SELECT
+            Album.Title,
+            Album.AlbumID,
+            Album.ID
+        FROM Album
+    '''
+    if cql.get('componist'):
+        sql += '''
+            JOIN Componist_Album ON Componist_Album.AlbumID = Album.ID 
+        '''
+        where_sql = add_to_where(where_sql, 'Componist_Album.ComponistID=?')
+        parameters.append(cql.get('componist'))
+    if cql.get('performer'):
+        sql += '''
+            JOIN Performer_Album ON Performer_Album.AlbumID = Album.ID
+        '''
+        where_sql = add_to_where(where_sql, 'Performer_Album.PerformerID=?')
+        parameters.append(cql.get('componist'))
+    if cql.get('tag'):
+        sql += '''
+            JOIN Tag_Album ON Tag_Album.AlbumID = Album.ID
+        '''
+        where_sql = add_to_where(where_sql, 'Tag_Album.TagID=?')
+        parameters.append(cql.get('componist'))
+    if cql.get('instrument'):
+        where_sql = add_to_where(where_sql, 'Album.InstrumentID=?')
+        parameters.append(cql.get('instrument'))
+    if len(parameters):
+        sql += where_sql
+        sql += '''
+        ORDER BY Album.Title COLLATE NOCASE
+        '''
+        conn, c = connect()
+        items = []
+        try:
+            items = [item for item in c.execute(sql, parameters).fetchall()]
+        except:
+            print('in db encoding error')
+        conn.close()
+        named_items = named_albums_with_mother(items)
+        # return named_items
+        grouped_items = filter_contained_children(named_items)
+        return grouped_items
+    return []
+
+
 def get_componist(id_componist):
     sql = '''
     SELECT FirstName, LastName, Birth, Death, Path, ID 

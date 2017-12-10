@@ -71,8 +71,9 @@ function query() {
         if (q.length) { q += '&';}
         q += 'instrument=' + getId(qInstrument);
     }
-    console.log(q);
-    // document.location.href = '/search' + q;
+    if (q.length) { q = '?' + q;}
+    // console.log(q);
+    document.location.href = '/search' + q;
 }
 
 function impl_query_typeahead(items, $typeahead) {
@@ -80,7 +81,7 @@ function impl_query_typeahead(items, $typeahead) {
         { source: match(items) }
     ).keydown(function(e){
         if (e.key === 'Enter') {
-            query();
+            // query();
         }
         if (e.key === 'Escape') {
             $typeahead.val('');
@@ -270,6 +271,9 @@ $(function () {
             $('.upload-controls .componist .typeahead'));
         typeAheadSearch('tags', 'Name',
             $('.upload-controls .tag .typeahead'));
+        $('.do-search').click(function() {
+            query();
+        });
     }
 });
 
