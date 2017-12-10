@@ -4,10 +4,12 @@
     search: {{ query }}
 {% endblock %}
 {% block page %}
-    <div class="search">
+<div class="search">
+    <form>{% csrf_token %}</form>
     <input class="search-title" placeholder="Zoek titel" value="{{ query }}">
     <input class="tag typeahead" type="text" placeholder="Tag">
         {{ albums|length }} albums
+    {% upload_controls %}
     {% albumlist albums %}
-    </div>
+</div>
 {% endblock %}

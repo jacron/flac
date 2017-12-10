@@ -221,16 +221,12 @@ def main():
     # album_id = 2309
     # path = get_path_of_album(album_id)
     # mother_id = 3816
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Yo Yo Ma 30 years outside the box"
-    # path = "/Volumes/Media/Audio/Klassiek/Collecties/Decca, The Decca Sound"
-    # path = "/Volumes/Media/Audio/Klassiek/Performers"
     # artiest = "Fritz Reiner"
     ComponistID = 9
     # componist = from_path(path)
     # ComponistID = componist_from_album(album_id)
     # PerformerID = 575
     # PerformerID2 = 47
-    # path = "/Volumes/Media/Audio/Klassiek/Componisten/Dvorak/Busch Trio and Miguel Da Silva - Dvorak Piano Quartets Nos. 1 and 2 (2017) (24-96 Qobuz)"
     path = "/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano/106 - Inventions & Sinfonias"
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     if path is None:

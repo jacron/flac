@@ -49,6 +49,45 @@ function impl_post_typeahead(items, $typeahead, cmd) {
     });
 }
 
+function query() {
+    var q = '';
+    const qComponist = $('.search .componist .typeahead.tt-input').val(),
+        qTag = $('.search .tag .typeahead.tt-input').val(),
+        qPerformer = $('.search .performer .typeahead.tt-input').val(),
+        qInstrument = $('.search .instrument .typeahead.tt-input').val();
+    console.log(qComponist);
+    if (qComponist.length) {
+        q = 'componist=' + getId(qComponist);
+    }
+    if (qPerformer.length) {
+        if (q.length) { q += '&';}
+        q += 'performer=' + getId(qPerformer);
+    }
+    if (qTag.length) {
+        if (q.length) { q += '&';}
+        q += 'tag=' + getId(qTag);
+    }
+    if (qInstrument.length) {
+        if (q.length) { q += '&';}
+        q += 'instrument=' + getId(qInstrument);
+    }
+    console.log(q);
+    // document.location.href = '/search' + q;
+}
+
+function impl_query_typeahead(items, $typeahead) {
+    $typeahead.typeahead(typeaheadSettings,
+        { source: match(items) }
+    ).keydown(function(e){
+        if (e.key === 'Enter') {
+            query();
+        }
+        if (e.key === 'Escape') {
+            $typeahead.val('');
+        }
+    });
+}
+
 function impl_typeahead(items, $typeahead) {
     $typeahead.typeahead(typeaheadSettings,
         { source: match(items) }
@@ -80,6 +119,19 @@ function typeAheadUpload(cmdGet, nameField, $typeahead) {
             items.push(item[nameField] + '_' + item.ID);
         });
         impl_typeahead(items, $typeahead);
+    });
+}
+
+function typeAheadSearch(cmdGet, nameField, $typeahead) {
+    // console.log(cmdGet, $typeahead.get(0));
+    ajaxGet({
+        cmd: cmdGet
+    }, function(response){
+        var items = [];
+        response.forEach(function(item) {
+            items.push(item[nameField] + '_' + item.ID);
+        });
+        impl_query_typeahead(items, $typeahead);
     });
 }
 
@@ -145,8 +197,8 @@ var albums = new Bloodhound({
 var albumIds = [];
 
 function getId(s) {
-    var pos = s.lastIndexOf(' - ');
-    return s.substr(pos + 3);
+    var pos = s.lastIndexOf('_');
+    return s.substr(pos + 1);
 }
 
 function generalSearch($typeahead) {
@@ -197,16 +249,26 @@ $(function () {
     quickSearch($('.componist-naam'), $('.componisten .typeahead'), '/componist/', 'componistid');
     generalSearch($('.typeahead.general'));
     searchTagsTypeahead($('.search .tag.typeahead'), 'tags', 'Name');
-    const uploadAlbumPath = $('.upload-album-path');
-    if (uploadAlbumPath.length) {
+    if ($('.upload-album-path').length) {
         // functions for the upload page
         typeAheadUpload('instruments', 'Name',
             $('.upload-controls .instrument .typeahead'));
-        typeAheadUpload('performers', 'LastName',
+        typeAheadUpload('performers', 'FullName',
             $('.upload-controls .performer .typeahead'));
-        typeAheadUpload('componisten', 'LastName',
+        typeAheadUpload('componisten', 'FullName',
             $('.upload-controls .componist .typeahead'));
         typeAheadUpload('tags', 'Name',
+            $('.upload-controls .tag .typeahead'));
+    }
+    if ($('.search').length) {
+        // functions for the searcvh page
+        typeAheadSearch('instruments', 'Name',
+            $('.upload-controls .instrument .typeahead'));
+        typeAheadSearch('performers', 'FullName',
+            $('.upload-controls .performer .typeahead'));
+        typeAheadSearch('componisten', 'FullName',
+            $('.upload-controls .componist .typeahead'));
+        typeAheadSearch('tags', 'Name',
             $('.upload-controls .tag .typeahead'));
     }
 });
