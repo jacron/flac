@@ -430,8 +430,11 @@ div[class="pattern"] img {
 }
 .upload-controls .clear {
     cursor: pointer;
-    padding: 0 2px;
+    padding: 0 4px 4px;
+    border-radius: 4px;
+    color: #999;
 }
 .upload-controls .clear:hover {
     background-color: #ccf;
+    color: #000;
 }

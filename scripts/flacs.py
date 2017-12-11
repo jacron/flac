@@ -218,8 +218,8 @@ def main():
     # open_finder_componist(ComponistID)
     # return
     # path = get_path_of_componist(ComponistID)
-    # album_id = 2309
-    # path = get_path_of_album(album_id)
+    album_id = 4300
+    path = get_path_of_album(album_id)
     # mother_id = 3816
     # artiest = "Fritz Reiner"
     ComponistID = 9
@@ -228,7 +228,7 @@ def main():
     # PerformerID = 575
     # PerformerID2 = 47
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano/106 - Inventions & Sinfonias"
-    path = "/Volumes/Media/Audio/Klassiek/Performers/Janine Jansen/Janine Jansen - Inventionen"
+    # path = "/Volumes/Media/Audio/Klassiek/Performers/Janine Jansen/Janine Jansen - Inventionen"
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     if path is None:
         print('No path')
@@ -238,11 +238,11 @@ def main():
 
     # sanatize_haakjes(path, True)
     # restore_cover(path=path, step_in=True)
-    rename_cover(path=path, step_in=True)
+    # rename_cover(path=path, step_in=True)
     # rename_titles(path)
     # rename_to_back(path)
-    process_a(p=path, mother_id=None, iscollectie=0, step_in=1)
-    # get_albums(path=path, mother_id=album_id, iscollectie=0)
+    # process_a(p=path, mother_id=None, iscollectie=0, step_in=1)
+    get_albums(path=path, mother_id=album_id, iscollectie=0)
     # get_album_groups(path=path, mother_id=album_id, iscollectie=0, step_in=0)
     # album_id = \
     # process_album(path=path, mother_id=None, is_collectie=0)
