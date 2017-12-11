@@ -218,14 +218,14 @@ def main():
     # open_finder_componist(ComponistID)
     # return
     # path = get_path_of_componist(ComponistID)
-    album_id = 4300
+    album_id = 674
     path = get_path_of_album(album_id)
     # mother_id = 3816
     # artiest = "Fritz Reiner"
-    ComponistID = 9
+    # ComponistID = 9
     # componist = from_path(path)
     # ComponistID = componist_from_album(album_id)
-    # PerformerID = 575
+    PerformerID = 48
     # PerformerID2 = 47
     # path = "/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano/106 - Inventions & Sinfonias"
     # path = "/Volumes/Media/Audio/Klassiek/Performers/Janine Jansen/Janine Jansen - Inventionen"
