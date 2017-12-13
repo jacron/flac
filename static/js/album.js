@@ -12,7 +12,7 @@ $(function () {
     function editAlbumTitle($this, albumId) {
         ajaxPost({
             cmd: 'update_album_title',
-            title: $this.text(),
+            title: $this.text().trim(),
             albumid: albumId
         })
     }

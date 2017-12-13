@@ -15,6 +15,29 @@ WHERE c > 1;
 
 645, 671, 677, 650, 656, 663, 647, 644, 687, 673, 665, 670, 700, 678, 667, 662, 694, 684, 639, 640, 675, 648, 683, 646, 660, 654, 661, 688, 642, 697, 635, 669, 692, 652, 643, 672, 676, 674, 2360, 2012, 2412, 2209, 2648, 2651, 2680, 2152,
 
+  -- (2a)
+SELECT Album.ID
+FROM Album
+  LEFT JOIN Piece ON Piece.AlbumID = Album.ID
+WHERE Album.Path IN (
+  SELECT Path
+  FROM Album
+  WHERE ID IN(
+    SELECT ID
+      FROM (
+        SELECT
+          ID,
+          COUNT(*) AS c
+        FROM Album
+        GROUP BY Path
+        ORDER BY c
+          DESC
+      )
+      WHERE c > 1
+  )
+)
+AND Piece.Name ISNULL;
+
 -- (2) ID's for the duplicated Path
 SELECT Album.ID
 FROM Album
@@ -36,6 +59,8 @@ WHERE ID IN (
 
 -- (2b) delete invalid albums
 DELETE FROM Album
+
+select ID, Path, Title from Album
 WHERE ID IN (
   SELECT Album.ID
   FROM Album
@@ -43,7 +68,7 @@ WHERE ID IN (
   WHERE Album.Path IN (
     SELECT Path
     FROM Album
-    WHERE ID IN (645, 671)
+    WHERE ID IN (645,671)
   )
         AND Piece.Name ISNULL
 );
@@ -61,7 +86,7 @@ WHERE ID IN (
   WHERE Album.Path IN (
     SELECT Path
     FROM Album
-    WHERE ID IN (
+    WHERE Album.ID IN (
       SELECT ID
       FROM (
         SELECT
@@ -100,3 +125,4 @@ WHERE ID IN (
 );
 VACUUM; -- van 6.7 naar 5.5 MB
 
+-- albums zonder stukken of sub-albums
