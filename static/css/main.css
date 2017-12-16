@@ -441,3 +441,6 @@ div[class="pattern"] img {
     background-color: #ccf;
     color: #000;
 }
+.stukken .piece.selected a {
+    color: blue;
+}

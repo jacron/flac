@@ -109,16 +109,33 @@ function similar($selectForCuesheet) {
     };
 }
 
+function rtrim(s, a) {
+    a.forEach(function(c){
+       if (s.substr(s.length - c.length) === c) {
+            s = s.substr(0, s.length - c.length);
+            s = s.trim();
+        }
+    });
+    return s;
+}
+
+function ltrim(s, a) {
+    a.forEach(function(c){
+       if (s.length < 2) {
+           return;
+       }
+       if (s.substr(0, 1) === c) {
+            s = s.substr(1);
+            s = s.trim();
+        }
+    });
+    return s;
+}
+
 function trimNr(s) {
-    console.log(s);
     s = s.trim();
-    if (s.substr(s.length-1) === 'I') {
-        s = s.substr(0, s.length-1);
-        s = s.trim();
-    }
-    if (s.substr(-1, 1) === '-') {
-        s = s.substr(0, s.length - 1);
-    }
+    s = rtrim(s, ['I', '-', ',', '.flac']);
+    s = ltrim(s, ['.', '-']);
     return s.trim();
 }
 
@@ -138,6 +155,21 @@ function lcs_pieces($selectForCuesheet, $makeCuesheet){
     }
     $makeCuesheet.val(trimNr(lcs(titles)));
     return ids;
+}
+
+function markTestedCuesheets(ids) {
+    var pieces = $('.stukken .piece');
+    // console.log(pieces);
+    pieces.removeClass('selected');
+    ids.forEach(function(id){
+        // console.log(id);
+        $.each(pieces, function(){
+            var $this = $(this);
+            if ($this.attr('id') === id) {
+                $this.addClass('selected');
+            }
+        })
+    });
 }
 
 function afterPostMake($makeCuesheet, $typeahead) {
@@ -170,6 +202,7 @@ $(function () {
         });
         $('.test-lcs').click(function(){
             cuesheetIds = lcs_pieces($selectForCuesheet, $makeCuesheet);
+            markTestedCuesheets(cuesheetIds);
         });
         typeaheadAlbumComponisten($typeahead, $makeCuesheet);
         $('.album-componist-to-make').click(function () {

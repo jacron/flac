@@ -1,6 +1,7 @@
 {% if pieces|length %}
 <div class="pieces">Stukken ({{ pieces | length }})
-    <i class="toggle-content fa fa-caret-right"></i></div>
+    <i class="toggle-content fa fa-caret-right"></i>
+</div>
     <table class="content stukken">
     <tr>
         <td>
@@ -19,7 +20,7 @@
         </td>
     </tr>
     {% for item in pieces %}
-        <tr>
+        <tr class="piece" id="{{ item.1 }}">
             <td class="hyperlink">
                 <input type="checkbox" title="voeg titel toe aan cuesheet"
                        id="{{ item.1 }}"

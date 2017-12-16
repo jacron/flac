@@ -19,7 +19,9 @@
 {% endif %}
 <h4>
     <span class="ID">{{ album.ID }}
-            <div class="fa fa-times-circle remove" id="{{ person.ID }}"></div>
+            <div class="fa fa-times-circle remove" id="{{ person.ID }}"
+                 title="Album verwijderen"
+            ></div>
         </span>:
     <span contenteditable="true" class="edit-title">
     {{ album.Title }}
@@ -67,7 +69,6 @@
 {% for double in path_doubles %}
     <a href="/album/{{ double.ID }}">{{ double.Title }}</a>
 {% endfor %}
-<a href="/album/{{ album.ID }}/delete/">Verwijder</a>
     </div>
 </div>
 {% endblock %}
