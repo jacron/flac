@@ -1,6 +1,11 @@
 import os
+
+from flac.lib.color import ColorPrint
 from flac.settings import COMPONIST_PATH, PERFORMER_PATH, COVER_PATH, TMP_PATH
 from PIL import ImageGrab
+
+
+rug = 0
 
 
 def replace_haakjes(s):
@@ -97,6 +102,32 @@ def syspath_performer(performer):
 
 def alfabet():
     return [chr(i) for i in range(ord('a'),ord('z')+1)]
+
+
+def save_front(img):
+    width = img.size[0]
+    height = img.size[1]
+    fbox = (width / 2 + rug, 0, width, height)
+    return img.crop(fbox)
+
+
+def save_back(img):
+    width = img.size[0]
+    height = img.size[1]
+    bbox = (0, 0, width / 2 - rug, height)
+    return img.crop(bbox)
+
+
+def save_cb_images(cover, nback):
+    img = ImageGrab.grabclipboard()
+    if img:
+        front = save_front(img)
+        back = save_back(img)
+        front.save(COVER_PATH.format(cover))
+        back.save(COVER_PATH.format(nback))
+        openpath(TMP_PATH)
+    else:
+        ColorPrint.print_c('no valid image on clipboard', ColorPrint.RED)
 
 
 def save_cb_image(cover):

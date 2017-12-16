@@ -926,10 +926,10 @@ ORDER BY A1.Title COLLATE NOCASE
                 'Path': item[2],
             }
         doubles = get_path_doubles(it)
-        if len(doubles):
-            print it['Title'], ' has doubles'
-        else:
+        if len(doubles) == 0:
             out.append(it)
+        # else:
+        #     print it['Title'], ' has doubles'
     return out
 
 

@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^performer/(?P<performer_id>.+)/$', views.performer),
     url(r'^performer/$', views.performers),
 
-    url(r'^componist/(?P<period>.+)/delete/$', views.componist_delete),
+    url(r'^componist/(?P<componist_id>.+)/delete/$', views.componist_delete),
     url(r'^componist/(?P<period>.+)/period/$', views.componisten_period),
     url(r'^componist/(?P<componist_id>.+)/search/(?P<query>.+)/$', views.componist_search),
     url(r'^componist/(?P<componist_id>.+)/$', views.componist, name='componist'),

@@ -148,8 +148,8 @@ PERSON_FILE = '/person.jpg'
 INSTRUMENTS_PATH = '/Volumes/Media/Audio/Klassiek/Instrumenten/'
 COMPONIST_PATH = '/Volumes/Media/Audio/Klassiek/Componisten/'
 PERFORMER_PATH = '/Volumes/Media/Audio/Klassiek/Performers/'
-COVER_PATH = '/Volumes/Media/tmp/{}.jpg'
-TMP_PATH = '/Volumes/Media/tmp'
+COVER_PATH = '/Volumes/Media/tmpscan/{}.jpg'
+TMP_PATH = '/Volumes/Media/tmpscan'
 SKIP_DIRS = ['website', 'websites', 'artwork', 'Artwork', 'etc', 'scans', 'Scans', 'scan',
             'website boxset', '#Booklets', 'Pixels', 'Graphics', 'Info + Art', 'Art',
             'Covers', ]

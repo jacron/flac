@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
 
-from flac.services import save_cb_image
+from flac.services import save_cb_image, save_cb_images
 from ..db import (get_scarlatti_k_pieces, get_scarlatti, get_setting,
                   toggle_setting, get_widow_albums)
 
@@ -57,6 +57,9 @@ def cmd(request, cmd_code):
         return extra_view(request)
     if cmd_code == 'back':
         save_cb_image('back')
+        return extra_view(request)
+    if cmd_code == 'folderback':
+        save_cb_images('folder', 'back')
         return extra_view(request)
     if cmd_code == 'widows':
         return extra_view_widows(request)

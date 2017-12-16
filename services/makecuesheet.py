@@ -186,9 +186,12 @@ def read_cuesheets(p, album_id):
                 lines.append(u'  TRACK {} AUDIO'.format(track['nr']))
                 if track.get('title'):
                     title = track['title'].encode('utf-8')
-                    lines.append(u'    TITLE "{}"'.format(title))
+                    try:
+                        lines.append(u'    TITLE "{}"'.format(title))
+                    except:
+                        lines.append(u'    TITLE "track {}"'.format(track['nr']))
                 else:
-                    lines.append(u'    TITLE "{}"'.format(track['nr']))
+                    lines.append(u'    TITLE "track {}"'.format(track['nr']))
                 if track.get('performer'):
                     lines.append(u'    PERFORMER {}'.format(track['performer']))
                 lines.append(u'    INDEX {} {}'.format(
