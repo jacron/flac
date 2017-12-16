@@ -77,8 +77,6 @@ def split_file(flac, filepath):
            '-ss', duration]
     if flac['duration']:
         duration = to_duration(flac['duration'])
-        if not duration:
-            return
         cmd += ['-t', duration,]
     cmd.append(flac['path'])
     ColorPrint.print_c(flac['path'], ColorPrint.CYAN)
@@ -88,8 +86,13 @@ def split_file(flac, filepath):
     # print 'ERR:{}'.format(err)
 
 
-def get_flac(index, track, basedir, tracks, file_duration):
-    outfile = os.path.join(basedir, track['title'] + '.flac')
+def get_flac(nr, index, track, basedir, tracks, file_duration):
+    strnr = str(nr)
+    if nr < 10:
+        strnr = '0' + strnr
+    filename = u'{} {}.flac'.format(strnr, track['title'])
+    # outfile = os.path.join(basedir, track['title'] + '.flac')
+    outfile = os.path.join(basedir, filename)
     time = track['index']['time']
     if index < len(tracks) - 1:
         time2 = tracks[index + 1]['index']['time']
@@ -119,8 +122,8 @@ def get_duration(filepath):
 def split_flac(cuepath):
     cuesheet = get_full_cuesheet(cuepath, 0)
     basedir = os.path.dirname(cuepath)
+    nr = 1
     for cfile in cuesheet['cue']['files']:
-        # cfile = cuesheet['cue']['files'][0]
         filename = cfile['name']
         tracks = cfile['tracks']
         filepath = os.path.join(basedir, filename)
@@ -130,9 +133,11 @@ def split_flac(cuepath):
             # return
         flacs = []
         for index, track in enumerate(tracks):
-            flacs.append(get_flac(index, track, basedir, tracks, file_duration))
+            flacs.append(get_flac(nr, index, track, basedir, tracks, file_duration))
+            nr += 1
         for flac in flacs:
             split_file(flac, filepath)
+
 
 
 def main():

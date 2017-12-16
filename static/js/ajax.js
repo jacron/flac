@@ -77,6 +77,10 @@ function play(idPiece) {
 }
 
 function postMakeCuesheet(name, ids, cb) {
+    console.log(ids);
+    if (!ids.length) {
+        return;
+    }
     ajaxPost({
         cmd: 'makecuesheet',
         ids: ids,

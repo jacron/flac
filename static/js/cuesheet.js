@@ -134,7 +134,7 @@ function ltrim(s, a) {
 
 function trimNr(s) {
     s = s.trim();
-    s = rtrim(s, ['I', '-', ',', '.flac']);
+    s = rtrim(s, ['No.', 'I', '-', ',', '.flac']);
     s = ltrim(s, ['.', '-']);
     return s.trim();
 }
@@ -157,12 +157,15 @@ function lcs_pieces($selectForCuesheet, $makeCuesheet){
     return ids;
 }
 
+function unmarkTestedCuesheets() {
+    var pieces = $('.stukken .piece');
+    pieces.removeClass('selected');
+}
+
 function markTestedCuesheets(ids) {
     var pieces = $('.stukken .piece');
-    // console.log(pieces);
     pieces.removeClass('selected');
     ids.forEach(function(id){
-        // console.log(id);
         $.each(pieces, function(){
             var $this = $(this);
             if ($this.attr('id') === id) {
@@ -176,7 +179,8 @@ function afterPostMake($makeCuesheet, $typeahead) {
     $makeCuesheet.val('');
     var items = getAlbumComponisten();
     if (items.length === 1) {$typeahead.val(items[0]); }
-    else { $typeahead.val('')};
+    else { $typeahead.val('')}
+    unmarkTestedCuesheets();
 }
 
 $(function () {
