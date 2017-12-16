@@ -1,3 +1,6 @@
+import os
+
+# from flac.db import (delete_album, )
 from .connect import connect
 
 
@@ -43,12 +46,27 @@ def get_item_with_id(sql, oid):
 
 def named_albums(items):
     out = []
-    for nr, item in enumerate(items):
+    for item in items:
         out.append({
             'Title': item[0],
             'ID': item[1],
         })
     return out
+
+
+def get_path_doubles(album):
+    sql = '''
+      SELECT 
+      Title, 
+      Album.ID
+      FROM Album 
+      WHERE Album.Path=?
+      AND NOT Album.ID=?
+      GROUP BY Title
+      ORDER BY Title COLLATE NOCASE
+    '''
+    items = get_items_with_2parameter(sql, album['Path'], album['ID'],)
+    return named_albums(items)
 
 
 def get_album_albums(id_album):
@@ -67,7 +85,7 @@ def get_album_albums(id_album):
     '''
     items = get_items_with_parameter(sql, id_album)
     out = []
-    for nr, item in enumerate(items):
+    for item in items:
         componist = ''
         if item[2] or item[3]:
             componist = u'{} {}'.format(item[2], item[3])
@@ -224,7 +242,7 @@ def get_albums_by_title(q):
     '''
     items = get_items_with_parameter(sql, '%' + q + '%')
     out = []
-    for nr, item in enumerate(items):
+    for item in items:
         out.append({
             'Title': item[0],
             'ID': item[1],
@@ -245,7 +263,7 @@ def get_albums():
     '''
     items = get_items(sql)
     out = []
-    for nr, item in enumerate(items):
+    for item in items:
         out.append({
             'Title': item[0],
             'ID': item[1],
@@ -378,7 +396,6 @@ def get_instruments_typeahead():
 
 
 def get_period_componisten(period):
-    # print('period={}'.format(period))
     pp = period.split('-')
     if len(pp) == 1:
         pmin = period
@@ -422,7 +439,7 @@ def get_period_componisten(period):
     return named_persons(items)
 
 
-def get_componisten(limit=0):
+def get_componisten():
     sql = '''
 SELECT *
 FROM (
@@ -442,9 +459,7 @@ FROM (
   GROUP BY C.ID
   ORDER BY LastName
 )
--- WHERE Albums > ?
 '''
-    # items = get_items_with_parameter(sql, int(limit))
     items = get_items(sql)
     return named_persons(items)
 
@@ -544,7 +559,6 @@ def get_performer_albums(id_performer):
     items = get_items_with_parameter(sql, id_performer)
     named_items = named_albums_with_mother(items)
     return filter_contained_children(named_items)
-    # return named_albums(items)
 
 
 def get_tag_albums(id_tag):
@@ -738,12 +752,11 @@ def get_albums_by_cql(cql):
         conn, c = connect()
         items = []
         try:
-            items = [item for item in c.execute(sql, parameters).fetchall()]
+            items = c.execute(sql, parameters).fetchall()
         except:
             print('in db encoding error')
         conn.close()
         named_items = named_albums_with_mother(items)
-        # return named_items
         grouped_items = filter_contained_children(named_items)
         return grouped_items
     return {}
@@ -877,6 +890,47 @@ def get_scarlatti():
         'FullName': make_fullname(fields[0], fields[1]),
         'ID': fields[2],
     }
+
+
+def delete_not_existing_path_albums(items):
+    for item in items:
+        if not os.path.exists(item[2]):
+            print item[0], ' path does not exist'
+            from flac.db import delete_album
+            delete_album(item[1])
+
+
+def get_widow_albums():
+    sql = '''
+SELECT A1.Title, A1.ID, A1.Path
+FROM Album A1
+  LEFT JOIN Piece ON Piece.AlbumID = A1.ID
+  LEFT JOIN Album A2 ON A2.AlbumID = A1.ID
+WHERE Piece.Name ISNULL
+AND A2.AlbumID ISNULL
+ORDER BY A1.Title COLLATE NOCASE
+    '''
+    conn, c = connect()
+    items = []
+    try:
+        items = c.execute(sql).fetchall()
+    except:
+        print('in db encoding error')
+    conn.close()
+    out = []
+    # delete_not_existing_path_albums(items)
+    for item in items:
+        it = {
+                'Title': item[0],
+                'ID': item[1],
+                'Path': item[2],
+            }
+        doubles = get_path_doubles(it)
+        if len(doubles):
+            print it['Title'], ' has doubles'
+        else:
+            out.append(it)
+    return out
 
 
 def get_scarlatti_k_pieces():

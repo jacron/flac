@@ -40,7 +40,11 @@
         <td><input class="delete-album" placeholder="ID"></td>
     </tr>
     </table>
-<a href="{% url 'cmd' 'folder' %}">save clipboard as folder.jpg</a> |
-<a href="{% url 'cmd' 'back' %}">save clipboard as back.jpg</a>
+<ul>
+    <li><a href="{% url 'cmd' 'folder' %}">save clipboard as folder.jpg</a></li>
+    <li><a href="{% url 'cmd' 'back' %}">save clipboard as back.jpg</a></li>
+    <li><a href="{% url 'cmd' 'widows' %}">widows lijst</a></li>
+</ul>
+    {% albumlist albums %}
 </div>
 {% endblock %}

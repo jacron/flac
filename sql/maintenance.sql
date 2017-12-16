@@ -1,15 +1,13 @@
--- 152
+-- 153 rows
 -- delete invalid albums that share the same path but have no content
 -- (1) Path duplicates
-SELECT ID
+SELECT ID, c
 FROM (
   SELECT
     ID,
     COUNT(*) AS c
   FROM Album
   GROUP BY Path
-  ORDER BY c
-    DESC
 )
 WHERE c > 1;
 
@@ -37,6 +35,39 @@ WHERE Album.Path IN (
   )
 )
 AND Piece.Name ISNULL;
+
+-- (2aa) 153 rows
+    SELECT ID, Path
+      FROM (
+        SELECT
+          ID,
+          Path,
+          COUNT(*) AS c
+        FROM Album
+        GROUP BY Path
+      )
+      WHERE c > 1
+
+-- (2b) 432 rows -> 418 rows
+SELECT A1.ID, A1.Title
+FROM Album A1
+  LEFT JOIN Piece ON Piece.AlbumID = A1.ID
+  LEFT JOIN Album A2 ON A2.AlbumID = A1.ID
+WHERE A1.Path IN (
+    SELECT Path
+      FROM (
+        SELECT
+          ID,
+          Path,
+          COUNT(*) AS c
+        FROM Album
+        GROUP BY Path
+      )
+      WHERE c > 1
+)
+AND Piece.Name ISNULL
+AND A2.AlbumID ISNULL ;
+
 
 -- (2) ID's for the duplicated Path
 SELECT Album.ID
@@ -125,4 +156,10 @@ WHERE ID IN (
 );
 VACUUM; -- van 6.7 naar 5.5 MB
 
--- albums zonder stukken of sub-albums
+-- widows: albums zonder stukken of sub-albums (523)
+SELECT A1.ID, A1.Title
+FROM Album A1
+  LEFT JOIN Piece ON Piece.AlbumID = A1.ID
+  LEFT JOIN Album A2 ON A2.AlbumID = A1.ID
+WHERE Piece.Name ISNULL
+AND A2.AlbumID ISNULL ;

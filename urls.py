@@ -20,19 +20,26 @@ urlpatterns = [
     url(r'^$', views.home),
     url(r'^home/$', views.home),
 
+    url(r'^album/(?P<album_id>.+)/delete/$', views.album_delete),
     url(r'^album/(?P<album_id>.+)/(?P<list_name>.+)/(?P<list_id>.+)/$', views.album_list),
     url(r'^album/(?P<album_id>.+)/$', views.album),
     url(r'^album/$', views.albums),
 
+    url(r'^performer/(?P<performer_id>.+)/delete/$', views.performer_delete),
     url(r'^performer/(?P<performer_id>.+)/$', views.performer),
     url(r'^performer/$', views.performers),
 
+    url(r'^componist/(?P<period>.+)/delete/$', views.componist_delete),
     url(r'^componist/(?P<period>.+)/period/$', views.componisten_period),
-    url(r'^componist/(?P<min_limit>.+)/min/$', views.componisten_limited),
     url(r'^componist/(?P<componist_id>.+)/search/(?P<query>.+)/$', views.componist_search),
     url(r'^componist/(?P<componist_id>.+)/$', views.componist, name='componist'),
     url(r'^componist/$', views.componisten),
 
+    url(r'^tag/(?P<tag_id>.+)/delete/$', views.tag_delete),
+    url(r'^tag/(?P<tag_id>.+)/$', views.tag),
+    url(r'^tag/$', views.tags),
+
+    url(r'^instrument/(?P<instrument_id>.+)/delete/(?P<query>.+)/$', views.instrument_delete),
     url(r'^instrument/(?P<instrument_id>.+)/search/(?P<query>.+)/$', views.instrument_search),
     url(r'^instrument/(?P<instrument_id>.+)/$', views.instrument),
     url(r'^instrument/$', views.instrumenten),
@@ -46,9 +53,6 @@ urlpatterns = [
     url(r'^ajax/$', views.ajax),
     url(r'^gather/$', views.gather),
     url(r'^gather/0/$', views.gather),
-
-    url(r'^tag/(?P<tag_id>.+)/$', views.tag),
-    url(r'^tag/$', views.tags),
 
     url(r'^image/(?P<id>.+)/(?P<type>.+)/$', views.image),
     url(r'^imageback/(?P<id>.+)/(?P<type>.+)/$', views.imageback),

@@ -1,9 +1,11 @@
 from flac.db import (get_pieces, get_album_albums,
                      get_album_componisten, get_album_performers, get_album_instruments, insert_componist,
-                     insert_album_componist, insert_album_performer, insert_album_instrument)
+                     insert_album_componist, insert_album_performer, insert_album_instrument, get_album, insert_album)
+from flac.lib.color import ColorPrint
+from flac.settings import SKIP_DIRS
 from .connect import connect
 from ..services import splits_naam, splits_years
-
+import os
 
 def get_library_code(name):
     parts = name.split('K. ')
@@ -360,6 +362,54 @@ def delete_pieces_of_album(album_id):
     con.commit()
 
 
+def delete_tag(tag_id):
+    sql = """
+    DELETE FROM Tag
+    WHERE ID=?"""
+    con, c = connect()
+    c.execute(sql, (tag_id,)).fetchone()
+    con.commit()
+
+
+def delete_performer(performer_id):
+    sql = """
+    DELETE FROM Performer
+    WHERE ID=?"""
+    con, c = connect()
+    c.execute(sql, (performer_id,)).fetchone()
+    con.commit()
+    sql = """
+    DELETE FROM Performer_Album
+    WHERE PerformerID=?"""
+    con, c = connect()
+    c.execute(sql, (performer_id,)).fetchone()
+    con.commit()
+
+
+def delete_componist(componist_id):
+    sql = """
+    DELETE FROM Componist
+    WHERE ID=?"""
+    con, c = connect()
+    c.execute(sql, (componist_id,)).fetchone()
+    con.commit()
+    sql = """
+    DELETE FROM Componist_Album
+    WHERE ComponistID=?"""
+    con, c = connect()
+    c.execute(sql, (componist_id,)).fetchone()
+    con.commit()
+
+
+def delete_instrument(instrument_id):
+    sql = """
+    DELETE FROM Instrument
+    WHERE ID=?"""
+    con, c = connect()
+    c.execute(sql, (instrument_id,)).fetchone()
+    con.commit()
+
+
 def delete_album(album_id):
     sql = """
     DELETE FROM Album
@@ -373,6 +423,41 @@ def delete_album(album_id):
     con, c = connect()
     c.execute(sql, (album_id,)).fetchone()
     con.commit()
+
+
+def process_album(path, mother_id):
+    """
+    haal stukken (cuesheets en music files) op voor een album
+    """
+    conn, c = connect()
+    w = path.split('/')
+    album_title = w[-1].replace("_", " ")
+
+    album_id = insert_album(
+        title=album_title,
+        path=path,
+        instrument_id=None,
+        is_collectie=0,
+        c=c,
+        conn=conn,
+        album_id=mother_id,
+    )[0]
+    ColorPrint.print_c("album_id={}".format(album_id), ColorPrint.LIGHTCYAN)
+    from flac.db.pieces import insert_pieces
+    insert_pieces(path, album_id, conn, c)
+    conn.close()
+    return album_id
+
+
+def read_albums(album_id):
+    album = get_album(album_id)
+    # get_albums(album['Path'], None, 0)
+    path = album['Path']
+    for d in os.listdir(path):
+        p = u'{}/{}'.format(path, d)
+        if os.path.isdir(p) and d not in SKIP_DIRS:
+            process_album(p, album_id)
+
 
 
 def update_performeryears(years, performer_id):

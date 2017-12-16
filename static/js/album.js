@@ -112,6 +112,14 @@ $(function () {
 
         });
     }
+    function readAlbums(albumId) {
+        ajaxPost({
+            cmd: 'read_albums',
+            albumid: albumId
+        }, function(){
+            location.reload();
+        })
+    }
     function filterAlbums($input) {
         var search = $input.val().toLowerCase();
         $('.album-list li').each(function() {
@@ -172,6 +180,9 @@ $(function () {
         });
         $('.inherit-elements').click(function(){
             inheritElements(albumId);
+        });
+        $('.read_albums').click(function(){
+            readAlbums(albumId);
         });
     }
     // albumlist also lives on componist page etc

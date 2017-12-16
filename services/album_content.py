@@ -8,7 +8,7 @@ from ..db import (
     get_album, get_pieces,
     get_mother_title, get_album_albums, get_album_componisten, get_album_performers, get_album_instruments,
     get_album_tags, get_setting, get_prev_album, get_next_album, get_prev_list_album,
-    get_next_list_album, get_componist, get_performer, get_tag, )
+    get_next_list_album, get_componist, get_performer, get_tag, get_path_doubles)
 from ..services import get_full_cuesheet
 
 
@@ -158,4 +158,5 @@ def album_context(album_id, list_name=None, list_id=None):
         'list_id': list_id,
         'has_subdirs': check_subdirs(album_o['Path']),
         'website': get_website(album_o['Path']),
+        'path_doubles': get_path_doubles(album_o)
     }

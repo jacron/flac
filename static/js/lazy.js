@@ -1,4 +1,8 @@
+'use strict';
+
 $(function () {
+    var lazy;
+
     setLazy();
     lazyLoad();
     $(window).scroll(function(){
@@ -9,7 +13,7 @@ $(function () {
     });
     function setLazy() {
         lazy = $('.lazy');
-        console.log('Found ' + lazy.length + ' lazy images');
+        // console.log('Found ' + lazy.length + ' lazy images');
     }
     function lazyLoad() {
         for (var i = 0; i < lazy.length; i++) {

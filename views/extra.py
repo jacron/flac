@@ -3,7 +3,19 @@ from django.template import loader
 
 from flac.services import save_cb_image
 from ..db import (get_scarlatti_k_pieces, get_scarlatti, get_setting,
-                  toggle_setting, )
+                  toggle_setting, get_widow_albums)
+
+
+def extra_view_widows(request):
+    template = loader.get_template('flac/extra.html')
+    rc = get_setting('read_cuesheet')
+    sp = get_setting('show_proposals')
+    return HttpResponse(template.render(
+        {
+            'read_cuesheet': rc['VALUE'],
+            'show_proposals': sp['VALUE'],
+            'albums': get_widow_albums(),
+        }, request))
 
 
 def extra_view(request):
@@ -46,6 +58,8 @@ def cmd(request, cmd_code):
     if cmd_code == 'back':
         save_cb_image('back')
         return extra_view(request)
+    if cmd_code == 'widows':
+        return extra_view_widows(request)
     return extra_view(request)
 
 

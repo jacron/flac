@@ -1,0 +1,28 @@
+{% extends "flac/base.html" %}
+{% load static %}
+{% load page_tags %}
+{% block title %}
+    {{ album.Title }}
+{% endblock %}
+{% block page %}
+<div class="album">
+    <form>{% csrf_token %}</form>
+    <input type="hidden" id="album_id" value="{{ album.ID }}">
+    {% album_controls album.ID website %}
+{% if album_folder_image %}
+<img src="/image/{{ album.ID }}/album/"
+     class="album-image">
+{% endif %}
+{% if album_back_image %}
+<img src="/imageback/{{ album.ID }}/album/"
+     class="album-image">
+{% endif %}
+<h4>
+    <span class="ID">{{ album.ID }}
+            <i>deleted</i>
+        </span>:
+    <span contenteditable="true" class="edit-title">
+    {{ album.Title }}
+    </span>
+</h4>
+{% endblock %}

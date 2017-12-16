@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.template import loader
 
 from ..db import get_componist_albums, get_componisten, get_componist, get_period_componisten, \
-    get_componist_albums_query
+    get_componist_albums_query, delete_componist
 
 
 def componistrequest(request, componist_id, items, query=''):
@@ -13,6 +13,13 @@ def componistrequest(request, componist_id, items, query=''):
         'query': query,
     }
     return HttpResponse(template.render(context, request))
+
+
+def componist_delete(request, componist_id):
+    componist_o = get_componist(componist_id)
+    delete_componist(componist_id)
+    template = loader.get_template('flac/componist_deleted.html')
+    return HttpResponse(template.render({'componist': componist_o}, request))
 
 
 def componist(request, componist_id):
@@ -30,11 +37,6 @@ def componistenrequest(request, items, period=''):
 
 def componisten_period(request, period):
     return componistenrequest(request, get_period_componisten(period), period)
-
-
-def componisten_limited(request, min_limit):
-    # obsolete
-    return componistenrequest(request, get_componisten(min_limit))
 
 
 def componist_search(request, componist_id, query):

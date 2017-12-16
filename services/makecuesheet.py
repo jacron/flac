@@ -85,7 +85,7 @@ def get_dirs(path):
     for d in os.listdir(path):
         if os.path.isdir(os.path.join(path, d)):
             dirs.append(d)
-    return dirs
+    return sorted(dirs)
 
 
 def make_sub_cuesheet(path):
@@ -184,7 +184,10 @@ def read_cuesheets(p, album_id):
             lines.append(u'FILE "{}" WAVE'.format(fpath))
             for track in cfile['tracks']:
                 lines.append(u'  TRACK {} AUDIO'.format(track['nr']))
-                lines.append(u'    TITLE "{}"'.format(track['title']))
+                if track.get('title'):
+                    lines.append(u'    TITLE "{}"'.format(track['title']))
+                else:
+                    lines.append(u'    TITLE "{}"'.format(track['nr']))
                 if track.get('performer'):
                     lines.append(u'    PERFORMER {}'.format(track['performer']))
                 lines.append(u'    INDEX {} {}'.format(

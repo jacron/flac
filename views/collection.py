@@ -20,3 +20,4 @@ def collections_search(request, query):
             'albums': ccollections,
             'query': query
         }, request))
+

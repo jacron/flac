@@ -5,7 +5,9 @@
 {% block page %}
     <form>{% csrf_token %}</form>
     <h4>{{ page_title }} ({{ items|length }})</h4>
-<img src="/componistimage/{{ scarlatti.ID }}/" class="instrument-image">
+    <div>
+        <img src="/image/{{ scarlatti.ID }}/componist/" class="componist-image">
+    </div>
     <table cellpadding="4">
     <tr>
         <th>K</th>

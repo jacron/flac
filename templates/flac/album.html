@@ -51,7 +51,8 @@
         <a class="combine-subs" title="Combineer cuelist voor subdirectories">
             Combineer sub-cuelists</a> |
         <a class="inherit-elements" title="Erf eigenschappen in subalbums">
-            Erf</a>
+            Erf</a> |
+        <a class="read_albums" title="Lees albums in">Lees albums in</a>
         {% endif %}
         {% if show_proposals == '1' %}
             <div>
@@ -61,8 +62,12 @@
     </div>
 {% if albums|length %}
     {% alfabet %}
-{% endif %}
     {% albumlist albums %}
+{% endif %}
+{% for double in path_doubles %}
+    <a href="/album/{{ double.ID }}">{{ double.Title }}</a>
+{% endfor %}
+<a href="/album/{{ album.ID }}/delete/">Verwijder</a>
     </div>
 </div>
 {% endblock %}

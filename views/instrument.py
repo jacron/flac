@@ -1,7 +1,16 @@
 from django.http import HttpResponse
 from django.template import loader
-from ..db import get_instrument, get_instrument_albums, get_instruments, get_instrument_albums_search
+from ..db import get_instrument, get_instrument_albums, get_instruments, get_instrument_albums_search, delete_instrument
 from django.conf import settings
+
+
+def instrument_delete(request, instrument_id):
+    instrument = get_instrument(instrument_id)
+    delete_instrument(instrument_id)
+    template = loader.get_template('flac/instrument_deleted.html')
+    return HttpResponse(template.render({
+        'instrument': instrument,
+    }, request))
 
 
 def instrument_search(request, instrument_id, query):

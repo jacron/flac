@@ -8,7 +8,7 @@ from flac.services.makecuesheet import make_cuesheet, rename_cuesheet, make_subs
     edit_cuesheet, combine_sub_cuesheets, norm_cuesheet
 from flac.services.path import get_path, path_from_id_field
 from ..db import (abs_insert_componist, update_componistbirth, update_componistdeath, update_performerbirth,
-                  update_performerdeath, adjust_kk, inherit_elements)
+                  update_performerdeath, adjust_kk, inherit_elements, read_albums)
 from flac.db.pieces import refetch_pieces
 from ..db import (
     get_album, get_piece, update_album_title, add_tag_to_album,
@@ -30,10 +30,6 @@ def play(args):
     name = piece['Name'].encode('utf-8')
     os.system('open -a "{}" "{}"'.format(settings.MEDIA_PLAYER,
                                          "{}/{}".format(path, name)))
-
-
-def refetch(album_id):
-    return refetch_pieces(album_id)
 
 
 def path_for_person(path):
@@ -136,7 +132,9 @@ def do_post(post):
     if cmd == 'delete_album':
         return delete_album(post['album_id'])
     if cmd == 'refetch':
-        return refetch(post['albumid'])
+        return refetch_pieces(post['albumid'])
+    if cmd == 'read_albums':
+        return read_albums(post['albumid'])
 
     if cmd == 'url':
         person_by_url(post)
