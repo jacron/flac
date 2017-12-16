@@ -66,7 +66,7 @@ $(function () {
             cmd: 'combinesubs',
             albumid: albumId
         }, function() {
-            // refetch();
+            refetch();
         });
     }
     function makeSubs(albumId) {

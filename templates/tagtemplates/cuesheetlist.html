@@ -1,10 +1,15 @@
 {% load page_tags %}
 {% if cuesheets|length %}
+    {% if cuesheets|length > 1 %}
 <div class="cuesheets">
 Cuesheets ({{ cuesheets | length }})
     <i class="toggle-cuesheets-content fa fa-caret-right"></i>
 </div>
     <div class="cuesheets-content">
+        {% else %}
+    <div>
+        {% endif %}
+
 {% for cuesheet in cuesheets %}
     <div {% if not valid %}
             class="error"
