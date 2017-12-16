@@ -110,10 +110,16 @@ function similar($selectForCuesheet) {
 }
 
 function trimNr(s) {
+    console.log(s);
+    s = s.trim();
     if (s.substr(s.length-1) === 'I') {
-        return s.substr(0, s.length-1);
+        s = s.substr(0, s.length-1);
+        s = s.trim();
     }
-    return s;
+    if (s.substr(-1, 1) === '-') {
+        s = s.substr(0, s.length - 1);
+    }
+    return s.trim();
 }
 
 function lcs_pieces($selectForCuesheet, $makeCuesheet){

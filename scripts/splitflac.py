@@ -38,10 +38,13 @@ def normtime(t):
 def to_duration(time):
     # mm:ss:ff
     t = time.split(':')
-    hh = int(t[0]) / 60
-    mm = int(t[0]) % 60
-    ss = t[1]
-    ms = float(t[2]) / 75 * 1000
+    try:
+        hh = int(t[0]) / 60
+        mm = int(t[0]) % 60
+        ss = t[1]
+        ms = float(t[2]) / 75 * 1000
+    except:
+        return None
     return '{}:{}:{}.{}'.format(hh, mm, ss, int(ms))
 
 
@@ -67,10 +70,16 @@ def timedif(time2, time1):
 
 
 def split_file(flac, filepath):
+    duration = to_duration(flac['time'])
+    if not duration:
+        return
     cmd = [FFMPEG, '-i', filepath,
-           '-ss', to_duration(flac['time'])]
+           '-ss', duration]
     if flac['duration']:
-        cmd += ['-t', to_duration(flac['duration']),]
+        duration = to_duration(flac['duration'])
+        if not duration:
+            return
+        cmd += ['-t', duration,]
     cmd.append(flac['path'])
     ColorPrint.print_c(flac['path'], ColorPrint.CYAN)
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
