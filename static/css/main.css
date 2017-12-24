@@ -70,6 +70,9 @@ body {
     float: left;
     margin: 0 4px 16px 0;
 }
+.album-image.back {
+    display: none;
+}
 .album-image-thumb {
     height: 160px;
 }
@@ -264,7 +267,7 @@ fieldset {
     height: 36px;
 }
 .album-controls .typeahead {
-    /*display: none;*/
+    display: none;
 }
 .album-controls:hover .typeahead {
     display: inline-block;
@@ -443,4 +446,17 @@ div[class="pattern"] img {
 }
 .stukken .piece.selected a {
     color: blue;
+}
+.person-loup {
+    display: none;
+    position: absolute;
+    margin: -12px 0 0 -80px;
+    background-color: #fff;
+    padding: 4px;
+}
+.person-loup img {
+    max-width: 300px;
+}
+.person:hover .person-loup {
+    display: inline-block;
 }

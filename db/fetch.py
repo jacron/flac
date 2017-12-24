@@ -1,6 +1,7 @@
 import os
 
 # from flac.db import (delete_album, )
+from flac.services import get_extension
 from .connect import connect
 
 
@@ -823,6 +824,8 @@ def get_album_performers(id_album):
         SELECT
             FirstName,
             LastName,
+            Birth,
+            Death,
             Performer.ID
         FROM Performer_Album
             JOIN Performer ON Performer.ID = Performer_Album.PerformerID
@@ -836,7 +839,9 @@ def get_album_performers(id_album):
             'FirstName': item[0],
             'LastName': item[1],
             'FullName': make_fullname(item[0], item[1]),
-            'ID': item[2],
+            'Birth': item[2],
+            'Death': item[3],
+            'ID': item[4],
         })
     return out
 
@@ -846,6 +851,8 @@ def get_album_componisten(id_album):
         SELECT
             FirstName,
             LastName,
+            Birth,
+            Death,
             Componist.ID
         FROM Componist_Album
             JOIN Componist ON Componist.ID = Componist_Album.ComponistID
@@ -859,7 +866,9 @@ def get_album_componisten(id_album):
             'FirstName': item[0],
             'LastName': item[1],
             'FullName': make_fullname(item[0], item[1]),
-            'ID': item[2],
+            'Birth': item[2],
+            'Death': item[3],
+            'ID': item[4],
         })
     return out
 
@@ -898,6 +907,39 @@ def delete_not_existing_path_albums(items):
             print item[0], ' path does not exist'
             from flac.db import delete_album
             delete_album(item[1])
+
+
+def get_apeflac_albums():
+    sql = '''
+    SELECT Title, ID, Path
+    FROM Album 
+        '''
+    conn, c = connect()
+    items = []
+    try:
+        items = c.execute(sql).fetchall()
+    except:
+        print('in db encoding error')
+    conn.close()
+    out = []
+    for item in items:
+        pieces = get_pieces(item[1])
+        count_ape = 0
+        count_flac = 0
+        for piece in pieces:
+            ext = get_extension(piece[0])
+            if ext == 'flac':
+                count_flac += 1
+            if ext == 'ape':
+                count_ape += 1
+        if count_ape > 0 and count_flac > 0:
+            it = {
+                'Title': item[0],
+                'ID': item[1],
+                'Path': item[2],
+            }
+            out.append(it)
+    return out
 
 
 def get_widow_albums():

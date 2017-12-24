@@ -148,7 +148,7 @@ $(function () {
                 refetch();
             }
         });
-        $('.album-image').click(function () {
+        $('.album-image').dblclick(function (e) {
             cycleSizes($(this));
         });
         $('.cue-plus').click(function () {
@@ -183,6 +183,9 @@ $(function () {
         });
         $('.read_albums').click(function(){
             readAlbums(albumId);
+        });
+        $('.album-image.folder').click(function() {
+            $('.album-image.back').toggle();
         });
     }
     // albumlist also lives on componist page etc

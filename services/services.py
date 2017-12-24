@@ -49,6 +49,10 @@ def trimextension(ffile):
     return '.'.join(ff)
 
 
+def get_extension(s):
+    return s.split('.')[-1]
+
+
 def dequote(line):
     line = line.strip()
     if line.startswith('"'):
