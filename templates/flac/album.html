@@ -11,6 +11,9 @@
     {% album_controls album.ID website %}
 {% if album_folder_image %}
 <img src="/image/{{ album.ID }}/album/"
+{% if album_back_image %}
+    title="Klik voor achterzijde"
+{% endif %}
      class="album-image folder">
 {% endif %}
 {% if album_back_image %}

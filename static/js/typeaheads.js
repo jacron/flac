@@ -36,19 +36,6 @@ function typeaheadPost(name, cmd) {
     location.reload();
 }
 
-function impl_post_typeahead(items, $typeahead, cmd) {
-    $typeahead.typeahead(typeaheadSettings,
-        { source: match(items) }
-    ).keydown(function(e){
-        if (e.key === 'Enter') {
-            typeaheadPost($(e.target).val(), cmd);
-        }
-        if (e.key === 'Escape') {
-            $typeahead.val('');
-        }
-    });
-}
-
 function query() {
     var q = '';
     const qComponist = $('.search .componist .typeahead.tt-input').val(),
@@ -126,6 +113,19 @@ function typeAheadAlbumItems(cmdGet, nameField, $typeahead, cmdPost) {
             items.push(item[nameField]);
         });
         impl_post_typeahead(items, $typeahead, cmdPost);
+    });
+}
+
+function impl_post_typeahead(items, $typeahead, cmd) {
+    $typeahead.typeahead(typeaheadSettings,
+        { source: match(items) }
+    ).keydown(function(e){
+        if (e.key === 'Enter') {
+            typeaheadPost($(e.target).val(), cmd);
+        }
+        if (e.key === 'Escape') {
+            $typeahead.val('');
+        }
     });
 }
 
