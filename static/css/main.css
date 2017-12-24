@@ -472,3 +472,6 @@ div[class="pattern"] img {
 .person:hover .person-loup {
     display: inline-block;
 }
+.played {
+    border: 1px solid blue;
+}

@@ -16,7 +16,7 @@ Cuesheets ({{ cuesheets | length }})
             {% endif %}
     >
         <div class="hyperlink cuesheet">
-            <a onclick="play({{ cuesheet.ID }})">{{ cuesheet.Filename }}</a>
+            <a onclick="play(this, {{ cuesheet.ID }})">{{ cuesheet.Filename }}</a>
         {% if not valid %}
             <span class="rename-cuesheet" id="{{ cuesheet.ID }}">rename</span>
         {% endif %}

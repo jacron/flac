@@ -306,7 +306,7 @@ def get_gatherers():
 
 def get_pieces(album_id):
     sql = '''
-      SELECT Name, ID FROM Piece 
+      SELECT Name, ID, LibraryCode FROM Piece 
       WHERE AlbumID=?
       ORDER BY Name
     '''

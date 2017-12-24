@@ -25,8 +25,11 @@
                 <input type="checkbox" title="voeg titel toe aan cuesheet"
                        id="{{ item.1 }}"
                        class="select-for-cuesheet">
-                <a onclick="play({{ item.1 }})">{{ item.0 }}</a>
+                <a onclick="play(this, {{ item.1 }})">{{ item.0 }}</a>
             </td>
+        <td>
+            <a href="/extra/kcode/{{ item.2 }}">{{ item.2 }}</a>
+        </td>
         </tr>
     {% endfor %}
 </table>

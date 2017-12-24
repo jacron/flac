@@ -69,10 +69,14 @@ function openwebsite(albumId) {
     })
 }
 
-function play(idPiece) {
+function play(elm, idPiece) {
+    console.log('elm', elm);
     ajaxPost({
         arg: idPiece,
         cmd: 'play'
+    }, function() {
+        $('.played').removeClass('played');
+        $(elm).addClass('played');
     });
 }
 

@@ -28,7 +28,7 @@
                 <a href="/album/{{ item.Album.ID }}">{{ item.Album.Title }}</a>
             </td>
             <td class="piece hyperlink">
-                <div onclick="play({{ item.Piece.ID }})">{{ item.Piece.Name }}</div>
+                <div onclick="play(this, {{ item.Piece.ID }})">{{ item.Piece.Name }}</div>
             </td>
             </tr>
         {% endfor %}

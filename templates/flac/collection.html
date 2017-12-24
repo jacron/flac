@@ -31,7 +31,7 @@
         {% endfor %}
         {% for cuesheet in cuesheet_output %}
             <div class="hyperlink cuesheet">
-                <a onclick="play({{ cuesheet.ID }})">{{ cuesheet.Title }}</a>
+                <a onclick="play(this, {{ cuesheet.ID }})">{{ cuesheet.Title }}</a>
             </div>
         {% endfor %}
         {% alfabet %}
@@ -40,7 +40,7 @@
             {% for item in items %}
                 <tr>
                     <td class="hyperlink">
-                        <a onclick="play({{ item.1 }})">{{ item.0 }}</a>
+                        <a onclick="play(this, {{ item.1 }})">{{ item.0 }}</a>
                     </td>
                 </tr>
             {% endfor %}
