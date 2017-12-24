@@ -1,0 +1,27 @@
+{% extends "flac/base.html" %}
+{% load static %}
+{% load page_tags %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block page %}
+    <form>{% csrf_token %}</form>
+    <h4>{{ page_title }} ({{ items|length }})</h4>
+    <div>
+        <img src="/image/{{ scarlatti.ID }}/componist/" class="componist-image">
+    </div>
+    <table cellpadding="4">
+        <tr>
+            <th>K</th>
+            <th>Tempo</th>
+            <th>Toonsoort</th>
+        </tr>
+        {% for item in items %}
+            <tr>
+                <td class="code">
+                    <a href="/extra/kcode/{{ item.k_code }}">{{ item.k_code }}</a>
+                </td>
+                <td class="tempo">{{ item.Tempo }}</td>
+                <td class="key">{{ item.Key }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

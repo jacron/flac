@@ -53,6 +53,9 @@ body {
 .piece.hyperlink:hover {
     text-decoration: underline;
 }
+.instrument {
+    color: #447e9b;
+}
 .instrument a {
     color: #447e9b;
 }
@@ -281,6 +284,15 @@ fieldset {
 }
 .album .hyperlink.performer {
     color: #1e347b;
+}
+.performer {
+    color: brown;
+}
+.boeknaam {
+    color: brown;
+}
+.boeknr {
+    text-align: right;
 }
 .hyperlink.componist,
 .hyperlink.performer {

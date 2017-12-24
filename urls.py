@@ -45,6 +45,7 @@ urlpatterns = [
     url(r'^instrument/$', views.instrumenten),
 
     url(r'^extra/$', views.extra),
+    url(r'^extra/kcode/(?P<k_code>.+)/$', views.k_code, name='kcode'),
     url(r'^extra/(?P<cmd_code>.+)/$', views.cmd, name='cmd'),
 
     url(r'^collection/(?P<query>.+)/search$', views.collections_search),

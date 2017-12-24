@@ -74,6 +74,11 @@ def performerimage(performer_id):
     return get_image(image_path)
 
 
+def librarycodeimage(k_code):
+    image_path = settings.LIBRARYCODE_PATH + k_code + '.png'
+    return get_image(image_path)
+
+
 def imageback(request, id, type):
     if type == 'album':
         return albumimageback(id)
@@ -88,3 +93,5 @@ def image(request, id, type):
         return componistimage(id)
     if type == 'instrument':
         return instrumentimage(id)
+    if type == 'librarycode':
+        return librarycodeimage(id)

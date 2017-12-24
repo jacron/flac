@@ -975,6 +975,93 @@ ORDER BY A1.Title COLLATE NOCASE
     return out
 
 
+def get_scarlatti_k_sonatas():
+    sql = '''
+      SELECT Code, Tempo, Key
+       FROM LibraryCode
+      '''
+    items = get_items(sql)
+    out = []
+    for item in items:
+        out.append({
+            'k_code': item[0],
+            'Tempo': item[1],
+            'Key': item[2],
+        })
+    return out
+
+
+def get_scarlatti_k_boeken(k_code):
+    sql = '''
+      SELECT 
+        Pianoboek.Name, 
+        LibraryCode_Pianoboek.Nr,
+        Uitgever.Name
+      FROM LibraryCode_Pianoboek
+      JOIN Pianoboek
+      ON Pianoboek.ID = LibraryCode_Pianoboek.PianoboekID
+      JOIN Uitgever
+      ON Uitgever.ID=Pianoboek.UitgeverID
+      WHERE LibraryCode_Pianoboek.LibraryCode=?
+      '''
+    items = get_items_with_parameter(sql, k_code)
+    out = []
+    for item in items:
+        out.append({
+            'Name': item[0],
+            'Nr': item[1],
+            'Uitgever': item[2],
+        })
+    return out
+
+
+def get_scarlatti_k_sonata(k_code):
+    sql = '''
+      SELECT 
+        Piece.ID,
+        Piece.Name,
+        Performer.FirstName, 
+        Performer.LastName, 
+        Performer.ID, 
+        Instrument.Name,
+        Instrument.ID,
+        Album.Title,
+        Album.ID
+       FROM Piece
+       JOIN Album
+       ON Piece.AlbumID = Album.ID
+       JOIN Performer_Album
+       ON Performer_Album.AlbumID = Album.ID
+       JOIN Performer
+       ON Performer_Album.PerformerID = Performer.ID
+       JOIN Instrument
+       ON Album.InstrumentID = Instrument.ID
+          WHERE Piece.LibraryCode=?
+      '''
+    items = get_items_with_parameter(sql, k_code)
+    out = []
+    for item in items:
+        out.append({
+            'Piece': {
+                'Name': item[1],
+                'ID': item[0],
+            },
+            'Performer': {
+                'Name': u'{} {}'.format(item[2], item[3]),
+                'ID': item[4],
+            },
+            'Instrument': {
+                'Name': item[5],
+                'ID': item[6],
+            },
+            'Album': {
+                'Title': item[7],
+                'ID': item[8],
+            }
+        })
+    return out
+
+
 def get_scarlatti_k_pieces():
     sql = '''
       SELECT 

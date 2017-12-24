@@ -10,9 +10,6 @@
 </div>
     </form>
     <div class="hyperlink">
-        <a href="{% url 'cmd' 'k' %}">Scarlatti K-lijst</a>
-    </div>
-    <div class="hyperlink">
         <div class="checkbox fa
                {%  if read_cuesheet == '1' %}
                fa-check
@@ -40,7 +37,9 @@
         <td><input class="delete-album" placeholder="ID"></td>
     </tr>
     </table>
-<ul>
+<ul class="hyperlink">
+    <li><a href="{% url 'cmd' 'k' %}">Scarlatti K-lijst</a></li>
+    <li><a href="{% url 'cmd' 'kk' %}">Nieuwe K-lijst</a></li>
     <li><a href="{% url 'cmd' 'folder' %}">save clipboard as folder.jpg</a></li>
     <li><a href="{% url 'cmd' 'back' %}">save clipboard as back.jpg</a></li>
     <li><a href="{% url 'cmd' 'folderback' %}">save clipboard as folder.jpg and back.jpg</a></li>
