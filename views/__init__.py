@@ -3,7 +3,7 @@ from album import *
 from home import *
 from ajax import *
 from performer import *
-from albumimage import *
+from image import *
 from componist import *
 from instrument import *
 from extra import *

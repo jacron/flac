@@ -9,33 +9,9 @@
     <input type="text" placeholder="zoek album" class="typeahead general">
 </div>
     </form>
-    <div class="hyperlink">
-        <div class="checkbox fa
-               {%  if read_cuesheet == '1' %}
-               fa-check
-               {% endif %}">
-        </div>
-            <a href="{% url 'cmd' 'cue' %}">lees cuesheets in voor album</a>
-    </div>
-    <div class="hyperlink">
-        <div class="checkbox fa
-               {%  if show_proposals == '1' %}
-               fa-check
-               {% endif %}">
-        </div>
-            <a href="{% url 'cmd' 'proposals' %}">toon voorstellen op album pagina</a>
-    </div>
         <input class="add-componist-extra" type="text" placeholder="Voeg componist toe">
         <span class="componist-extra-added"></span>
     <table>
-    <tr>
-        <td>naar album</td>
-        <td><input class="input-album" placeholder="ID"></td>
-    </tr>
-    <tr>
-        <td>delete album</td>
-        <td><input class="delete-album" placeholder="ID"></td>
-    </tr>
     </table>
 <ul class="hyperlink">
     <li><a href="{% url 'cmd' 'k' %}">Scarlatti Sonates</a></li>

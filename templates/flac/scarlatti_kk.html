@@ -5,16 +5,18 @@
 {% block page %}
     <form>{% csrf_token %}</form>
     <h4>{{ page_title }} ({{ items|length }})</h4>
+    {% if scarlatti.ID %}
     <div>
         <img src="/image/{{ scarlatti.ID }}/componist/" class="componist-image">
     </div>
+    {% endif %}
     <table cellpadding="4">
-        <tr>
-            <th>K</th>
-            <th>Tempo</th>
-            <th>Toonsoort</th>
-        </tr>
         {% for item in items %}
+            <tr>
+                <td colspan="3">
+                    <img src="/image/{{ item.k_code }}/librarycode/" class="librarycode-image">
+                </td>
+            </tr>
             <tr>
                 <td class="code">
                     <a href="/extra/kcode/{{ item.k_code }}">{{ item.k_code }}</a>
