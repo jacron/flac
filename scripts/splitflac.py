@@ -83,9 +83,8 @@ def split_file(flac, filepath):
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = process.communicate()
     # print 'STDOUT:{}'.format(out)
-    print 'ERR:{}'.format(err)
-# /Volumes/Media/Audio/Klassiek/Collecties/BBC Legends/BBCL5002 - Arturo Benedetti Michelangeli - Portrait of a Legend/CD03/Arturo Benedetti Michelangeli - BBC Legends Michelangeli.ape: No such file or directory
-# /Volumes/Media/Audio/Klassiek/Collecties/BBC Legends/BBCL5002 - Arturo Benedetti Michelangeli - Portrait of a Legend/CD03/Arturo Benedetti Michelangeli - BBC Legends  Michelangeli.ape
+    # print 'ERR:{}'.format(err)
+
 
 def get_flac(nr, index, track, basedir, tracks, file_duration):
     strnr = str(nr)

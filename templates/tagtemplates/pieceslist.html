@@ -27,9 +27,11 @@
                        class="select-for-cuesheet">
                 <a onclick="play(this, {{ item.1 }})">{{ item.0 }}</a>
             </td>
+            {% if item.2 %}
         <td>
             <a href="/extra/kcode/{{ item.2 }}">{{ item.2 }}</a>
         </td>
+        {% endif %}
         </tr>
     {% endfor %}
 </table>

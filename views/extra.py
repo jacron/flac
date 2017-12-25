@@ -4,7 +4,7 @@ from django.template import loader
 from flac.services import save_cb_image, save_cb_images
 from ..db import (get_scarlatti_k_pieces, get_scarlatti, get_setting,
                   toggle_setting, get_widow_albums, get_apeflac_albums, get_scarlatti_k_sonatas, get_scarlatti_k_sonata,
-                  get_scarlatti_k_boeken)
+                  get_scarlatti_k_boeken, get_bach_k_pieces)
 
 
 def extra_view(request, albums=None):
@@ -33,13 +33,21 @@ def list_scarlatti(request):
         }, request))
 
 
-def list_scarlatti_sonatas(request):
+def list_bach(request):
+    template = loader.get_template('flac/scarlatti_k.html')
+    return HttpResponse(template.render(
+        {
+            'items': get_bach_k_pieces(),
+            'page_title': 'Bach Goldberg',
+        }, request))
+
+
+def list_librarycode(request, k_wild):
     template = loader.get_template('flac/scarlatti_kk.html')
     return HttpResponse(template.render(
         {
-            'items': get_scarlatti_k_sonatas(),
-            'scarlatti': get_scarlatti(),
-            'page_title': 'Scarlatti Sonaten (Kirkpatrick nummering)',
+            'items': get_scarlatti_k_sonatas(k_wild),
+            'page_title': 'List (' + k_wild + ')',
         }, request))
 
 
@@ -58,8 +66,12 @@ def k_code(request, k_code):
 def cmd(request, cmd_code):
     if cmd_code == 'k':
         return list_scarlatti(request)
+    if cmd_code == 'bg':
+        return list_bach(request)
     if cmd_code == 'kk':
-        return list_scarlatti_sonatas(request)
+        return list_librarycode(request, 'K %')
+    if cmd_code == 'bgg':
+        return list_librarycode(request, 'gold %')
     if cmd_code == 'cue':
         toggle_setting('read_cuesheet')
         return extra_view(request)

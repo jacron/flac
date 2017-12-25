@@ -310,7 +310,21 @@ def get_pieces(album_id):
       WHERE AlbumID=?
       ORDER BY Name
     '''
-    return get_items_with_parameter(sql, album_id)
+    items = get_items_with_parameter(sql, album_id)
+    out = []
+    for item in items:
+        code = item[2]
+        if code == '0':
+            code = None
+        out.append({
+            0: item[0],
+            1: item[1],
+            2: code,
+            'Name': item[0],
+            'ID': item[1],
+            'LibraryCode': code,
+        })
+    return out
 
 
 def named_persons(items):
@@ -975,12 +989,13 @@ ORDER BY A1.Title COLLATE NOCASE
     return out
 
 
-def get_scarlatti_k_sonatas():
+def get_scarlatti_k_sonatas(k_wild):
     sql = '''
       SELECT Code, Tempo, Key
        FROM LibraryCode
+       WHERE LibraryCode.Code LIKE ?
       '''
-    items = get_items(sql)
+    items = get_items_with_parameter(sql, k_wild)
     out = []
     for item in items:
         out.append({
@@ -1062,7 +1077,15 @@ def get_scarlatti_k_sonata(k_code):
     return out
 
 
+def get_bach_k_pieces():
+    return get_k_pieces('gold %')
+
+
 def get_scarlatti_k_pieces():
+    return get_k_pieces('K %')
+
+
+def get_k_pieces(k_wild):
     sql = '''
       SELECT 
         Piece.LibraryCode, 
@@ -1084,10 +1107,10 @@ def get_scarlatti_k_pieces():
        ON Performer_Album.PerformerID = Performer.ID
        JOIN Instrument
        ON Album.InstrumentID = Instrument.ID
-      WHERE LibraryCode LIKE 'K %'
+      WHERE LibraryCode LIKE ?
       ORDER BY LENGTH(LibraryCode), LibraryCode
     '''
-    items = get_items(sql)
+    items = get_items_with_parameter(sql, k_wild)
     out = []
     for item in items:
         out.append({

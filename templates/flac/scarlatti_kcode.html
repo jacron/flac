@@ -8,6 +8,22 @@
     <div>
         <img src="/image/{{ scarlatti.ID }}/componist/" class="componist-image">
     </div>
+    <table class="boeken">
+    {% for boek in boeken %}
+        <tr>
+        <td class="boeknr">
+            {{ boek.Nr }}
+        </td>
+        <td class="boeknaam">
+            {{ boek.Name }}
+        </td>
+        <td>{{ boek.Uitgever }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    <div>
+        <img src="/image/{{ librarycode }}/librarycode/" class="librarycode-image">
+    </div>
     <table class=" stukken">
     {% for item in pieces %}
         <tr class="piece" id="{{ item.ID }}">
@@ -24,22 +40,6 @@
             <a href="/album/{{ item.Album.ID }}">
             {{ item.Album.Title }}</a>
         </td>
-        </tr>
-    {% endfor %}
-    </table>
-    <div>
-        <img src="/image/{{ librarycode }}/librarycode/" class="librarycode-image">
-    </div>
-    <table class="boeken">
-    {% for boek in boeken %}
-        <tr>
-        <td class="boeknr">
-            {{ boek.Nr }}
-        </td>
-        <td class="boeknaam">
-            {{ boek.Name }}
-        </td>
-        <td>{{ boek.Uitgever }}</td>
         </tr>
     {% endfor %}
     </table>
