@@ -31,7 +31,7 @@ function toggleContents($this, parent, sibling) {
 
 $(function () {
     $('.toggle-content').click(function () {
-        toggleContent($(this), 'div', 'table');
+        toggleContents($(this), 'div', 'table');
     });
     $('.toggle-edit').click(function () {
         toggleContent($(this), 'div', '.content.edit');

@@ -13,6 +13,8 @@
             <a class="kk">kirkpatrick (Kk)</a>
         </td>
     </tr>
+    </table>
+    <table class="content stukken">
     <tr>
         <td class="hyperlink control">
             <a class="check-all">alles selecteren</a> |
@@ -31,6 +33,9 @@
         <td>
             <a href="/extra/kcode/{{ item.2 }}">{{ item.2 }}</a>
         </td>
+                <td>
+                    <img src="/image/{{ item.2 }}/librarycode/" class="librarycode-image">
+                </td>
         {% endif %}
         </tr>
     {% endfor %}
