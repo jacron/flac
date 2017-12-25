@@ -12,3 +12,4 @@ from gather import *
 from tag import *
 from search import *
 from upload import *
+from pianoboek import *

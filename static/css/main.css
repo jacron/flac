@@ -478,3 +478,6 @@ div[class="pattern"] img {
 .librarycode-image {
     max-width: 800px;
 }
+.boeken td {
+    padding: 3px;
+}

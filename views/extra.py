@@ -57,7 +57,6 @@ def k_code(request, k_code):
         {
             'pieces': get_scarlatti_k_sonata(k_code),
             'boeken': get_scarlatti_k_boeken(k_code),
-            'scarlatti': get_scarlatti(),
             'librarycode': k_code,
             'page_title': 'Scarlatti Sonaten ({})'.format(k_code),
         }, request))

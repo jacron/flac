@@ -1006,6 +1006,88 @@ def get_scarlatti_k_sonatas(k_wild):
     return out
 
 
+def get_pianoboek_nummers(boek_id):
+    sql = '''
+    SELECT 
+      L.Code,
+      LP.Nr,
+      L.Tempo,
+      L.Key
+     FROM LibraryCode L
+     JOIN LibraryCode_Pianoboek LP
+     ON L.Code=LP.LibraryCode
+     WHERE LP.PianoboekID=?
+     ORDER BY length(LP.Nr), LP.Nr
+    '''
+    items = get_items_with_parameter(sql, boek_id)
+    out = []
+    for item in items:
+        out.append({
+            'Code': item[0],
+            'Nr': item[1],
+            'Tempo': item[2],
+            'Key': item[3],
+        })
+    return out
+
+
+def get_pianoboek(boek_id):
+    sql = '''
+    SELECT 
+    P.Name, 
+    P.Nr, 
+    P.ID, 
+    U.Name,
+    C.FirstName,
+    C.LastName
+    FROM Pianoboek P
+    JOIN Uitgever U
+    ON U.ID = P.UitgeverID
+    JOIN Componist C
+    ON C.ID = P.ComponistID
+    WHERE P.ID = ?
+    '''
+    items = get_items_with_parameter(sql, boek_id)
+    out = []
+    for item in items:
+        out.append({
+            'Name': item[0],
+            'Nr': item[1],
+            'ID': item[2],
+            'Uitgever': item[3],
+            'Componist': item[4] + ' ' + item[5]
+        })
+    return out[0]
+
+
+def get_pianoboeken():
+    sql = '''
+    SELECT 
+    P.Name, 
+    P.Nr, 
+    P.ID, 
+    U.Name,
+    C.FirstName,
+    C.LastName
+    FROM Pianoboek P
+    JOIN Uitgever U
+    ON U.ID = P.UitgeverID
+    JOIN Componist C
+    ON C.ID = P.ComponistID
+    '''
+    items = get_items(sql)
+    out = []
+    for item in items:
+        out.append({
+            'Name': item[0],
+            'Nr': item[1],
+            'ID': item[2],
+            'Uitgever': item[3],
+            'Componist': item[4] + ' ' + item[5]
+        })
+    return out
+
+
 def get_scarlatti_k_boeken(k_code):
     sql = '''
       SELECT 
