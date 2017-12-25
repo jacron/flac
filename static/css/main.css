@@ -481,3 +481,23 @@ div[class="pattern"] img {
 .boeken td {
     padding: 3px;
 }
+.pianoboek tr {
+    background-color: #efefef;
+    border-color: #efefef;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+/*.pianoboek td,*/
+/*.pianoboek tr,*/
+.pianoboek table{
+    border-collapse: collapse;
+    border-style: none;
+    /*border-color: #efefef;*/
+}
+.pianoboek tr:nth-child(4n+0),
+.pianoboek tr:nth-child(4n-1){
+    background-color: #eeffff;
+}
+.pianoboek-image td {
+    padding: 13px;
+}

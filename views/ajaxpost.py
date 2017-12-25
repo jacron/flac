@@ -1,7 +1,7 @@
 import urllib
 import os
 
-from flac.services import openpath
+from flac.services import openpath, save_score_fragment
 from flac.services.album_content import get_website
 from flac.services.export import export_albums
 from flac.services.makecuesheet import make_cuesheet, rename_cuesheet, make_subs_cuesheet, split_cued_file, \
@@ -61,6 +61,10 @@ def openwebsite(album_id):
     path = get_website(album['Path'])
     if path:
         openpath(path)
+
+
+def paste_score_fragment(code):
+    save_score_fragment(code)
 
 
 def do_post(post):
@@ -172,3 +176,6 @@ def do_post(post):
         return combine_sub_cuesheets(post['albumid'])
     if cmd == 'normcuesheet':
         return norm_cuesheet(post['id'], post['albumid'])
+
+    if cmd == 'paste_score_fragment':
+        return paste_score_fragment(post['code'])

@@ -26,4 +26,13 @@ $(function () {
             addNewComponist($target);
         }
     });
+    $('.extra .paste-score-pragment').click(function(){
+        code = $(this).attr('code');
+        ajaxPost({
+            cmd: 'paste_score_fragment',
+            code: code
+        }, function(){
+            // document.reload();
+        });
+    });
 });

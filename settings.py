@@ -150,6 +150,7 @@ COMPONIST_PATH = '/Volumes/Media/Audio/Klassiek/Componisten/'
 PERFORMER_PATH = '/Volumes/Media/Audio/Klassiek/Performers/'
 LIBRARYCODE_PATH = '/Volumes/Media/Audio/Klassiek/LibraryCode/'
 COVER_PATH = '/Volumes/Media/tmpscan/{}.jpg'
+SCORE_FRAGMENT_PATH = '/Volumes/Media/Audio/Klassiek/LibraryCode/{}.png'
 TMP_PATH = '/Volumes/Media/tmpscan'
 SKIP_DIRS = ['website', 'websites', 'artwork', 'Artwork', 'etc', 'scans', 'Scans', 'scan',
             'website boxset', '#Booklets', 'Pixels', 'Graphics', 'Info + Art', 'Art',
