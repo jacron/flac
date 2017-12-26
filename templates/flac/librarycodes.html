@@ -3,29 +3,62 @@
 {% load page_tags %}
 {% block title %}{{ page_title }}{% endblock %}
 {% block page %}
-    <form>{% csrf_token %}</form>
-    <h4>{{ page_title }} ({{ items|length }})</h4>
-    {% if scarlatti.ID %}
-    <div>
-        <img src="/image/{{ scarlatti.ID }}/componist/" class="componist-image">
+    <div class="librarycodes">
+        <form>{% csrf_token %}</form>
+        <h4>{{ page_title }} ({{ items|length }})</h4>
+        {% if scarlatti.ID %}
+            <div>
+                <img src="/image/{{ scarlatti.ID }}/componist/"
+                     class="componist-image">
+            </div>
+        {% endif %}
+        <table cellpadding="4">
+            {% for item in items %}
+                <tr>
+                    <td colspan="2">
+                        <a href="{% url 'librarycode' item.k_code librarywild %}">
+                            <img src="/image/{{ item.k_code }}/librarycode/"
+                                 class="librarycode-image">
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="code">
+                        <h4>{{ item.k_code }} - {{ item.Tempo }} - {{ item.Key }}</h4>
+                    </td>
+                    {#            <td class="paste-score-fragment" code="{{ item.k_code }}">#}
+                    {#                plak plaatje {{ item.k_code }}</td>#}
+                </tr>
+                <tr>
+                    <td>
+                        <table>
+                            {% for piece in item.pieces %}
+                                <tr>
+                                    <td class="hyperlink">
+                                        <a onclick="play(this, {{ item.Piece.ID }})">
+                                            {{ piece.Performer.Name }}
+                                            ({{ piece.Instrument.Name }})
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            {% for boek in item.pianoboeken %}
+                                <tr>
+                                    <td class="hyperlink">
+                                        <a href="{% url 'pianoboek' boek.ID %}">
+                                            {{ boek.Name }} ({{ boek.Nr }})
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
     </div>
-    {% endif %}
-    <table cellpadding="4">
-        {% for item in items %}
-            <tr>
-                <td colspan="3">
-                    <img src="/image/{{ item.k_code }}/librarycode/" class="librarycode-image">
-                </td>
-            </tr>
-            <tr>
-                <td class="code">
-                    <a href="{% url 'librarycode' item.k_code librarywild %}">{{ item.k_code }}</a>
-                </td>
-                <td class="tempo">{{ item.Tempo }}</td>
-                <td class="key">{{ item.Key }}</td>
-            <td class="paste-score-fragment" code="{{ item.k_code }}">
-                plak plaatje {{ item.k_code }}</td>
-            </tr>
-        {% endfor %}
-    </table>
 {% endblock %}

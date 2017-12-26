@@ -1140,7 +1140,8 @@ def get_librarycode_boek(k_code):
       SELECT 
         Pianoboek.Name, 
         LibraryCode_Pianoboek.Nr,
-        Uitgever.Name
+        Uitgever.Name,
+        Pianoboek.ID
       FROM LibraryCode_Pianoboek
       JOIN Pianoboek
       ON Pianoboek.ID = LibraryCode_Pianoboek.PianoboekID
@@ -1155,6 +1156,7 @@ def get_librarycode_boek(k_code):
             'Name': item[0],
             'Nr': item[1],
             'Uitgever': item[2],
+            'ID': item[3]
         })
     return out
 

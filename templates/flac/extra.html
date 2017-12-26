@@ -11,16 +11,22 @@
     </form>
         <input class="add-componist-extra" type="text" placeholder="Voeg componist toe">
         <span class="componist-extra-added"></span>
-    <table>
-    </table>
+<h4>clipboard</h4>
 <ul class="hyperlink">
+    <li><a href="{% url 'cmd' 'folder' %}">save clipboard as folder.jpg</a></li>
+    <li><a href="{% url 'cmd' 'back' %}">save clipboard as back.jpg</a></li>
+    <li><a href="{% url 'cmd' 'folderback' %}">save clipboard as folder.jpg and back.jpg</a></li>
+</ul>
+    <h4>extra</h4>
+<ul class="hyperlink">
+    <li><a href="{% url 'pianoboeken' %}">pianoboek</a></li>
     <li><a href="{% url 'cmd' 'scarlatti' %}">Scarlatti Sonates</a></li>
     <li><a href="{% url 'cmd' 'bach' %}">Bach Goldberg</a></li>
     <li><a href="{% url 'librarycodelist' 'k %' %}">Librarycode-lijst K</a></li>
     <li><a href="{% url 'librarycodelist' 'gold %' %}">Librarycode-lijst gold</a></li>
-    <li><a href="{% url 'cmd' 'folder' %}">save clipboard as folder.jpg</a></li>
-    <li><a href="{% url 'cmd' 'back' %}">save clipboard as back.jpg</a></li>
-    <li><a href="{% url 'cmd' 'folderback' %}">save clipboard as folder.jpg and back.jpg</a></li>
+</ul>
+    <h4>onderhoud</h4>
+<ul class="hyperlink">
     <li><a href="{% url 'cmd' 'widows' %}">widows lijst</a></li>
     <li><a href="{% url 'cmd' 'apeflac' %}">ape with flacs</a></li>
     <li><a href="{% url 'cmd' 'missingscore' %}">missing score</a></li>

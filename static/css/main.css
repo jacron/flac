@@ -477,7 +477,7 @@ div[class="pattern"] img {
     color: brown;
 }
 .librarycode-image {
-    max-width: 800px;
+    max-width: 500px;
 }
 .boeken td {
     padding: 3px;
@@ -520,4 +520,7 @@ div[class="pattern"] img {
     width: 300px;
     padding:  3px 0 3px 12px;
     margin: 0 0 12px 12px;
+}
+.librarycodes table td {
+    vertical-align: top;
 }

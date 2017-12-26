@@ -87,7 +87,11 @@ urlpatterns = [
         views.searchq,
         name='query'),
 
-    url(r'^pianoboek/(?P<id>.+)/$', views.pianoboek),
-    url(r'^pianoboek/$', views.pianoboeken),
+    url(r'^pianoboek/(?P<id>.+)/$',
+        views.pianoboek,
+        name='pianoboek'),
+    url(r'^pianoboek/$',
+        views.pianoboeken,
+        name='pianoboeken'),
     url(r'^upload/$', views.uploadalbum),
 ]
