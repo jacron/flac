@@ -1,0 +1,15 @@
+{% extends "flac/base.html" %}
+{% load page_tags %}
+{% block title %}missing scores
+{% endblock %}
+{% block page %}
+    <div class="missing">
+    <h4>missing score images for K codes (Scarlatti) ({{ items|length }})</h4>
+    <form>{% csrf_token %}</form>
+    {% for item in items %}
+        <div class="paste-score-fragment" code="{{ item.0 }}">
+            plak plaatje {{ item.0 }}
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

@@ -19,7 +19,7 @@
                 <tr class="pianoboek-details">
                     <td>{{ item.Nr }}</td>
                     <td class="code">
-                        <a href="/extra/kcode/{{ item.Code }}">{{ item.Code }}</a>
+                        <a href="{% url 'librarycode' item.Code %}">{{ item.Code }}</a>
                     </td>
                     <td class="tempo">{{ item.Tempo }}</td>
                     <td class="key">{{ item.Key }}</td>

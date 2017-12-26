@@ -2,6 +2,7 @@ import os
 
 # from flac.db import (delete_album, )
 from flac.services import get_extension
+from flac.settings import SCORE_FRAGMENT_PATH
 from .connect import connect
 
 
@@ -976,6 +977,27 @@ def get_apeflac_albums():
                 'Path': item[2],
             }
             out.append(it)
+    return out
+
+
+def get_missing_score():
+    sql = '''
+    select DISTINCT LibraryCode from Piece
+    where LibraryCode like 'K %'
+    order by length(LibraryCode), LibraryCode
+    '''
+    conn, c = connect()
+    items = []
+    try:
+        items = c.execute(sql).fetchall()
+    except:
+        print('in db encoding error')
+    conn.close()
+    out = []
+    for item in items:
+        image_path = SCORE_FRAGMENT_PATH.format(item[0])
+        if not os.path.exists(image_path):
+            out.append(item)
     return out
 
 

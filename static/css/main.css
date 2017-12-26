@@ -514,3 +514,10 @@ div[class="pattern"] img {
 .paste-person:hover {
     text-decoration: underline;
 }
+.missing .paste-score-fragment {
+    font-size: 30px;
+    border: 2px solid blue;
+    width: 300px;
+    padding:  3px 0 3px 12px;
+    margin: 0 0 12px 12px;
+}

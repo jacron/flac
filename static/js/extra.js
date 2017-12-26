@@ -35,6 +35,7 @@ $(function () {
             cmd: 'paste_score_fragment',
             code: code
         }, function(){
+            window.open('http://127.0.0.1:8000/librarycode/' + code + '/None/', 'score_proof');
             location.reload();
         });
     });

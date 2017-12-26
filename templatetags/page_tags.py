@@ -39,7 +39,13 @@ def cuesheetlist(cuesheets, valid):
     'tagtemplates/pieceslist.html',
 )
 def pieceslist(pieces):
-    return dict(pieces=pieces)
+    wild = None
+    if len(pieces) and pieces[0].get(2):
+        code = pieces[0].get(2)
+        code_parts = code.split(' ')
+        if len(code_parts) > 1:
+            wild = code_parts[0] + '%'
+    return dict(pieces=pieces, wild=wild)
 
 
 @register.inclusion_tag(

@@ -19,7 +19,7 @@ def librarycode_content(librarycode, librarywild):
     }
 
 
-def one_librarycode(request, librarycode, librarywild):
+def one_librarycode(request, librarycode, librarywild='dummy'):
     template = loader.get_template('flac/librarycode.html')
     content = librarycode_content(librarycode, librarywild)
     return HttpResponse(template.render(content, request))

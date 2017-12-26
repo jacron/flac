@@ -31,11 +31,13 @@
             </td>
             {% if item.2 %}
         <td>
-            <a href="/extra/kcode/{{ item.2 }}">{{ item.2 }}</a>
+            <a href="{% url 'librarycode' item.2 wild %}">{{ item.2 }}</a>
         </td>
-                <td>
-                    <img src="/image/{{ item.2 }}/librarycode/" class="librarycode-image">
-                </td>
+            <td>
+                <img src="/image/{{ item.2 }}/librarycode/" class="librarycode-image">
+            </td>
+            <td class="paste-score-fragment" code="{{ item.2 }}">
+                plak plaatje {{ item.2 }}</td>
         {% endif %}
         </tr>
     {% endfor %}
