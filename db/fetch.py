@@ -168,6 +168,18 @@ sql_mother_albums = '''
     '''
 
 
+def get_next_librarycode(librarycode):
+    if not librarycode : return None
+    items = get_items_with_parameter(sql_librarycode)
+    match = None
+    for item in items:
+        if match:
+            return item[1]
+        if item[1] == librarycode:
+            match = librarycode
+    return None
+
+
 def get_next_album(id_mother, id_album):
     if not id_mother : return None
     # a = 'all'
@@ -203,9 +215,19 @@ def get_next_list_album(id_album, list_name, list_id):
     return None
 
 
+def get_prev_librarycode(librarycode):
+    if not librarycode : return None
+    items = get_items_with_parameter(sql_librarycode, librarycode)
+    match = None
+    for item in items:
+        if match and item[1] == librarycode:
+            return match
+        match = int(item[1])
+    return None
+
+
 def get_prev_album(id_mother, id_album):
     if not id_mother : return None
-    # items = get_items_with_parameter(sql_albums.get('all'), id_mother)
     items = get_items_with_parameter(sql_mother_albums, id_mother)
     match = None
     for item in items:
@@ -992,13 +1014,15 @@ ORDER BY A1.Title COLLATE NOCASE
     return out
 
 
-def get_scarlatti_k_sonatas(k_wild):
-    sql = '''
-      SELECT Code, Tempo, Key
-       FROM LibraryCode
-       WHERE LibraryCode.Code LIKE ?
-      '''
-    items = get_items_with_parameter(sql, k_wild)
+sql_librarycode = '''
+  SELECT Code, Tempo, Key
+   FROM LibraryCode
+   WHERE LibraryCode.Code LIKE ?
+  '''
+
+
+def get_librarycode_sonatas(k_wild):
+    items = get_items_with_parameter(sql_librarycode, k_wild)
     out = []
     for item in items:
         out.append({
@@ -1091,7 +1115,7 @@ def get_pianoboeken():
     return out
 
 
-def get_scarlatti_k_boeken(k_code):
+def get_librarycode_boek(k_code):
     sql = '''
       SELECT 
         Pianoboek.Name, 
@@ -1115,7 +1139,7 @@ def get_scarlatti_k_boeken(k_code):
     return out
 
 
-def get_scarlatti_k_sonata(k_code):
+def get_librarycode_sonata(k_code):
     sql = '''
       SELECT 
         Piece.ID,

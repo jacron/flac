@@ -474,6 +474,7 @@ div[class="pattern"] img {
 }
 .played {
     border: 1px solid blue;
+    color: brown;
 }
 .librarycode-image {
     max-width: 800px;

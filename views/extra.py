@@ -3,8 +3,8 @@ from django.template import loader
 
 from flac.services.clipboard import save_cb_image, save_cb_images
 from ..db import (get_scarlatti_k_pieces, get_scarlatti, get_setting,
-                  toggle_setting, get_widow_albums, get_apeflac_albums, get_scarlatti_k_sonatas, get_scarlatti_k_sonata,
-                  get_scarlatti_k_boeken, get_bach_k_pieces)
+                  toggle_setting, get_widow_albums, get_apeflac_albums,
+                  get_bach_k_pieces, )
 
 
 def extra_view(request, albums=None):
@@ -24,7 +24,7 @@ def extra(request):
 
 
 def list_scarlatti(request):
-    template = loader.get_template('flac/scarlatti_k.html')
+    template = loader.get_template('flac/librarycode_pieces.html')
     return HttpResponse(template.render(
         {
             'items': get_scarlatti_k_pieces(),
@@ -34,7 +34,7 @@ def list_scarlatti(request):
 
 
 def list_bach(request):
-    template = loader.get_template('flac/scarlatti_k.html')
+    template = loader.get_template('flac/librarycode_pieces.html')
     return HttpResponse(template.render(
         {
             'items': get_bach_k_pieces(),
@@ -42,35 +42,11 @@ def list_bach(request):
         }, request))
 
 
-def list_librarycode(request, k_wild):
-    template = loader.get_template('flac/scarlatti_kk.html')
-    return HttpResponse(template.render(
-        {
-            'items': get_scarlatti_k_sonatas(k_wild),
-            'page_title': 'List (' + k_wild + ')',
-        }, request))
-
-
-def k_code(request, k_code):
-    template = loader.get_template('flac/scarlatti_kcode.html')
-    return HttpResponse(template.render(
-        {
-            'pieces': get_scarlatti_k_sonata(k_code),
-            'boeken': get_scarlatti_k_boeken(k_code),
-            'librarycode': k_code,
-            'page_title': 'Scarlatti Sonaten ({})'.format(k_code),
-        }, request))
-
-
 def cmd(request, cmd_code):
-    if cmd_code == 'k':
+    if cmd_code == 'scarlatti':
         return list_scarlatti(request)
-    if cmd_code == 'bg':
+    if cmd_code == 'bach':
         return list_bach(request)
-    if cmd_code == 'kk':
-        return list_librarycode(request, 'K %')
-    if cmd_code == 'bgg':
-        return list_librarycode(request, 'gold %')
     if cmd_code == 'cue':
         toggle_setting('read_cuesheet')
         return extra_view(request)
@@ -91,7 +67,3 @@ def cmd(request, cmd_code):
     if cmd_code == 'apeflac':
         return extra_view(request, get_apeflac_albums())
     return extra_view(request)
-
-
-
-

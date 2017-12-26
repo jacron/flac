@@ -13,15 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
-from . import views
+from django.conf.urls import url, include
+
+# from flac.urls import componist as componist_urls
+from .. import views
 
 urlpatterns = [
+    # url(r'^componist/', include(componist_urls)),
     url(r'^$', views.home),
     url(r'^home/$', views.home),
 
     url(r'^album/(?P<album_id>.+)/delete/$', views.album_delete),
-    url(r'^album/(?P<album_id>.+)/(?P<list_name>.+)/(?P<list_id>.+)/$', views.album_list),
+    url(r'^album/(?P<album_id>.+)/(?P<list_name>.+)/(?P<list_id>.+)/$',
+        views.album_list),
     url(r'^album/(?P<album_id>.+)/$', views.album),
     url(r'^album/$', views.albums),
 
@@ -31,22 +35,39 @@ urlpatterns = [
 
     url(r'^componist/(?P<componist_id>.+)/delete/$', views.componist_delete),
     url(r'^componist/(?P<period>.+)/period/$', views.componisten_period),
-    url(r'^componist/(?P<componist_id>.+)/search/(?P<query>.+)/$', views.componist_search),
+    url(r'^componist/(?P<componist_id>.+)/search/(?P<query>.+)/$',
+        views.componist_search),
     url(r'^componist/(?P<componist_id>.+)/$', views.componist, name='componist'),
     url(r'^componist/$', views.componisten),
 
-    url(r'^tag/(?P<tag_id>.+)/delete/$', views.tag_delete),
-    url(r'^tag/(?P<tag_id>.+)/$', views.tag),
-    url(r'^tag/$', views.tags),
+    url(r'^tag/(?P<tag_id>.+)/delete/$',
+        views.tag_delete),
+    url(r'^tag/(?P<tag_id>.+)/$',
+        views.tag),
+    url(r'^tag/$',
+        views.tags),
 
-    url(r'^instrument/(?P<instrument_id>.+)/delete/(?P<query>.+)/$', views.instrument_delete),
-    url(r'^instrument/(?P<instrument_id>.+)/search/(?P<query>.+)/$', views.instrument_search),
-    url(r'^instrument/(?P<instrument_id>.+)/$', views.instrument),
-    url(r'^instrument/$', views.instrumenten),
+    url(r'^instrument/(?P<instrument_id>.+)/delete/(?P<query>.+)/$',
+        views.instrument_delete),
+    url(r'^instrument/(?P<instrument_id>.+)/search/(?P<query>.+)/$',
+        views.instrument_search),
+    url(r'^instrument/(?P<instrument_id>.+)/$',
+        views.instrument),
+    url(r'^instrument/$',
+        views.instrumenten),
 
-    url(r'^extra/$', views.extra),
-    url(r'^extra/kcode/(?P<k_code>.+)/$', views.k_code, name='kcode'),
-    url(r'^extra/(?P<cmd_code>.+)/$', views.cmd, name='cmd'),
+    url(r'^extra/$',
+        views.extra),
+    url(r'^extra/(?P<cmd_code>.+)/$',
+        views.cmd,
+        name='cmd'),
+
+    url(r'^librarycode/code/(?P<librarycode>.+)/$',
+        views.one_librarycode,
+        name='librarycode'),
+    url(r'^librarycode/(?P<librarycode>.+)/$',
+        views.list_librarycode,
+        name='librarycodelist'),
 
     url(r'^collection/(?P<query>.+)/search$', views.collections_search),
     url(r'^collection/$', views.collections),
@@ -59,7 +80,9 @@ urlpatterns = [
     url(r'^imageback/(?P<id>.+)/(?P<type>.+)/$', views.imageback),
 
     url(r'^search/$', views.search),
-    url(r'^search/(?P<query>.+)$', views.searchq, name='query'),
+    url(r'^search/(?P<query>.+)$',
+        views.searchq,
+        name='query'),
 
     url(r'^pianoboek/(?P<id>.+)/$', views.pianoboek),
     url(r'^pianoboek/$', views.pianoboeken),
