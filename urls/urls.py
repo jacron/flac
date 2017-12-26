@@ -62,12 +62,12 @@ urlpatterns = [
         views.cmd,
         name='cmd'),
 
-    url(r'^librarycode/code/(?P<librarycode>.+)/$',
-        views.one_librarycode,
-        name='librarycode'),
-    url(r'^librarycode/(?P<librarycode>.+)/$',
+    url(r'^librarycode/list/(?P<librarywild>.+)/$',
         views.list_librarycode,
         name='librarycodelist'),
+    url(r'^librarycode/(?P<librarycode>.+)/(?P<librarywild>.+)/$',
+        views.one_librarycode,
+        name='librarycode'),
 
     url(r'^collection/(?P<query>.+)/search$', views.collections_search),
     url(r'^collection/$', views.collections),

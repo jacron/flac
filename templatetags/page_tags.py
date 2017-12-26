@@ -51,6 +51,14 @@ def pages(prev_id, next_id, list_title, list_name, list_id):
 
 
 @register.inclusion_tag(
+    'tagtemplates/cpages.html',
+)
+def cpages(prev_id, next_id, list_title, wild):
+    return dict(prev_id=prev_id, next_id=next_id, list_title=list_title,
+                wild=wild)
+
+
+@register.inclusion_tag(
     'tagtemplates/album_instrument_list.html',
 )
 def album_instrument_list(album_instrument):

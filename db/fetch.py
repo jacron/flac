@@ -168,22 +168,20 @@ sql_mother_albums = '''
     '''
 
 
-def get_next_librarycode(librarycode):
+def get_next_librarycode(librarycode, librarywild):
     if not librarycode : return None
-    items = get_items_with_parameter(sql_librarycode)
+    items = get_items_with_parameter(sql_librarycode, librarywild)
     match = None
     for item in items:
         if match:
-            return item[1]
-        if item[1] == librarycode:
+            return item[0]
+        if item[0] == librarycode:
             match = librarycode
     return None
 
 
 def get_next_album(id_mother, id_album):
     if not id_mother : return None
-    # a = 'all'
-    # sql = sql_albums[a]
     items = get_items_with_parameter(sql_mother_albums, id_mother)
     match = None
     for item in items:
@@ -215,14 +213,14 @@ def get_next_list_album(id_album, list_name, list_id):
     return None
 
 
-def get_prev_librarycode(librarycode):
+def get_prev_librarycode(librarycode, librarywild):
     if not librarycode : return None
-    items = get_items_with_parameter(sql_librarycode, librarycode)
+    items = get_items_with_parameter(sql_librarycode, librarywild)
     match = None
     for item in items:
-        if match and item[1] == librarycode:
+        if match and item[0] == librarycode:
             return match
-        match = int(item[1])
+        match = item[0]
     return None
 
 

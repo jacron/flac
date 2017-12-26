@@ -5,6 +5,7 @@
 {% block page %}
     <form>{% csrf_token %}</form>
     <h4>{{ page_title }} ({{ pieces|length }})</h4>
+    {% cpages prev_id next_id 'librarycode' wild %}
     <table class="boeken">
     {% for boek in boeken %}
         <tr>
