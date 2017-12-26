@@ -3,8 +3,11 @@
         <li class="hyperlink">
         <div class="image-container">
             {% if not item.has_image %}
-                            <a target="_blank"
-               href="https://google.nl/search?q={{ item.FullName }}">&nbsp;<i>google</i></a>
+                <a target="_blank"
+                   href="https://google.nl/search?q={{ item.FullName }}">
+                    &nbsp;<i>google</i></a>
+                <a class="paste-person" id="{{ item.ID }}" type="componist">
+                    <i>plak</i></a>
             {% endif %}
             <a href="/componist/{{ item.ID }}">
             {% if item.has_image %}

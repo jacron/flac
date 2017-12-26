@@ -507,3 +507,9 @@ div[class="pattern"] img {
 .paste-score-fragment:hover {
     text-decoration: underline;
 }
+.paste-person {
+    cursor: pointer;
+}
+.paste-person:hover {
+    text-decoration: underline;
+}

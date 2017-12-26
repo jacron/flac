@@ -2,13 +2,16 @@ import os
 from ..db import (get_album,
                   add_path_to_componist, add_path_to_performer,
                   get_performer, get_componist,
-                  )
+                  ColorPrint)
 from . import (syspath_performer, syspath_componist, COMPONIST_PATH, )
 
 
 def create_componist_path(componist_id):
     componist = get_componist(componist_id)
-    path = componist['Path']
+    if not componist:
+        ColorPrint.print_c('{} has no componist'.format(componist_id), ColorPrint.RED)
+        return None
+    path = componist.get('Path')
     if path is None or len(path) == 0:
         path = syspath_componist(componist).encode('utf-8')
         if not os.path.exists(path):

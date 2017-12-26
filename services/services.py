@@ -1,5 +1,6 @@
 import os
 
+from flac.lib.color import ColorPrint
 from flac.settings import COMPONIST_PATH, PERFORMER_PATH
 
 
@@ -89,7 +90,12 @@ def splits_years(years):
 
 
 def syspath_componist(componist):
-    path = u'{}{}'.format(COMPONIST_PATH, componist['LastName'])
+    name = componist.get('LastName')
+    path = None
+    if name:
+        path = u'{}{}'.format(COMPONIST_PATH, componist['LastName'])
+    else:
+        ColorPrint.print_c('{} has no last name'.format(componist), ColorPrint.RED)
     return path
 
 

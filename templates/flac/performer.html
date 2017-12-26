@@ -9,14 +9,18 @@
             {% csrf_token %}
             <input type="hidden" id="performer_id" value="{{ performer.ID }}">
         </form>
-        <div class="w3-col m2 5">
+        <div>
             <span class="hyperlink btn">
                 <a onclick="openfinder('{{ performer.ID }}', 'performer')">open finder</a>
             </span> |
             <span>
             <a target="_blank"
-               href="https://google.nl/search?q={{ performer.FullName }}">google</a>
-        </span>
+               href="https://google.nl/search?q={{ performer.FullName }}"><i>google</i></a>
+            </span> |
+            <span>
+                <a class="paste-person" id="{{ performer.ID }}" type="performer">
+            <i>plak</i></a>
+            </span>
             <div id="drop-area-performer">
                 <h4>
         <span contenteditable="true" name="title"

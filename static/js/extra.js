@@ -1,3 +1,6 @@
+'use strict';
+
+
 /**
  * Created by orion on 28/10/2017.
  */
@@ -27,7 +30,7 @@ $(function () {
         }
     });
     $('.paste-score-fragment').click(function(){
-        code = $(this).attr('code');
+        var code = $(this).attr('code');
         ajaxPost({
             cmd: 'paste_score_fragment',
             code: code

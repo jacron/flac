@@ -2,7 +2,10 @@ from flac.lib.color import ColorPrint
 from PIL import ImageGrab
 
 from flac.services import openpath
-from flac.settings import COVER_PATH, TMP_PATH, SCORE_FRAGMENT_PATH
+from flac.services.path import create_componist_path, create_performer_path
+from flac.settings import COVER_PATH, TMP_PATH, SCORE_FRAGMENT_PATH, PERSON_FILE
+from ..db import get_componist_path, get_performer_path
+import os
 
 rug = 0
 
@@ -11,6 +14,29 @@ def save_score_fragment(code):
     img = ImageGrab.grabclipboard()
     if img:
         img.save(SCORE_FRAGMENT_PATH.format(code))
+
+
+def get_person_image_path(id, type):
+    image_path = None
+    if type == 'componist':
+        image_path = create_componist_path(id)
+    if type == 'performer':
+        image_path = create_performer_path(id)
+    return image_path
+
+
+def save_person(id, type):
+    img = ImageGrab.grabclipboard()
+    if img:
+        image_path = get_person_image_path(id, type)
+        if image_path:
+            img.save(image_path + PERSON_FILE)
+            return True
+        else:
+            ColorPrint.print_c('no valid path for this person', ColorPrint.RED)
+    else:
+        ColorPrint.print_c('no valid image on clipboard', ColorPrint.RED)
+    return False
 
 
 def crop_front(img):

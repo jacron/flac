@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
 
-from flac.services import save_cb_image, save_cb_images
+from flac.services.clipboard import save_cb_image, save_cb_images
 from ..db import (get_scarlatti_k_pieces, get_scarlatti, get_setting,
                   toggle_setting, get_widow_albums, get_apeflac_albums, get_scarlatti_k_sonatas, get_scarlatti_k_sonata,
                   get_scarlatti_k_boeken, get_bach_k_pieces)

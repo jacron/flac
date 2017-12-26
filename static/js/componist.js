@@ -84,6 +84,19 @@ function saveInputYears($input, cmd, person_id) {
     });
 }
 
+function pastePerson($this) {
+    var id = $this.attr('id'),
+        type = $this.attr('type');
+    // console.log(id, type);
+    ajaxPost({
+        cmd: 'paste_person',
+        id: id,
+        type: type
+    }, function(){
+        location.reload();
+    });
+}
+
 $(function () {
     // componist
     $('button.select-componist').click(function () {
@@ -120,6 +133,9 @@ $(function () {
     });
     $('.componist .remove').click(function () {
         removeComponist($(this));
+    });
+    $('.paste-person').click(function(){
+        pastePerson($(this));
     });
     const componist_id = $('#componist_id').val();
     if (componist_id) {

@@ -715,7 +715,10 @@ def get_componist_path(id_componist):
     SELECT Path 
     FROM Componist WHERE ID=?
     '''
-    return get_item_with_id(sql, id_componist)[0]
+    item = get_item_with_id(sql, id_componist)
+    if item:
+        return item[0]
+    return None
 
 
 def add_to_where(where_sql, cql):

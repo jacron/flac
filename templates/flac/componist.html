@@ -13,16 +13,21 @@
             <span class="hyperlink btn">
                 <a onclick="openfinder('{{ componist.ID }}', 'componist')">open finder</a>
             </span> |
-            <span>
-                <a target="_blank"
-                   href="https://google.nl/search?q={{ componist.FullName }}">google</a>
-            </span> |
             <span class="hyperlink btn">
                 <a onclick="exportAlbums('{{ componist.ID }}', 'componist')">export</a>
             </span> |
-        <span>
-            <input class="search-inside-componist" placeholder="Zoek" value="{{ query }}">
-        </span>
+            <span>
+                <a target="_blank"
+                   href="https://google.nl/search?q={{ componist.FullName }}">
+                    <i>google</i></a>
+            </span> |
+            <span>
+                    <a class="paste-person" id="{{ componist.ID }}" type="componist">
+            <i>plak</i></a>
+            </span> |
+            <span>
+                <input class="search-inside-componist" placeholder="Zoek" value="{{ query }}">
+            </span>
             <div id="drop-area-componist">
                 <h4>
                     <span contenteditable="true" name="title"
