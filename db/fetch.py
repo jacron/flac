@@ -744,11 +744,23 @@ def get_componist_path(id_componist):
     return None
 
 
-def add_to_where(where_sql, cql):
+def add_to_where(where_sql, cql, parameter_list, parameters):
     if len(where_sql) == 0:
         where_sql = 'WHERE '
     else:
         where_sql += ' AND '
+    list = parameter_list.split(',')
+    if len(list) == 1:
+        cql = cql.format('?')
+        parameters.append(parameter_list)
+    else:
+        placeholders = ''
+        for arg in list:
+            if len(placeholders):
+                placeholders += ','
+            placeholders += '?'
+            parameters.append(arg)
+        cql = cql.format(placeholders)
     where_sql += cql
     return where_sql
 
@@ -757,8 +769,6 @@ def get_albums_by_cql(cql):
     """
     our semi query language contains id's for several elements
     these id's can be multiple, comma-seperated values
-    to handle these, a not so nice solution is used here
-    i.e. without the safeguard of placeholder parameters
     :param cql: dict
     :return: albums in groups (mother- and children albums)
     """
@@ -772,29 +782,33 @@ def get_albums_by_cql(cql):
         '''
         where_sql = add_to_where(
             where_sql,
-            'Componist_Album.ComponistID IN ({})'.format(cql.get('componist')))
-        # parameters.append(cql.get('componist'))
+            'Componist_Album.ComponistID IN ({})',
+            cql.get('componist'),
+            parameters
+        )
     if cql.get('performer'):
         sql += '''
             JOIN Performer_Album ON Performer_Album.AlbumID = Album.ID
         '''
         where_sql = add_to_where(
             where_sql,
-            'Performer_Album.PerformerID IN ({})'.format(cql.get('performer')))
-        # parameters.append(cql.get('performer'))
+            'Performer_Album.PerformerID IN ({})',
+            cql.get('performer'),
+            parameters)
     if cql.get('tag'):
         sql += '''
             JOIN Tag_Album ON Tag_Album.AlbumID = Album.ID
         '''
         where_sql = add_to_where(
             where_sql,
-            'Tag_Album.TagID IN ({})'.format(cql.get('tag')))
-        # parameters.append(cql.get('tag'))
+            'Tag_Album.TagID IN ({})',
+            cql.get('tag'), parameters)
     if cql.get('instrument'):
         where_sql = add_to_where(
             where_sql,
-            'Album.InstrumentID IN ({})'.format(cql.get('instrument')))
-        # parameters.append(cql.get('instrument'))
+            'Album.InstrumentID IN ({})',
+            cql.get('instrument'),
+            parameters)
     # prevent returning all our thousands of albums
     if len(where_sql):
         sql = '''
