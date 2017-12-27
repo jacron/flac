@@ -803,7 +803,7 @@ def get_albums_by_cql(cql):
                 Album.AlbumID,
                 Album.ID
             FROM Album
-        ''' + where_sql
+        ''' + sql + where_sql
         sql += '''
         ORDER BY Album.Title COLLATE NOCASE
         '''
@@ -813,6 +813,7 @@ def get_albums_by_cql(cql):
             items = c.execute(sql, parameters).fetchall()
         except:
             print('in db encoding error')
+            print sql
         conn.close()
         named_items = named_albums_with_mother(items)
         grouped_items = filter_contained_children(named_items)

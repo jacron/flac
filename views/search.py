@@ -18,6 +18,12 @@ def searchq(request, query):
 
 
 def get_item_name(request, type):
+    """
+    todo: adapt for comma seperated id-lists
+    :param request:
+    :param type:
+    :return:
+    """
     if request.GET.get(type):
         type_id = request.GET.get(type)
         if type == 'componist':
