@@ -5,7 +5,7 @@ from flac.db import get_albums_by_title, get_albums_by_cql, get_componist, get_p
 
 
 def searchresponse(context, request):
-    template = loader.get_template('flac/searchq.html')
+    template = loader.get_template('flac/search.html')
     return HttpResponse(template.render(context, request))
 
 

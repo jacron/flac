@@ -36,33 +36,6 @@ function typeaheadPost(name, cmd) {
     location.reload();
 }
 
-function query() {
-    var q = '';
-    const qComponist = $('.search .componist .typeahead.tt-input').val(),
-        qTag = $('.search .tag .typeahead.tt-input').val(),
-        qPerformer = $('.search .performer .typeahead.tt-input').val(),
-        qInstrument = $('.search .instrument .typeahead.tt-input').val();
-    console.log(qComponist);
-    if (qComponist.length) {
-        q = 'componist=' + getId(qComponist);
-    }
-    if (qPerformer.length) {
-        if (q.length) { q += '&';}
-        q += 'performer=' + getId(qPerformer);
-    }
-    if (qTag.length) {
-        if (q.length) { q += '&';}
-        q += 'tag=' + getId(qTag);
-    }
-    if (qInstrument.length) {
-        if (q.length) { q += '&';}
-        q += 'instrument=' + getId(qInstrument);
-    }
-    if (q.length) { q = '?' + q;}
-    // console.log(q);
-    document.location.href = '/search' + q;
-}
-
 function impl_typeahead(items, $typeahead) {
     const $typeahead = $('.upload-controls .' + type + ' .typeahead');
     $typeahead.typeahead(typeaheadSettings,
@@ -72,36 +45,6 @@ function impl_typeahead(items, $typeahead) {
             $typeahead.val('');
         }
     });
-}
-
-function impl_query_typeahead(items, type) {
-    const $typeahead = $('.upload-controls .' + type + ' .typeahead');
-    $typeahead.typeahead(typeaheadSettings,
-        { source: match(items) }
-    ).keydown(function(e){
-        if (e.key === 'Enter') {
-            // console.log(getId($typeahead.val()));
-            // $('.search input[name=' + type + ']').val(getId($typeahead.val()))
-        }
-        if (e.key === 'Escape') {
-            $typeahead.val('');
-        }
-    });
-}
-
-function prepareQuery() {
-    const types = ['componist', 'performer', 'tag', 'instrument'];
-    types.forEach(function(type) {
-        var $typeahead = $('.upload-controls .' + type + ' .typeahead.tt-input');
-        // console.log($typeahead.val());
-        $('.search input[name=' + type + ']').val(getId($typeahead.val()))
-    });
-}
-
-function clearSearch($this) {
-    const $li = $this.parent('li').first();
-    // console.log($li);
-    $li.find('.typeahead.tt-input').val('');
 }
 
 function typeAheadAlbumItems(cmdGet, nameField, $typeahead, cmdPost) {
@@ -138,18 +81,6 @@ function typeAheadUpload(cmdGet, nameField, type) {
             items.push(item[nameField] + '_' + item.ID);
         });
         impl_typeahead(items, type);
-    });
-}
-
-function typeAheadSearch(cmdGet, nameField, type) {
-    ajaxGet({
-        cmd: cmdGet
-    }, function(response){
-        var items = [];
-        response.forEach(function(item) {
-            items.push(item[nameField] + '_' + item.ID);
-        });
-        impl_query_typeahead(items, type);
     });
 }
 
@@ -214,11 +145,6 @@ var albums = new Bloodhound({
 
 var albumIds = [];
 
-function getId(s) {
-    var pos = s.lastIndexOf('_');
-    return s.substr(pos + 1);
-}
-
 function generalSearch($typeahead) {
     $typeahead.typeahead(
         typeaheadSettings,
@@ -274,23 +200,28 @@ $(function () {
         typeAheadUpload('componisten', 'FullName', 'componist');
         typeAheadUpload('tags', 'Name', 'tag');
     }
-    if ($('.search').length) {
-        // functions for the search page
-        typeAheadSearch('instruments', 'Name', 'instrument');
-        typeAheadSearch('performers', 'FullName', 'performer');
-        typeAheadSearch('componisten', 'FullName', 'componist');
-        typeAheadSearch('tags', 'Name', 'tag');
-        $('.do-search').click(function() {
-            query();
-        });
-        $('.search input[type=submit]').click(function() {
-            prepareQuery();
-            return true;
-        });
-        $('.search .clear').click(function(){
-            clearSearch($(this));
-        });
-    }
+    $('.search-title').keydown(function(e){
+        if (e.key === 'Enter') {
+            location.href = '/search/' + $(this).val();
+        }
+    });
+    $('.search-inside-componist').keydown(function(e){
+        if (e.key === 'Enter') {
+            location.href = '/componist/' + $('#componist_id').val() + '/search/' +
+                $(this).val() + '/';
+        }
+    });
+    $('.search-inside-collection').keydown(function(e){
+        if (e.key === 'Enter') {
+            location.href = '/collection/' + $(this).val() + '/search';
+        }
+    });
+    $('.search-inside-instrument').keydown(function(e){
+        if (e.key === 'Enter') {
+            location.href = '/instrument/' + $('#instrument_id').val() + '/search/' + $(this).val();
+        }
+    });
+
 });
 
 
