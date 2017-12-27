@@ -26,6 +26,7 @@ Cuesheets ({{ cuesheets | length }})
         <li class="cue-header">
             {% if cuesheet.Title %}
             <span>{{ cuesheet.Title|unescape }}</span>
+                <span>&lt;{{ cuesheet.Code }}&gt;</span>
             {% endif %}
             <span class="cue-plus-container">
                 <span class="cue-plus" title="bewaar als albumtitel">
@@ -37,7 +38,9 @@ Cuesheets ({{ cuesheets | length }})
                 <span class="cue-edit" id="{{ cuesheet.ID }}" title="bewerk cuesheet in sublime">
                     bewerk</span> |
                 <span class="cue-norm" id="{{ cuesheet.ID }}" title="normaliseer de titels van delen in de cuesheet">
-                    normaliseer</span>
+                    normaliseer</span> |
+                <span class="add-code" id="{{ cuesheet.ID }}" title="Voeg librarycode toe">
+                    code</span>
             </span>
         </li>
         {%  if cuesheet.cue.performer %}

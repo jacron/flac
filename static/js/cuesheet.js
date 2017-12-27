@@ -184,6 +184,19 @@ function afterPostMake($makeCuesheet, $typeahead) {
 }
 
 $(function () {
+    function addCode($this) {
+        console.log($this.attr('id'));
+        const code = prompt('Code');
+        console.log(code);
+        ajaxPost({
+            cmd: 'add_code',
+            id: $this.attr('id'),
+            code: code
+        }, function() {
+
+        });
+    }
+
     const albumId = $('#album_id').val();
     if (albumId) {
         // functions for the single album page
@@ -226,6 +239,9 @@ $(function () {
         });
         $('.stukken .check-nothing').click(function () {
             cuesheetIds = selectCheckboxes($selectForCuesheet, $makeCuesheet, false);
+        });
+        $('.add-code').click(function() {
+            addCode($(this));
         });
     }
 });

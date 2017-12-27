@@ -36,6 +36,7 @@ def organize_pieces(album_id, album_path):
                     if has_notfound_files(cuesheet, album_path):
                         invalidcues.append(cuesheet)
                     else:
+                        cuesheet['Code'] = item[2]
                         cuesheets.append(cuesheet)
                 else:
                     pieces.append(item)

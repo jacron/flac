@@ -17,10 +17,14 @@
     <li><a href="{% url 'cmd' 'back' %}">save clipboard as back.jpg</a></li>
     <li><a href="{% url 'cmd' 'folderback' %}">save clipboard as folder.jpg and back.jpg</a></li>
 </ul>
+    <h4>code</h4>
+<ul>
+    {% for code in codes %}
+        <li><a href="{% url 'librarycodelist' code.Wildcard %}">{{ code.Description }}</a></li>
+    {% endfor %}
+</ul>
     <h4>extra</h4>
 <ul class="hyperlink">
-    <li><a href="{% url 'librarycodelist' 'k %' %}">Librarycode-lijst K</a></li>
-    <li><a href="{% url 'librarycodelist' 'gold %' %}">Librarycode-lijst gold</a></li>
     <li><a href="{% url 'pianoboeken' %}">pianoboek</a></li>
     <li><a href="{% url 'cmd' 'scarlatti' %}">Scarlatti Sonates</a></li>
     <li><a href="{% url 'cmd' 'bach' %}">Bach Goldberg</a></li>

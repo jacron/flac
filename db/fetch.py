@@ -835,6 +835,22 @@ def get_albums_by_cql(cql):
     return {}
 
 
+def get_codes():
+    sql = '''
+    SELECT LibraryCode, Explanation
+    FROM Librarycode_Explanation
+    '''
+    items = get_items(sql)
+    out = []
+    for item in items:
+        out.append({
+            'Code': item[0],
+            'Description': item[1],
+            'Wildcard': item[0] + ' %',
+        })
+    return out
+
+
 def get_componist(id_componist):
     sql = '''
     SELECT FirstName, LastName, Birth, Death, Path, ID 

@@ -8,8 +8,10 @@ from flac.services.export import export_albums
 from flac.services.makecuesheet import make_cuesheet, rename_cuesheet, make_subs_cuesheet, split_cued_file, \
     edit_cuesheet, combine_sub_cuesheets, norm_cuesheet
 from flac.services.path import get_path, path_from_id_field
-from ..db import (abs_insert_componist, update_componistbirth, update_componistdeath, update_performerbirth,
-                  update_performerdeath, adjust_kk, inherit_elements, read_albums)
+from ..db import (abs_insert_componist, update_componistbirth,
+                  update_componistdeath, update_performerbirth,
+                  update_performerdeath, adjust_kk, inherit_elements,
+                  read_albums, update_piece_library_code)
 from flac.db.pieces import refetch_pieces
 from ..db import (
     get_album, get_piece, update_album_title, add_tag_to_album,
@@ -70,6 +72,10 @@ def paste_score_fragment(code):
 
 def paste_person(id, type):
     return save_person(id, type)
+
+
+def add_code(piece_id, librarycode):
+    update_piece_library_code(piece_id, librarycode)
 
 
 def do_post(post):
@@ -181,6 +187,8 @@ def do_post(post):
         return combine_sub_cuesheets(post['albumid'])
     if cmd == 'normcuesheet':
         return norm_cuesheet(post['id'], post['albumid'])
+    if cmd == 'add_code':
+        return add_code(post['id'], post['code'])
 
     if cmd == 'paste_score_fragment':
         return paste_score_fragment(post['code'])

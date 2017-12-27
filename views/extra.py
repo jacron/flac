@@ -4,18 +4,20 @@ from django.template import loader
 from flac.services.clipboard import save_cb_image, save_cb_images
 from ..db import (get_scarlatti_k_pieces, get_scarlatti, get_setting,
                   toggle_setting, get_widow_albums, get_apeflac_albums,
-                  get_bach_k_pieces, )
+                  get_bach_k_pieces, get_codes)
 
 
 def extra_view(request, albums=None):
     template = loader.get_template('flac/extra.html')
     rc = get_setting('read_cuesheet')
     sp = get_setting('show_proposals')
+    codes = get_codes()
     return HttpResponse(template.render(
         {
             'read_cuesheet': rc['VALUE'],
             'show_proposals': sp['VALUE'],
             'albums': albums,
+            'codes': codes,
         }, request))
 
 
