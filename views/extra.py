@@ -4,7 +4,7 @@ from django.template import loader
 from flac.services.clipboard import save_cb_image, save_cb_images
 from ..db import (get_scarlatti_k_pieces, get_scarlatti, get_setting,
                   toggle_setting, get_widow_albums, get_apeflac_albums,
-                  get_bach_k_pieces, get_missing_score)
+                  get_bach_k_pieces, )
 
 
 def extra_view(request, albums=None):
@@ -42,12 +42,12 @@ def list_bach(request):
         }, request))
 
 
-def missing_score(request):
-    template = loader.get_template('flac/missing.html')
-    missing = get_missing_score()
-    return HttpResponse(template.render(
-        {'items': missing}, request
-    ))
+# def missing_score(request):
+#     template = loader.get_template('flac/missing.html')
+#     missing = get_missing_score()
+#     return HttpResponse(template.render(
+#         {'items': missing}, request
+#     ))
 
 def cmd(request, cmd_code):
     if cmd_code == 'scarlatti':
@@ -73,6 +73,6 @@ def cmd(request, cmd_code):
         return extra_view(request, get_widow_albums())
     if cmd_code == 'apeflac':
         return extra_view(request, get_apeflac_albums())
-    if cmd_code == 'missingscore':
-        return missing_score(request)
+    # if cmd_code == 'missingscore':
+    #     return missing_score(request)
     return extra_view(request)

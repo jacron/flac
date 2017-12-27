@@ -12,7 +12,6 @@ def librarycode_content(librarycode, librarywild):
         'pieces': get_librarycode_sonata(librarycode),
         'boeken': get_librarycode_boek(librarycode),
         'librarycode': librarycode,
-        'page_title': 'Scarlatti Sonaten ({})'.format(librarycode),
         'prev_id': prev_id,
         'next_id': next_id,
         'wild': librarywild,
@@ -39,7 +38,7 @@ def list_librarycode(request, librarywild):
     return HttpResponse(template.render(
         {
             'items': items,
-            'page_title': 'List (' + librarywild + ')',
+            'page_title': 'LibrayCodes (' + librarywild + ')',
             'librarywild': librarywild
         }, request))
 

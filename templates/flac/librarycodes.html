@@ -6,19 +6,13 @@
     <div class="librarycodes">
         <form>{% csrf_token %}</form>
         <h4>{{ page_title }} ({{ items|length }})</h4>
-        {% if scarlatti.ID %}
-            <div>
-                <img src="/image/{{ scarlatti.ID }}/componist/"
-                     class="componist-image">
-            </div>
-        {% endif %}
         <table cellpadding="4">
             {% for item in items %}
                 <tr>
                     <td colspan="2">
                         <a href="{% url 'librarycode' item.k_code librarywild %}">
-                            <img src="/image/{{ item.k_code }}/librarycode/"
-                                 class="librarycode-image">
+                            <img data-src="/image/{{ item.k_code }}/librarycode/"
+                                 class="lazy librarycode-image">
                         </a>
                     </td>
                 </tr>
@@ -35,9 +29,14 @@
                             {% for piece in item.pieces %}
                                 <tr>
                                     <td class="hyperlink">
-                                        <a onclick="play(this, {{ item.Piece.ID }})">
+                                        <a onclick="play(this, {{ item.Piece.ID }})"
+                                        title="Afspelen">
                                             {{ piece.Performer.Name }}
                                             ({{ piece.Instrument.Name }})
+                                        </a> -
+                                        <a href="{% url 'album' piece.Album.ID %}"
+                                        title="{{ piece.Album.Title }}">
+                                            album
                                         </a>
                                     </td>
                                 </tr>

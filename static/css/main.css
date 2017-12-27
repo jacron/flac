@@ -521,6 +521,9 @@ div[class="pattern"] img {
     padding:  3px 0 3px 12px;
     margin: 0 0 12px 12px;
 }
+.missing .paste-score-fragment:hover {
+    background-color: #aaffff;
+}
 .librarycodes table td {
     vertical-align: top;
 }

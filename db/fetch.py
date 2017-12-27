@@ -2,21 +2,21 @@ import os
 
 # from flac.db import (delete_album, )
 from flac.services import get_extension
-from flac.settings import SCORE_FRAGMENT_PATH
+# from flac.settings import SCORE_FRAGMENT_PATH
 from .connect import connect
 
 
-def make_fullname(FirstName, LastName):
-    if not FirstName or len(FirstName) == 0:
-        return LastName
-    return u'{} {}'.format(FirstName, LastName)
+def make_fullname(first_name, last_name):
+    if not first_name or len(first_name) == 0:
+        return last_name
+    return u'{} {}'.format(first_name, last_name)
 
 
 def get_items_with_parameter(sql, oid):
     conn, c = connect()
     items = []
     try:
-        items = [item for item in c.execute(sql, (oid,)).fetchall()]
+        items = c.execute(sql, (oid,)).fetchall()
     except:
         print('in db encoding error')
     conn.close()
@@ -27,7 +27,7 @@ def get_items_with_2parameter(sql, a, b):
     conn, c = connect()
     items = []
     try:
-        items = [item for item in c.execute(sql, (a, b, )).fetchall()]
+        items = c.execute(sql, (a, b, )).fetchall()
     except:
         print('in db encoding error')
     conn.close()
@@ -36,7 +36,8 @@ def get_items_with_2parameter(sql, a, b):
 
 def get_items(sql):
     conn, c = connect()
-    items = [item for item in c.execute(sql).fetchall()]
+    # items = [item for item in c.execute(sql).fetchall()]
+    items = c.execute(sql).fetchall()
     conn.close()
     return items
 
@@ -327,7 +328,8 @@ def get_gatherers():
 
 def get_pieces(album_id):
     sql = '''
-      SELECT Name, ID, LibraryCode FROM Piece 
+      SELECT Name, ID, LibraryCode 
+      FROM Piece 
       WHERE AlbumID=?
       ORDER BY Name
     '''
@@ -402,7 +404,7 @@ def get_general_search(query):
     sql = '''
       SELECT Title, ID
       FROM Album
-      WHERE Album.Title LIKE ?
+      WHERE Title LIKE ?
       LIMIT 10
     '''
     items = get_items_with_parameter(sql, '%' + query + '%')
@@ -980,25 +982,25 @@ def get_apeflac_albums():
     return out
 
 
-def get_missing_score():
-    sql = '''
-    select DISTINCT LibraryCode from Piece
-    where LibraryCode like 'K %'
-    order by length(LibraryCode), LibraryCode
-    '''
-    conn, c = connect()
-    items = []
-    try:
-        items = c.execute(sql).fetchall()
-    except:
-        print('in db encoding error')
-    conn.close()
-    out = []
-    for item in items:
-        image_path = SCORE_FRAGMENT_PATH.format(item[0])
-        if not os.path.exists(image_path):
-            out.append(item)
-    return out
+# def get_missing_score():
+#     sql = '''
+#     select DISTINCT LibraryCode from Piece
+#     where LibraryCode like 'K %'
+#     order by length(LibraryCode), LibraryCode
+#     '''
+#     conn, c = connect()
+#     items = []
+#     try:
+#         items = c.execute(sql).fetchall()
+#     except:
+#         print('in db encoding error')
+#     conn.close()
+#     out = []
+#     for item in items:
+#         image_path = SCORE_FRAGMENT_PATH.format(item[0])
+#         if not os.path.exists(image_path):
+#             out.append(item)
+#     return out
 
 
 def get_widow_albums():
@@ -1183,6 +1185,7 @@ def get_librarycode_sonata(k_code):
        JOIN Instrument
        ON Album.InstrumentID = Instrument.ID
           WHERE Piece.LibraryCode=?
+      ORDER BY Instrument.Name
       '''
     items = get_items_with_parameter(sql, k_code)
     out = []

@@ -23,11 +23,15 @@ urlpatterns = [
     url(r'^$', views.home),
     url(r'^home/$', views.home),
 
-    url(r'^album/(?P<album_id>.+)/delete/$', views.album_delete),
+    url(r'^album/(?P<album_id>.+)/delete/$',
+        views.album_delete),
     url(r'^album/(?P<album_id>.+)/(?P<list_name>.+)/(?P<list_id>.+)/$',
         views.album_list),
-    url(r'^album/(?P<album_id>.+)/$', views.album),
-    url(r'^album/$', views.albums),
+    url(r'^album/(?P<album_id>.+)/$',
+        views.album,
+        name='album'),
+    url(r'^album/$',
+        views.albums),
 
     url(r'^performer/(?P<performer_id>.+)/delete/$', views.performer_delete),
     url(r'^performer/(?P<performer_id>.+)/$', views.performer),

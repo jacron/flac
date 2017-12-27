@@ -1,10 +1,10 @@
 {% extends "flac/base.html" %}
 {% load static %}
 {% load page_tags %}
-{% block title %}{{ page_title }}{% endblock %}
+{% block title %}{{ librarycode }}{% endblock %}
 {% block page %}
     <form>{% csrf_token %}</form>
-    <h4>{{ page_title }} ({{ pieces|length }})</h4>
+    <h4>{{ librarycode }}</h4>
     {% cpages prev_id next_id 'librarycode' wild %}
     <table class="boeken">
     {% for boek in boeken %}
@@ -26,7 +26,9 @@
     {% for item in pieces %}
         <tr class="piece" id="{{ item.ID }}">
             <td class="hyperlink">
-                <a onclick="play(this, {{ item.Piece.ID }})">
+                <a onclick="play(this, {{ item.Piece.ID }})"
+                   title="Afspelen"
+                >
                     {{ item.Piece.Name }}</a>
             </td>
             <td class="instrument">
