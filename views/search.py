@@ -41,8 +41,8 @@ def search(request):
         'albums': albums,
         'mothers': albums.get('mothers'),
         'children': albums.get('children'),
-        'componist_name': get_item_name(request, 'componist'),
-        'performer_name': get_item_name(request, 'performer'),
-        'tag_name': get_item_name(request, 'tag'),
-        'instrument_name': get_item_name(request, 'instrument'),
+        # 'componist_name': get_item_name(request, 'componist'),
+        # 'performer_name': get_item_name(request, 'performer'),
+        # 'tag_name': get_item_name(request, 'tag'),
+        # 'instrument_name': get_item_name(request, 'instrument'),
     }, request)
