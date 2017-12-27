@@ -6,10 +6,26 @@
 
 $(function () {
     function prepareQuery() {
+        // put query values in the hidden fields
         const types = ['componist', 'performer', 'tag', 'instrument'];
         types.forEach(function(type) {
-            var $typeahead = $('.search .' + type + ' .typeahead.tt-input');
-            $('.search input[name=' + type + ']').val(getId($typeahead.val()))
+            const $typeahead = $('.search .' + type + ' .typeahead.tt-input'),
+                li = $typeahead.parents('li').first(),
+                qq = li.find('.query');
+            var val = '';
+            if (qq.length === 0) {
+                // console.log('Empty query for type ' + type);
+                return;  // continue foreach: next type
+            }
+            $.each(qq, function(){
+                const q = $(this);
+                console.log('q', q.text());
+
+                if (val.length) { val += ','; }
+                val += getId(q.text());
+            });
+            console.log('val', val);
+            $('.search input[name=' + type + ']').val(getId(val))
         });
     }
 
@@ -23,22 +39,44 @@ $(function () {
         $li.find('.typeahead.tt-input').val('');
     }
 
+    function insertQueryElement($typeahead, val, input) {
+        const
+            clear =
+            $('<span>')
+                .text('x')
+                .addClass('clear')
+                .on('click', function(e){
+                    const clear = $(e.target),
+                        q2 = clear.prev('.query'),
+                        li = q2.parent('li');
+                    q2.remove();
+                    clear.remove();
+                }),
+            q =
+            $('<i>')
+                .text(val)
+                .addClass('query');
+
+        q.insertAfter(input);
+        clear.insertAfter(q);
+        $typeahead.typeahead('val', '');
+    }
+
     function impl_query_typeahead(items, type) {
         const $typeahead = $('.search .' + type + ' .typeahead'),
             li = $typeahead.parent('li'),
-            span = li.find('input').last();
+            input = li.find('input').last();
         $typeahead.typeahead(typeaheadSettings,
             { source: match(items) }
-        ).keydown(function(e){
+        ).bind('typeahead:select', function(e, suggestion){
+            insertQueryElement($typeahead, suggestion, input);
+        })
+            .keydown(function(e){
             if (e.key === 'Enter') {
-                console.log(span);
-                $('<i>')
-                    .text($typeahead.val())
-                    .insertAfter(span);
-                // $typeahead.val('');
+                e.preventDefault();
             }
             if (e.key === 'Escape') {
-                $typeahead.val('');
+                $typeahead.typeahead('val', '');
             }
         });
     }

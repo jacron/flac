@@ -446,13 +446,13 @@ div[class="pattern"] img {
 .cuesheets {
     margin-top: 8px;
 }
-.upload-controls .clear {
+.search .clear {
     cursor: pointer;
     padding: 0 4px 4px;
     border-radius: 4px;
     color: #999;
 }
-.upload-controls .clear:hover {
+.search .clear:hover {
     background-color: #ccf;
     color: #000;
 }
