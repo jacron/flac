@@ -1213,7 +1213,7 @@ def get_librarycode_boek(k_code):
     return out
 
 
-def get_librarycode_sonata(k_code, instrument_id):
+def get_librarycode_sonata(k_code, instrument_id=None):
     sql = '''
       SELECT 
         Piece.ID,

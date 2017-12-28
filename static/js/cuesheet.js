@@ -220,17 +220,38 @@ $(function () {
         return proposal;
     }
 
+    function proposeKCode($this, keywords, proposal) {
+        const hyperlink = $this.parents('.hyperlink'),
+            title = hyperlink.find('.title'),
+            text = title.text();
+        // console.log(text);
+        for (var i = 0; i < keywords.length; i++) {
+            const keyword = keywords[i],
+                pos = text.indexOf(keyword);
+            if (pos !== -1) {
+                return proposal + parseInt(text.substr(pos + keyword.length));
+            }
+        }
+        return null;
+    }
+
     function addCode($this) {
         setTimeout(function(){
             $('.add-code').removeClass('selected');
             $this.addClass('selected');
         });
-        const proposal = proposeCode('bps ', $this);
-        // var code = prompt('Code', proposal);
-        // if (code === '0') {
+        // Here are some possible propose function calls
+        const proposal = proposeKCode($this, ['K. ', 'K.'], 'K ');
+        // const proposal = proposeCode($this, 'bps ');
+        // const proposal = proposeKCode($this, ['variation ', 'Variation '], 'gold ');
+        // if (!proposal) {
         //     return;
         // }
         var code = proposal;
+        // code = prompt('Code', proposal);
+        // if (code === '0') {
+        //     return;
+        // }
         ajaxPost({
             cmd: 'add_code',
             id: $this.attr('id'),

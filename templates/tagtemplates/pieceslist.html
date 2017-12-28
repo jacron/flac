@@ -27,7 +27,10 @@
                 <input type="checkbox" title="voeg titel toe aan cuesheet"
                        id="{{ item.1 }}"
                        class="select-for-cuesheet">
-                <a onclick="play(this, {{ item.1 }})">{{ item.0 }}</a>
+                <a onclick="play(this, {{ item.1 }})" class="title">{{ item.0 }}</a> |
+                <span>&lt;{{ item.2 }}&gt;</span>
+                <span class="add-code" id="{{ item.1 }}" title="Voeg librarycode toe">
+                    code</span>
             </td>
             {% if item.2 %}
         <td>
@@ -36,8 +39,8 @@
             <td>
                 <img src="/image/{{ item.2 }}/librarycode/" class="librarycode-image">
             </td>
-            <td class="paste-score-fragment" code="{{ item.2 }}">
-                plak plaatje {{ item.2 }}</td>
+{#            <td class="paste-score-fragment" code="{{ item.2 }}">#}
+{#                plak plaatje {{ item.2 }}</td>#}
         {% endif %}
         </tr>
     {% endfor %}

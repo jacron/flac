@@ -6,10 +6,8 @@
     <div class="librarycodes">
         <form>{% csrf_token %}</form>
         <h4>{{ page_title }} ({{ items|length }})</h4>
-    <table>
-            {% for item in items %}
-                <tr><td>
         <table cellpadding="4" class="codes-list">
+            {% for item in items %}
                 <tr>
                     <td colspan="2">
                         <a href="{% url 'librarycode' item.k_code librarywild %}">
@@ -65,7 +63,6 @@
                     </td>
                 </tr>
         </td></tr>
-        </table>
             {% endfor %}
 </table>
     </div>
