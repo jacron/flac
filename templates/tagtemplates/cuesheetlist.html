@@ -21,6 +21,10 @@ Cuesheets ({{ cuesheets | length }})
             <span class="rename-cuesheet" id="{{ cuesheet.ID }}">rename</span>
         {% endif %}
             <i class="toggle-cue-content fa fa-caret-right"></i>
+            <span class="cue-plus-container">
+                <span class="add-code" id="{{ cuesheet.ID }}" title="Voeg librarycode toe">
+                    code</span>
+            </span>
         </div>
         <ul class="cue">
         <li class="cue-header">
@@ -38,9 +42,7 @@ Cuesheets ({{ cuesheets | length }})
                 <span class="cue-edit" id="{{ cuesheet.ID }}" title="bewerk cuesheet in sublime">
                     bewerk</span> |
                 <span class="cue-norm" id="{{ cuesheet.ID }}" title="normaliseer de titels van delen in de cuesheet">
-                    normaliseer</span> |
-                <span class="add-code" id="{{ cuesheet.ID }}" title="Voeg librarycode toe">
-                    code</span>
+                    normaliseer</span>
             </span>
         </li>
         {%  if cuesheet.cue.performer %}

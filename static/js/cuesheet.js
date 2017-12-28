@@ -157,11 +157,6 @@ function lcs_pieces($selectForCuesheet, $makeCuesheet){
     return ids;
 }
 
-function unmarkTestedCuesheets() {
-    var pieces = $('.stukken .piece');
-    pieces.removeClass('selected');
-}
-
 function markTestedCuesheets(ids) {
     var pieces = $('.stukken .piece');
     pieces.removeClass('selected');
@@ -175,15 +170,32 @@ function markTestedCuesheets(ids) {
     });
 }
 
-function afterPostMake($makeCuesheet, $typeahead) {
-    $makeCuesheet.val('');
-    var items = getAlbumComponisten();
-    if (items.length === 1) {$typeahead.val(items[0]); }
-    else { $typeahead.val('')}
-    unmarkTestedCuesheets();
-}
-
 $(function () {
+    function unmarkTestedCuesheets() {
+        var pieces = $('.stukken .piece');
+        pieces.removeClass('selected');
+    }
+
+    function autoCreate($selectForCuesheet, cuesheetIds, $makeCuesheet, $typeahead) {
+        // console.log($selectForCuesheet.first());
+        $selectForCuesheet.first().get(0).checked = true; // init following function
+        var ids = lcs_pieces($selectForCuesheet, $makeCuesheet);
+        // createCuesheet($makeCuesheet, cuesheetIds, $typeahead);
+    }
+
+    function afterPostMake($makeCuesheet, $typeahead) {
+        $makeCuesheet.val('');
+        var items = getAlbumComponisten();
+        if (items.length === 1) {$typeahead.val(items[0]); }
+        else { $typeahead.val('')}
+        unmarkTestedCuesheets();
+    }
+
+    function createCuesheet($makeCuesheet, cuesheetIds, $typeahead) {
+        postMakeCuesheet($makeCuesheet.val(), cuesheetIds, function(response) {
+            afterPostMake($makeCuesheet, $typeahead)});
+    }
+
     function addCode($this) {
         console.log($this.attr('id'));
         const code = prompt('Code');
@@ -221,13 +233,15 @@ $(function () {
             cuesheetIds = lcs_pieces($selectForCuesheet, $makeCuesheet);
             markTestedCuesheets(cuesheetIds);
         });
+        $('.auto-create').click(function(){
+            autoCreate($selectForCuesheet, cuesheetIds, $makeCuesheet, $typeahead);
+        });
         typeaheadAlbumComponisten($typeahead, $makeCuesheet);
         $('.album-componist-to-make').click(function () {
             copyComponist($typeahead.val(), $makeCuesheet);
         });
         $('.create-cuesheet').click(function(){
-            postMakeCuesheet($makeCuesheet.val(), cuesheetIds, function(response) {
-                afterPostMake($makeCuesheet, $typeahead)});
+            createCuesheet($makeCuesheet, cuesheetIds, $typeahead);
         });
         $('.rename-cuesheet').click(function(){
             postRenameCuesheet(this.id, $('#album_id').val(), function(response) {

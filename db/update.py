@@ -61,6 +61,16 @@ def update_piece_library_code(id, code):
     con, c = connect()
     c.execute(sql, (code, id, )).fetchone()
     con.commit()
+    sql = '''
+    INSERT OR IGNORE 
+    INTO LibraryCode
+    (Code)
+    VALUES(?)
+    '''
+    con, c = connect()
+    c.execute(sql, (code, )).fetchone()
+    con.commit()
+
 
 
 def update_album_title(album_id, title):

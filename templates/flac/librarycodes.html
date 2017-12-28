@@ -29,7 +29,7 @@
                             {% for piece in item.pieces %}
                                 <tr>
                                     <td class="hyperlink">
-                                        <a onclick="play(this, {{ item.Piece.ID }})"
+                                        <a onclick="play(this, {{ piece.Piece.ID }})"
                                         title="Afspelen">
                                             {{ piece.Performer.Name }}
                                             ({{ piece.Instrument.Name }})

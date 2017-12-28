@@ -138,13 +138,15 @@ nav a.selected {
 .album-componist-to-make,
 .create-cuesheet,
 .test-lcs,
-.kk {
+.kk,
+.auto-create {
     cursor: pointer;
 }
 .album-componist-to-make:hover,
 .create-cuesheet:hover,
 .test-lcs:hover,
-.kk:hover {
+.kk:hover,
+.auto-create:hover {
     text-decoration: underline;
 }
 .content.cue {
@@ -237,7 +239,8 @@ fieldset {
 .cue-title,
 .cue-split,
 .cue-edit,
-.cue-norm {
+.cue-norm,
+.add-code {
     cursor: pointer;
     font-style: italic;
 }

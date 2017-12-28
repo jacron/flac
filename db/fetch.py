@@ -1088,6 +1088,7 @@ sql_librarycode = '''
   SELECT Code, Tempo, Key
    FROM LibraryCode
    WHERE LibraryCode.Code LIKE ?
+   ORDER BY length(Code), Code
   '''
 
 
