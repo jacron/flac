@@ -19,6 +19,9 @@ $(function () {
         for (var i = 0; i < lazy.length; i++) {
             if (isInViewport(lazy[i])) {
                 if (lazy[i].getAttribute('data-src')) {
+                    // lazy[i].error(function(){
+                    //     $(this).hide();
+                    // });
                     lazy[i].src = lazy[i].getAttribute('data-src');
                     lazy[i].removeAttribute('data-src');
                 }

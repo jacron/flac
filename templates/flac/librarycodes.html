@@ -6,8 +6,10 @@
     <div class="librarycodes">
         <form>{% csrf_token %}</form>
         <h4>{{ page_title }} ({{ items|length }})</h4>
-        <table cellpadding="4">
+    <table>
             {% for item in items %}
+                <tr><td>
+        <table cellpadding="4" class="codes-list">
                 <tr>
                     <td colspan="2">
                         <a href="{% url 'librarycode' item.k_code librarywild %}">
@@ -18,10 +20,15 @@
                 </tr>
                 <tr>
                     <td class="code">
-                        <h4>{{ item.k_code }} - {{ item.Tempo }} - {{ item.Key }}</h4>
+                        <div class="code-line">{{ item.k_code }} - {{ item.Tempo|default_if_none:'' }}
+                            - {{ item.Key|default_if_none:'' }}
+                        </div>
+                            {% if item.Alias %}
+                            <div class="alias">{{ item.Alias|default_if_none:'' }}</div>
+                            {% endif %}
                     </td>
-                    {#            <td class="paste-score-fragment" code="{{ item.k_code }}">#}
-                    {#                plak plaatje {{ item.k_code }}</td>#}
+                                <td class="paste-score-fragment" code="{{ item.k_code }}">
+                                    plak plaatje {{ item.k_code }}</td>
                 </tr>
                 <tr>
                     <td>
@@ -57,7 +64,9 @@
                         </table>
                     </td>
                 </tr>
-            {% endfor %}
+        </td></tr>
         </table>
+            {% endfor %}
+</table>
     </div>
 {% endblock %}

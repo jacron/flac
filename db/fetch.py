@@ -1085,7 +1085,7 @@ ORDER BY A1.Title COLLATE NOCASE
 
 
 sql_librarycode = '''
-  SELECT Code, Tempo, Key
+  SELECT Code, Tempo, Key, Alias
    FROM LibraryCode
    WHERE LibraryCode.Code LIKE ?
    ORDER BY length(Code), Code
@@ -1100,6 +1100,7 @@ def get_librarycode_sonatas(k_wild):
             'k_code': item[0],
             'Tempo': item[1],
             'Key': item[2],
+            'Alias': item[3],
         })
     return out
 

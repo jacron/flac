@@ -530,3 +530,12 @@ div[class="pattern"] img {
 .librarycodes table td {
     vertical-align: top;
 }
+.alias {
+    font-style: italic;
+}
+.code-line {
+    font-size: 18px;
+}
+.codes-list {
+    border-bottom: 1px solid blue;
+}

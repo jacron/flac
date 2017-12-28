@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound
 
-from flac.settings import BASE_DIR
+from flac.settings import BASE_DIR, NOT_FOUND_IMAGE_PATH
 from ..db import get_album, get_componist_path, get_performer_path
 from django.conf import settings
 import os
@@ -14,12 +14,12 @@ def get_image(path, cached=None):
     image_path = path.encode('utf-8')
     if os.path.exists(image_path):
         image_data = open(image_path, "rb").read()
-        if cached:
-            fp = open(cached, "wb")
-            fp.write(image_data)
-        return HttpResponse(image_data, content_type="image/png")
+        # if cached:
+        #     fp = open(cached, "wb")
+        #     fp.write(image_data)
     else:
-        return HttpResponse('Dit pad bestaat niet:"{}"'.format(image_path))
+        image_data = open(NOT_FOUND_IMAGE_PATH, "rb").read()
+    return HttpResponse(image_data, content_type="image/png")
 
 
 def componistimage(componist_id):

@@ -18,7 +18,7 @@
             <a href="/componist/{{ item.ID }}">
                 <input type="hidden" value="{{ item.LastName }}" class="last-name">
                 <div class="componist-naam" componistid="{{ item.ID }}">{{ item.FullName }}</div>
-                <div class="jaren">{{ item.Birth }} -
+                <div class="jaren">{{ item.Birth|default_if_none:'' }} -
                     {% if item.Death %}
                         {{ item.Death }}
                     {% endif %}

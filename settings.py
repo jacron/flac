@@ -155,3 +155,4 @@ TMP_PATH = '/Volumes/Media/tmpscan'
 SKIP_DIRS = ['website', 'websites', 'artwork', 'Artwork', 'etc', 'scans', 'Scans', 'scan',
             'website boxset', '#Booklets', 'Pixels', 'Graphics', 'Info + Art', 'Art',
             'Covers', ]
+NOT_FOUND_IMAGE_PATH = '/Volumes/Media/Audio/Klassiek/empty/notfound.jpg'

@@ -81,7 +81,6 @@ function play(elm, idPiece) {
 }
 
 function postMakeCuesheet(name, ids, cb) {
-    console.log(ids);
     if (!ids.length) {
         return;
     }

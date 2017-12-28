@@ -177,10 +177,14 @@ $(function () {
     }
 
     function autoCreate($selectForCuesheet, cuesheetIds, $makeCuesheet, $typeahead) {
-        // console.log($selectForCuesheet.first());
         $selectForCuesheet.first().get(0).checked = true; // init following function
-        var ids = lcs_pieces($selectForCuesheet, $makeCuesheet);
-        // createCuesheet($makeCuesheet, cuesheetIds, $typeahead);
+        do {
+            cuesheetIds = lcs_pieces($selectForCuesheet, $makeCuesheet);
+            if (cuesheetIds.length) {
+                console.log(cuesheetIds);
+                createCuesheet($makeCuesheet, cuesheetIds, $typeahead);
+            }
+        } while (cuesheetIds.length);
     }
 
     function afterPostMake($makeCuesheet, $typeahead) {
