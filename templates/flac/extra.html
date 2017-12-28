@@ -11,16 +11,14 @@
     </form>
         <input class="add-componist-extra" type="text" placeholder="Voeg componist toe">
         <span class="componist-extra-added"></span>
-<h4>clipboard</h4>
-<ul class="hyperlink">
-    <li><a href="{% url 'cmd' 'folder' %}">save clipboard as folder.jpg</a></li>
-    <li><a href="{% url 'cmd' 'back' %}">save clipboard as back.jpg</a></li>
-    <li><a href="{% url 'cmd' 'folderback' %}">save clipboard as folder.jpg and back.jpg</a></li>
-</ul>
     <h4>code</h4>
 <ul>
     {% for code in codes %}
-        <li><a href="{% url 'librarycodelist' code.Wildcard %}">{{ code.Description }}</a></li>
+        <li>
+            <a href="{% url 'librarycodelist' code.Wildcard %}">{{ code.Description }}</a> |
+            <a href="{% url 'librarycodelist' code.Wildcard  1 %}">piano</a> |
+            <a href="{% url 'librarycodelist' code.Wildcard  2 %}">clavecimbel</a>
+        </li>
     {% endfor %}
 </ul>
     <h4>extra</h4>
@@ -28,6 +26,12 @@
     <li><a href="{% url 'pianoboeken' %}">pianoboek</a></li>
     <li><a href="{% url 'cmd' 'scarlatti' %}">Scarlatti Sonates</a></li>
     <li><a href="{% url 'cmd' 'bach' %}">Bach Goldberg</a></li>
+</ul>
+<h4>clipboard</h4>
+<ul class="hyperlink">
+    <li><a href="{% url 'cmd' 'folder' %}">save clipboard as folder.jpg</a></li>
+    <li><a href="{% url 'cmd' 'back' %}">save clipboard as back.jpg</a></li>
+    <li><a href="{% url 'cmd' 'folderback' %}">save clipboard as folder.jpg and back.jpg</a></li>
 </ul>
     <h4>onderhoud</h4>
 <ul class="hyperlink">

@@ -134,7 +134,7 @@ function ltrim(s, a) {
 
 function trimNr(s) {
     s = s.trim();
-    s = rtrim(s, ['No.', 'I', '-', ',', '.flac']);
+    s = rtrim(s, ['No.', 'I', '-', ',', '.flac', ':']);
     s = ltrim(s, ['.', '-']);
     return s.trim();
 }
@@ -201,12 +201,36 @@ $(function () {
             afterPostMake($makeCuesheet, $typeahead)});
     }
 
+    function proposeCode(prefix, $this) {
+        var proposal = prefix;
+        const hyperlink = $this.parents('.hyperlink'),
+            title = hyperlink.find('.title'),
+            text = title.text();
+        const w = text.split(" ");
+        for (var i = 0; i < w.length; i++) {
+            var v = w[i];
+            if (v.substr(v.length-1, 1) === ',') {
+                v = v.substr(0, v.length-1);
+            }
+            if ($.isNumeric(v)) {
+                proposal += v;
+                break;
+            }
+        }
+        return proposal;
+    }
+
     function addCode($this) {
         setTimeout(function(){
             $('.add-code').removeClass('selected');
             $this.addClass('selected');
         });
-        const code = prompt('Code');
+        const proposal = proposeCode('bps ', $this);
+        // var code = prompt('Code', proposal);
+        // if (code === '0') {
+        //     return;
+        // }
+        var code = proposal;
         ajaxPost({
             cmd: 'add_code',
             id: $this.attr('id'),

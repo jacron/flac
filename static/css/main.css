@@ -540,6 +540,7 @@ div[class="pattern"] img {
 }
 .alias {
     font-style: italic;
+    color: brown;
 }
 .code-line {
     font-size: 18px;

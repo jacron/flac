@@ -16,12 +16,12 @@ Cuesheets ({{ cuesheets | length }})
             {% endif %}
     >
         <div class="hyperlink cuesheet">
-            <a onclick="play(this, {{ cuesheet.ID }})">{{ cuesheet.Filename }}</a>
+            <a onclick="play(this, {{ cuesheet.ID }})" class="title">{{ cuesheet.Filename }}</a>
         {% if not valid %}
             <span class="rename-cuesheet" id="{{ cuesheet.ID }}">rename</span>
         {% endif %}
             <span class="cue-plus-container">
-            <i class="toggle-cue-content fa fa-caret-right"></i>
+                <i class="toggle-cue-content fa fa-caret-right"></i>
                 <span>&lt;{{ cuesheet.Code }}&gt;</span>
                 <span class="add-code" id="{{ cuesheet.ID }}" title="Voeg librarycode toe">
                     code</span>

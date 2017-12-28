@@ -24,17 +24,17 @@ def one_librarycode(request, librarycode, librarywild='dummy'):
     return HttpResponse(template.render(content, request))
 
 
-def get_full_items(librarywild):
+def get_full_items(librarywild, instrument_id):
     items = get_librarycode_sonatas(librarywild)
     for item in items:
-        item['pieces'] = get_librarycode_sonata(item['k_code'])
+        item['pieces'] = get_librarycode_sonata(item['k_code'],instrument_id)
         item['pianoboeken'] = get_librarycode_boek(item['k_code'])
     return items
 
 
-def list_librarycode(request, librarywild):
+def list_librarycode(request, librarywild, instrument_id=0):
     template = loader.get_template('flac/librarycodes.html')
-    items = get_full_items(librarywild)
+    items = get_full_items(librarywild, instrument_id)
     return HttpResponse(template.render(
         {
             'items': items,

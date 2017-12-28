@@ -1213,7 +1213,7 @@ def get_librarycode_boek(k_code):
     return out
 
 
-def get_librarycode_sonata(k_code):
+def get_librarycode_sonata(k_code, instrument_id):
     sql = '''
       SELECT 
         Piece.ID,
@@ -1235,9 +1235,17 @@ def get_librarycode_sonata(k_code):
        JOIN Instrument
        ON Album.InstrumentID = Instrument.ID
           WHERE Piece.LibraryCode=?
+          '''
+    if instrument_id:
+        sql += 'AND Instrument.ID=?'
+    sql += '''
       ORDER BY Instrument.Name
       '''
-    items = get_items_with_parameter(sql, k_code)
+
+    if instrument_id:
+        items = get_items_with_2parameter(sql, k_code, instrument_id)
+    else:
+        items = get_items_with_parameter(sql, k_code)
     out = []
     for item in items:
         out.append({

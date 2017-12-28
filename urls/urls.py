@@ -66,6 +66,9 @@ urlpatterns = [
         views.cmd,
         name='cmd'),
 
+    url(r'^librarycode/list/(?P<librarywild>.+)/(?P<instrument_id>.+)/$',
+        views.list_librarycode,
+        name='librarycodelist'),
     url(r'^librarycode/list/(?P<librarywild>.+)/$',
         views.list_librarycode,
         name='librarycodelist'),
