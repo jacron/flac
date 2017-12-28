@@ -246,8 +246,16 @@ fieldset {
 }
 .cue-plus:hover,
 .cue-title:hover,
-.cue-split:hover {
+.cue-split:hover,
+.add-code:hover {
     text-decoration: underline;
+}
+.add-code.saved {
+    color: blue;
+    border: 1px solid #cfcfcf;
+}
+.add-code.selected {
+    color: brown;
 }
 .cue-header .cue-plus-container {
     display: none;

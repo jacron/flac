@@ -185,6 +185,7 @@ $(function () {
                 createCuesheet($makeCuesheet, cuesheetIds, $typeahead);
             }
         } while (cuesheetIds.length);
+        location.reload();
     }
 
     function afterPostMake($makeCuesheet, $typeahead) {
@@ -201,15 +202,20 @@ $(function () {
     }
 
     function addCode($this) {
-        console.log($this.attr('id'));
+        setTimeout(function(){
+            $('.add-code').removeClass('selected');
+            $this.addClass('selected');
+        });
         const code = prompt('Code');
-        console.log(code);
         ajaxPost({
             cmd: 'add_code',
             id: $this.attr('id'),
             code: code
         }, function() {
-
+            $('.add-code').removeClass('saved');
+            $this.removeClass('selected');
+            $this.addClass('saved');
+            $this.prev().text('<' + code + '>');
         });
     }
 
