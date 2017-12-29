@@ -240,14 +240,16 @@ fieldset {
 .cue-split,
 .cue-edit,
 .cue-norm,
-.add-code {
+.add-code,
+.remove-code {
     cursor: pointer;
     font-style: italic;
 }
 .cue-plus:hover,
 .cue-title:hover,
 .cue-split:hover,
-.add-code:hover {
+.add-code:hover,
+.remove-code:hover {
     text-decoration: underline;
 }
 .add-code.saved {

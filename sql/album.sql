@@ -309,3 +309,35 @@ where Name like '%BWV%';
             JOIN Tag_Album ON Tag_Album.AlbumID = Album.ID
         WHERE Tag_Album.TagID=?
         ORDER BY Album.Title COLLATE NOCASE;
+
+-- sorteer code zo, dat subcode niet mee gesorteerd wordt;
+-- meegenomen is, dat code nu opgesplitst is in code1 en code2.
+SELECT Code1, Code2
+FROM (
+  SELECT
+    Code,
+    CASE WHEN ic > 0
+      THEN Code1
+    ELSE Code2 END AS Code1,
+    CASE WHEN ic > 0
+      THEN Code2
+    ELSE NULL END  AS Code2
+  FROM
+    (SELECT
+       Code,
+       ic,
+       substr(Code, 0, ic) Code1,
+       substr(Code, ic)    Code2
+     FROM
+       (SELECT
+          instr(Code, '_') ic,
+          Code,
+          Tempo,
+          Key,
+          Alias
+        FROM LibraryCode
+        WHERE LibraryCode.Code LIKE 'cs%'
+       )
+    )
+)
+ORDER BY length(Code1), Code1, Code2;

@@ -201,16 +201,29 @@ $(function () {
             afterPostMake($makeCuesheet, $typeahead)});
     }
 
-    function proposeCode(prefix, $this) {
+    function proposeCode($this, prefix) {
         var proposal = prefix;
         const hyperlink = $this.parents('.hyperlink'),
             title = hyperlink.find('.title'),
             text = title.text();
+        console.log(text);
         const w = text.split(" ");
-        for (var i = 0; i < w.length; i++) {
+        // skip the first (number?) word
+        for (var i = 1; i < w.length; i++) {
             var v = w[i];
             if (v.substr(v.length-1, 1) === ',') {
                 v = v.substr(0, v.length-1);
+            }
+            if (v.substr(v.length-1, 1) === '.') {
+                v = v.substr(0, v.length-1);
+            }
+            if (v.substr(0,1) === '#') {
+                v = v.substr(1);
+            }
+            const romans = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+            const pos = romans.indexOf(v);
+            if (pos !== -1) {
+                return proposal + (pos + 1);
             }
             if ($.isNumeric(v)) {
                 proposal += v;
@@ -235,23 +248,39 @@ $(function () {
         return null;
     }
 
+    function removeCode($this) {
+        ajaxPost({
+            cmd: 'remove_code',
+            id: $this.attr('id')
+        }, function() {
+            $('.add-code').removeClass('saved');
+            $this.removeClass('selected');
+            $this.addClass('saved');
+            $this.prev().text('<None>');
+        });
+    }
+
     function addCode($this) {
         setTimeout(function(){
             $('.add-code').removeClass('selected');
             $this.addClass('selected');
         });
         // Here are some possible propose function calls
-        const proposal = proposeKCode($this, ['K. ', 'K.'], 'K ');
-        // const proposal = proposeCode($this, 'bps ');
+        // const proposal = proposeKCode($this, ['K. ', 'K.'], 'K ');
+        const proposal = proposeCode($this, 'cs 6_');
         // const proposal = proposeKCode($this, ['variation ', 'Variation '], 'gold ');
         // if (!proposal) {
         //     return;
         // }
         var code = proposal;
-        // code = prompt('Code', proposal);
-        // if (code === '0') {
-        //     return;
-        // }
+        var interactive = true;
+        // interactive = false;
+        if (interactive) {
+            code = prompt('Code', proposal);
+            if (code === '0') {
+                return;
+            }
+        }
         ajaxPost({
             cmd: 'add_code',
             id: $this.attr('id'),
@@ -311,6 +340,9 @@ $(function () {
         });
         $('.add-code').click(function() {
             addCode($(this));
+        });
+        $('.remove-code').click(function() {
+            removeCode($(this));
         });
     }
 });

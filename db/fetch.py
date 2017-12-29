@@ -997,6 +997,35 @@ def delete_not_existing_path_albums(items):
             delete_album(item[1])
 
 
+def get_pathdoubles_albums():
+    sql = '''
+SELECT Title, ID, Path, c
+FROM (
+  SELECT
+    TITLE,
+    ID,
+    PATH,
+    COUNT(*) AS c
+  FROM Album
+  GROUP BY Path
+  ORDER BY Path
+)
+WHERE c > 1;
+    '''
+    conn, c = connect()
+    items = c.execute(sql).fetchall()
+    conn.close()
+    out = []
+    for item in items:
+        out.append({
+            'Title': item[0],
+            'ID': item[1],
+            'Path': item[2],
+            'Count': item[3],
+        })
+    return out
+
+
 def get_apeflac_albums():
     sql = '''
     SELECT Title, ID, Path
@@ -1085,7 +1114,8 @@ ORDER BY A1.Title COLLATE NOCASE
 
 
 sql_librarycode = '''
-  SELECT Code, Tempo, Key, Alias
+  SELECT instr(Code, '_') ic, substr(Code, 0, ic) Code1, substr(Code, ic) Code2,
+  Code, Tempo, Key, Alias
    FROM LibraryCode
    WHERE LibraryCode.Code LIKE ?
    ORDER BY length(Code), Code

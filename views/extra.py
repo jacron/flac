@@ -4,7 +4,7 @@ from django.template import loader
 from flac.services.clipboard import save_cb_image, save_cb_images
 from ..db import (get_scarlatti_k_pieces, get_scarlatti, get_setting,
                   toggle_setting, get_widow_albums, get_apeflac_albums,
-                  get_bach_k_pieces, get_codes)
+                  get_bach_k_pieces, get_codes, get_pathdoubles_albums)
 
 
 def extra_view(request, albums=None):
@@ -77,4 +77,6 @@ def cmd(request, cmd_code):
         return extra_view(request, get_apeflac_albums())
     # if cmd_code == 'missingscore':
     #     return missing_score(request)
+    if cmd_code == 'pathdoubles':
+        return extra_view(request, get_pathdoubles_albums())
     return extra_view(request)

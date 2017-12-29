@@ -78,6 +78,10 @@ def add_code(piece_id, librarycode):
     update_piece_library_code(piece_id, librarycode)
 
 
+def remove_code(piece_id):
+    update_piece_library_code(piece_id, None)
+
+
 def do_post(post):
     cmd = post['cmd']
 
@@ -189,6 +193,8 @@ def do_post(post):
         return norm_cuesheet(post['id'], post['albumid'])
     if cmd == 'add_code':
         return add_code(post['id'], post['code'])
+    if cmd == 'remove_code':
+        return remove_code(post['id'])
 
     if cmd == 'paste_score_fragment':
         return paste_score_fragment(post['code'])
