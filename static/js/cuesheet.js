@@ -201,34 +201,46 @@ $(function () {
             afterPostMake($makeCuesheet, $typeahead)});
     }
 
+    function prop(v) {
+        if (v.substr(v.length-1, 1) === ',') {
+            v = v.substr(0, v.length-1);
+        }
+        if (v.substr(v.length-1, 1) === '.') {
+            v = v.substr(0, v.length-1);
+        }
+        if (v.substr(0,1) === '#') {
+            v = v.substr(1);
+        }
+        const romans = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+        const pos = romans.indexOf(v);
+        if (pos !== -1) {
+            return pos + 1;
+        }
+        if ($.isNumeric(v)) {
+            return v;
+        }
+    }
+
     function proposeCode($this, prefix) {
         var proposal = prefix;
         const hyperlink = $this.parents('.hyperlink'),
             title = hyperlink.find('.title'),
             text = title.text();
-        console.log(text);
+        // console.log(text);
         const w = text.split(" ");
-        // skip the first (number?) word
+        // skip the first (number?) word, so i = 1
+        var nrs = [];
         for (var i = 1; i < w.length; i++) {
-            var v = w[i];
-            if (v.substr(v.length-1, 1) === ',') {
-                v = v.substr(0, v.length-1);
+            var p = prop(w[i]);
+            if (p) {
+                nrs.push(p);
             }
-            if (v.substr(v.length-1, 1) === '.') {
-                v = v.substr(0, v.length-1);
-            }
-            if (v.substr(0,1) === '#') {
-                v = v.substr(1);
-            }
-            const romans = ['I', 'II', 'III', 'IV', 'V', 'VI'];
-            const pos = romans.indexOf(v);
-            if (pos !== -1) {
-                return proposal + (pos + 1);
-            }
-            if ($.isNumeric(v)) {
-                proposal += v;
-                break;
-            }
+        }
+        if (nrs.length === 1) {
+            return proposal + nrs[0];
+        }
+        if (nrs.length === 2) {
+            return proposal + nrs[0] + '_' + nrs[1];
         }
         return proposal;
     }
@@ -267,14 +279,14 @@ $(function () {
         });
         // Here are some possible propose function calls
         // const proposal = proposeKCode($this, ['K. ', 'K.'], 'K ');
-        const proposal = proposeCode($this, 'cs 6_');
+        const proposal = proposeCode($this, 'cs ');
         // const proposal = proposeKCode($this, ['variation ', 'Variation '], 'gold ');
         // if (!proposal) {
         //     return;
         // }
         var code = proposal;
         var interactive = true;
-        // interactive = false;
+        interactive = false;
         if (interactive) {
             code = prompt('Code', proposal);
             if (code === '0') {

@@ -80,8 +80,13 @@ def split_file(flac, filepath):
         cmd += ['-t', duration,]
     cmd.append(flac['path'])
     ColorPrint.print_c(flac['path'], ColorPrint.CYAN)
-    process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    # try:
+    print cmd
+    process = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE)
     out, err = process.communicate()
+    # except TypeError as type_err:
+    #     print type_err
     # print 'STDOUT:{}'.format(out)
     # print 'ERR:{}'.format(err)
 
