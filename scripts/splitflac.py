@@ -1,16 +1,26 @@
+import glob
+
 from flac.lib.color import ColorPrint
 from flac.services import get_full_cuesheet
-import os, subprocess
+import os
+import subprocess
 
 
 """
-er van uitgaande dat een cuesheet een enkel muziekbestand adresseert dat het in stukken verdeelt
-laten we in dit script ffmpeg zorgen dat de afzonderlijke stukken in flac files worden weggeschreven
+er van uitgaande dat een cuesheet een enkel muziekbestand adresseert dat het in 
+stukken verdeelt laten we in dit script ffmpeg zorgen dat de afzonderlijke 
+stukken in flac files worden weggeschreven
 
-dit is de enige methode om albums werkelijk op te delen in muziekstukken, bijv. concerten
-omdat een cuesheet dat een paar delen bevat nooit perfect kan werken op een enkele muziekfile
+dit is de enige methode om albums werkelijk op te delen in muziekstukken, 
+bijv. concerten omdat een cuesheet dat een paar delen bevat nooit perfect kan 
+werken op een enkele muziekfile
 
-(je houd 'resten' over omdat een cuesheet alleen begin- en geen eind-tijden aan kan geven)
+(je houd 'resten' over omdat een cuesheet alleen begin- en geen eind-tijden 
+aan kan geven)
+
+om verdere verwerking (combineren tot cuesheets) makkelijker te maken worden
+de bestanden genummerd; soms zijn er meerdere cuesheets die gebruikt worden
+voor splitsing en ook dat wordt verdisconteerd
 
 november 2017 - jan h croonen
 """
@@ -84,7 +94,7 @@ def split_file(flac, filepath):
     cmd.append(flac['path'])
     ColorPrint.print_c(flac['path'], ColorPrint.CYAN)
     # try:
-    print cmd
+    # print cmd
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE)
     out, err = process.communicate()
@@ -98,7 +108,8 @@ def get_flac(nr, index, track, basedir, tracks, file_duration):
     strnr = str(nr)
     if nr < 10:
         strnr = '0' + strnr
-    filename = u'{} {}.flac'.format(strnr, track['title'])
+    track_title = track['title'].replace('/', '_')
+    filename = u'{} {}.flac'.format(strnr, track_title)
     # outfile = os.path.join(basedir, track['title'] + '.flac')
     outfile = os.path.join(basedir, filename)
     time = track['index']['time']
@@ -127,25 +138,37 @@ def get_duration(filepath):
     return normtime(out)
 
 
+def filename(filepath):
+    name = filepath.split('/')[-1]
+    return name  # .replace("_", " ")
+
+
 def split_flac(cuepath):
     cuesheet = get_full_cuesheet(cuepath, 0)
     basedir = os.path.dirname(cuepath)
     nr = 1
+    files_path = u"{}{}".format(basedir, "/*.flac")
+    for f in glob.iglob(files_path):
+        if filename(f)[:2] == '01':
+            nr = 101
+        if filename(f)[:2] == '10':
+            nr = 201
+        if filename(f)[:2] == '20':
+            nr = 301
+
     for cfile in cuesheet['cue']['files']:
-        filename = cfile['name']
-        tracks = cfile['tracks']
-        filepath = os.path.join(basedir, filename)
+        filepath = os.path.join(basedir, cfile['name'])
         file_duration = get_duration(filepath)
         if not file_duration:
             print('unknown duration for: ' + filepath)
             # return
         flacs = []
+        tracks = cfile['tracks']
         for index, track in enumerate(tracks):
             flacs.append(get_flac(nr, index, track, basedir, tracks, file_duration))
             nr += 1
         for flac in flacs:
             split_file(flac, filepath)
-
 
 
 def main():

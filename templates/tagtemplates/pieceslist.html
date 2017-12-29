@@ -28,9 +28,11 @@
                        id="{{ item.1 }}"
                        class="select-for-cuesheet">
                 <a onclick="play(this, {{ item.1 }})" class="title">{{ item.0 }}</a> |
-                <span>&lt;{{ item.2 }}&gt;</span>
-                <span class="add-code" id="{{ item.1 }}" title="Voeg librarycode toe">
-                    code</span>
+                <span class="code">&lt;{{ item.2 }}&gt;</span>
+                <span class="add-code" id="{{ item.1 }}" prompt="false" title="Voeg librarycode toe">
+                    code</span> |
+                <span class="add-code" id="{{ item.1 }}" prompt="true" title="Voeg librarycode toe (interactive)">
+                    prompt</span>
             </td>
             {% if item.2 %}
         <td>

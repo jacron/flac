@@ -203,7 +203,7 @@ $(function () {
 
     function prop(v) {
         // special: convert names to numbers
-        const names = ['Prelude', 'Allemande', 'Courante', 'Sarabande',
+        const names = ['Prelude|Prélude|Praeludium', 'Allemande', 'Courante', 'Sarabande',
             'Menuet|Bourree|Gavotte', 'Gigue'];
         for (var i = 0; i < names.length; i++) {
             const name = names[i],
@@ -255,9 +255,10 @@ $(function () {
         if (nrs.length === 1) {
             return proposal + nrs[0];
         }
-        // if (nrs.length > 2) {
-        //     return proposal + nrs[0] + '_' + nrs[2];
-        // }
+        // negeer het tweede getal, bijv. 'BWV 1010'
+        if (nrs.length > 2) {
+            return proposal + nrs[0] + '_' + nrs[2];
+        }
         if (nrs.length > 1) {
             return proposal + nrs[0] + '_' + nrs[1];
         }
@@ -280,10 +281,6 @@ $(function () {
     }
 
     function addCode($this) {
-        setTimeout(function(){
-            $('.add-code').removeClass('selected');
-            $this.addClass('selected');
-        });
         // Here are some possible propose function calls
         // const proposal = proposeKCode($this, ['K. ', 'K.'], 'K ');
         const proposal = proposeCode($this, 'cs ');
@@ -292,8 +289,7 @@ $(function () {
         //     return;
         // }
         var code = proposal;
-        var interactive = true;
-        interactive = false;
+        var interactive = $this.attr('prompt') === 'true';
         if (interactive) {
             code = prompt('Code', proposal);
             if (code === '0') {
@@ -306,9 +302,10 @@ $(function () {
             code: code
         }, function() {
             $('.add-code').removeClass('saved');
-            $this.removeClass('selected');
             $this.addClass('saved');
-            $this.prev().text('<' + code + '>');
+            const hyperlink = $this.parents('.hyperlink'),
+                $code = hyperlink.find('.code');
+            $code.text('<' + code + '>');
         });
     }
 
