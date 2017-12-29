@@ -202,12 +202,11 @@ $(function () {
     }
 
     function prop(v) {
-        if (v.substr(v.length-1, 1) === ',') {
-            v = v.substr(0, v.length-1);
-        }
-        if (v.substr(v.length-1, 1) === '.') {
-            v = v.substr(0, v.length-1);
-        }
+        [',', '.', ':'].forEach(function(last){
+            if (v.substr(v.length-1, 1) === last) {
+                v = v.substr(0, v.length-1);
+            }
+        });
         if (v.substr(0,1) === '#') {
             v = v.substr(1);
         }
@@ -239,6 +238,9 @@ $(function () {
         if (nrs.length === 1) {
             return proposal + nrs[0];
         }
+        if (nrs.length === 3) {
+            return proposal + nrs[0] + '_' + nrs[2];
+        }
         if (nrs.length === 2) {
             return proposal + nrs[0] + '_' + nrs[1];
         }
@@ -260,18 +262,6 @@ $(function () {
         return null;
     }
 
-    function removeCode($this) {
-        ajaxPost({
-            cmd: 'remove_code',
-            id: $this.attr('id')
-        }, function() {
-            $('.add-code').removeClass('saved');
-            $this.removeClass('selected');
-            $this.addClass('saved');
-            $this.prev().text('<None>');
-        });
-    }
-
     function addCode($this) {
         setTimeout(function(){
             $('.add-code').removeClass('selected');
@@ -286,7 +276,7 @@ $(function () {
         // }
         var code = proposal;
         var interactive = true;
-        interactive = false;
+        // interactive = false;
         if (interactive) {
             code = prompt('Code', proposal);
             if (code === '0') {
@@ -302,6 +292,18 @@ $(function () {
             $this.removeClass('selected');
             $this.addClass('saved');
             $this.prev().text('<' + code + '>');
+        });
+    }
+
+    function removeCode($this) {
+        ajaxPost({
+            cmd: 'remove_code',
+            id: $this.attr('id')
+        }, function() {
+            $('.add-code').removeClass('saved');
+            $this.removeClass('selected');
+            $this.addClass('saved');
+            $this.prev().text('<None>');
         });
     }
 

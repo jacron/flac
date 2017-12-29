@@ -362,6 +362,16 @@ def update_performername(name, performer_id):
     con.commit()
 
 
+def delete_piece(piece_id):
+    sql = '''
+    DELETE FROM Piece
+    WHERE ID=?
+    '''
+    con, c = connect()
+    c.execute(sql, (piece_id,))
+    con.commit()
+
+
 def delete_pieces_of_album(album_id):
     sql = '''
     DELETE FROM Piece
