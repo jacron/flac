@@ -136,7 +136,7 @@ var albums = new Bloodhound({
             albumIds = [];
             return $.map(response, function(movie) {
                 albumIds.push(movie.ID);
-                const name = movie.name + ' - ' + movie.ID;
+                const name = movie.name + '_' + movie.ID;
                 return {name:name};
             });
         }
@@ -146,6 +146,11 @@ var albums = new Bloodhound({
 var albumIds = [];
 
 function generalSearch($typeahead) {
+    function getId(s) {
+        var pos = s.lastIndexOf('_');
+        return s.substr(pos + 1);
+    }
+
     $typeahead.typeahead(
         typeaheadSettings,
         {
@@ -157,9 +162,9 @@ function generalSearch($typeahead) {
             }
         }).keydown(function(e) {
         if (e.key === 'Enter') {
-            // const id = getId($(e.target).val());
-            console.log(albumIds);
-            // location.href = '/album/' + id;
+            const id = getId($(e.target).val());
+            // console.log(albumIds);
+            location.href = '/album/' + id;
         }
     });
 }
