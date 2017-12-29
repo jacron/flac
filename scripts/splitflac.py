@@ -90,7 +90,7 @@ def split_file(flac, filepath):
         if duration:
             cmd += ['-t', duration,]
         else:
-            print 'found no duration for ', filepath
+            print 'found no duration for ', flac['path']
     cmd.append(flac['path'])
     ColorPrint.print_c(flac['path'], ColorPrint.CYAN)
     # try:

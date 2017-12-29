@@ -221,7 +221,7 @@ $(function () {
             }
         });
         // trim left
-        ['#', 'No.', 'Nr.', 'No'].forEach(function(first){
+        ['#', 'No.', 'Nr.', 'No', 'no.'].forEach(function(first){
             if (v.indexOf(first) === 0) {
                 v = v.substr(first.length);
             }
@@ -317,7 +317,10 @@ $(function () {
             $('.add-code').removeClass('saved');
             $this.removeClass('selected');
             $this.addClass('saved');
-            $this.prev().text('<None>');
+            // $this.prev().text('<None>');
+            const hyperlink = $this.parents('.hyperlink'),
+                $code = hyperlink.find('.code');
+            $code.text('<None>');
         });
     }
 
