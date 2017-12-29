@@ -19,6 +19,7 @@ def get_items_with_parameter(sql, oid):
         items = c.execute(sql, (oid,)).fetchall()
     except:
         print('in db encoding error')
+        print sql
     conn.close()
     return items
 
@@ -30,6 +31,7 @@ def get_items_with_2parameter(sql, a, b):
         items = c.execute(sql, (a, b, )).fetchall()
     except:
         print('in db encoding error')
+        print sql
     conn.close()
     return items
 
@@ -846,7 +848,6 @@ def get_codes():
         out.append({
             'Code': item[0],
             'Description': item[1],
-            'Wildcard': item[0] + ' %',
         })
     return out
 
@@ -1037,6 +1038,7 @@ def get_apeflac_albums():
         items = c.execute(sql).fetchall()
     except:
         print('in db encoding error')
+        print sql
     conn.close()
     out = []
     for item in items:
@@ -1096,6 +1098,7 @@ ORDER BY A1.Title COLLATE NOCASE
         items = c.execute(sql).fetchall()
     except:
         print('in db encoding error')
+        print sql
     conn.close()
     out = []
     # delete_not_existing_path_albums(items)
@@ -1113,13 +1116,57 @@ ORDER BY A1.Title COLLATE NOCASE
     return out
 
 
-sql_librarycode = '''
-  SELECT instr(Code, '_') ic, substr(Code, 0, ic) Code1, substr(Code, ic) Code2,
-  Code, Tempo, Key, Alias
+sql_librarycode_old = '''
+  SELECT Code, Tempo, Key, Alias
    FROM LibraryCode
    WHERE LibraryCode.Code LIKE ?
    ORDER BY length(Code), Code
   '''
+
+
+sql_librarycode = '''
+SELECT
+  Code,
+  Code1,
+  Code2,
+  Tempo,
+  Key,
+  Alias
+FROM (
+  SELECT
+    Code,
+    CASE WHEN ic > 0
+      THEN Code1
+    ELSE Code2 END AS Code1,
+    CASE WHEN ic > 0
+      THEN Code2
+    ELSE NULL END  AS Code2,
+    Tempo,
+    Key,
+    Alias
+  FROM
+    (SELECT
+       ic,
+       Code,
+       substr(Code, 0, ic) Code1,
+       substr(Code, ic)    Code2,
+       Tempo,
+       Key,
+       Alias
+     FROM
+       (SELECT
+          instr(Code, '_') ic,
+          Code,
+          Tempo,
+          Key,
+          Alias
+        FROM LibraryCode
+        WHERE LibraryCode.Code LIKE ?
+       )
+    )
+)
+ORDER BY length(Code1), Code1, Code2
+'''
 
 
 def get_librarycode_sonatas(k_wild):
@@ -1128,11 +1175,23 @@ def get_librarycode_sonatas(k_wild):
     for item in items:
         out.append({
             'k_code': item[0],
-            'Tempo': item[1],
-            'Key': item[2],
-            'Alias': item[3],
+            'code1': item[1],
+            'code2': item[2],
+            'Tempo': item[3],
+            'Key': item[4],
+            'Alias': item[5],
         })
     return out
+
+
+def get_librarycode_explanation(code):
+    sql = '''
+    SELECT Explanation
+    FROM Librarycode_Explanation
+    WHERE LibraryCode=?
+    '''
+    item = get_item_with_id(sql, code)
+    return item
 
 
 def get_pianoboek_nummers(boek_id):

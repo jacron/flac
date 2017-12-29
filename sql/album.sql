@@ -312,7 +312,13 @@ where Name like '%BWV%';
 
 -- sorteer code zo, dat subcode niet mee gesorteerd wordt;
 -- meegenomen is, dat code nu opgesplitst is in code1 en code2.
-SELECT Code1, Code2
+SELECT
+  Code,
+  Code1,
+  Code2,
+  Tempo,
+  Key,
+  Alias
 FROM (
   SELECT
     Code,
@@ -321,13 +327,19 @@ FROM (
     ELSE Code2 END AS Code1,
     CASE WHEN ic > 0
       THEN Code2
-    ELSE NULL END  AS Code2
+    ELSE NULL END  AS Code2,
+    Tempo,
+    Key,
+    Alias
   FROM
     (SELECT
-       Code,
        ic,
+       Code,
        substr(Code, 0, ic) Code1,
-       substr(Code, ic)    Code2
+       substr(Code, ic)    Code2,
+       Tempo,
+       Key,
+       Alias
      FROM
        (SELECT
           instr(Code, '_') ic,
@@ -336,7 +348,7 @@ FROM (
           Key,
           Alias
         FROM LibraryCode
-        WHERE LibraryCode.Code LIKE 'cs%'
+        WHERE LibraryCode.Code LIKE 'K%'
        )
     )
 )

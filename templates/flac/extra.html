@@ -15,9 +15,9 @@
 <ul>
     {% for code in codes %}
         <li>
-            <a href="{% url 'librarycodelist' code.Wildcard %}">{{ code.Description }}</a> |
-            <a href="{% url 'librarycodelist' code.Wildcard  1 %}">piano</a> |
-            <a href="{% url 'librarycodelist' code.Wildcard  2 %}">clavecimbel</a>
+            <a href="{% url 'librarycodelist' code.Code %}">{{ code.Description }}</a> |
+            <a href="{% url 'librarycodelist' code.Code 1 %}">piano</a> |
+            <a href="{% url 'librarycodelist' code.Code 2 %}">clavecimbel</a>
         </li>
     {% endfor %}
 </ul>

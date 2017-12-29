@@ -10,7 +10,7 @@
             {% for item in items %}
                 <tr>
                     <td colspan="2">
-                        <a href="{% url 'librarycode' item.k_code librarywild %}">
+                        <a href="{% url 'librarycode' item.k_code wild %}">
                             <img data-src="/image/{{ item.k_code }}/librarycode/"
                                  class="lazy librarycode-image">
                         </a>
@@ -62,8 +62,8 @@
                         </table>
                     </td>
                 </tr>
-        </td></tr>
+
             {% endfor %}
-</table>
+        </table>
     </div>
 {% endblock %}
