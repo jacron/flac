@@ -202,14 +202,31 @@ $(function () {
     }
 
     function prop(v) {
+        // special: convert names to numbers
+        const names = ['Prelude', 'Allemande', 'Courante', 'Sarabande',
+            'Menuet|Bourree|Gavotte', 'Gigue'];
+        for (var i = 0; i < names.length; i++) {
+            const name = names[i],
+                w = name.split('|');
+            for (var j = 0; j < w.length; j++) {
+                if (v.indexOf(w[j]) === 0) {
+                    return i + 1;
+                }
+            }
+        }
+        // trim right
         [',', '.', ':'].forEach(function(last){
             if (v.substr(v.length-1, 1) === last) {
                 v = v.substr(0, v.length-1);
             }
         });
-        if (v.substr(0,1) === '#') {
-            v = v.substr(1);
-        }
+        // trim left
+        ['#', 'No.', 'Nr.', 'No'].forEach(function(first){
+            if (v.indexOf(first) === 0) {
+                v = v.substr(first.length);
+            }
+        });
+        // convert roman digits
         const romans = ['I', 'II', 'III', 'IV', 'V', 'VI'];
         const pos = romans.indexOf(v);
         if (pos !== -1) {
@@ -238,10 +255,10 @@ $(function () {
         if (nrs.length === 1) {
             return proposal + nrs[0];
         }
-        if (nrs.length === 3) {
-            return proposal + nrs[0] + '_' + nrs[2];
-        }
-        if (nrs.length === 2) {
+        // if (nrs.length > 2) {
+        //     return proposal + nrs[0] + '_' + nrs[2];
+        // }
+        if (nrs.length > 1) {
             return proposal + nrs[0] + '_' + nrs[1];
         }
         return proposal;
@@ -276,7 +293,7 @@ $(function () {
         // }
         var code = proposal;
         var interactive = true;
-        // interactive = false;
+        interactive = false;
         if (interactive) {
             code = prompt('Code', proposal);
             if (code === '0') {

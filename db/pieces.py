@@ -27,7 +27,7 @@ def insert_or_delete_pieces(path, album_id, conn, c):
     # delete non-existing pieces
     for p in pieces:
         if not os.path.exists(os.path.join(path, p['Name'])):
-            delete_piece(pieces['ID'])
+            delete_piece(p['ID'])
     # insert pieces that exist in directory, not in database
     for card in play_types:
         files_path = u"{}{}".format(path, "/*.{}".format(card))
