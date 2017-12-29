@@ -4,7 +4,7 @@
 {% block title %}{{ librarycode }}{% endblock %}
 {% block page %}
     <form>{% csrf_token %}</form>
-    <h4>{{ librarycode }}</h4>
+    <h4>{{ librarycode }} - {{ description }}</h4>
     {% cpages prev_id next_id 'librarycode' wild %}
     <table class="boeken">
     {% for boek in boeken %}
@@ -20,8 +20,12 @@
     {% endfor %}
     </table>
     <div>
-        <img src="/image/{{ librarycode }}/librarycode/" class="librarycode-image">
+        <img src="/image/{{ librarycode }}/librarycode/"
+             class="librarycode-image-details">
     </div>
+    <h4>{{ code.Title|default_if_none:'' }}</h4>
+    <h4>{{ code.Tempo }} - {{ code.Key }} -
+        <span class="code-title">{{ code.Alias }}</span> </h4>
     <table class=" stukken">
     {% for item in pieces %}
         <tr class="piece" id="{{ item.ID }}">

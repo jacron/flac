@@ -203,14 +203,17 @@ $(function () {
 
     function prop(v) {
         // special: convert names to numbers
-        const names = ['Prelude|Prélude|Praeludium', 'Allemande', 'Courante', 'Sarabande',
-            'Menuet|Bourree|Gavotte', 'Gigue'];
-        for (var i = 0; i < names.length; i++) {
-            const name = names[i],
-                w = name.split('|');
-            for (var j = 0; j < w.length; j++) {
-                if (v.indexOf(w[j]) === 0) {
-                    return i + 1;
+        var cello_suites = false;
+        if (cello_suites) {
+            const names = ['Prelude|Prélude|Praeludium', 'Allemande', 'Courante', 'Sarabande',
+                'Menuet|Bourree|Gavotte', 'Gigue'];
+            for (var i = 0; i < names.length; i++) {
+                const name = names[i],
+                    w = name.split('|');
+                for (var j = 0; j < w.length; j++) {
+                    if (v.indexOf(w[j]) === 0) {
+                        return i + 1;
+                    }
                 }
             }
         }
@@ -227,7 +230,7 @@ $(function () {
             }
         });
         // convert roman digits
-        const romans = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+        const romans = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
         const pos = romans.indexOf(v);
         if (pos !== -1) {
             return pos + 1;
@@ -292,12 +295,13 @@ $(function () {
         const hyperlink = $this.parents('.hyperlink'),
             title = hyperlink.find('.title'),
             text = title.text();
-        // Here are some possible propose function calls
         const keywords = {
             K: ['K. ', 'K.'],
             BWV: ['BWV ', 'BWV.'],
             gold: ['variation ', 'Variation ']
         };
+        // Here are some possible propose function calls
+        // you can select one by NOT commenting it out
         const proposal = proposeKCode(text, keywords.BWV, 'bwv ');
         // const proposal = proposeKCode(text, keywords.k, 'K ');
         // const proposal = proposeCode(text, 'cs ');

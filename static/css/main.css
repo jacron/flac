@@ -489,6 +489,10 @@ div[class="pattern"] img {
     border: 1px solid blue;
     color: brown;
 }
+.librarycode-image-details {
+    max-width: 100%;
+    padding: 20px;
+}
 .librarycode-image {
     max-width: 500px;
     padding-top: 24px;
@@ -550,4 +554,7 @@ div[class="pattern"] img {
 }
 .codes-list {
     border-bottom: 1px solid blue;
+}
+.code-title {
+    color: brown;
 }

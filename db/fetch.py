@@ -1169,6 +1169,26 @@ ORDER BY length(Code1), Code1, Code2
 '''
 
 
+def get_librarycode(code):
+    sql = '''
+      SELECT Code, Tempo, Key, Alias, Title
+       FROM LibraryCode
+       WHERE LibraryCode.Code=?
+       ORDER BY length(Code), Code
+      '''
+    item = get_item_with_id(sql, code)
+    if not item or not len(item):
+        return None
+    out = item
+    return {
+        'Code': out[0],
+        'Tempo': out[1],
+        'Key': out[2],
+        'Alias': out[3],
+        'Title': out[4],
+    }
+
+
 def get_librarycode_sonatas(k_wild):
     items = get_items_with_parameter(sql_librarycode, k_wild)
     out = []

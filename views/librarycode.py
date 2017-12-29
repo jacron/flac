@@ -3,10 +3,15 @@ from django.template import loader
 from ..db import (get_librarycode_sonata, get_librarycode_boek,
                   get_librarycode_sonatas,
                   get_prev_librarycode, get_next_librarycode,
-                  get_librarycode_explanation)
+                  get_librarycode_explanation, get_librarycode)
 
 
 def librarycode_content(librarycode, wild):
+    code = get_librarycode(librarycode)
+    d = get_librarycode_explanation(wild[:-2])
+    description = None
+    if d and len(d):
+        description = d[0]
     prev_id = get_prev_librarycode(librarycode, wild)
     next_id = get_next_librarycode(librarycode, wild)
     return {
@@ -15,7 +20,9 @@ def librarycode_content(librarycode, wild):
         'librarycode': librarycode,
         'prev_id': prev_id,
         'next_id': next_id,
-        # 'wild': code,
+        'code': code,
+        'wild': wild,
+        'description': description,
     }
 
 
