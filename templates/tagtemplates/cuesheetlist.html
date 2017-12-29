@@ -24,7 +24,9 @@ Cuesheets ({{ cuesheets | length }})
                 <i class="toggle-cue-content fa fa-caret-right"></i>
                 <span class="code">&lt;{{ cuesheet.Code }}&gt;</span>
                 <span class="add-code" id="{{ cuesheet.ID }}" title="Voeg librarycode toe">
-                    code</span>
+                    code</span> |
+                <span class="add-code" id="{{ cuesheet.ID }}" prompt="true" title="Voeg librarycode toe (interactive)">
+                    prompt</span> |
                 <span class="remove-code" id="{{ cuesheet.ID }}" title="verwijder librarycode">
                     x</span>
             </span>

@@ -237,11 +237,8 @@ $(function () {
         }
     }
 
-    function proposeCode($this, prefix) {
+    function proposeCode(text, prefix) {
         var proposal = prefix;
-        const hyperlink = $this.parents('.hyperlink'),
-            title = hyperlink.find('.title'),
-            text = title.text();
         // console.log(text);
         const w = text.split(" ");
         // skip the first (number?) word, so i = 1
@@ -265,26 +262,46 @@ $(function () {
         return proposal;
     }
 
-    function proposeKCode($this, keywords, proposal) {
-        const hyperlink = $this.parents('.hyperlink'),
-            title = hyperlink.find('.title'),
-            text = title.text();
+    function proposeKCode(text, keywords, proposal) {
         // console.log(text);
         for (var i = 0; i < keywords.length; i++) {
             const keyword = keywords[i],
                 pos = text.indexOf(keyword);
             if (pos !== -1) {
-                return proposal + parseInt(text.substr(pos + keyword.length));
+                proposal += parseInt(text.substr(pos + keyword.length));
+                text = text.substr(pos + keyword.length);
+                break;
             }
         }
-        return null;
+        const w = text.split(" ");
+        var nrs = [];
+        // skip first word, is already parsed
+        for (var i = 1; i < w.length; i++) {
+            var p = prop(w[i]);
+            if (p) {
+                nrs.push(p);
+            }
+        }
+        if (nrs.length) {
+            proposal += '_' + nrs[0];
+        }
+        return proposal;
     }
 
     function addCode($this) {
+        const hyperlink = $this.parents('.hyperlink'),
+            title = hyperlink.find('.title'),
+            text = title.text();
         // Here are some possible propose function calls
-        // const proposal = proposeKCode($this, ['K. ', 'K.'], 'K ');
-        const proposal = proposeCode($this, 'cs ');
-        // const proposal = proposeKCode($this, ['variation ', 'Variation '], 'gold ');
+        const keywords = {
+            K: ['K. ', 'K.'],
+            BWV: ['BWV ', 'BWV.'],
+            gold: ['variation ', 'Variation ']
+        };
+        const proposal = proposeKCode(text, keywords.BWV, 'bwv ');
+        // const proposal = proposeKCode(text, keywords.k, 'K ');
+        // const proposal = proposeCode(text, 'cs ');
+        // const proposal = proposeKCode(text, keywords.gold, 'gold ');
         // if (!proposal) {
         //     return;
         // }
