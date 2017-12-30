@@ -104,13 +104,9 @@ def split_file(flac, filepath):
     # print 'ERR:{}'.format(err)
 
 
-def get_flac(nr, index, track, basedir, tracks, file_duration):
-    strnr = str(nr)
-    if nr < 10:
-        strnr = '0' + strnr
+def get_flac(strnr, index, track, basedir, tracks, file_duration):
     track_title = track['title'].replace('/', '_')
     filename = u'{} {}.flac'.format(strnr, track_title)
-    # outfile = os.path.join(basedir, track['title'] + '.flac')
     outfile = os.path.join(basedir, filename)
     time = track['index']['time']
     if index < len(tracks) - 1:
@@ -143,29 +139,70 @@ def filename(filepath):
     return name  # .replace("_", " ")
 
 
-def split_flac(cuepath):
-    cuesheet = get_full_cuesheet(cuepath, 0)
-    basedir = os.path.dirname(cuepath)
-    nr = 1
+def tidy_nr(nr):
+    strnr = str(nr)
+    if nr < 10:
+        strnr = '0' + strnr
+    if nr < 100:
+        strnr = '0' + strnr
+    return strnr
+
+
+def get_max_nr(basedir):
+    nr = 0
     files_path = u"{}{}".format(basedir, "/*.flac")
     for f in glob.iglob(files_path):
-        if filename(f)[:2] == '01':
-            nr = 101
-        if filename(f)[:2] == '10':
-            nr = 201
-        if filename(f)[:2] == '20':
-            nr = 301
+        fname = filename(f)
+        w = fname.split(' ')[0]
+        try:
+            i = int(w)
+            # make nr the max
+            if i > nr:
+                nr = i
+        except ValueError:
+            pass
+    return nr
+
+
+def incr_nr(nr):
+    # maak een kleine sprong van tien, om de afzonderlijke bron cuesheets te
+    # onderscheiden - tenzij we helemaal aan het begin staan
+    if nr == 0:
+        nr += 1
+    else:
+        nr += 10
+    return nr
+
+
+def split_flac(cuepath):
+    """
+    Splits een groot flac of ape bestand aan de hand van een cuesheet
+    (het cuesheet heeft een verwijzing naar het te splitsen bestand in een
+    relatief pad).
+    Om de volgorde te bewaren begint elk doelbestand met een nummer.
+    Het nummer krijgt tot twee voorloopnullen zodat we tot bijna duizend
+    bestanden in volgorde kunnen houden (sorteerbaar alfabetisch).
+    Meerdere splitsacties na elkaar zijn mogelijk, het rangnummer
+    wordt na een sprongetje van tien voortgezet.
+    Aangenomen wordt dat normale flac bestanden niet met een nummer beginnen.
+    :param cuepath:
+    :return:
+    """
+    cuesheet = get_full_cuesheet(cuepath, 0)
+    basedir = os.path.dirname(cuepath)
+    nr = get_max_nr(basedir)
+    nr = incr_nr(nr)
 
     for cfile in cuesheet['cue']['files']:
         filepath = os.path.join(basedir, cfile['name'])
         file_duration = get_duration(filepath)
         if not file_duration:
             print('unknown duration for: ' + filepath)
-            # return
         flacs = []
         tracks = cfile['tracks']
         for index, track in enumerate(tracks):
-            flacs.append(get_flac(nr, index, track, basedir, tracks, file_duration))
+            strnr = tidy_nr(nr)
+            flacs.append(get_flac(strnr, index, track, basedir, tracks, file_duration))
             nr += 1
         for flac in flacs:
             split_file(flac, filepath)
