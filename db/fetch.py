@@ -1186,7 +1186,8 @@ SELECT
   Code2,
   Tempo,
   Key,
-  Alias
+  Alias,
+  Title
 FROM (
 SELECT
   Code,
@@ -1195,7 +1196,8 @@ SELECT
   Code2,
   Tempo,
   Key,
-  Alias
+  Alias,
+  Title
 FROM (
   SELECT
     Code,
@@ -1207,7 +1209,8 @@ FROM (
     ELSE NULL END  AS Code2,
     Tempo,
     Key,
-    Alias
+    Alias,
+    Title
   FROM
     (SELECT
        ic,
@@ -1216,14 +1219,16 @@ FROM (
        substr(Code, ic)    Code2,
        Tempo,
        Key,
-       Alias
+       Alias,
+       Title
      FROM
        (SELECT
           instr(Code, '_') ic,
           Code,
           Tempo,
           Key,
-          Alias
+          Alias,
+          Title
         FROM LibraryCode
         WHERE LibraryCode.Code LIKE ?
        )
@@ -1268,11 +1273,12 @@ def get_librarycode_sonatas_range(k_wild, min, max):
     for item in items:
         out.append({
             'k_code': item[0],
-            'code1': item[1],
-            'code2': item[2],
-            'Tempo': item[3],
-            'Key': item[4],
-            'Alias': item[5],
+            'code1': item[2],
+            'code2': item[3],
+            'Tempo': item[4],
+            'Key': item[5],
+            'Alias': item[6],
+            'Title': item[7],
         })
     return out
 

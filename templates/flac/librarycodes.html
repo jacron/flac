@@ -18,9 +18,11 @@
                 </tr>
                 <tr>
                     <td class="code">
+                        <a href="{% url 'librarycode' item.k_code wild %}">
                         <div class="code-line">{{ item.k_code }} - {{ item.Tempo|default_if_none:'' }}
-                            - {{ item.Key|default_if_none:'' }}
+                            - {{ item.Key|default_if_none:'' }} - {{ item.Title|default_if_none:'' }}
                         </div>
+                        </a>
                             {% if item.Alias %}
                             <div class="alias">{{ item.Alias|default_if_none:'' }}</div>
                             {% endif %}
