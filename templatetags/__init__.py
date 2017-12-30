@@ -20,9 +20,6 @@ MENU_ITEMS =[
     {'href': '/search/',
      'label': 'Zoek',
      },
-    {'href': '/upload/',
-     'label': 'Upload',
-     },
 ]
 
 

@@ -25,7 +25,7 @@
     </div>
     <h4>{{ code.Title|default_if_none:'' }}</h4>
     <h4>{{ code.Tempo }} - {{ code.Key }} -
-        <span class="code-title">{{ code.Alias }}</span> </h4>
+        <span class="code-title">{{ code.Alias|default_if_none:'' }}</span> </h4>
     <table class=" stukken">
     {% for item in pieces %}
         <tr class="piece" id="{{ item.ID }}">

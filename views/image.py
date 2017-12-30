@@ -3,37 +3,30 @@ from django.http import HttpResponse, HttpResponseNotFound
 from flac.settings import BASE_DIR, NOT_FOUND_IMAGE_PATH
 from ..db import get_album, get_componist_path, get_performer_path
 from django.conf import settings
-import os
 
 
 def static_dir(subdir):
     return BASE_DIR + '/flac/static/images/' + subdir
 
 
-def get_image(path, cached=None):
+def get_image(path):
     image_path = path.encode('utf-8')
-    if os.path.exists(image_path):
+    try:
         image_data = open(image_path, "rb").read()
-        # if cached:
-        #     fp = open(cached, "wb")
-        #     fp.write(image_data)
-    else:
-        image_data = open(NOT_FOUND_IMAGE_PATH, "rb").read()
+    except IOError:
+        try:
+            image_data = open(NOT_FOUND_IMAGE_PATH, "rb").read()
+        except IOError as err:
+            print err
+            return empty_response()
     return HttpResponse(image_data, content_type="image/png")
 
 
 def componistimage(componist_id):
-    # cached = static_dir('componist/' + componist_id)
-    # if os.path.exists(cached):
-    #     print('getting from cache')
-    #     image_data = open(cached, "rb").read()
-    #     return HttpResponse(image_data, content_type="image/png")
-
     componist_path = get_componist_path(componist_id)
     if not componist_path:
         return empty_response()
     image_path = componist_path + settings.PERSON_FILE
-    # return get_image(image_path, cached)
     return get_image(image_path)
 
 
@@ -49,7 +42,8 @@ def instrumentimage(instrument_name):
 def albumimage(album_id):
     album = get_album(album_id)
     if not album:
-        return HttpResponseNotFound('Dit album bestaat niet:"{}"'.format(album_id), )
+        return HttpResponseNotFound(
+            'Dit album bestaat niet:"{}"'.format(album_id), )
     if not album['Path']:
         return empty_response()
     image_path = album['Path'] + settings.COVER_FILE
@@ -59,7 +53,8 @@ def albumimage(album_id):
 def albumimageback(album_id):
     album = get_album(album_id)
     if not album:
-        return HttpResponseNotFound('Dit album bestaat niet:"{}"'.format(album_id), )
+        return HttpResponseNotFound(
+            'Dit album bestaat niet:"{}"'.format(album_id), )
     if not album['Path']:
         return empty_response()
     image_path = album['Path'] + settings.BACK_FILE
