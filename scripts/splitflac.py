@@ -39,6 +39,8 @@ def normtime(t):
     # duration
     # hh:mm:ss.ms
     ttt = t.split('.')
+    if len(ttt) < 2:
+        return None
     ms = int(ttt[1])
     tt = ttt[0].split(':')
     mm = int(tt[1]) + 60 * int(tt[0])
@@ -106,8 +108,8 @@ def split_file(flac, filepath):
 
 def get_flac(strnr, index, track, basedir, tracks, file_duration):
     track_title = track['title'].replace('/', '_')
-    filename = u'{} {}.flac'.format(strnr, track_title)
-    outfile = os.path.join(basedir, filename)
+    fname = u'{} {}.flac'.format(strnr, track_title)
+    outfile = os.path.join(basedir, fname)
     time = track['index']['time']
     if index < len(tracks) - 1:
         time2 = tracks[index + 1]['index']['time']
@@ -198,8 +200,10 @@ def split_flac(cuepath):
         file_duration = get_duration(filepath)
         if not file_duration:
             print('unknown duration for: ' + filepath)
+            continue
         flacs = []
         tracks = cfile['tracks']
+        # use index to keep track of when the last track is being processed
         for index, track in enumerate(tracks):
             strnr = tidy_nr(nr)
             flacs.append(get_flac(strnr, index, track, basedir, tracks, file_duration))
