@@ -560,3 +560,6 @@ div[class="pattern"] img {
 .code-title {
     color: brown;
 }
+.code-range {
+    margin-left: 48px;
+}

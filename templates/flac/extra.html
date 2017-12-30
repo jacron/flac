@@ -14,11 +14,23 @@
     <h4>code</h4>
 <ul>
     {% for code in codes %}
+    {%if code.Range %}
+        <li class="code-range">
+            <a href="{% url 'librarycodelistrange' code.Code code.Range %}">
+                {{ code.Description }} {{ code.Range }}
+            </a> |
+            <a href="{% url 'librarycodelistrange' code.Code code.Range 1 %}">piano</a> |
+            <a href="{% url 'librarycodelistrange' code.Code code.Range 2 %}">clavecimbel</a>
+        </li>
+    {% else %}
         <li>
-            <a href="{% url 'librarycodelist' code.Code %}">{{ code.Description }}</a> |
+            <a href="{% url 'librarycodelist' code.Code %}">
+                {{ code.Description }}
+            </a> |
             <a href="{% url 'librarycodelist' code.Code 1 %}">piano</a> |
             <a href="{% url 'librarycodelist' code.Code 2 %}">clavecimbel</a>
         </li>
+    {% endif %}
     {% endfor %}
 </ul>
     <h4>extra</h4>

@@ -839,7 +839,7 @@ def get_albums_by_cql(cql):
 
 def get_codes():
     sql = '''
-    SELECT LibraryCode, Explanation
+    SELECT LibraryCode, Explanation, Range
     FROM Librarycode_Explanation
     '''
     items = get_items(sql)
@@ -848,6 +848,7 @@ def get_codes():
         out.append({
             'Code': item[0],
             'Description': item[1],
+            'Range': item[2],
         })
     return out
 
@@ -1124,6 +1125,9 @@ sql_librarycode_old = '''
   '''
 
 
+# split Code in Code1 and Code2 for sorting properly
+# e.g. 'BWV 1020_3' becomes 'BWV 1020' and '3'
+# placeholder would be k_wild
 sql_librarycode = '''
 SELECT
   Code,
@@ -1169,6 +1173,67 @@ ORDER BY length(Code1), Code1, Code2
 '''
 
 
+# split Code in Code1 and Code2 for sorting properly
+# e.g. 'BWV 1020_3' becomes 'BWV 1020' and '3'
+# range special:
+# get code objects with Code 1 being within a range between min and max
+# placeholders would be k_wild, min, max
+sql_librarycode_range = '''
+SELECT
+  Code,
+  Code0,
+  Code1,
+  Code2,
+  Tempo,
+  Key,
+  Alias
+FROM (
+SELECT
+  Code,
+  CAST(substr(Code1, instr(Code1, ' ')) AS INT) Code0,
+  Code1,
+  Code2,
+  Tempo,
+  Key,
+  Alias
+FROM (
+  SELECT
+    Code,
+    CASE WHEN ic > 0
+      THEN Code1
+    ELSE Code2 END AS Code1,
+    CASE WHEN ic > 0
+      THEN Code2
+    ELSE NULL END  AS Code2,
+    Tempo,
+    Key,
+    Alias
+  FROM
+    (SELECT
+       ic,
+       Code,
+       substr(Code, 0, ic) Code1,
+       substr(Code, ic)    Code2,
+       Tempo,
+       Key,
+       Alias
+     FROM
+       (SELECT
+          instr(Code, '_') ic,
+          Code,
+          Tempo,
+          Key,
+          Alias
+        FROM LibraryCode
+        WHERE LibraryCode.Code LIKE ?
+       )
+    )
+))
+WHERE Code0 >= ? AND Code0 <= ?
+ORDER BY length(Code1), Code1, Code2;
+'''
+
+
 def get_librarycode(code):
     sql = '''
       SELECT Code, Tempo, Key, Alias, Title
@@ -1187,6 +1252,29 @@ def get_librarycode(code):
         'Alias': out[3],
         'Title': out[4],
     }
+
+def get_librarycode_sonatas_range(k_wild, min, max):
+    sql = sql_librarycode_range
+    conn, c = connect()
+    try:
+        items = c.execute(sql, (k_wild, min, max, )).fetchall()
+    except:
+        print('in db encoding error')
+        print sql
+        conn.close()
+        return []
+    conn.close()
+    out = []
+    for item in items:
+        out.append({
+            'k_code': item[0],
+            'code1': item[1],
+            'code2': item[2],
+            'Tempo': item[3],
+            'Key': item[4],
+            'Alias': item[5],
+        })
+    return out
 
 
 def get_librarycode_sonatas(k_wild):
