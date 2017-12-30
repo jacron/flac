@@ -94,7 +94,7 @@ def split_file(flac, filepath):
         else:
             print 'found no duration for ', flac['path']
     cmd.append(flac['path'])
-    ColorPrint.print_c(flac['path'], ColorPrint.CYAN)
+    ColorPrint.print_c(flac['fname'], ColorPrint.CYAN)
     # try:
     # print cmd
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE,
@@ -121,6 +121,7 @@ def get_flac(strnr, index, track, basedir, tracks, file_duration):
             duration = None
     return {
         'path': outfile,
+        'fname': fname,
         'time': time,
         'duration': duration,
     }
@@ -195,6 +196,7 @@ def split_flac(cuepath):
     nr = get_max_nr(basedir)
     nr = incr_nr(nr)
 
+    ColorPrint.print_c(basedir, ColorPrint.GREEN)
     for cfile in cuesheet['cue']['files']:
         filepath = os.path.join(basedir, cfile['name'])
         file_duration = get_duration(filepath)

@@ -1298,14 +1298,23 @@ def get_librarycode_sonatas(k_wild):
     return out
 
 
-def get_librarycode_explanation(code):
-    sql = '''
-    SELECT Explanation
-    FROM Librarycode_Explanation
-    WHERE LibraryCode=?
-    '''
-    item = get_item_with_id(sql, code)
-    return item
+def get_librarycode_explanation(code, range=None):
+    conn, c = connect()
+    if range:
+        sql = '''
+        SELECT Explanation
+        FROM Librarycode_Explanation
+        WHERE LibraryCode=?
+        AND Range=?
+        '''
+        return c.execute(sql, (code, range, )).fetchone()
+    else:
+        sql = '''
+        SELECT Explanation
+        FROM Librarycode_Explanation
+        WHERE LibraryCode=?
+        '''
+        return c.execute(sql, (code, )).fetchone()
 
 
 def get_pianoboek_nummers(boek_id):
@@ -1435,7 +1444,7 @@ def get_librarycode_sonata(k_code, instrument_id=None):
        ON Performer_Album.AlbumID = Album.ID
        JOIN Performer
        ON Performer_Album.PerformerID = Performer.ID
-       JOIN Instrument
+       LEFT JOIN Instrument
        ON Album.InstrumentID = Instrument.ID
           WHERE Piece.LibraryCode=?
           '''

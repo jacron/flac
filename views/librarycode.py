@@ -55,7 +55,8 @@ def list_content(code, instrument_id, range=None):
     items = get_full_items(wild, instrument_id, range)
     description = get_librarycode_explanation(code)[0]
     if range:
-        description += ' ' + range
+        description += ' - ' + range + \
+                       ' - ' + get_librarycode_explanation(code, range)[0]
     return {
             'items': items,
             'page_title': description,

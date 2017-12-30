@@ -555,7 +555,7 @@ div[class="pattern"] img {
     font-size: 18px;
 }
 .codes-list {
-    border-bottom: 1px solid blue;
+    /*border-bottom: 1px solid blue;*/
 }
 .code-title {
     color: brown;
