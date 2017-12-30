@@ -3,9 +3,9 @@ import codecs
 import glob
 import os
 
-from flac.scripts import play_types, kirkpatrick, ColorPrint
+from flac.scripts import play_types, ColorPrint
 from flac.scripts.splitflac import split_flac
-from . import trimextension, filename, subl_path, get_full_cuesheet, dirname
+from . import trimextension, filename, subl_path, get_full_cuesheet
 from ..db import connect, get_album_path_by_id, insert_piece, get_piece
 
 
@@ -68,6 +68,10 @@ def make_cuesheet(name, ids, album_id):
     lines = []
     lines.append(u'TITLE "{}"'.format(filename(name)))
     # titles = []
+    if len(ids) < 3:
+        ColorPrint.print_c(name + ' :less than 3 ids, so quitting',
+                           ColorPrint.RED)
+        return
     for piece_id in ids:
         piece = get_piece(piece_id)
         fpath = piece.get('Name')
@@ -187,13 +191,15 @@ def read_cuesheets(p, album_id):
                 if track.get('title'):
                     title = track['title'].encode('utf-8')
                     try:
-                        lines.append(u'    TITLE "{}"'.format(title))
+                        line = u'    TITLE "{}"'.format(title)
                     except:
-                        lines.append(u'    TITLE "track {}"'.format(track['nr']))
+                        line = u'    TITLE "track {}"'.format(track['nr'])
                 else:
-                    lines.append(u'    TITLE "track {}"'.format(track['nr']))
+                    line = u'    TITLE "track {}"'.format(track['nr'])
+                lines.append(line)
                 if track.get('performer'):
-                    lines.append(u'    PERFORMER {}'.format(track['performer']))
+                    lines.append(u'    PERFORMER {}'
+                                 .format(track['performer']))
                 lines.append(u'    INDEX {} {}'.format(
                     track['index']['nr'], track['index']['time']))
     return lines
@@ -201,7 +207,8 @@ def read_cuesheets(p, album_id):
 
 def combine_sub_cuesheets(album_id):
     """
-    Combine cuesheets in each subdirectory in one, which you write in the directory
+    Combine cuesheets in each subdirectory in one,
+    which you write in the directory
     :param album_id:
     :return:
     """

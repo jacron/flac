@@ -30,40 +30,40 @@
                     <td class="paste-score-fragment" code="{{ item.k_code }}">
                                     plak plaatje {{ item.k_code }}</td>
                 </tr>
-                <tr>
-                    <td>
-                        <table>
-                            {% for piece in item.pieces %}
-                                <tr>
-                                    <td class="hyperlink">
-                                        <a onclick="play(this, {{ piece.Piece.ID }})"
-                                        title="Afspelen">
-                                            {{ piece.Performer.Name }}
-                                            ({{ piece.Instrument.Name }})
-                                        </a> -
-                                        <a href="{% url 'album' piece.Album.ID %}"
-                                        title="{{ piece.Album.Title }}">
-                                            album
-                                        </a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </td>
-                    <td>
-                        <table>
-                            {% for boek in item.pianoboeken %}
-                                <tr>
-                                    <td class="hyperlink">
-                                        <a href="{% url 'pianoboek' boek.ID %}">
-                                            {{ boek.Name }} ({{ boek.Nr }})
-                                        </a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </td>
-                </tr>
+{#                <tr>#}
+{#                    <td>#}
+{#                        <table>#}
+{#                            {% for piece in item.pieces %}#}
+{#                                <tr>#}
+{#                                    <td class="hyperlink">#}
+{#                                        <a onclick="play(this, {{ piece.Piece.ID }})"#}
+{#                                        title="Afspelen">#}
+{#                                            {{ piece.performers.0.FullName }}#}
+{#                                            ({{ piece.Instrument.Name|default_if_none:'' }})#}
+{#                                        </a> -#}
+{#                                        <a href="{% url 'album' piece.Album.ID %}"#}
+{#                                        title="{{ piece.Album.Title }}">#}
+{#                                            album#}
+{#                                        </a>#}
+{#                                    </td>#}
+{#                                </tr>#}
+{#                            {% endfor %}#}
+{#                        </table>#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        <table>#}
+{#                            {% for boek in item.pianoboeken %}#}
+{#                                <tr>#}
+{#                                    <td class="hyperlink">#}
+{#                                        <a href="{% url 'pianoboek' boek.ID %}">#}
+{#                                            {{ boek.Name }} ({{ boek.Nr }})#}
+{#                                        </a>#}
+{#                                    </td>#}
+{#                                </tr>#}
+{#                            {% endfor %}#}
+{#                        </table>#}
+{#                    </td>#}
+{#                </tr>#}
 
             {% endfor %}
         </table>

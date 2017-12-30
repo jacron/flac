@@ -66,10 +66,10 @@ urlpatterns = [
         views.cmd,
         name='cmd'),
 
-    url(r'^librarycode/listrange/(?P<code>.+)/(?P<range>.+)/(?P<instrument_id>.+)/$',
+    url(r'^librarycode/listrange/(?P<code>.+)/(?P<crange>.+)/(?P<instrument_id>.+)/$',
         views.list_librarycoderange,
         name='librarycodelistrange'),
-    url(r'^librarycode/listrange/(?P<code>.+)/(?P<range>.+)/$',
+    url(r'^librarycode/listrange/(?P<code>.+)/(?P<crange>.+)/$',
         views.list_librarycoderange,
         name='librarycodelistrange'),
     url(r'^librarycode/list/(?P<code>.+)/(?P<instrument_id>.+)/$',

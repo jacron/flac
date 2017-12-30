@@ -1430,9 +1430,6 @@ def get_librarycode_sonata(k_code, instrument_id=None):
       SELECT 
         Piece.ID,
         Piece.Name,
-        Performer.FirstName, 
-        Performer.LastName, 
-        Performer.ID, 
         Instrument.Name,
         Instrument.ID,
         Album.Title,
@@ -1440,10 +1437,6 @@ def get_librarycode_sonata(k_code, instrument_id=None):
        FROM Piece
        JOIN Album
        ON Piece.AlbumID = Album.ID
-       JOIN Performer_Album
-       ON Performer_Album.AlbumID = Album.ID
-       JOIN Performer
-       ON Performer_Album.PerformerID = Performer.ID
        LEFT JOIN Instrument
        ON Album.InstrumentID = Instrument.ID
           WHERE Piece.LibraryCode=?
@@ -1465,17 +1458,13 @@ def get_librarycode_sonata(k_code, instrument_id=None):
                 'Name': item[1],
                 'ID': item[0],
             },
-            'Performer': {
-                'Name': u'{} {}'.format(item[2], item[3]),
-                'ID': item[4],
-            },
             'Instrument': {
-                'Name': item[5],
-                'ID': item[6],
+                'Name': item[2],
+                'ID': item[3],
             },
             'Album': {
-                'Title': item[7],
-                'ID': item[8],
+                'Title': item[4],
+                'ID': item[5],
             }
         })
     return out
