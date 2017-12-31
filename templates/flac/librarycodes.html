@@ -22,12 +22,17 @@
                     <td class="code hyperlink {{ item.cls_code_level }}">
                         <a href="{% url 'librarycode' item.k_code wild %}">
                         <div class="code-line">{{ item.k_code }} - {{ item.Tempo|default_if_none:'' }}
-                            - {{ item.Key|default_if_none:'' }} - {{ item.Title|default_if_none:'' }}
+                            - {{ item.Key|default_if_none:'' }} - {{ item.Title|default_if_none:'' }} -
+                        <span>
+                            <a target="_blank"
+                               href="https://google.nl/search?q={{ item.k_code }}">
+                                <i>google</i></a>
+                        </span>
                         </div>
                         </a>
-                            {% if item.Alias %}
+                        {% if item.Alias %}
                             <div class="alias">{{ item.Alias|default_if_none:'' }}</div>
-                            {% endif %}
+                        {% endif %}
                     </td>
 {#                    <td class="paste-score-fragment" code="{{ item.k_code }}">#}
 {#                                    plak plaatje {{ item.k_code }}</td>#}

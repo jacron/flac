@@ -117,7 +117,7 @@ $(function () {
         var interactive = $this.attr('prompt') === 'true';
         if (interactive) {
             code = prompt('Code', proposal);
-            if (code === '0') {
+            if (!code) {
                 return;
             }
         }
