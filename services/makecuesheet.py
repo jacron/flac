@@ -68,8 +68,9 @@ def make_cuesheet(name, ids, album_id):
     lines = []
     lines.append(u'TITLE "{}"'.format(filename(name)))
     # titles = []
-    if len(ids) < 3:
-        ColorPrint.print_c(name + ' :less than 3 ids, so quitting',
+    print ids
+    if len(ids) < 2:
+        ColorPrint.print_c(name + ' :less than 2 ids, so quitting',
                            ColorPrint.RED)
         return
     for piece_id in ids:

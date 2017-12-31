@@ -1174,9 +1174,11 @@ ORDER BY length(Code1), Code1, Code2
 
 
 # split Code in Code1 and Code2 for sorting properly
-# e.g. 'BWV 1020_3' becomes 'BWV 1020' and '3'
-# range special:
-# get code objects with Code 1 being within a range between min and max
+# place numeric part of Code1 in Code0 (for comparison with range)
+# e.g. 'BWV 1020_3' becomes:
+# Code1: 'BWV 1020'
+# Code2: '3'
+# Code0: 1020
 # placeholders would be k_wild, min, max
 sql_librarycode_range = '''
 SELECT
@@ -1235,7 +1237,7 @@ FROM (
     )
 ))
 WHERE Code0 >= ? AND Code0 <= ?
-ORDER BY length(Code1), Code1, Code2;
+ORDER BY length(Code1), Code1, Code2, Code0;
 '''
 
 

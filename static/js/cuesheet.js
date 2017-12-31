@@ -4,8 +4,19 @@
 'use strict';
 
 function titleOfPiece($val) {
-    var parent = $val.parents('.hyperlink').first();
-    return parent.find('a').first().text();
+    var parent = $val.parents('.hyperlink').first(),
+        title = parent.find('a').first().text(),
+        w = title.split('.');
+    if (w[w.length - 1] === 'flac') {
+        w.pop();
+        title = w.join('.');
+    }
+    var s = title.split(' ');
+    if ($.isNumeric(s[0])) {
+        s.splice(0, 1);
+        title = s.join(' ');
+    }
+    return title;
 }
 
 function getSelectedCuesheetIds($selectForCuesheet, $makeCuesheet) {
