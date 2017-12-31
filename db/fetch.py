@@ -841,6 +841,7 @@ def get_codes():
     sql = '''
     SELECT LibraryCode, Explanation, Range
     FROM Librarycode_Explanation
+    ORDER BY LibraryCode, Range
     '''
     items = get_items(sql)
     out = []
@@ -1237,7 +1238,7 @@ FROM (
     )
 ))
 WHERE Code0 >= ? AND Code0 <= ?
-ORDER BY length(Code1), Code1, Code2, Code0;
+ORDER BY length(Code1), Code1, Code2;
 '''
 
 
