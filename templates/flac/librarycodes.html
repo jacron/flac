@@ -9,7 +9,7 @@
         <table cellpadding="4" class="codes-list">
             {% for item in items %}
                 <tr>
-                    <td colspan="2">
+                    <td colspan="2" class="{{ item.cls_part }}">
                         <a href="{% url 'librarycode' item.k_code wild %}">
                             <img data-src="/image/{{ item.k_code }}/librarycode/"
                                  class="lazy librarycode-image">
@@ -17,7 +17,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="code">
+                    <td class="code hyperlink {{ item.cls_part }}">
                         <a href="{% url 'librarycode' item.k_code wild %}">
                         <div class="code-line">{{ item.k_code }} - {{ item.Tempo|default_if_none:'' }}
                             - {{ item.Key|default_if_none:'' }} - {{ item.Title|default_if_none:'' }}
@@ -27,8 +27,8 @@
                             <div class="alias">{{ item.Alias|default_if_none:'' }}</div>
                             {% endif %}
                     </td>
-                    <td class="paste-score-fragment" code="{{ item.k_code }}">
-                                    plak plaatje {{ item.k_code }}</td>
+{#                    <td class="paste-score-fragment" code="{{ item.k_code }}">#}
+{#                                    plak plaatje {{ item.k_code }}</td>#}
                 </tr>
 {#                <tr>#}
 {#                    <td>#}

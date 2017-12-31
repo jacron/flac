@@ -563,3 +563,6 @@ div[class="pattern"] img {
 .code-range {
     margin-left: 48px;
 }
+.codes-list .part {
+    padding-left: 30px;
+}
