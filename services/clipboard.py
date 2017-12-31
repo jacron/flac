@@ -16,6 +16,11 @@ def save_score_fragment(code):
         img.save(SCORE_FRAGMENT_PATH.format(code))
 
 
+def delete_score_fragment(code):
+    img_path = SCORE_FRAGMENT_PATH.format(code)
+    os.remove(img_path)
+
+
 def get_person_image_path(id, type):
     image_path = None
     if type == 'componist':

@@ -46,8 +46,12 @@
                         {% endif %}
                     </td>
                 {% if not lazy %}
-                    <td class="paste-score-fragment" code="{{ item.k_code }}">
-                                    plak plaatje {{ item.k_code }}</td>
+                    <td>
+                    <span class="paste-score-fragment" code="{{ item.k_code }}">
+                                    plak plaatje {{ item.k_code }}
+                    </span>
+                    <span class="remove-score-fragment" code="{{ item.k_code }}">x</span>
+                    </td>
                 {% endif %}
                 </tr>
 {#                <tr>#}

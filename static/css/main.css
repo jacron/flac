@@ -522,12 +522,14 @@ div[class="pattern"] img {
 .pianoboek-image td {
     padding: 13px;
 }
-.paste-score-fragment {
+.paste-score-fragment,
+.remove-score-fragment {
     cursor: pointer;
     position: relative;
     top: 11px;
 }
-.paste-score-fragment:hover {
+.paste-score-fragment:hover,
+.remove-score-fragment:hover {
     text-decoration: underline;
 }
 .paste-person {

@@ -3,7 +3,8 @@ import os
 
 from flac.services import openpath
 from flac.services.album_content import get_website
-from flac.services.clipboard import save_score_fragment, save_person
+from flac.services.clipboard import save_score_fragment, save_person, \
+    delete_score_fragment
 from flac.services.export import export_albums
 from flac.services.makecuesheet import make_cuesheet, rename_cuesheet, make_subs_cuesheet, split_cued_file, \
     edit_cuesheet, combine_sub_cuesheets, norm_cuesheet
@@ -68,6 +69,10 @@ def openwebsite(album_id):
 
 def paste_score_fragment(code):
     return save_score_fragment(code)
+
+
+def remove_score_fragment(code):
+    return delete_score_fragment(code)
 
 
 def paste_person(id, type):
@@ -198,5 +203,7 @@ def do_post(post):
 
     if cmd == 'paste_score_fragment':
         return paste_score_fragment(post['code'])
+    if cmd == 'remove_score_fragment':
+        return remove_score_fragment(post['code'])
     if cmd == 'paste_person':
         return paste_person(post['id'],  post['type'])

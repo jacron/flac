@@ -29,6 +29,15 @@ $(function () {
             addNewComponist($target);
         }
     });
+    $('.remove-score-fragment').click(function(){
+        var code = $(this).attr('code');
+        ajaxPost({
+            cmd: 'remove_score_fragment',
+            code: code
+        }, function(){
+            location.reload();
+        });
+    });
     $('.paste-score-fragment').click(function(){
         var code = $(this).attr('code');
         ajaxPost({
