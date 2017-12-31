@@ -43,14 +43,18 @@ Cuesheets ({{ cuesheets | length }})
                     bewerk</span> |
                 <span class="cue-norm" id="{{ cuesheet.ID }}" title="normaliseer de titels van delen in de cuesheet">
                     normaliseer</span> |
-                <span class="cue-remove" id="{{ cuesheet.ID }}" title="">
-                    verwijder</span>
-                {% if cuesheet.Title %}|
-                    <span class="cue-plus" title="bewaar als albumtitel">
-                        album-titel</span> |
-                    <span class="cue-title" title="kopieer naar titel voor nieuwe cuesheet">
-                        cuesheet-titel</span>
-                {% endif %}
+                <span class="cue-remove" id="{{ cuesheet.ID }}"
+                      title="{{ cuesheet.Title }}">
+                    verwijder</span> |
+                <span class="cue-rename" id="{{ cuesheet.ID }}"
+                      title="{{ cuesheet.Title }}">
+                    hernoem</span>
+{#                {% if cuesheet.Title %}|#}
+{#                    <span class="cue-plus" title="bewaar als albumtitel">#}
+{#                        album-titel</span> |#}
+{#                    <span class="cue-title" title="kopieer naar titel voor nieuwe cuesheet">#}
+{#                        cuesheet-titel</span>#}
+{#                {% endif %}#}
             </span>
         </li>
         {%  if cuesheet.cue.performer %}

@@ -141,6 +141,15 @@ def remove_cuesheet(piece_id, album_id):
     os.remove(path)
 
 
+def rename_cuesheet(piece_id, album_id, newname):
+    conn, cursor = connect()
+    path = get_album_path_by_id(album_id, cursor)
+    piece = get_piece(piece_id)
+    src = u'{}/{}'.format(path, piece['Name'])
+    dst = u'{}/{}.cue'.format(path, newname)
+    os.rename(src, dst)
+
+
 def norm_cuesheet(piece_id, album_id):
     conn, cursor = connect()
     path = get_album_path_by_id(album_id, cursor)

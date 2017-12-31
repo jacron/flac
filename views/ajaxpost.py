@@ -199,6 +199,8 @@ def do_post(post):
         return norm_cuesheet(post['id'], post['albumid'])
     if cmd == 'removecuesheet':
         return remove_cuesheet(post['id'], post['albumid'])
+    if cmd == 'renamecuesheet':
+        return rename_cuesheet(post['id'], post['albumid'], post['newname'])
 
     if cmd == 'add_code':
         return add_code(post['id'], post['code'])

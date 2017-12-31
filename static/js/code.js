@@ -91,7 +91,23 @@ $(function () {
         }
         if (nrs.length) {
             proposal += '_' + nrs[0];
+        } else {
+            // speciaal geval, e.g. 'BWV1004'
+            for (var k = 1; k < w.length; k++) {
+                var word = w[k];
+                if (word.substr(0, 3).toLowerCase() == 'bwv') {
+                    var n = word.substr(3);
+                    while (n.substr(0,1) == '0') {
+                        n = n.substr(1);
+                    }
+                    return proposal + n;
+                }
+            }
+            if (nrs.length) {
+                proposal += '_' + nrs[0];
+            }
         }
+
         return proposal;
     }
 

@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import glob
 
 from flac.lib.color import ColorPrint
@@ -82,6 +84,8 @@ def timedif(time2, time1):
 
 
 def split_file(flac, filepath):
+    if not flac:
+        return
     duration = to_duration(flac['time'])
     if not duration:
         return
@@ -107,8 +111,13 @@ def split_file(flac, filepath):
 
 
 def get_flac(strnr, index, track, basedir, tracks, file_duration):
-    track_title = track['title'].replace('/', '_')
-    fname = u'{} {}.flac'.format(strnr, track_title)
+    # track_title = track['title'].replace('/', '_')
+    try:
+        fname = u'{} {}.flac'.format(strnr, track['title'])
+    except:
+        print track['title']
+        return None
+    fname = fname.replace('/', '_')
     outfile = os.path.join(basedir, fname)
     time = track['index']['time']
     if index < len(tracks) - 1:

@@ -87,13 +87,29 @@ $(function () {
         });
     }
     function removeCuesheet($this, albumid) {
-        if (!confirm('verwijderen?')){
+        const title = $this.attr('title');
+        if (!confirm("cuesheet '" + title + "' verwijderen?")){
             return;
         }
         ajaxPost({
             cmd: 'removecuesheet',
             albumid: albumid,
             id: $this.attr('id')
+        }, function(){
+            refetch();
+        });
+    }
+    function renameCuesheet($this, albumid) {
+        const title = $this.attr('title');
+        var answer = prompt('hernoemen?', title);
+        if (!answer) {
+            return;
+        }
+        ajaxPost({
+            cmd: 'renamecuesheet',
+            albumid: albumid,
+            id: $this.attr('id'),
+            newname: answer
         }, function(){
             refetch();
         });
@@ -180,6 +196,9 @@ $(function () {
         });
         $('.cue-remove').click(function(){
             removeCuesheet($(this), albumId);
+        });
+        $('.cue-rename').click(function () {
+            renameCuesheet($(this), albumId);
         });
         $('.make-subs').click(function() {
             makeSubs(albumId);
