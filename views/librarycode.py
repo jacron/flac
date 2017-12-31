@@ -52,6 +52,19 @@ def image_exists(k_code):
     return os.path.exists(image_path)
 
 
+def get_nummer(k_code):
+    if '_' in k_code:
+        return k_code.split('_')[1]
+    return None
+
+
+def get_level(k_code):
+    if '_' in k_code:
+        return 'part'
+    else:
+        return 'main'
+
+
 def get_full_items(wild, instrument_id, crange):
     if crange:
         cmin, cmax = from_range(crange)
@@ -61,11 +74,9 @@ def get_full_items(wild, instrument_id, crange):
     for item in items:
         item['pieces'] = get_pieces(item['k_code'], instrument_id)
         item['pianoboeken'] = get_librarycode_boek(item['k_code'])
-        if '_' in item['k_code']:
-            item['cls_code_level'] = 'part'
-        else:
-            item['cls_code_level'] = 'main'
+        item['cls_code_level'] = get_level(item['k_code'])
         item['has_image'] = image_exists(item['k_code'])
+        item['nr'] = get_nummer(item['k_code'])
     return items
 
 
@@ -79,7 +90,8 @@ def list_content(code, instrument_id, crange=None):
     return {
             'items': items,
             'page_title': description,
-            'wild': wild
+            'wild': wild,
+            'lazy': False,
         }
 
 

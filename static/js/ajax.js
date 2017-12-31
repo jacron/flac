@@ -82,6 +82,11 @@ function play(elm, idPiece) {
 
 function postMakeCuesheet(name, ids, cb) {
     if (!ids.length) {
+        console.log('no ids for creating cuesheet');
+        return;
+    }
+    if (!name || !name.length) {
+        console.log('empty name for creating cuesheet');
         return;
     }
     ajaxPost({

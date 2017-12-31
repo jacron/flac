@@ -524,6 +524,8 @@ div[class="pattern"] img {
 }
 .paste-score-fragment {
     cursor: pointer;
+    position: relative;
+    top: 11px;
 }
 .paste-score-fragment:hover {
     text-decoration: underline;

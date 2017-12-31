@@ -186,14 +186,20 @@ $(function () {
      * @param $typeahead
      */
     function autoCreate($selectForCuesheet, cuesheetIds, $makeCuesheet, $typeahead) {
-        $selectForCuesheet.first().get(0).checked = true; // init following function
+        var found = false;
+        $.each($selectForCuesheet, function(key, val) {
+            if (val.checked) {
+                found = true;
+            }
+        });
+        if (!found) {
+            $selectForCuesheet.first().get(0).checked = true; // init following function
+        }
         do {
             cuesheetIds = lcs_pieces($selectForCuesheet, $makeCuesheet);
-            if (cuesheetIds.length > 2) {
-                // console.log(cuesheetIds);
+            if (cuesheetIds.length) {
+                console.log(cuesheetIds);
                 createCuesheet($makeCuesheet, cuesheetIds, $typeahead);
-            } else if (cuesheetIds.length) {
-                unmarkTestedCuesheets();
             }
         } while (cuesheetIds.length);
         location.reload();
