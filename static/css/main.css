@@ -546,16 +546,21 @@ div[class="pattern"] img {
 }
 .librarycodes table td {
     vertical-align: top;
+    padding: 0;
 }
-.alias {
+.codes-list .alias {
+    font-size: 14px;
     font-style: italic;
-    color: brown;
+    /*color: brown;*/
 }
 .code-line {
-    font-size: 18px;
+    font-size: 14px;
 }
 .codes-list {
     /*border-bottom: 1px solid blue;*/
+    border-style: none;
+    border-collapse: collapse;
+    margin-left: 8px;
 }
 .code-title {
     color: brown;
@@ -565,4 +570,11 @@ div[class="pattern"] img {
 }
 .codes-list .part {
     padding-left: 30px;
+}
+.codes-list .main {
+    color: blue;
+    padding-top: 12px;
+}
+.codes-list .main .code-line {
+    /*font-size: 16px;*/
 }

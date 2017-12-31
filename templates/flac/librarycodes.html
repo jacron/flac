@@ -10,7 +10,7 @@
             {% for item in items %}
                 {% if item.has_image %}
                 <tr>
-                    <td colspan="2" class="{{ item.cls_part }}">
+                    <td colspan="2" class="{{ item.cls_code_level }}">
                         <a href="{% url 'librarycode' item.k_code wild %}">
                             <img data-src="/image/{{ item.k_code }}/librarycode/"
                                  class="lazy librarycode-image">
@@ -19,7 +19,7 @@
                 </tr>
                 {% endif %}
                 <tr>
-                    <td class="code hyperlink {{ item.cls_part }}">
+                    <td class="code hyperlink {{ item.cls_code_level }}">
                         <a href="{% url 'librarycode' item.k_code wild %}">
                         <div class="code-line">{{ item.k_code }} - {{ item.Tempo|default_if_none:'' }}
                             - {{ item.Key|default_if_none:'' }} - {{ item.Title|default_if_none:'' }}

@@ -62,7 +62,9 @@ def get_full_items(wild, instrument_id, crange):
         item['pieces'] = get_pieces(item['k_code'], instrument_id)
         item['pianoboeken'] = get_librarycode_boek(item['k_code'])
         if '_' in item['k_code']:
-            item['cls_part'] = 'part'
+            item['cls_code_level'] = 'part'
+        else:
+            item['cls_code_level'] = 'main'
         item['has_image'] = image_exists(item['k_code'])
     return items
 
