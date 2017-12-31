@@ -45,8 +45,10 @@
                             <div class="alias">{{ item.Alias|default_if_none:'' }}</div>
                         {% endif %}
                     </td>
+                {% if not lazy %}
                     <td class="paste-score-fragment" code="{{ item.k_code }}">
                                     plak plaatje {{ item.k_code }}</td>
+                {% endif %}
                 </tr>
 {#                <tr>#}
 {#                    <td>#}

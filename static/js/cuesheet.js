@@ -176,6 +176,24 @@ $(function () {
         pieces.removeClass('selected');
     }
 
+    function testCheck($selectForCuesheet) {
+        var found = false;
+        $.each($selectForCuesheet, function(key, val) {
+            if (val.checked) {
+                found = true;
+            }
+        });
+        return found;
+    }
+
+    function testLcs($selectForCuesheet, $makeCuesheet, cuesheetIds) {
+        if (!testCheck($selectForCuesheet)) {
+            $selectForCuesheet.first().get(0).checked = true; // init following function
+        }
+        cuesheetIds = lcs_pieces($selectForCuesheet, $makeCuesheet);
+        markTestedCuesheets(cuesheetIds);
+    }
+
     /**
      * automatisch cuesheets cre-eren
      * spring naar volgende tot er geen meer zijn
@@ -186,14 +204,9 @@ $(function () {
      * @param $typeahead
      */
     function autoCreate($selectForCuesheet, cuesheetIds, $makeCuesheet, $typeahead) {
-        var found = false;
-        $.each($selectForCuesheet, function(key, val) {
-            if (val.checked) {
-                found = true;
-            }
-        });
-        if (!found) {
+        if (!testCheck($selectForCuesheet)) {
             $selectForCuesheet.first().get(0).checked = true; // init following function
+            // console.log('checking first piece for automation');
         }
         do {
             cuesheetIds = lcs_pieces($selectForCuesheet, $makeCuesheet);
@@ -239,8 +252,7 @@ $(function () {
             }
         });
         $('.test-lcs').click(function(){
-            cuesheetIds = lcs_pieces($selectForCuesheet, $makeCuesheet);
-            markTestedCuesheets(cuesheetIds);
+            testLcs($selectForCuesheet, $makeCuesheet, cuesheetIds);
         });
         $('.auto-create').click(function(){
             autoCreate($selectForCuesheet, cuesheetIds, $makeCuesheet, $typeahead);
