@@ -86,6 +86,18 @@ $(function () {
             refetch();
         });
     }
+    function removeCuesheet($this, albumid) {
+        if (!confirm('verwijderen?')){
+            return;
+        }
+        ajaxPost({
+            cmd: 'removecuesheet',
+            albumid: albumid,
+            id: $this.attr('id')
+        }, function(){
+            refetch();
+        });
+    }
     function removeAlbum(albumId, idText) {
         if (confirm('Album ' + albumId + ' verwijderen?')) {
             ajaxPost({
@@ -165,6 +177,9 @@ $(function () {
         });
         $('.cue-norm').click(function() {
             normCuesheet($(this), albumId);
+        });
+        $('.cue-remove').click(function(){
+            removeCuesheet($(this), albumId);
         });
         $('.make-subs').click(function() {
             makeSubs(albumId);

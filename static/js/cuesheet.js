@@ -3,19 +3,32 @@
  */
 'use strict';
 
+function isMusicFile(s) {
+    const exts = ['flac', 'mp3'];
+    for (var i = 0; i < exts.length; i++) {
+        if (s === exts[i]) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function titleOfPiece($val) {
     var parent = $val.parents('.hyperlink').first(),
-        title = parent.find('a').first().text(),
-        w = title.split('.');
-    if (w[w.length - 1] === 'flac') {
+        title = parent.find('a').first().text();
+
+    var w = title.split('.');
+    if (isMusicFile(w[w.length - 1])){
         w.pop();
         title = w.join('.');
     }
+
     var s = title.split(' ');
     if ($.isNumeric(s[0])) {
         s.splice(0, 1);
         title = s.join(' ');
     }
+
     return title;
 }
 

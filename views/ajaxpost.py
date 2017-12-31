@@ -6,8 +6,9 @@ from flac.services.album_content import get_website
 from flac.services.clipboard import save_score_fragment, save_person, \
     delete_score_fragment
 from flac.services.export import export_albums
-from flac.services.makecuesheet import make_cuesheet, rename_cuesheet, make_subs_cuesheet, split_cued_file, \
-    edit_cuesheet, combine_sub_cuesheets, norm_cuesheet
+from flac.services.makecuesheet import make_cuesheet, rename_cuesheet, \
+    make_subs_cuesheet, split_cued_file, \
+    edit_cuesheet, combine_sub_cuesheets, norm_cuesheet, remove_cuesheet
 from flac.services.path import get_path, path_from_id_field
 from ..db import (abs_insert_componist, update_componistbirth,
                   update_componistdeath, update_performerbirth,
@@ -196,6 +197,9 @@ def do_post(post):
         return combine_sub_cuesheets(post['albumid'])
     if cmd == 'normcuesheet':
         return norm_cuesheet(post['id'], post['albumid'])
+    if cmd == 'removecuesheet':
+        return remove_cuesheet(post['id'], post['albumid'])
+
     if cmd == 'add_code':
         return add_code(post['id'], post['code'])
     if cmd == 'remove_code':

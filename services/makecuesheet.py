@@ -133,6 +133,14 @@ def make_subs_cuesheet(album_id):
             write_cuesheet(filename(p), album_id, lines)
 
 
+def remove_cuesheet(piece_id, album_id):
+    conn, cursor = connect()
+    path = get_album_path_by_id(album_id, cursor)
+    piece = get_piece(piece_id)
+    path = u'{}/{}'.format(path, piece['Name'])
+    os.remove(path)
+
+
 def norm_cuesheet(piece_id, album_id):
     conn, cursor = connect()
     path = get_album_path_by_id(album_id, cursor)

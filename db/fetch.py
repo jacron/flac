@@ -839,9 +839,12 @@ def get_albums_by_cql(cql):
 
 def get_codes():
     sql = '''
-    SELECT LibraryCode, Explanation, Range
-    FROM Librarycode_Explanation
-    ORDER BY LibraryCode, Range
+    SELECT LibraryCode, Explanation, Range, M FROM (
+        SELECT LibraryCode, Explanation, Range, 
+          CAST(substr(Range, 0, instr(Range, '-')) AS INT) M
+          FROM Librarycode_Explanation
+    )
+    ORDER BY LibraryCode, M
     '''
     items = get_items(sql)
     out = []
