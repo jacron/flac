@@ -243,6 +243,7 @@ fieldset {
 .cue-edit,
 .cue-norm,
 .cue-remove,
+.cue-rename,
 .add-code,
 .remove-code {
     cursor: pointer;
@@ -254,6 +255,7 @@ fieldset {
 .cue-edit:hover,
 .cue-norm:hover,
 .cue-remove:hover,
+.cue-rename:hover,
 .add-code:hover,
 .remove-code:hover {
     text-decoration: underline;

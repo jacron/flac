@@ -228,6 +228,11 @@ $(function () {
             filterAlbums($(this));
         }
     });
+    $('.open-finder').keydown(function(e){
+        if (e.key === 'Enter') {
+            openfinder($(this).val(), 'album');
+        }
+    });
 
 });
 
