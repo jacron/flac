@@ -5,7 +5,8 @@ from ..db import (get_librarycode_sonata, get_librarycode_boek,
                   get_prev_librarycode, get_next_librarycode,
                   get_librarycode_explanation, get_librarycode,
                   get_librarycode_sonatas_range,
-                  get_album_performers)
+                  get_album_performers, settings)
+import os
 
 
 def one_librarycode_content(librarycode, wild):
@@ -46,6 +47,11 @@ def get_pieces(code, instrument_id=0):
     return pieces
 
 
+def image_exists(k_code):
+    image_path = settings.LIBRARYCODE_PATH + k_code + '.png'
+    return os.path.exists(image_path)
+
+
 def get_full_items(wild, instrument_id, crange):
     if crange:
         cmin, cmax = from_range(crange)
@@ -57,6 +63,7 @@ def get_full_items(wild, instrument_id, crange):
         item['pianoboeken'] = get_librarycode_boek(item['k_code'])
         if '_' in item['k_code']:
             item['cls_part'] = 'part'
+        item['has_image'] = image_exists(item['k_code'])
     return items
 
 
