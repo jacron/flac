@@ -16,6 +16,13 @@ $(function () {
             albumid: albumId
         })
     }
+    function editAlbumDescription($this, albumId) {
+        ajaxPost({
+            cmd: 'update_album_description',
+            description: $this.text().trim(),
+            albumid: albumId
+        })
+    }
     function copyTitle($this, albumId) {
         const title = getTitle($this),
             $title = $('.edit-title');
@@ -168,6 +175,11 @@ $(function () {
         $('.edit-title').keydown(function (e) {
             if (e.key === 'Tab') {
                 editAlbumTitle($(this), albumId);
+            }
+        });
+        $('.edit-description').keydown(function(e){
+            if (e.key === 'Tab') {
+                editAlbumDescription($(this), albumId);
             }
         });
         $('.refetch').click(function(){

@@ -13,7 +13,8 @@ from flac.services.path import get_path, path_from_id_field
 from ..db import (abs_insert_componist, update_componistbirth,
                   update_componistdeath, update_performerbirth,
                   update_performerdeath, adjust_kk, inherit_elements,
-                  read_albums, update_piece_library_code)
+                  read_albums, update_piece_library_code,
+                  update_album_description)
 from flac.db.pieces import refetch_pieces
 from ..db import (
     get_album, get_piece, update_album_title, add_tag_to_album,
@@ -177,6 +178,9 @@ def do_post(post):
         return 'Website opened'
     if cmd == 'update_album_title':
         return update_album_title(album_id=int(post['albumid']), title=post['title'])
+    if cmd == 'update_album_description':
+        return update_album_description(album_id=int(post['albumid']),
+                                        description=post['description'])
     if cmd == 'adjust_kk':
         return adjust_kk(album_id=int(post['albumid']))
     if cmd == 'inherit_elements':

@@ -84,6 +84,17 @@ def update_album_title(album_id, title):
     con.commit()
 
 
+def update_album_description(album_id, description):
+    sql = """
+    UPDATE Album 
+    SET Description=?
+    WHERE Album.ID=?
+    """
+    con, c = connect()
+    c.execute(sql, (description, album_id, )).fetchone()
+    con.commit()
+
+
 def add_new_componist_to_album(name, albumid):
     # name is not unambivalently translatable in firstname and lastname
     # so we search for it existing first
