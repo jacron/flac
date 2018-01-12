@@ -14,7 +14,7 @@ from ..db import (abs_insert_componist, update_componistbirth,
                   update_componistdeath, update_performerbirth,
                   update_performerdeath, adjust_kk, inherit_elements,
                   read_albums, update_piece_library_code,
-                  update_album_description)
+                  update_album_description, update_librarycode)
 from flac.db.pieces import refetch_pieces
 from ..db import (
     get_album, get_piece, update_album_title, add_tag_to_album,
@@ -87,6 +87,14 @@ def add_code(piece_id, librarycode):
 
 def remove_code(piece_id):
     update_piece_library_code(piece_id, None)
+
+
+def toggle_code_favorite(librarycode, favorite):
+    state = {
+        'true': 1,
+        'false': 0
+    }
+    update_librarycode(librarycode, state[favorite])
 
 
 def do_post(post):
@@ -210,6 +218,8 @@ def do_post(post):
         return add_code(post['id'], post['code'])
     if cmd == 'remove_code':
         return remove_code(post['id'])
+    if cmd == 'toggle_code_favorite':
+        return toggle_code_favorite(post['code'], post['favorite'])
 
     if cmd == 'paste_score_fragment':
         return paste_score_fragment(post['code'])

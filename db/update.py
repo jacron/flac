@@ -52,6 +52,16 @@ def inherit_elements(album_id):
         inherit_album(album, componisten, performers, instrument, c, conn)
 
 
+def update_librarycode(code, favorite):
+    sql = '''
+    UPDATE LibraryCode
+    SET Favorite=?
+    WHERE Code=?'''
+    con, c = connect()
+    c.execute(sql, (favorite, code, )).fetchone()
+    con.commit()
+
+
 def update_piece_library_code(id, code):
     sql = '''
     UPDATE Piece

@@ -7,6 +7,7 @@ from flac.views.ajaxpost import openpath
 folderpath = '/Volumes/Media/tmp/folder.jpg'
 path = '/Volumes/Media/tmp'
 
+
 def save_cb_image():
     img = ImageGrab.grabclipboard()
     if img:

@@ -53,6 +53,15 @@
                     <span class="remove-score-fragment" code="{{ item.k_code }}">x</span>
                     </td>
                 {% endif %}
+                <td>
+                    <input type="checkbox"
+                           class="favorite-librarycode"
+                           code="{{ item.k_code }}"
+                           {% if item.Favorite > 0 %}
+                           checked="checked"
+                           {% endif %}
+                    >
+                </td>
                 </tr>
 {#                <tr>#}
 {#                    <td>#}

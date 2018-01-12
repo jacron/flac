@@ -222,7 +222,7 @@ def main():
     # path = get_path_of_album(album_id)
     # mother_id = 3816
     # artiest = "Fritz Reiner"
-    ComponistID = 1
+    ComponistID = 7
     # componist = from_path(path)
     # ComponistID = componist_from_album(album_id)
     # PerformerID = 48
@@ -230,7 +230,7 @@ def main():
     path = '/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten piano/Daria van den Bercken - Domenico Scarlatti and Daria van den Bercken (2017)'
     path = '/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten piano/Hyperion - Hewitt plays Scarlatti; Sonatas vol. 2'
     path = '/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano/Bach - Goldberg Variations - Hantai (2003)'
-    path = '/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten piano/Pierre Hantai - Domenico Scarlatti, vol.2'
+    path = '/Volumes/Media/Video/Video Klassiek/Mozart/MozPTrioMutt'
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     if path is None:
         print('No path')

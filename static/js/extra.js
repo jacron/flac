@@ -48,4 +48,16 @@ $(function () {
             location.reload();
         });
     });
+    $('.favorite-librarycode').change(function(){
+        var $this = $(this),
+            code = $this.attr('code');
+        console.log($this.is(':checked'));
+        ajaxPost({
+            cmd: 'toggle_code_favorite',
+            code: code,
+            favorite: $this.is(':checked')
+        }, function(){
+            // location.reload();
+        });
+    });
 });
