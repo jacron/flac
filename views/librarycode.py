@@ -65,12 +65,12 @@ def get_level(k_code):
         return 'main'
 
 
-def get_full_items(wild, instrument_id, crange):
+def get_full_items(wild, instrument_id, crange, favorite):
     if crange:
         cmin, cmax = from_range(crange)
-        items = get_librarycode_sonatas_range(wild, cmin, cmax)
+        items = get_librarycode_sonatas_range(wild, cmin, cmax, favorite)
     else:
-        items = get_librarycode_sonatas(wild)
+        items = get_librarycode_sonatas(wild, favorite)
     for item in items:
         item['pieces'] = get_pieces(item['k_code'], instrument_id)
         item['pianoboeken'] = get_librarycode_boek(item['k_code'])
@@ -80,9 +80,9 @@ def get_full_items(wild, instrument_id, crange):
     return items
 
 
-def list_content(code, instrument_id, crange=None):
+def list_content(code, instrument_id=None, crange=None, favorite=None):
     wild = code + ' %'
-    items = get_full_items(wild, instrument_id, crange)
+    items = get_full_items(wild, instrument_id, crange, favorite)
     description = get_librarycode_explanation(code)[0]
     if crange:
         description += ' - ' + crange + \
@@ -95,13 +95,25 @@ def list_content(code, instrument_id, crange=None):
         }
 
 
-def list_librarycoderange(request, code, crange, instrument_id=0):
+def list_librarycoderange(request, code, crange):
     template = loader.get_template('flac/librarycodes.html')
-    content = list_content(code, instrument_id, crange)
+    content = list_content(code=code, crange=crange)
     return HttpResponse(template.render(content, request))
 
 
-def list_librarycode(request, code, instrument_id=0):
+def list_librarycode_favorite(request, code, favorite):
     template = loader.get_template('flac/librarycodes.html')
-    content = list_content(code, instrument_id)
+    content = list_content(code=code, favorite=favorite)
+    return HttpResponse(template.render(content, request))
+
+
+def list_librarycode_instrument(request, code, instrument_id):
+    template = loader.get_template('flac/librarycodes.html')
+    content = list_content(code=code, instrument_id=instrument_id)
+    return HttpResponse(template.render(content, request))
+
+
+def list_librarycode(request, code):
+    template = loader.get_template('flac/librarycodes.html')
+    content = list_content(code=code)
     return HttpResponse(template.render(content, request))

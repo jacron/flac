@@ -174,7 +174,8 @@ sql_mother_albums = '''
 
 def get_next_librarycode(librarycode, librarywild):
     if not librarycode : return None
-    items = get_items_with_parameter(sql_librarycode, librarywild)
+    sql = sql_librarycode.format('')
+    items = get_items_with_parameter(sql, librarywild)
     match = None
     for item in items:
         if match:
@@ -219,7 +220,8 @@ def get_next_list_album(id_album, list_name, list_id):
 
 def get_prev_librarycode(librarycode, librarywild):
     if not librarycode : return None
-    items = get_items_with_parameter(sql_librarycode, librarywild)
+    sql = sql_librarycode.format('')
+    items = get_items_with_parameter(sql, librarywild)
     match = None
     for item in items:
         if match and item[0] == librarycode:
@@ -1174,6 +1176,7 @@ FROM (
           Favorite
         FROM LibraryCode
         WHERE LibraryCode.Code LIKE ?
+        {}
        )
     )
 )
@@ -1300,8 +1303,11 @@ def get_librarycode_sonatas_range(k_wild, min, max):
     return out
 
 
-def get_librarycode_sonatas(k_wild):
-    items = get_items_with_parameter(sql_librarycode, k_wild)
+def get_librarycode_sonatas(k_wild, favorite=None):
+    sql = sql_librarycode.format('')
+    if favorite:
+        sql = sql_librarycode.format('AND Favorite=' + favorite)
+    items = get_items_with_parameter(sql, k_wild)
     out = []
     for item in items:
         out.append({
