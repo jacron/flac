@@ -6,6 +6,8 @@
     <div class="librarycodes">
         <form>{% csrf_token %}</form>
         <h4>{{ page_title }} ({{ items|length }})</h4>
+    <a href="{% url 'librarycodelistfavorite' code 1 %}">fav</a> |
+    <a href="{% url 'librarycodelist' code %}">all</a>
         <table cellpadding="4" class="codes-list">
             {% for item in items %}
                 {% if item.has_image %}

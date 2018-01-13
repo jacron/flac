@@ -12,6 +12,19 @@ def make_fullname(first_name, last_name):
     return u'{} {}'.format(first_name, last_name)
 
 
+def execute(sql, params):
+    conn, c = connect()
+    try:
+        items = c.execute(sql, params).fetchall()
+    except:
+        print('in db encoding error')
+        print sql
+        conn.close()
+        return []
+    conn.close()
+    return items
+
+
 def get_items_with_parameter(sql, oid):
     conn, c = connect()
     items = []
@@ -1249,6 +1262,7 @@ FROM (
           Favorite
         FROM LibraryCode
         WHERE LibraryCode.Code LIKE ?
+        {}
        )
     )
 ))
@@ -1277,17 +1291,15 @@ def get_librarycode(code):
         'Favorite': out[5],
     }
 
-def get_librarycode_sonatas_range(k_wild, min, max):
-    sql = sql_librarycode_range
-    conn, c = connect()
-    try:
-        items = c.execute(sql, (k_wild, min, max, )).fetchall()
-    except:
-        print('in db encoding error')
-        print sql
-        conn.close()
-        return []
-    conn.close()
+
+def get_librarycode_sonatas_range(k_wild, min, max, favorite=None):
+    if favorite:
+        sql = sql_librarycode_range.format('AND Favorite=?')
+        params = (k_wild, min, max, favorite, )
+    else:
+        sql = sql_librarycode_range.format('')
+        params = (k_wild, min, max,)
+    items = execute(sql, params)
     out = []
     for item in items:
         out.append({
@@ -1304,10 +1316,14 @@ def get_librarycode_sonatas_range(k_wild, min, max):
 
 
 def get_librarycode_sonatas(k_wild, favorite=None):
-    sql = sql_librarycode.format('')
     if favorite:
-        sql = sql_librarycode.format('AND Favorite=' + favorite)
-    items = get_items_with_parameter(sql, k_wild)
+        sql = sql_librarycode.format('AND Favorite=?')
+        params = (k_wild, favorite, )
+    else:
+        sql = sql_librarycode.format('')
+        params = (k_wild, )
+
+    items = execute(sql, params)
     out = []
     for item in items:
         out.append({

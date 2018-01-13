@@ -91,6 +91,7 @@ def list_content(code, instrument_id=None, crange=None, favorite=None):
             'items': items,
             'page_title': description,
             'wild': wild,
+            'code': code,
             'lazy': True,
         }
 
