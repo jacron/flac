@@ -60,11 +60,7 @@
             Erf</a> |
         <a class="read_albums" title="Lees albums in">Lees albums in</a>
         {% endif %}
-        {% if show_proposals == '1' %}
-            <div>
-            {% proposallist proposals artists %}
-            </div>
-        {% endif %}
+        {% proposallist proposals artists show_proposals %}
     </div>
 {% if albums|length %}
     {% alfabet %}

@@ -59,9 +59,9 @@ def cmd(request, cmd_code):
     if cmd_code == 'cue':
         toggle_setting('read_cuesheet')
         return extra_view(request)
-    if cmd_code == 'proposals':
-        toggle_setting('show_proposals')
-        return extra_view(request)
+    # if cmd_code == 'proposals':
+    #     toggle_setting('show_proposals')
+    #     return extra_view(request)
     if cmd_code == 'folder':
         save_cb_image('folder')
         return extra_view(request)

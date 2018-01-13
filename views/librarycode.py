@@ -92,7 +92,7 @@ def list_content(code, instrument_id=None, crange=None, favorite=None):
             'page_title': description,
             'wild': wild,
             'code': code,
-            'lazy': True,
+            'lazy': False,
         }
 
 

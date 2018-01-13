@@ -233,6 +233,13 @@ $(function () {
         $('.album-image.folder').click(function() {
             $('.album-image.back').toggle();
         });
+        $('.toggle-show-proposals').change(function(){
+            ajaxPost({
+                'cmd': 'proposals'
+            }, function(){
+                location.reload();
+            });
+        });
     }
     // albumlist also lives on componist page etc
     $('.filter-albums').keydown(function(e){

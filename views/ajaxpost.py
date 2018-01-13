@@ -14,7 +14,7 @@ from ..db import (abs_insert_componist, update_componistbirth,
                   update_componistdeath, update_performerbirth,
                   update_performerdeath, adjust_kk, inherit_elements,
                   read_albums, update_piece_library_code,
-                  update_album_description, update_librarycode)
+                  update_album_description, update_librarycode, toggle_setting)
 from flac.db.pieces import refetch_pieces
 from ..db import (
     get_album, get_piece, update_album_title, add_tag_to_album,
@@ -227,3 +227,8 @@ def do_post(post):
         return remove_score_fragment(post['code'])
     if cmd == 'paste_person':
         return paste_person(post['id'],  post['type'])
+
+    if cmd == 'proposals':
+        return toggle_setting('show_proposals')
+
+    print cmd, 'not a valid cmd'

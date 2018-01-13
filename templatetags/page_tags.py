@@ -106,8 +106,8 @@ def editalbum(select, add, albumid, options):
 @register.inclusion_tag(
     'tagtemplates/proposallist.html',
 )
-def proposallist(proposals, artists):
-    return dict(proposals=proposals, artists=artists)
+def proposallist(proposals, artists, show):
+    return dict(proposals=proposals, artists=artists, show=show)
 
 
 @register.inclusion_tag(

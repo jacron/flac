@@ -1155,6 +1155,7 @@ SELECT
   Tempo,
   Key,
   Alias,
+  Title,
   Favorite
 FROM (
   SELECT
@@ -1168,6 +1169,7 @@ FROM (
     Tempo,
     Key,
     Alias,
+    Title,
     Favorite
   FROM
     (SELECT
@@ -1178,6 +1180,7 @@ FROM (
        Tempo,
        Key,
        Alias,
+       Title,
        Favorite
      FROM
        (SELECT
@@ -1186,6 +1189,7 @@ FROM (
           Tempo,
           Key,
           Alias,
+          Title,
           Favorite
         FROM LibraryCode
         WHERE LibraryCode.Code LIKE ?
@@ -1333,7 +1337,8 @@ def get_librarycode_sonatas(k_wild, favorite=None):
             'Tempo': item[3],
             'Key': item[4],
             'Alias': item[5],
-            'Favorite': item[6],
+            'Title': item[6],
+            'Favorite': item[7],
         })
     return out
 

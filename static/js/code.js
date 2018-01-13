@@ -116,14 +116,14 @@ $(function () {
             title = hyperlink.find('.title'),
             text = title.text();
         const keywords = {
-            K: ['K. ', 'K.'],
+            K: ['K. ', 'K.', 'K ', 'KV ', 'KV'],
             BWV: ['BWV ', 'BWV.'],
             gold: ['variation ', 'Variation ']
         };
         // Here are some possible propose function calls
         // you can select one by NOT commenting it out
-        const proposal = proposeKCode(text, keywords.BWV, 'bwv ');
-        // const proposal = proposeKCode(text, keywords.k, 'K ');
+        // const proposal = proposeKCode(text, keywords.BWV, 'bwv ');
+        const proposal = proposeKCode(text, keywords.K, 'KV ');
         // const proposal = proposeCode(text, 'cs ');
         // const proposal = proposeKCode(text, keywords.gold, 'gold ');
         // if (!proposal) {
