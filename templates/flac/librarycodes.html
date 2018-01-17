@@ -6,6 +6,9 @@
     <div class="librarycodes">
         <form>{% csrf_token %}</form>
         <h4>{{ page_title }} ({{ items|length }})</h4>
+    <h5><a href="{% url 'componist' componist.ID %}">
+        {{ componist.FullName }}
+    </a></h5>
     <a href="{% url 'librarycodelistfavorite' code 1 %}">fav</a> |
     <a href="{% url 'librarycodelist' code %}">all</a>
         <table cellpadding="4" class="codes-list">
@@ -47,7 +50,7 @@
                             <div class="alias">{{ item.Alias|default_if_none:'' }}</div>
                         {% endif %}
                     </td>
-                {% if not lazy %}
+                {% if plak %}
                     <td>
                     <span class="paste-score-fragment" code="{{ item.k_code }}">
                                     plak plaatje {{ item.k_code }}

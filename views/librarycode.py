@@ -5,7 +5,7 @@ from ..db import (get_librarycode_sonata, get_librarycode_boek,
                   get_prev_librarycode, get_next_librarycode,
                   get_librarycode_explanation, get_librarycode,
                   get_librarycode_sonatas_range,
-                  get_album_performers, settings)
+                  get_album_performers, settings, get_componist)
 import os
 
 
@@ -83,7 +83,10 @@ def get_full_items(wild, instrument_id, crange, favorite):
 def list_content(code, instrument_id=None, crange=None, favorite=None):
     wild = code + ' %'
     items = get_full_items(wild, instrument_id, crange, favorite)
-    description = get_librarycode_explanation(code)[0]
+    explanation = get_librarycode_explanation(code)
+    description = explanation[0]
+    componist_id = explanation[1]
+    componist = get_componist(componist_id)
     if crange:
         description += ' - ' + crange + \
                        ' - ' + get_librarycode_explanation(code, crange)[0]
@@ -93,6 +96,8 @@ def list_content(code, instrument_id=None, crange=None, favorite=None):
             'wild': wild,
             'code': code,
             'lazy': False,
+            'plak': False,
+            'componist': componist,
         }
 
 

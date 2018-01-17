@@ -14,7 +14,8 @@ from ..db import (abs_insert_componist, update_componistbirth,
                   update_componistdeath, update_performerbirth,
                   update_performerdeath, adjust_kk, inherit_elements,
                   read_albums, update_piece_library_code,
-                  update_album_description, update_librarycode, toggle_setting)
+                  update_album_description, update_librarycode, toggle_setting,
+                  update_played)
 from flac.db.pieces import refetch_pieces
 from ..db import (
     get_album, get_piece, update_album_title, add_tag_to_album,
@@ -36,6 +37,7 @@ def play(args):
     name = piece['Name'].encode('utf-8')
     os.system('open -a "{}" "{}"'.format(settings.MEDIA_PLAYER,
                                          "{}/{}".format(path, name)))
+    update_played(piece['ID'])
 
 
 def path_for_person(path):

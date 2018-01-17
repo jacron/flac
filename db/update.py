@@ -1,11 +1,15 @@
 from flac.db import (get_pieces, get_album_albums,
-                     get_album_componisten, get_album_performers, get_album_instruments, insert_componist,
-                     insert_album_componist, insert_album_performer, insert_album_instrument, get_album, insert_album)
+                     get_album_componisten, get_album_performers,
+                     get_album_instruments,
+                     insert_album_componist, insert_album_performer,
+                     insert_album_instrument, get_album, insert_album,
+                     get_piece)
 from flac.lib.color import ColorPrint
 from flac.settings import SKIP_DIRS
 from .connect import connect
 from ..services import splits_naam, splits_years
 import os
+
 
 def get_library_code(name):
     parts = name.split('K. ')
@@ -62,14 +66,14 @@ def update_librarycode(code, favorite):
     con.commit()
 
 
-def update_piece_library_code(id, code):
+def update_piece_library_code(piece_id, code):
     sql = '''
     UPDATE Piece
     SET LibraryCode=?
     WHERE ID=?
     '''
     con, c = connect()
-    c.execute(sql, (code, id, )).fetchone()
+    c.execute(sql, (code, piece_id,)).fetchone()
     con.commit()
     sql = '''
     INSERT OR IGNORE 
@@ -80,7 +84,6 @@ def update_piece_library_code(id, code):
     con, c = connect()
     c.execute(sql, (code, )).fetchone()
     con.commit()
-
 
 
 def update_album_title(album_id, title):
@@ -238,7 +241,6 @@ def add_new_instrument_to_album(name, albumid):
         instrument_id = new_instrument(name)
     if instrument_id:
         add_instrument_to_album(instrument_id[0], albumid)
-
 
 
 def new_componist(name):
@@ -500,7 +502,6 @@ def read_albums(album_id):
             process_album(p, album_id)
 
 
-
 def update_performeryears(years, performer_id):
     birth, death = splits_years(years)
     sql = """
@@ -542,6 +543,22 @@ def set_album_title(album_id, title, c, con):
     WHERE ID=?
     """
     c.execute(sql, (title, album_id,)).fetchone()
+    con.commit()
+
+
+def update_played(piece_id):
+    piece = get_piece(piece_id)
+    n_played = piece['NPlayed']
+    if not n_played:
+        n_played = 0
+    n_played += 1
+    sql = '''
+    UPDATE Piece
+    SET NPlayed=?, LastPlayed=current_date
+    WHERE ID=?
+    '''
+    con, c = connect()
+    c.execute(sql, (n_played, piece_id,)).fetchone()
     con.commit()
 
 

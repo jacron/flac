@@ -31,7 +31,7 @@
     </span>
 </h4>
 <div contenteditable="true" class="edit-description">
-    <span>{{ album.Description }}</span></div>
+    <span>{{ album.Description|default_if_none:'' }}</span></div>
 {% for tag in album_tags %}
     <i class="tag hyperlink"><a href="/tag/{{ tag.ID }}">{{ tag.Name }}</a>
         <div class="fa fa-times-circle remove" id="{{ tag.ID }}"></div>

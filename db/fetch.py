@@ -1347,7 +1347,7 @@ def get_librarycode_explanation(code, range=None):
     conn, c = connect()
     if range:
         sql = '''
-        SELECT Explanation
+        SELECT Explanation, ComponistID
         FROM Librarycode_Explanation
         WHERE LibraryCode=?
         AND Range=?
@@ -1355,7 +1355,7 @@ def get_librarycode_explanation(code, range=None):
         return c.execute(sql, (code, range, )).fetchone()
     else:
         sql = '''
-        SELECT Explanation
+        SELECT Explanation, ComponistID
         FROM Librarycode_Explanation
         WHERE LibraryCode=?
         '''
@@ -1763,13 +1763,14 @@ def get_mother_title(id_album):
 
 def get_piece(id_piece):
     sql = '''
-    SELECT Name, AlbumID, ID FROM Piece WHERE ID=?
+    SELECT Name, AlbumID, ID, NPlayed FROM Piece WHERE ID=?
     '''
     fields = get_item_with_id(sql, id_piece)
     return {
         "Name": fields[0],
         "AlbumID": fields[1],
         "ID": fields[2],
+        "NPlayed": fields[3],
     }
 
 

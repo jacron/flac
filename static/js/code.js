@@ -116,7 +116,7 @@ $(function () {
             title = hyperlink.find('.title'),
             text = title.text();
         const keywords = {
-            K: ['K. ', 'K.', 'K ', 'KV ', 'KV'],
+            K: ['K. ', 'K.', 'K ', 'KV ', 'KV', 'K'],
             BWV: ['BWV ', 'BWV.'],
             gold: ['variation ', 'Variation ']
         };
