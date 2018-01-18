@@ -109,5 +109,10 @@ urlpatterns = [
     url(r'^pianoboek/$',
         views.pianoboeken,
         name='pianoboeken'),
-    url(r'^upload/$', views.uploadalbum),
+    url(r'^upload/$',
+        views.uploadalbum,
+        name='upload'),
+    url(r'^nplayed/$',
+        views.nplayed,
+        name='nplayed')
 ]

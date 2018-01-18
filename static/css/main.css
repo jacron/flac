@@ -245,7 +245,8 @@ fieldset {
 .cue-remove,
 .cue-rename,
 .add-code,
-.remove-code {
+.remove-code,
+.add-code-all {
     cursor: pointer;
     font-style: italic;
 }
@@ -257,10 +258,12 @@ fieldset {
 .cue-remove:hover,
 .cue-rename:hover,
 .add-code:hover,
+.add-code-all:hover,
 .remove-code:hover {
     text-decoration: underline;
 }
-.add-code.saved {
+.add-code.saved,
+.add-code-all.saved {
     color: blue;
     border: 1px solid #cfcfcf;
 }
@@ -587,4 +590,10 @@ div[class="pattern"] img {
 }
 .codes-list .main .code-line {
     /*font-size: 16px;*/
+}
+.extra h4 {
+    margin-bottom: 0;
+}
+.extra ul {
+    margin-top: 0;
 }

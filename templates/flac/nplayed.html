@@ -1,0 +1,27 @@
+{% extends "flac/base.html" %}
+{% load page_tags %}
+{% block title %}
+    Laatst afgespeeld
+{% endblock %}
+{% block page %}
+    <div class="nplayed">
+    <form>{% csrf_token %}</form>
+    <h4>Laatst afgespeeld</h4>
+        <table>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.Piece.NPlayed }}</td>
+                <td class="hyperlink">
+                    <a onclick="play(this, {{ item.Piece.ID }})"
+                       class="title">{{ item.Piece.Name }}</a>
+                </td>
+                <td>
+                    <a href="{% url 'album' item.Album.ID %}">
+                        {{ item.Album.Title }}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

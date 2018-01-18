@@ -21,6 +21,9 @@
             <a class="check-nothing">niets selecteren</a>
         </td>
     </tr>
+    <tr>
+        <td><span class="add-code-all">code (alle)</span></td>
+    </tr>
     {% for item in pieces %}
         <tr class="piece" id="{{ item.1 }}">
             <td class="hyperlink">
@@ -29,7 +32,7 @@
                        class="select-for-cuesheet">
                 <a onclick="play(this, {{ item.1 }})" class="title">{{ item.0 }}</a> |
                 <span class="code">&lt;{{ item.2 }}&gt;</span>
-                <span class="add-code" id="{{ item.1 }}" prompt="false" title="Voeg librarycode toe">
+                <span class="add-code first" id="{{ item.1 }}" prompt="false" title="Voeg librarycode toe">
                     code</span> |
                 <span class="add-code" id="{{ item.1 }}" prompt="true" title="Voeg librarycode toe (interactive)">
                     prompt</span> |

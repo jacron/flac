@@ -5,56 +5,57 @@
 {% block page %}
 <div class="extra">
     <form>{% csrf_token %}
-<div>
-    <input type="text" placeholder="zoek album met titel" class="typeahead general">
-</div>
-<div>
-    <input type="text" placeholder="open pad album id" class="open-finder">
-</div>
+    <div>
+        <input type="text" placeholder="zoek album met titel" class="typeahead general">
+    </div>
+    <div>
+        <input type="text" placeholder="open pad album id" class="open-finder">
+    </div>
     </form>
         <input class="add-componist-extra" type="text" placeholder="Voeg componist toe">
         <span class="componist-extra-added"></span>
     <h4>code</h4>
-<ul class="hyperlink">
-    {% for code in codes %}
-    {%if code.Range %}
-        <li class="code-range">
-            <a href="{% url 'librarycodelistrange' code.Code code.Range %}">
-                {{ code.Description }} {{ code.Range }}
-            </a>
-{#            <a href="{% url 'librarycodelistrange' code.Code code.Range 1 %}">piano</a> |#}
-{#            <a href="{% url 'librarycodelistrange' code.Code code.Range 2 %}">clavecimbel</a>#}
-        </li>
-    {% else %}
-        <li>
-            <a href="{% url 'librarycodelist' code.Code %}">
-                {{ code.Description }}
-            </a>
-{#            <a href="{% url 'librarycodelist' code.Code 1 %}">piano</a> |#}
-{#            <a href="{% url 'librarycodelist' code.Code 2 %}">clavecimbel</a>#}
-        </li>
-    {% endif %}
-    {% endfor %}
-</ul>
+    <ul class="hyperlink">
+        {% for code in codes %}
+        {%if code.Range %}
+            <li class="code-range">
+                <a href="{% url 'librarycodelistrange' code.Code code.Range %}">
+                    {{ code.Description }} {{ code.Range }}
+                </a>
+    {#            <a href="{% url 'librarycodelistrange' code.Code code.Range 1 %}">piano</a> |#}
+    {#            <a href="{% url 'librarycodelistrange' code.Code code.Range 2 %}">clavecimbel</a>#}
+            </li>
+        {% else %}
+            <li>
+                <a href="{% url 'librarycodelist' code.Code %}">
+                    {{ code.Description }}
+                </a>
+    {#            <a href="{% url 'librarycodelist' code.Code 1 %}">piano</a> |#}
+    {#            <a href="{% url 'librarycodelist' code.Code 2 %}">clavecimbel</a>#}
+            </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
     <h4>extra</h4>
-<ul class="hyperlink">
-    <li><a href="{% url 'pianoboeken' %}">pianoboek</a></li>
-    <li><a href="{% url 'cmd' 'scarlatti' %}">Scarlatti Sonates</a></li>
-    <li><a href="{% url 'cmd' 'bach' %}">Bach Goldberg</a></li>
-</ul>
-<h4>clipboard</h4>
-<ul class="hyperlink">
-    <li><a href="{% url 'cmd' 'folder' %}">save clipboard as folder.jpg</a></li>
-    <li><a href="{% url 'cmd' 'back' %}">save clipboard as back.jpg</a></li>
-    <li><a href="{% url 'cmd' 'folderback' %}">save clipboard as folder.jpg and back.jpg</a></li>
-</ul>
+    <ul class="hyperlink">
+        <li><a href="{% url 'nplayed' %}">laatst afgespeeld</a></li>
+        <li><a href="{% url 'pianoboeken' %}">pianoboek</a></li>
+        <li><a href="{% url 'cmd' 'scarlatti' %}">Scarlatti Sonates</a></li>
+        <li><a href="{% url 'cmd' 'bach' %}">Bach Goldberg</a></li>
+    </ul>
+    <h4>clipboard</h4>
+    <ul class="hyperlink">
+        <li><a href="{% url 'cmd' 'folder' %}">save clipboard as folder.jpg</a></li>
+        <li><a href="{% url 'cmd' 'back' %}">save clipboard as back.jpg</a></li>
+        <li><a href="{% url 'cmd' 'folderback' %}">save clipboard as folder.jpg and back.jpg</a></li>
+    </ul>
     <h4>onderhoud</h4>
-<ul class="hyperlink">
-    <li><a href="{% url 'cmd' 'widows' %}">widows lijst</a></li>
-    <li><a href="{% url 'cmd' 'apeflac' %}">ape with flacs</a></li>
-    <li><a href="{% url 'cmd' 'pathdoubles' %}">path doubles</a></li>
-{#    <li><a href="{% url 'cmd' 'missingscore' %}">missing score</a></li>#}
-</ul>
+    <ul class="hyperlink">
+        <li><a href="{% url 'cmd' 'widows' %}">widows lijst</a></li>
+        <li><a href="{% url 'cmd' 'apeflac' %}">ape with flacs</a></li>
+        <li><a href="{% url 'cmd' 'pathdoubles' %}">path doubles</a></li>
+    {#    <li><a href="{% url 'cmd' 'missingscore' %}">missing score</a></li>#}
+    </ul>
     {% albumlist albums %}
 </div>
 {% endblock %}

@@ -222,15 +222,11 @@ def main():
     # path = get_path_of_album(album_id)
     # mother_id = 3816
     # artiest = "Fritz Reiner"
-    ComponistID = 7
+    ComponistID = 9
     # componist = from_path(path)
     # ComponistID = componist_from_album(album_id)
     # PerformerID = 48
-    # PerformerID2 = 47
-    path = '/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten piano/Daria van den Bercken - Domenico Scarlatti and Daria van den Bercken (2017)'
-    path = '/Volumes/Media/Audio/Klassiek/Componisten/Scarlatti, D/sonaten piano/Hyperion - Hewitt plays Scarlatti; Sonatas vol. 2'
-    path = '/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano/Bach - Goldberg Variations - Hantai (2003)'
-    path = '/Volumes/Media/Video/Video Klassiek/Mozart/MozPTrioMutt'
+    path = '/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano/Karin Kei Nagano - J.S. Bach Inventions & Sinfonias, BWV 772-801 (2017)'
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     if path is None:
         print('No path')
@@ -248,6 +244,7 @@ def main():
     # get_album_groups(path=path, mother_id=album_id, iscollectie=0, step_in=0)
     # album_id = \
     process_album(path=path, mother_id=None, is_collectie=0)
+
 
 if __name__ == '__main__':
     main()

@@ -111,7 +111,15 @@ $(function () {
         return proposal;
     }
 
-    function addCode($this) {
+    function addCodeAll($this) {
+        $('.add-code.first').each(function(){
+            addCode($(this), true);
+        });
+        $('.saved').removeClass('saved');
+        $this.addClass('saved');
+    }
+
+    function addCode($this, nomark) {
         const hyperlink = $this.parents('.hyperlink'),
             title = hyperlink.find('.title'),
             text = title.text();
@@ -122,8 +130,8 @@ $(function () {
         };
         // Here are some possible propose function calls
         // you can select one by NOT commenting it out
-        // const proposal = proposeKCode(text, keywords.BWV, 'bwv ');
-        const proposal = proposeKCode(text, keywords.K, 'KV ');
+        const proposal = proposeKCode(text, keywords.BWV, 'bwv ');
+        // const proposal = proposeKCode(text, keywords.K, 'KV ');
         // const proposal = proposeCode(text, 'cs ');
         // const proposal = proposeKCode(text, keywords.gold, 'gold ');
         // if (!proposal) {
@@ -142,8 +150,10 @@ $(function () {
             id: $this.attr('id'),
             code: code
         }, function() {
-            $('.add-code').removeClass('saved');
-            $this.addClass('saved');
+            if (!nomark) {
+                $('.saved').removeClass('saved');
+                $this.addClass('saved');
+            }
             const hyperlink = $this.parents('.hyperlink'),
                 $code = hyperlink.find('.code');
             $code.text('<' + code + '>');
@@ -173,6 +183,9 @@ $(function () {
         });
         $('.remove-code').click(function() {
             removeCode($(this));
+        });
+        $('.add-code-all').click(function() {
+            addCodeAll($(this));
         });
     }
 });

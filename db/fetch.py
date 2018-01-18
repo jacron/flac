@@ -1794,3 +1794,29 @@ def get_album_count_by_path(path, c, conn):
     return {
         "Count": fields[0],
     }
+
+
+def get_pieces_nplayed(n):
+    sql = '''
+    SELECT P.ID, Name, NPlayed, LastPlayed, A.ID, A.Title
+    FROM Piece P
+    JOIN Album A ON P.AlbumID = A.ID
+    WHERE NPlayed > ?
+    '''
+    con, c = connect()
+    items = c.execute(sql, (int(n) - 1, )).fetchall()
+    out = []
+    for fields in items:
+        out.append( {
+            'Piece': {
+                'ID': fields[0],
+                'Name': fields[1],
+                "NPlayed": fields[2],
+                'LastPlayed': fields[3],
+            },
+            'Album': {
+                'ID': fields[4],
+                'Title': fields[5],
+            },
+        })
+    return out
