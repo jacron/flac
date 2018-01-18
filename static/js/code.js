@@ -69,8 +69,9 @@ $(function () {
         return proposal;
     }
 
-    function proposeKCode(text, keywords, proposal) {
+    function proposeKCode(text, keywords) {
         // console.log(text);
+        var proposal = '';
         for (var i = 0; i < keywords.length; i++) {
             const keyword = keywords[i],
                 pos = text.indexOf(keyword);
@@ -125,23 +126,28 @@ $(function () {
             text = title.text();
         const keywords = {
             K: ['K. ', 'K.', 'K ', 'KV ', 'KV', 'K'],
-            BWV: ['BWV ', 'BWV.'],
+            BWV: ['BWV ', 'BWV.', 'Bwv '],
             gold: ['variation ', 'Variation ']
         };
         // Here are some possible propose function calls
         // you can select one by NOT commenting it out
-        const proposal = proposeKCode(text, keywords.BWV, 'bwv ');
+        const prefix = 'bwv ';
+        const proposal = proposeKCode(text, keywords.BWV);
         // const proposal = proposeKCode(text, keywords.K, 'KV ');
         // const proposal = proposeCode(text, 'cs ');
         // const proposal = proposeKCode(text, keywords.gold, 'gold ');
         // if (!proposal) {
         //     return;
         // }
-        var code = proposal;
+        var code = prefix + proposal;
         var interactive = $this.attr('prompt') === 'true';
         if (interactive) {
-            code = prompt('Code', proposal);
-            if (!code) {
+            code = prompt('Code', code);
+            if (code === null) {
+                return;
+            }
+        } else {
+            if (!proposal.length) {
                 return;
             }
         }

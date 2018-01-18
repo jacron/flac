@@ -2,13 +2,14 @@
 {% if cuesheets|length %}
     {% if cuesheets|length > 1 %}
 <div class="cuesheets">
-Cuesheets ({{ cuesheets | length }})
+    Cuesheets ({{ cuesheets | length }})
     <i class="toggle-cuesheets-content fa fa-caret-right"></i>
 </div>
     <div class="cuesheets-content">
         {% else %}
     <div>
         {% endif %}
+    <div><span class="add-code-all">code (alle)</span></div>
 
 {% for cuesheet in cuesheets %}
     <div {% if not valid %}
@@ -23,7 +24,7 @@ Cuesheets ({{ cuesheets | length }})
             <span class="cue-plus-container">
                 <i class="toggle-cue-content fa fa-caret-right"></i>
                 <span class="code">&lt;{{ cuesheet.Code }}&gt;</span>
-                <span class="add-code" id="{{ cuesheet.ID }}" title="Voeg librarycode toe">
+                <span class="add-code first" id="{{ cuesheet.ID }}" title="Voeg librarycode toe">
                     code</span> |
                 <span class="add-code" id="{{ cuesheet.ID }}" prompt="true" title="Voeg librarycode toe (interactive)">
                     prompt</span> |
