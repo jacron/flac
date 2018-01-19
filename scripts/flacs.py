@@ -227,7 +227,8 @@ def main():
     # ComponistID = componist_from_album(album_id)
     # PerformerID = 48
     # path = '/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano/Karin Kei Nagano - J.S. Bach Inventions & Sinfonias, BWV 772-801 (2017)'
-    path = '/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano/Bach - Inventions and Sinfonias - Rubsam'
+    # path = '/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano/Bach - Inventions and Sinfonias - Rubsam'
+    path = '/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano/Bach - Well-Tempered Clavier (Hewitt 1997-99)'
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     if path is None:
         print('No path')

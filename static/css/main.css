@@ -246,7 +246,8 @@ fieldset {
 .cue-rename,
 .add-code,
 .remove-code,
-.add-code-all {
+.add-code-all,
+.remove-code-all {
     cursor: pointer;
     font-style: italic;
 }
@@ -259,7 +260,8 @@ fieldset {
 .cue-rename:hover,
 .add-code:hover,
 .add-code-all:hover,
-.remove-code:hover {
+.remove-code:hover,
+.remove-code-all:hover {
     text-decoration: underline;
 }
 .add-code.saved,

@@ -9,7 +9,10 @@
         {% else %}
     <div>
         {% endif %}
-    <div><span class="add-code-all">code (alle)</span></div>
+    <div>
+        <span class="add-code-all">code (alle)</span> |
+        <span class="remove-code-all">x</span>
+    </div>
 
 {% for cuesheet in cuesheets %}
     <div {% if not valid %}

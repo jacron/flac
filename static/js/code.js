@@ -120,50 +120,73 @@ $(function () {
         $this.addClass('saved');
     }
 
-    function addCode($this, nomark) {
-        const hyperlink = $this.parents('.hyperlink'),
-            title = hyperlink.find('.title'),
-            text = title.text();
-        const keywords = {
-            K: ['K. ', 'K.', 'K ', 'KV ', 'KV', 'K'],
-            BWV: ['BWV ', 'BWV.', 'Bwv '],
-            gold: ['variation ', 'Variation ']
-        };
-        // Here are some possible propose function calls
-        // you can select one by NOT commenting it out
-        const prefix = 'bwv ';
-        const proposal = proposeKCode(text, keywords.BWV);
-        // const proposal = proposeKCode(text, keywords.K, 'KV ');
-        // const proposal = proposeCode(text, 'cs ');
-        // const proposal = proposeKCode(text, keywords.gold, 'gold ');
-        // if (!proposal) {
-        //     return;
-        // }
-        var code = prefix + proposal;
-        var interactive = $this.attr('prompt') === 'true';
-        if (interactive) {
-            code = prompt('Code', code);
-            if (code === null) {
-                return;
-            }
-        } else {
-            if (!proposal.length) {
-                return;
-            }
+    const KEYWORDS = {
+        K: {
+            prefix: 'K ',
+            codes: ['K. ', 'K.', 'K ', 'K']
+        },
+        BWV: {
+            prefix: 'bwv ',
+            codes: ['BWV ', 'BWV.', 'Bwv ', 'BWV']
+        },
+        gold: {
+            prefix: 'gold ',
+            codes: ['variation ', 'Variation ']
+        },
+        KV: {
+            prefix: 'KV ',
+            codes: ['K. ', 'K.', 'K ', 'KV ', 'KV', 'K']
         }
+    };
+
+    function postCode(id, code, $this, $code, nomark) {
         ajaxPost({
             cmd: 'add_code',
-            id: $this.attr('id'),
+            id: id,
             code: code
         }, function() {
             if (!nomark) {
                 $('.saved').removeClass('saved');
                 $this.addClass('saved');
             }
-            const hyperlink = $this.parents('.hyperlink'),
-                $code = hyperlink.find('.code');
             $code.text('<' + code + '>');
         });
+    }
+
+    function addCode($this, nomark) {
+        console.log($this);
+        const
+            id = $this.attr('id'),
+            doPrompt = $this.attr('prompt'),
+            hyperlink = $this.parents('.hyperlink'),
+            $code = hyperlink.find('.code'),
+            $title = hyperlink.find('.title'),
+            text = $title.text(),
+            c = KEYWORDS.K, // choose your keywords here
+            proposal = proposeKCode(text, c.codes);
+
+        // const proposal = proposeCode(text, 'cs ');
+        var code = c.prefix + proposal;
+        console.log(doPrompt);
+        if (doPrompt && doPrompt === 'true') {
+            code = prompt('Code', code);
+            if (code === null) {  // escape
+                return;
+            }
+        } else {
+            if (!proposal.length) {  // empty code
+                return;
+            }
+        }
+        postCode(id, code, $this, $code, nomark);
+    }
+
+    function removeCodeAll($this) {
+        $('.add-code.first').each(function(){
+            removeCode($(this));
+        });
+        $('.saved').removeClass('saved');
+        $this.addClass('saved');
     }
 
     function removeCode($this) {
@@ -192,6 +215,9 @@ $(function () {
         });
         $('.add-code-all').click(function() {
             addCodeAll($(this));
+        });
+        $('.remove-code-all').click(function() {
+            removeCodeAll($(this));
         });
     }
 });
