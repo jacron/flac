@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 # coding=utf-8
 import glob
 # from flac.db.pieces import insert_pieces
+from flac import settings
 from flac.lib.color import ColorPrint
 from flac.services import get_full_cuesheet
 from flac.settings import SKIP_DIRS
@@ -27,7 +28,8 @@ from venv.flac.scripts.helper.insert import (
 )
 
 
-db_path = '../../db.sqlite3'
+# db_path = '../../db.sqlite3'
+db_path = settings.SQLITE3_FILE
 artiest = None
 componist = None
 ComponistID = None
@@ -228,7 +230,8 @@ def main():
     # PerformerID = 48
     # path = '/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano/Karin Kei Nagano - J.S. Bach Inventions & Sinfonias, BWV 772-801 (2017)'
     # path = '/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano/Bach - Inventions and Sinfonias - Rubsam'
-    path = '/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano/Bach - Well-Tempered Clavier (Hewitt 1997-99)'
+    # path = '/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano/Bach - Well-Tempered Clavier (Hewitt 1997-99)'
+    path = '/Volumes/Media/Audio/Klassiek/Componisten/Bach/Piano/Bach JS - Goldberg Variations, BWV 988 - Ji (2018)'
     ColorPrint.print_c(path, ColorPrint.LIGHTCYAN)
     if path is None:
         print('No path')

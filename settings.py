@@ -141,7 +141,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join('static'),)
 
 MEDIA_PLAYER = '/Applications/Media Center 21.app'
-SQLITE3_FILE = 'venv/db.sqlite3'
+SQLITE3_FILE = '/Users/orion/db/db.music.sqlite3'
 COVER_FILE = '/folder.jpg'
 BACK_FILE = '/back.jpg'
 PERSON_FILE = '/person.jpg'

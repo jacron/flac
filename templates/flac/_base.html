@@ -12,13 +12,13 @@
     <link rel="stylesheet" href="{% static 'css/alfabet.css' %}">
     <link rel="stylesheet" href="{% static 'css/upload.css' %}">
     <link rel="stylesheet" href="{% static 'css/w3.css' %}">
+{% block css %}{% endblock %}
     <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
 </head>
 <body>
 <div class="content">
 {% navbar %}
-    {% block page %}
-    {% endblock %}
+    {% block page %}{% endblock %}
 </div>
     <script src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>
     <script src="{% static 'bower_components/typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
@@ -40,5 +40,6 @@
     <script src="{% static 'js/drop.js' %}"></script>
     <script src="{% static 'js/upload.js' %}"></script>
     <script src="{% static 'js/code.js' %}"></script>
+{% block js %}{% endblock %}
 </body>
 </html>
