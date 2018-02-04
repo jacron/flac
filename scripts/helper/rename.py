@@ -3,7 +3,7 @@ from shutil import copyfile
 
 from flac.db import set_album_title, get_album_by_path
 from flac.lib.color import ColorPrint
-from venv.flac.services import (
+from flac.services import (
     has_haakjes, replace_haakjes, get_full_cuesheet)
 import os
 

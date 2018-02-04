@@ -1,4 +1,4 @@
-from venv.flac.db import (
+from flac.db import (
     insert_componist, insert_performer,
     insert_album_performer, insert_album_componist, )
 
