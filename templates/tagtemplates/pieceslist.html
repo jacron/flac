@@ -43,15 +43,23 @@
                     x</span>
             </td>
             {% if item.2 %}
-        <td>
-            <a href="{% url 'librarycode' item.2 wild %}">{{ item.2 }}</a>
-        </td>
             <td>
-                <img src="/image/{{ item.2 }}/librarycode/" class="librarycode-image">
+                <a href="{% url 'librarycode' item.2 wild %}">{{ item.2 }}</a>
             </td>
-{#            <td class="paste-score-fragment" code="{{ item.2 }}">#}
-{#                plak plaatje {{ item.2 }}</td>#}
-        {% endif %}
+                <td>
+                    <img src="/image/{{ item.2 }}/librarycode/" class="librarycode-image">
+                </td>
+    {#            <td class="paste-score-fragment" code="{{ item.2 }}">#}
+    {#                plak plaatje {{ item.2 }}</td>#}
+            {% endif %}
+        {% for tag, value in item.tags.items %}
+            <td>
+            {{ tag }}:
+            {% for t in value %}
+                {{ t }}{% if not forloop.last %},&nbsp;{% endif %}
+            {% endfor %}
+            </td>
+        {% endfor %}
         </tr>
     {% endfor %}
 </table>

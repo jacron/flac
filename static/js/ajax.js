@@ -54,6 +54,13 @@ function openfinder(objectId, kind) {
     });
 }
 
+function tageditoralbum(albumId) {
+    ajaxPost({
+        cmd: 'tageditoralbum',
+        albumid: albumId
+    })
+}
+
 function exportAlbums(objectId, kind) {
     ajaxPost({
         objectid: objectId,

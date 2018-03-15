@@ -3,6 +3,7 @@ import glob
 import os
 
 from flac.services.proposals import get_proposals, get_artists
+from flac.services.tag import get_metatags
 from flac.settings import SKIP_DIRS
 from ..db import (
     get_album, get_pieces,
@@ -25,6 +26,7 @@ def has_notfound_files(cuesheet, album_path):
 def organize_pieces(album_id, album_path):
     items = get_pieces(album_id)
     cuesheets, pieces, notfounds, invalidcues = [], [], [], []
+    album_metatags = []
     for item in items:
         ffile = item[0]
         if ffile:
@@ -39,10 +41,12 @@ def organize_pieces(album_id, album_path):
                         cuesheet['Code'] = item[2]
                         cuesheets.append(cuesheet)
                 else:
+                    item['tags'] = get_metatags(path)
+                    album_metatags = item['tags']
                     pieces.append(item)
             else:
                 notfounds.append(path)
-    return cuesheets, pieces, notfounds, invalidcues
+    return cuesheets, pieces, notfounds, invalidcues, album_metatags
 
 
 def check_subdirs(path):
@@ -120,7 +124,7 @@ def album_context(album_id, list_name=None, list_id=None):
     if album_o['AlbumID']:
         mother_id = album_o['AlbumID']
         mother_title = get_mother_title(mother_id)
-    cuesheets, pieces, notfounds, invalidcues = organize_pieces(album_id, album_o['Path'])
+    cuesheets, pieces, notfounds, invalidcues, album_metatags = organize_pieces(album_id, album_o['Path'])
     album_componisten, album_performers, album_instruments = get_elements(album_id)
     sp = get_setting('show_proposals')
     show_proposals = sp['VALUE']
@@ -147,6 +151,7 @@ def album_context(album_id, list_name=None, list_id=None):
         'invalidcues': invalidcues,
         'notfounds': notfounds,
         'album_tags': get_album_tags(album_id),
+        'album_metatags': album_metatags,
         'proposals': proposals,
         'show_proposals': show_proposals,
         'artists': artists,

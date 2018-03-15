@@ -28,7 +28,7 @@
     </span>:
     <span contenteditable="true" class="edit-title">
     {{ album.Title }}
-    </span><span class="title-to-tag cmd" title="title to tag">&gt;</span>
+    </span>
 </h4>
 <div contenteditable="true" class="edit-description">
     <span>{{ album.Description|default_if_none:'' }}</span></div>
@@ -40,7 +40,19 @@
 {% persons_list album_componisten '/componist/' 'componist' %}
 {% persons_list album_performers '/performer/' 'performer' %}
 {%  album_instrument_list album_instrument  %}
+<div style="float: left">
+{% for tag, value in album_metatags.items %}
+    {{ tag }}:
+    {% for t in value %}
+        {{ t }}{% if not forloop.last %},&nbsp;{% endif %}
+    {% endfor %}<br>
+{% endfor %}
+</div>
+
 <div class="clear nav">
+    <span class="title-to-tag cmd" title="title to tag">T&gt;</span>
+    <span class="all-to-tag cmd" title="all to tag">All&gt;</span><br>
+
     {% pages prev_id next_id mother_title 'album' album.AlbumID %}
     {% pages prev_list_id next_list_id list_title list_name list_id %}
     {% cuesheetlist cuesheets 1 %}

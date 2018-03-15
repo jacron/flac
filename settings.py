@@ -139,6 +139,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 # https://stackoverflow.com/questions/10165638/django-isnt-serving-static-files-getting-404-errors
 STATICFILES_DIRS = (os.path.join('static'),)
+TAG_EDITOR = '/Applications/Tag Editor.app'
 
 MEDIA_PLAYER = '/Applications/Media Center 21.app'
 SQLITE3_FILE = '/Users/orion/db/db.music.sqlite3'

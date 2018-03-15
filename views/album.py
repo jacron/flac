@@ -32,7 +32,7 @@ def album(request, album_id):
     return album_view(request, album_id)
 
 
-def albums(request):
-    template = loader.get_template('flac/albums.html')
-    return HttpResponse(template.render(
-        {'albums': get_albums(), }, request))
+# def albums(request):
+#     template = loader.get_template('flac/albums.html')
+#     return HttpResponse(template.render(
+#         {'albums': get_albums(), }, request))

@@ -243,7 +243,15 @@ $(function () {
         $('.title-to-tag').click(function(){
             ajaxPost({
                 cmd: 'title2tag',
-                albumid: albumId
+                albumid: albumId,
+                mode: 'short'
+            })
+        });
+        $('.all-to-tag').click(function(){
+            ajaxPost({
+                cmd: 'title2tag',
+                albumid: albumId,
+                mode: 'long'
             })
         });
     }

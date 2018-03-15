@@ -1,7 +1,7 @@
 import urllib
 import os
 
-from flac.services import openpath
+from flac.services import openpath, opentageditor
 from flac.services.album_content import get_website
 from flac.services.clipboard import save_score_fragment, save_person, \
     delete_score_fragment
@@ -10,7 +10,7 @@ from flac.services.makecuesheet import make_cuesheet, rename_cuesheet, \
     make_subs_cuesheet, split_cued_file, \
     edit_cuesheet, combine_sub_cuesheets, norm_cuesheet, remove_cuesheet
 from flac.services.path import get_path, path_from_id_field
-from flac.services.tag import title_tag
+from flac.services.tag import set_metatags
 from ..db import (abs_insert_componist, update_componistbirth,
                   update_componistdeath, update_performerbirth,
                   update_performerdeath, adjust_kk, inherit_elements,
@@ -84,8 +84,14 @@ def paste_person(id, type):
     return save_person(id, type)
 
 
-def title2tag(album_id):
-    return title_tag(album_id)
+def title2tag(album_id, mode):
+    return set_metatags(album_id, mode)
+
+
+def tageditoralbum(album_id):
+    path = get_path(album_id, 'album')
+    opentageditor(path)
+    return 'editor'
 
 
 def add_code(piece_id, librarycode):
@@ -238,6 +244,8 @@ def do_post(post):
     if cmd == 'proposals':
         return toggle_setting('show_proposals')
     if cmd == 'title2tag':
-        return title2tag(post['albumid'])
+        return title2tag(post['albumid'], post['mode'])
+    if cmd == 'tageditoralbum':
+        return tageditoralbum(post['albumid'])
 
     print cmd, 'not a valid cmd'

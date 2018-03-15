@@ -30,8 +30,8 @@ urlpatterns = [
     url(r'^album/(?P<album_id>.+)/$',
         views.album,
         name='album'),
-    url(r'^album/$',
-        views.albums),
+    # url(r'^album/$',
+    #     views.albums),
 
     url(r'^performer/(?P<performer_id>.+)/delete/$', views.performer_delete),
     url(r'^performer/(?P<performer_id>.+)/$', views.performer),

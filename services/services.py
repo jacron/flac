@@ -1,7 +1,7 @@
-import os
+import os, subprocess
 
 from flac.lib.color import ColorPrint
-from flac.settings import COMPONIST_PATH, PERFORMER_PATH
+from flac.settings import COMPONIST_PATH, PERFORMER_PATH, TAG_EDITOR
 
 
 def replace_haakjes(s):
@@ -117,3 +117,20 @@ def openpath(path):
 def subl_path(path):
     cmd = u'subl "{}"'.format(path).encode('UTF-8')
     os.system(cmd)
+
+
+def opentageditor(path):
+    cmd = ['open', '-a', TAG_EDITOR]
+    for f in os.listdir(path):
+        extension = f.split('.')[-1]
+        if extension == 'flac':
+            p = '{}/{}'.format(path, f)
+            cmd.append(p)
+
+    process = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE)
+    out, err = process.communicate()
+    if len(out) == 0:
+        print(err)
+
+
