@@ -235,10 +235,16 @@ $(function () {
         });
         $('.toggle-show-proposals').change(function(){
             ajaxPost({
-                'cmd': 'proposals'
+                cmd: 'proposals'
             }, function(){
                 location.reload();
             });
+        });
+        $('.title-to-tag').click(function(){
+            ajaxPost({
+                cmd: 'title2tag',
+                albumid: albumId
+            })
         });
     }
     // albumlist also lives on componist page etc

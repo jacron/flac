@@ -10,6 +10,7 @@ from flac.services.makecuesheet import make_cuesheet, rename_cuesheet, \
     make_subs_cuesheet, split_cued_file, \
     edit_cuesheet, combine_sub_cuesheets, norm_cuesheet, remove_cuesheet
 from flac.services.path import get_path, path_from_id_field
+from flac.services.tag import title_tag
 from ..db import (abs_insert_componist, update_componistbirth,
                   update_componistdeath, update_performerbirth,
                   update_performerdeath, adjust_kk, inherit_elements,
@@ -81,6 +82,10 @@ def remove_score_fragment(code):
 
 def paste_person(id, type):
     return save_person(id, type)
+
+
+def title2tag(album_id):
+    return title_tag(album_id)
 
 
 def add_code(piece_id, librarycode):
@@ -232,5 +237,7 @@ def do_post(post):
 
     if cmd == 'proposals':
         return toggle_setting('show_proposals')
+    if cmd == 'title2tag':
+        return title2tag(post['albumid'])
 
     print cmd, 'not a valid cmd'
